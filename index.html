@@ -829,9 +829,9 @@
   .bq-arena .chip.d-pow[aria-pressed="true"] { border-color: var(--green); box-shadow: 0 8px 20px rgba(67,192,106,.22); }
   .bq-arena .chip.d-spd[aria-pressed="true"] { border-color: var(--speed); box-shadow: 0 8px 20px rgba(124,92,230,.22); }
   .bq-arena .chip.d-sta[aria-pressed="true"] { border-color: var(--coral); box-shadow: 0 8px 20px rgba(238,91,98,.22); }
-  .bq-arena .chip.d-pow .tile { background: var(--green); }
-  .bq-arena .chip.d-spd .tile { background: var(--speed); }
-  .bq-arena .chip.d-sta .tile { background: var(--coral); }
+  .bq-arena .chip.d-pow .tile { background: #E7F6EC; }
+  .bq-arena .chip.d-spd .tile { background: #F0EBFC; }
+  .bq-arena .chip.d-sta .tile { background: #FDECED; }
 
   .bq-arena .stances { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 6px; }
   .bq-arena .stance {
@@ -3740,15 +3740,15 @@
     <div class="seclabel"><h3>Discipline</h3><span class="hint">Pick the stat that clashes</span></div>
     <div class="disciplines" role="group" aria-label="Choose discipline">
       <button type="button" class="chip d-pow" data-stat="pow" aria-pressed="true">
-        <span class="tile"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span>
+        <span class="tile"><img src="assets/icons/disc_clash.png" width="24" height="24" alt=""></span>
         <span class="cname">Clash</span><span class="cstat">Power</span>
       </button>
       <button type="button" class="chip d-spd" data-stat="spd" aria-pressed="false">
-        <span class="tile"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span>
+        <span class="tile"><img src="assets/icons/disc_chase.png" width="24" height="24" alt=""></span>
         <span class="cname">Chase</span><span class="cstat">Speed</span>
       </button>
       <button type="button" class="chip d-sta" data-stat="sta" aria-pressed="false">
-        <span class="tile"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span>
+        <span class="tile"><img src="assets/icons/disc_standoff.png" width="24" height="24" alt=""></span>
         <span class="cname">Standoff</span><span class="cstat">Stamina</span>
       </button>
     </div>
@@ -3756,15 +3756,15 @@
     <div class="seclabel"><h3>Stance</h3><span class="hint">Skill layer &middot; soft counters</span></div>
     <div class="stances" role="group" aria-label="Choose stance">
       <button type="button" class="stance" data-stance="charge" aria-pressed="true">
-        <span class="sicon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h11m0 0-4-4m4 4-4 4M18 5v14" stroke="#EE5B62" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+        <span class="sicon"><img src="assets/icons/stance_charge.png" width="24" height="24" alt=""></span>
         <span class="stname">Charge</span><span class="sttip">beats Feint</span>
       </button>
       <button type="button" class="stance" data-stance="feint" aria-pressed="false">
-        <span class="sicon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8c6-5 10 5 16 0M4 16c6-5 10 5 16 0" stroke="#7C5CE6" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg></span>
+        <span class="sicon"><img src="assets/icons/stance_feint.png" width="24" height="24" alt=""></span>
         <span class="stname">Feint</span><span class="sttip">beats Brace</span>
       </button>
       <button type="button" class="stance" data-stance="brace" aria-pressed="false">
-        <span class="sicon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z" fill="none" stroke="#43C06A" stroke-width="2.2" stroke-linejoin="round"/></svg></span>
+        <span class="sicon"><img src="assets/icons/stance_brace.png" width="24" height="24" alt=""></span>
         <span class="stname">Brace</span><span class="sttip">beats Charge</span>
       </button>
     </div>
