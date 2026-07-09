@@ -1983,6 +1983,20 @@
     text-align: center;
   }
 
+  /* back button (top-left of hero) */
+  .bq-onboard .back {
+    position: absolute; z-index: 4; top: 24px; left: 16px;
+    width: 44px; height: 44px; border-radius: 14px;
+    display: grid; place-items: center; cursor: pointer;
+    appearance: none; -webkit-appearance: none;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.16); color: #fff;
+    transition: background .15s ease, transform .1s ease;
+  }
+  .bq-onboard .back:hover { background: rgba(255,255,255,.28); }
+  .bq-onboard .back:active { transform: scale(.94); }
+  .bq-onboard .back svg { display: block; }
+
   /* confetti */
   .bq-onboard .confetti { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .bq-onboard .confetti svg {
@@ -4442,21 +4456,25 @@
 
   <!-- ===== violet welcome region ===== -->
   <div class="hero">
+    <button type="button" class="back" data-bqgo="view-landing" aria-label="Back">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 8 12l6.5 7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
     <div class="confetti" aria-hidden="true">
-      <svg class="c1" viewBox="0 0 24 24"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#FCE9C6"/></svg>
-      <svg class="c2" viewBox="0 0 24 24"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#F6C560"/></svg>
+      <svg class="c1" viewBox="0 0 24 24"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#FCE9C6"/><path d="M19.2 3.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#FCE9C6" opacity=".8"/></svg>
+      <svg class="c2" viewBox="0 0 24 24"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#F6C560"/><path d="M4.6 16.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#F6C560" opacity=".8"/></svg>
       <svg class="c3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#F0B429"/><circle cx="12" cy="12" r="7" fill="#FFD36B"/></svg>
-      <svg class="c4" viewBox="0 0 26 24"><path d="M13 2 24 8v8L13 22 2 16V8Z" fill="#5CB2F6"/><path d="M13 2 24 8v8L13 22 2 16V8Z" fill="#BFE0FA" opacity=".5"/></svg>
-      <svg class="c5" viewBox="0 0 24 24"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#BFE0FA"/></svg>
+      <svg class="c4" viewBox="0 0 24 24"><path d="M12 2.5 20 7v10l-8 4.5L4 17V7Z" fill="#4DA6F5"/><path d="M12 2.5 20 7 12 10.5 4 7Z" fill="#8CC8F9"/><path d="M4 7 12 10.5V21.5L4 17Z" fill="#3F98ED"/><path d="M12 10.5V21.5M12 10.5 20 7M12 10.5 4 7" fill="none" stroke="#CDE6FB" stroke-width=".7" opacity=".55" stroke-linejoin="round"/></svg>
+      <svg class="c5" viewBox="0 0 24 24"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#BFE0FA"/><path d="M19.2 3.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#BFE0FA" opacity=".8"/></svg>
       <svg class="c6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#F0B429"/><circle cx="12" cy="12" r="7" fill="#FFD36B"/></svg>
-      <svg class="c7" viewBox="0 0 24 24"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#FCE9C6"/></svg>
-      <svg class="c8" viewBox="0 0 24 24"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#F6C560"/></svg>
+      <svg class="c7" viewBox="0 0 24 24"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#FCE9C6"/><path d="M4.6 16.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#FCE9C6" opacity=".8"/></svg>
+      <svg class="c8" viewBox="0 0 24 24"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#F6C560"/><path d="M19.2 3.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#F6C560" opacity=".8"/></svg>
       <svg class="c9" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#F0B429"/><circle cx="12" cy="12" r="7" fill="#FFD36B"/></svg>
     </div>
 
     <span class="wordmark">
       <span class="mark" aria-hidden="true">
-        <svg width="15" height="15" viewBox="0 0 200 230"><use href="#bqBullOnboard" style="--bull-body:#fff;--bull-belly:#FFF3D6;--bull-shade:#E7A93A;--bull-horn:#fff;--bull-ring:#F5A623"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8.5 8C6.3 5.2 4.6 3.6 3.2 2.5 4 4.9 5.1 7.2 7.2 8.9Z" fill="#fff"/><path d="M15.5 8c2.2-2.8 3.9-4.4 5.3-5.5-.8 2.4-1.9 4.7-4 6.4Z" fill="#fff"/><path d="M12 8.1c-3.8 0-5.9 2.6-5.9 5.8s2.5 5.5 5.9 5.5 5.9-2.3 5.9-5.5S15.8 8.1 12 8.1Z" fill="#fff"/><circle cx="10.1" cy="13.2" r="1.1" fill="#E6961B"/><circle cx="13.9" cy="13.2" r="1.1" fill="#E6961B"/><path d="M10.4 16.4c.6.7 2.6.7 3.2 0" fill="none" stroke="#E6961B" stroke-width="1.5" stroke-linecap="round"/></svg>
       </span>
       BullQuest
     </span>
@@ -4464,8 +4482,8 @@
     <div class="mascot-wrap">
       <div class="glow" aria-hidden="true"></div>
       <div class="pedestal" aria-hidden="true"></div>
-      <svg class="spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#FFE7A6"/></svg>
-      <svg class="spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#BFE0FA"/></svg>
+      <svg class="spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#FFE7A6"/><path d="M19.2 3.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#FFE7A6" opacity=".85"/></svg>
+      <svg class="spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#BFE0FA"/><path d="M4.6 16.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#BFE0FA" opacity=".85"/></svg>
       <svg class="bull" viewBox="0 0 200 230" role="img" aria-label="Your first BullQuest bull"
            style="--bull-body:#8C6B57;--bull-belly:#F3E7D4;--bull-shade:#6f5544;--bull-horn:#EAD9B0;--bull-ring:#F0B429">
         <use href="#bqBullOnboard"/>
@@ -4479,21 +4497,21 @@
     <div class="steps" aria-label="How to play: Collect, then Train, then Charge">
       <div class="step">
         <span class="si" aria-hidden="true">
-          <svg width="24" height="24" viewBox="0 0 24 24"><path d="M5 6c0 4 3 6 7 6s7-2 7-6c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3M17 9c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 12c0 3 2.2 6 5 6s5-3 5-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="13" r="1" fill="#fff"/><circle cx="14" cy="13" r="1" fill="#fff"/></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8.5 8C6.3 5.2 4.6 3.6 3.2 2.5 4 4.9 5.1 7.2 7.2 8.9Z" fill="#fff"/><path d="M15.5 8c2.2-2.8 3.9-4.4 5.3-5.5-.8 2.4-1.9 4.7-4 6.4Z" fill="#fff"/><path d="M12 8.1c-3.8 0-5.9 2.6-5.9 5.8s2.5 5.5 5.9 5.5 5.9-2.3 5.9-5.5S15.8 8.1 12 8.1Z" fill="#fff"/><circle cx="10.1" cy="13.4" r="1.15" fill="#6B31E6"/><circle cx="13.9" cy="13.4" r="1.15" fill="#6B31E6"/><path d="M10.4 16.6c.6.7 2.6.7 3.2 0" fill="none" stroke="#6B31E6" stroke-width="1.6" stroke-linecap="round"/></svg>
         </span>
         <span class="sl">Collect</span>
       </div>
       <span class="step-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       <div class="step">
         <span class="si" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24"><rect x="3.3" y="13.2" width="4.4" height="7.3" rx="1.6" fill="#fff"/><rect x="9.8" y="9.4" width="4.4" height="11.1" rx="1.6" fill="#fff"/><rect x="16.3" y="5.4" width="4.4" height="15.1" rx="1.6" fill="#fff"/><path d="M4.6 8.8 11 4.2l2.9 2.1L20 2.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.9 2.1 20 1.9 19.8 5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span class="sl">Train</span>
       </div>
       <span class="step-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       <div class="step">
         <span class="si" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#FFE7A6"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24"><path d="M13.4 2.4 5.6 13.1a.75.75 0 0 0 .6 1.2H10l-1.1 6.9c-.12.75.85 1.14 1.28.52l7.8-11a.75.75 0 0 0-.6-1.18H13.5l1.15-6.5c.13-.75-.83-1.14-1.25-.52Z" fill="#fff"/></svg>
         </span>
         <span class="sl">Charge</span>
       </div>
