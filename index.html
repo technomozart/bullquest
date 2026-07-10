@@ -16,6 +16,10 @@
 .pico{display:inline-block;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;vertical-align:middle}
 .stat .tile .pico{width:16px;height:16px;background:#fff}
 .tdot .pico{width:11px;height:11px;background:#fff}
+.schip .tile .pico{width:14px;height:14px;background:#fff}
+.lstat .tile .pico{width:12px;height:12px;background:#fff}
+.seclabel h3 .pico{width:15px;height:15px;background:currentColor;margin-right:6px;vertical-align:-2px}
+.decor{position:absolute;pointer-events:none}
 .sol{display:none}   /* SOL price lines hidden until on-chain trading exists */
 #view-home,#view-arena{min-height:100vh;padding:24px 14px;background:radial-gradient(120% 60% at 50% 0%,#EDF0F6 0%,#E3E7F0 100%)}
 
@@ -3024,9 +3028,9 @@
 
   <!-- ===== violet hero region ===== -->
   <div class="hero">
-    <svg class="hero-ghost g1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#FCE9C6"/></svg>
-    <svg class="hero-ghost g2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#BFE0FA"/></svg>
-    <svg class="hero-ghost g3" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#F0B429"/><circle cx="12" cy="12" r="7" fill="#FFD36B"/></svg>
+    <img class="hero-ghost g1" src="assets/icons/decor_sparkle.png" alt="" aria-hidden="true" style="width:24px;opacity:.85">
+    <img class="hero-ghost g2" src="assets/icons/decor_butterfly.png" alt="" aria-hidden="true" style="width:22px;opacity:.8">
+    <img class="hero-ghost g3" src="assets/icons/decor_leaf.png" alt="" aria-hidden="true" style="width:20px;opacity:.8">
 
     <header class="topbar">
       <div class="greet">
@@ -3071,11 +3075,10 @@
           <div class="center"><span><b>62%</b><br><small>Season</small></span></div>
         </div>
         <div class="band-info">
-          <div class="season-k">Season 4 &middot; Ranked</div>
+          <div class="season-k"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:13px;height:13px;background:currentColor;vertical-align:-1px;margin-right:5px"></i>Season 4 &middot; Ranked</div>
           <div class="tier">
             <span class="tierhex" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 34 34"><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#F0B429"/><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#fff" opacity=".2"/></svg>
-              <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg>
+              <i class="pico" style="--m:url('assets/icons/badge_rank.png');width:26px;height:26px;background:#F0B429"></i>
             </span>
             <b>Bullock II</b>
           </div>
@@ -3095,7 +3098,7 @@
           <span class="pip on"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>4</small></span>
           <span class="pip on today"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>5</small></span>
         </div>
-        <div class="lab"><b>5-day</b><span>login streak</span></div>
+        <div class="lab"><i class="pico" style="--m:url('assets/icons/ui_streak.png');width:15px;height:15px;background:#fff;vertical-align:middle;margin-right:4px;opacity:.9"></i><b style="display:inline-block">5-day</b><span>login streak</span></div>
       </div>
     </div>
   </div>
@@ -3103,7 +3106,7 @@
   <!-- ===== content sheet ===== -->
   <div class="sheet">
 
-    <div class="seclabel"><h3>Your Wallet</h3><a class="link" href="#" data-bqtoast="Wallet - coming soon">Wallet <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+    <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/ui_wallet.png')"></i>Your Wallet</h3><a class="link" href="#" data-bqtoast="Wallet - coming soon">Wallet <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     <div class="card wallet">
       <svg class="wm" width="150" height="150" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M17 7 27 12.7v11.6L17 30 7 24.3V12.7Z" fill="none" stroke="#fff" stroke-width="1.2"/></svg>
       <div class="wallet-head">
@@ -3112,7 +3115,7 @@
           My GRIT balance
         </span>
         <button type="button" class="buy" data-bqtoast="GRIT top-ups are coming soon" aria-label="Buy more GRIT">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <i class="pico" style="--m:url('assets/icons/ui_plus.png');width:14px;height:14px"></i>
           Buy
         </button>
       </div>
@@ -3160,14 +3163,14 @@
       </div>
     </div>
 
-    <div class="seclabel"><h3>Daily Quests</h3><span class="link" style="color:var(--faint);font-weight:700">Resets 8h</span></div>
+    <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/ui_quests.png')"></i>Daily Quests</h3><span class="link" style="color:var(--faint);font-weight:700">Resets 8h</span></div>
     <div class="card">
       <div class="quest-head">
         <span class="chest" aria-hidden="true">
           <i class="pico" style="--m:url('assets/icons/item_lootbox.png');width:24px;height:24px;background:#fff"></i>
         </span>
         <div class="qt"><b>Daily Quests</b><span>Clear all 3 for a bonus chest</span></div>
-        <span class="done">2/3 done</span>
+        <span class="done"><i class="pico" style="--m:url('assets/icons/ui_check.png');width:12px;height:12px;background:#2f9752;vertical-align:-1px;margin-right:3px"></i>2/3 done</span>
       </div>
 
       <div class="quest claimable">
@@ -3198,7 +3201,7 @@
       </div>
     </div>
 
-    <div class="seclabel"><h3>Training</h3><a class="link" href="#" data-bqtoast="Gym - coming soon">Gym <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+    <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/ui_training.png')"></i>Training</h3><a class="link" href="#" data-bqtoast="Gym - coming soon">Gym <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     <div class="card">
       <div class="train">
         <div class="tring" aria-label="Training 68 percent complete, 2 hours 14 minutes left">
@@ -3232,7 +3235,7 @@
         <b id="spinState">Free spin ready</b>
         <p id="spinSub">Win 10 to 100 GRIT, once a day.</p>
         <button type="button" class="sbtn" data-bqgo="view-spin">
-          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <i class="pico" style="--m:url('assets/icons/ui_refresh.png');width:15px;height:15px"></i>
           Spin now
         </button>
       </div>
@@ -3364,9 +3367,9 @@
         <div class="brow1"><span class="bname">Rampage</span></div>
         <span class="rarity"><span class="dot"></span>Epic</span>
         <div class="ministats">
-          <div class="mstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>82</b></div>
-          <div class="mstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>64</b></div>
-          <div class="mstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>71</b></div>
+          <div class="mstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>82</b></div>
+          <div class="mstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>64</b></div>
+          <div class="mstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>71</b></div>
         </div>
         <div class="lvlbar"><div class="track"><i style="width:72%"></i></div><small>72%</small></div>
       </button>
@@ -3382,9 +3385,9 @@
         <div class="brow1"><span class="bname">Cinder</span></div>
         <span class="rarity"><span class="dot"></span>Legendary</span>
         <div class="ministats">
-          <div class="mstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>91</b></div>
-          <div class="mstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>74</b></div>
-          <div class="mstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>88</b></div>
+          <div class="mstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>91</b></div>
+          <div class="mstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>74</b></div>
+          <div class="mstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>88</b></div>
         </div>
         <div class="lvlbar"><div class="track"><i style="width:40%"></i></div><small>40%</small></div>
       </button>
@@ -3400,9 +3403,9 @@
         <div class="brow1"><span class="bname">Titan</span></div>
         <span class="rarity"><span class="dot"></span>Rare</span>
         <div class="ministats">
-          <div class="mstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>70</b></div>
-          <div class="mstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>78</b></div>
-          <div class="mstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>66</b></div>
+          <div class="mstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>70</b></div>
+          <div class="mstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>78</b></div>
+          <div class="mstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>66</b></div>
         </div>
         <div class="lvlbar"><div class="track"><i style="width:55%"></i></div><small>55%</small></div>
       </button>
@@ -3418,9 +3421,9 @@
         <div class="brow1"><span class="bname">Onyx</span></div>
         <span class="rarity"><span class="dot"></span>Epic</span>
         <div class="ministats">
-          <div class="mstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>68</b></div>
-          <div class="mstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>71</b></div>
-          <div class="mstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>60</b></div>
+          <div class="mstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>68</b></div>
+          <div class="mstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>71</b></div>
+          <div class="mstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>60</b></div>
         </div>
         <div class="lvlbar"><div class="track"><i style="width:28%"></i></div><small>28%</small></div>
       </button>
@@ -3436,9 +3439,9 @@
         <div class="brow1"><span class="bname">Bramble</span></div>
         <span class="rarity"><span class="dot"></span>Common</span>
         <div class="ministats">
-          <div class="mstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>44</b></div>
-          <div class="mstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>39</b></div>
-          <div class="mstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>52</b></div>
+          <div class="mstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>44</b></div>
+          <div class="mstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>39</b></div>
+          <div class="mstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>52</b></div>
         </div>
         <div class="lvlbar"><div class="track"><i style="width:64%"></i></div><small>64%</small></div>
       </button>
@@ -3454,9 +3457,9 @@
         <div class="brow1"><span class="bname">Pebble</span></div>
         <span class="rarity"><span class="dot"></span>Common</span>
         <div class="ministats">
-          <div class="mstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>31</b></div>
-          <div class="mstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>36</b></div>
-          <div class="mstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>40</b></div>
+          <div class="mstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>31</b></div>
+          <div class="mstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>36</b></div>
+          <div class="mstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>40</b></div>
         </div>
         <div class="lvlbar"><div class="track"><i style="width:18%"></i></div><small>18%</small></div>
       </button>
@@ -3501,17 +3504,17 @@
       <!-- stat rows -->
       <div class="statrows">
         <div class="srow pow">
-          <span class="schip"><span class="tile"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span>Power</span>
+          <span class="schip"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span>Power</span>
           <span class="vtrack"><i id="barPow" style="width:82%"></i></span>
           <span class="vnum" id="numPow">82</span>
         </div>
         <div class="srow spd">
-          <span class="schip"><span class="tile"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span>Speed</span>
+          <span class="schip"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span>Speed</span>
           <span class="vtrack"><i id="barSpd" style="width:64%"></i></span>
           <span class="vnum" id="numSpd">64</span>
         </div>
         <div class="srow sta">
-          <span class="schip"><span class="tile"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span>Stamina</span>
+          <span class="schip"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span>Stamina</span>
           <span class="vtrack"><i id="barSta" style="width:71%"></i></span>
           <span class="vnum" id="numSta">71</span>
         </div>
@@ -3743,9 +3746,9 @@
     </div>
     <p class="rps-note">You lead with <b id="stanceEcho">Charge</b> - read your rival, the counter tips the odds.</p>
 
-    <div class="seclabel"><h3>Booster</h3><span class="hint">Optional &middot; 1 slot</span></div>
+    <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/item_booster.png')"></i>Booster</h3><span class="hint">Optional &middot; 1 slot</span></div>
     <button type="button" class="booster" aria-pressed="false" aria-label="Equip Energy Drink booster: plus 6 percent win chance, 2 owned">
-      <span class="bicon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg></span>
+      <span class="bicon"><i class="pico" style="--m:url('assets/icons/item_energy.png');width:22px;height:22px;background:#6b4a05"></i></span>
       <span class="btext">
         <span class="bt">Energy Drink</span>
         <span class="bs">+6% win chance this battle &middot; x2 owned</span>
@@ -3779,7 +3782,7 @@
 
     <div class="seed" aria-label="Provably fair result">
       <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z" fill="none" stroke="#AEB8C2" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#43C06A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Provably fair &middot; seed <code id="seed">a91f&hellip;7c2e</code>
+      Provably fair &middot; seed <code id="seed">a91f&hellip;7c2e</code><i class="pico" style="--m:url('assets/icons/ui_info.png');width:12px;height:12px;background:#AEB8C2;vertical-align:-1px;margin-left:6px"></i>
     </div>
 
     <button type="button" class="cta" id="chargeBtn">
@@ -3932,7 +3935,7 @@
         <div class="t-top">
           <span class="t-icon" style="background:var(--amber)"><img src="assets/icons/sector_memes.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
           <span class="t-state contested">
-            <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><use href="#bqBear" style="--bear:#d23b43"/></svg>
+            <i class="pico" style="--m:url('assets/icons/state_contested.png');width:12px;height:12px;background:#d23b43"></i>
             Contested
           </span>
         </div>
@@ -3965,7 +3968,7 @@
         <div class="t-top">
           <span class="t-icon" style="background:#5A22D6"><img src="assets/icons/sector_ai.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
           <span class="t-state contested">
-            <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><use href="#bqBear" style="--bear:#d23b43"/></svg>
+            <i class="pico" style="--m:url('assets/icons/state_contested.png');width:12px;height:12px;background:#d23b43"></i>
             Contested
           </span>
         </div>
@@ -3988,7 +3991,7 @@
         <div class="t-top">
           <span class="t-icon" style="background:var(--coral)"><img src="assets/icons/sector_nfts.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
           <span class="t-state contested">
-            <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><use href="#bqBear" style="--bear:#d23b43"/></svg>
+            <i class="pico" style="--m:url('assets/icons/state_contested.png');width:12px;height:12px;background:#d23b43"></i>
             Contested
           </span>
         </div>
@@ -4144,9 +4147,9 @@
 
   <!-- ===== violet header ===== -->
   <div class="hero">
-    <svg class="hero-ghost g1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#FCE9C6"/></svg>
-    <svg class="hero-ghost g2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 6 6 11 12 12-6 1-11 6-12 12-1-6-6-11-12-12C6 11 11 6 12 0Z" fill="#BFE0FA"/></svg>
-    <svg class="hero-ghost g3" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#F0B429"/><circle cx="12" cy="12" r="7" fill="#FFD36B"/></svg>
+    <img class="hero-ghost g1" src="assets/icons/decor_mushroom.png" alt="" aria-hidden="true" style="width:24px;opacity:.85">
+    <img class="hero-ghost g2" src="assets/icons/decor_sparkle.png" alt="" aria-hidden="true" style="width:18px;opacity:.8">
+    <img class="hero-ghost g3" src="assets/icons/decor_butterfly.png" alt="" aria-hidden="true" style="width:16px;opacity:.8">
 
     <header class="topbar">
       <div class="titlewrap">
@@ -4156,6 +4159,7 @@
         </span>
         <h1>Marketplace</h1>
       </div>
+      <button type="button" class="mkt-search" data-bqtoast="Search is coming soon" aria-label="Search listings" style="border:0;background:rgba(255,255,255,.16);width:36px;height:36px;border-radius:12px;display:grid;place-items:center;cursor:pointer;margin-left:auto;margin-right:8px"><i class="pico" style="--m:url('assets/icons/ui_search.png');width:18px;height:18px;background:#fff"></i></button>
       <span class="pill" aria-label="500 dollar BULL balance">
         <img src="assets/icons/coin_bull.png" width="20" height="20" alt="" style="vertical-align:middle">
         500<small>$BULL</small>
@@ -4196,7 +4200,7 @@
         <div class="hot-name">
           <b>Obsidian Prime</b>
           <span class="hexbadge" aria-label="Level 22">
-            <svg width="28" height="28" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#F0B429"/><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#fff" opacity=".2"/></svg>
+            <i class="pico" style="--m:url('assets/icons/badge_hex.png');width:28px;height:28px;background:#F0B429"></i>
             <span>22</span>
           </span>
         </div>
@@ -4224,7 +4228,7 @@
     <!-- filter / sort chips -->
     <div class="filters" role="group" aria-label="Filter and sort listings">
       <button type="button" class="fchip" aria-pressed="true">
-        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <i class="pico" style="--m:url('assets/icons/ui_filter.png');width:14px;height:14px"></i>
         All rarities
       </button>
       <button type="button" class="fchip" aria-pressed="false"><span class="rdot" style="background:var(--gold)"></span>Legendary</button>
@@ -4252,8 +4256,8 @@
         <div class="lname"><span class="t">Thunderhoof</span></div>
         <span class="rarity"><span class="dot" style="background:var(--speed)"></span>Epic</span>
         <div class="lstats">
-          <span class="lstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>84</b></span>
-          <span class="lstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>79</b></span>
+          <span class="lstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>84</b></span>
+          <span class="lstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>79</b></span>
         </div>
         <div class="priceblock">
           <div class="amt">
@@ -4263,7 +4267,7 @@
           <div class="sol">or 0.12 SOL</div>
         </div>
         <button type="button" class="buy" data-bqtoast="Trading is coming soon" aria-label="Buy Thunderhoof for 640 dollar BULL">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <i class="pico" style="--m:url('assets/icons/ui_plus.png');width:14px;height:14px"></i>
           Buy
         </button>
       </article>
@@ -4281,8 +4285,8 @@
         <div class="lname"><span class="t">Goldmane</span></div>
         <span class="rarity"><span class="dot" style="background:var(--gold)"></span>Legendary</span>
         <div class="lstats">
-          <span class="lstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>93</b></span>
-          <span class="lstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>90</b></span>
+          <span class="lstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>93</b></span>
+          <span class="lstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>90</b></span>
         </div>
         <div class="priceblock">
           <div class="amt">
@@ -4292,7 +4296,7 @@
           <div class="sol">or 5.1 SOL</div>
         </div>
         <button type="button" class="buy" data-bqtoast="Trading is coming soon" aria-label="Buy Goldmane for 2,400 dollar BULL">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <i class="pico" style="--m:url('assets/icons/ui_plus.png');width:14px;height:14px"></i>
           Buy
         </button>
       </article>
@@ -4310,8 +4314,8 @@
         <div class="lname"><span class="t">Frostback</span></div>
         <span class="rarity"><span class="dot" style="background:var(--cta)"></span>Rare</span>
         <div class="lstats">
-          <span class="lstat spd"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>72</b></span>
-          <span class="lstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>68</b></span>
+          <span class="lstat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>72</b></span>
+          <span class="lstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>68</b></span>
         </div>
         <div class="priceblock">
           <div class="amt">
@@ -4321,7 +4325,7 @@
           <div class="sol">or 0.06 SOL</div>
         </div>
         <button type="button" class="buy" data-bqtoast="Trading is coming soon" aria-label="Buy Frostback for 310 dollar BULL">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <i class="pico" style="--m:url('assets/icons/ui_plus.png');width:14px;height:14px"></i>
           Buy
         </button>
       </article>
@@ -4341,8 +4345,8 @@
         <div class="lname"><span class="t">Ironhide Saddle</span></div>
         <span class="rarity"><span class="dot" style="background:var(--speed)"></span>Epic</span>
         <div class="lstats">
-          <span class="lstat pow"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>+8</b></span>
-          <span class="lstat sta"><span class="tile"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>+5</b></span>
+          <span class="lstat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>+8</b></span>
+          <span class="lstat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>+5</b></span>
         </div>
         <div class="priceblock">
           <div class="amt">
@@ -4352,7 +4356,7 @@
           <div class="sol">or 0.04 SOL</div>
         </div>
         <button type="button" class="buy" data-bqtoast="Trading is coming soon" aria-label="Buy Ironhide Saddle for 180 dollar BULL">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <i class="pico" style="--m:url('assets/icons/ui_plus.png');width:14px;height:14px"></i>
           Buy
         </button>
       </article>
@@ -4746,7 +4750,7 @@
     <div class="legend">
       <div class="lg"><span class="lgi" style="background:#FFF3D6"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><use href="#spCoin"/></svg></span><span class="lgt"><b>$BULL coins</b><span>8 to 500</span></span></div>
       <div class="lg"><span class="lgi" style="background:#E4F0FE"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><use href="#spGem"/></svg></span><span class="lgt"><b>GRIT</b><span>25 to 100</span></span></div>
-      <div class="lg"><span class="lgi" style="background:#FBEED4"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><use href="#spHay"/></svg></span><span class="lgt"><b>HAY packs</b><span>Spin fuel</span></span></div>
+      <div class="lg"><span class="lgi" style="background:#FBEED4"><i class="pico" style="--m:url('assets/icons/item_hay.png');width:19px;height:19px;background:#C98A2B"></i></span><span class="lgt"><b>HAY packs</b><span>Spin fuel</span></span></div>
       <div class="lg"><span class="lgi" style="background:#EFE7FB"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><use href="#spBox"/></svg></span><span class="lgt"><b>Lootbox</b><span>Mystery gear</span></span></div>
       <div class="lg"><span class="lgi" style="background:#E6F7EC"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><use href="#spX2"/></svg></span><span class="lgt"><b>x2 multiplier</b><span>Next battle</span></span></div>
       <div class="lg"><span class="lgi" style="background:#F3EEFE"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><use href="#spBull"/></svg></span><span class="lgt"><b>Rare bull</b><span>Jackpot slot</span></span></div>
@@ -5608,7 +5612,7 @@
     el.querySelector('.bqrev-go').addEventListener('click', function(){ el.remove(); });
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
   }
-  function statTile(l,v,c){ return '<div style="background:#F5F5FA;border-radius:12px;padding:10px 4px"><div style="font-size:19px;font-weight:800;color:'+c+'">'+v+'</div><div style="font-size:11px;color:#6B7280;font-weight:700">'+l+'</div></div>'; }
+  function statTile(l,v,c,icon){ return '<div style="background:#F5F5FA;border-radius:12px;padding:10px 4px">'+(icon?'<i class="pico" style="--m:url(assets/icons/'+icon+'.png);width:16px;height:16px;background:'+c+';display:block;margin:0 auto 3px"></i>':'')+'<div style="font-size:19px;font-weight:800;color:'+c+'">'+(v==null?'-':v)+'</div><div style="font-size:11px;color:#6B7280;font-weight:700">'+l+'</div></div>'; }
   function renderBulls(){
     var v=document.getElementById('view-bulls'); if(!v||!curBull) return;
     var b=curBull.bulls||{}, ub=curBull, t=tier(b.rarity_rank);
@@ -5621,8 +5625,9 @@
       '<div style="width:150px;height:150px;margin:0 auto 8px"><img src="'+b.image_url+'" alt="" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display=\'none\'"></div>'+
       '<div style="font-size:22px;font-weight:800;color:#20143A">'+(b.name||('Bull #'+b.id))+'</div>'+
       '<div style="margin:4px 0 14px;font-size:13px;color:#6B7280"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rank #'+b.rarity_rank+' of 5,000 &middot; Level '+ub.level+'</div>'+
-      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">'+statTile('Power',ub.power,'#43C06A')+statTile('Speed',ub.speed,'#7C5CE6')+statTile('Stam',ub.stamina,'#EE5B62')+'</div>'+
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">'+statTile('Power',ub.power,'#43C06A','stat_power')+statTile('Speed',ub.speed,'#7C5CE6','stat_speed')+statTile('Stam',ub.stamina,'#EE5B62','stat_stamina')+statTile('Temper',ub.temper,'#E6961B','stat_temper')+'</div>'+
       '<div style="font-size:12.5px;color:#6B7280">Record <b style="color:#20143A">'+ub.wins+'W '+ub.losses+'L</b> &middot; Energy '+ub.energy+'/'+ub.energy_max+'</div>'+
+      '<button type="button" onclick="if(window.showToast)showToast(\'Share links are coming soon\')" style="margin-top:14px;border:0;background:#EEE9FB;color:#6B31E6;font-size:13px;font-weight:800;padding:10px 16px;border-radius:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px"><i class="pico" style="--m:url(assets/icons/ui_share.png);width:15px;height:15px;background:#6B31E6"></i>Share my bull</button>'+
       (b.body?'<div style="margin-top:10px;font-size:11.5px;color:#9AA6B2;line-height:1.5">'+b.body+' &middot; '+b.belly+' &middot; '+b.horns+' &middot; '+b.face+'</div>':'')+
     '</div>';
   }
@@ -5655,7 +5660,11 @@
       var lbl=document.createElement('span'); lbl.className='lbl'; lbl.style.cssText='font-size:11.5px;font-weight:800;color:#4B3B7A;letter-spacing:.2px;font-variant-numeric:tabular-nums';
       var btn=document.createElement('button'); btn.textContent='Sign out'; btn.style.cssText='border:0;background:#EEE9FB;color:#6B31E6;font-size:11px;font-weight:800;padding:5px 9px;border-radius:14px;cursor:pointer;font-family:inherit';
       btn.addEventListener('click', function(){ sb.auth.signOut().then(function(){ location.reload(); }); });
-      box.appendChild(lbl); box.appendChild(btn); document.body.appendChild(box);
+      var setg=document.createElement('button'); setg.setAttribute('aria-label','Settings'); setg.title='Settings';
+      setg.style.cssText='border:0;background:#EEE9FB;width:26px;height:26px;border-radius:13px;cursor:pointer;display:grid;place-items:center;font-family:inherit';
+      setg.innerHTML='<i class="pico" style="--m:url(assets/icons/ui_settings.png);width:15px;height:15px;background:#6B31E6"></i>';
+      setg.addEventListener('click', function(){ if(window.showToast) showToast('Settings are coming soon'); });
+      box.appendChild(lbl); box.appendChild(setg); box.appendChild(btn); document.body.appendChild(box);
     }
     var l=box.querySelector('.lbl'); l.textContent=acctLabel||''; l.style.display=acctLabel?'':'none';
   }
