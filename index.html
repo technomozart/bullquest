@@ -12,6 +12,10 @@
 /* pro nav icons wired as recolorable masks (keep active/inactive state via currentColor) */
 .nav a .nico{width:24px;height:24px;display:block;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
 .nav a.center .knob .nico{width:24px;height:24px;background:#fff}
+/* generated icon set wired as recolorable masks (single-color PNGs -> currentColor) */
+.pico{display:inline-block;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;vertical-align:middle}
+.stat .tile .pico{width:16px;height:16px;background:#fff}
+.tdot .pico{width:11px;height:11px;background:#fff}
 .sol{display:none}   /* SOL price lines hidden until on-chain trading exists */
 #view-home,#view-arena{min-height:100vh;padding:24px 14px;background:radial-gradient(120% 60% at 50% 0%,#EDF0F6 0%,#E3E7F0 100%)}
 
@@ -3142,9 +3146,9 @@
             7/10 Energy
           </span>
           <div class="feat-stats">
-            <div class="stat pow"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><span class="sv"><b>82</b><span>Power</span></span></div>
-            <div class="stat spd"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><span class="sv"><b>64</b><span>Speed</span></span></div>
-            <div class="stat sta"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><span class="sv"><b>71</b><span>Stam</span></span></div>
+            <div class="stat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><span class="sv"><b>82</b><span>Power</span></span></div>
+            <div class="stat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><span class="sv"><b>64</b><span>Speed</span></span></div>
+            <div class="stat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><span class="sv"><b>71</b><span>Stam</span></span></div>
           </div>
         </div>
       </div>
@@ -3160,7 +3164,7 @@
     <div class="card">
       <div class="quest-head">
         <span class="chest" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="11" rx="2" fill="#8A6A12"/><path d="M3 11a9 5 0 0 1 18 0v0H3z" fill="#FFD36B"/><rect x="3" y="12" width="18" height="3" fill="#8A6A12" opacity=".5"/><rect x="10.5" y="10" width="3" height="6" rx="1.5" fill="#8A6A12"/></svg>
+          <i class="pico" style="--m:url('assets/icons/item_lootbox.png');width:24px;height:24px;background:#fff"></i>
         </span>
         <div class="qt"><b>Daily Quests</b><span>Clear all 3 for a bonus chest</span></div>
         <span class="done">2/3 done</span>
@@ -3669,9 +3673,9 @@
         </svg>
       </div>
       <div class="statrow">
-        <div class="stat pow"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><span class="val">82</span></div>
-        <div class="stat spd"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><span class="val">64</span></div>
-        <div class="stat sta"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><span class="val">71</span></div>
+        <div class="stat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><span class="val">82</span></div>
+        <div class="stat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><span class="val">64</span></div>
+        <div class="stat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><span class="val">71</span></div>
       </div>
     </div>
 
@@ -3696,9 +3700,9 @@
         </svg>
       </div>
       <div class="statrow">
-        <div class="stat pow"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><span class="val">70</span></div>
-        <div class="stat spd"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><span class="val">78</span></div>
-        <div class="stat sta"><span class="tile"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><span class="val">66</span></div>
+        <div class="stat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><span class="val">70</span></div>
+        <div class="stat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><span class="val">78</span></div>
+        <div class="stat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><span class="val">66</span></div>
       </div>
     </div>
   </div>
@@ -3917,7 +3921,7 @@
         <span class="yours">Yours</span>
         <div class="t-top">
           <span class="t-icon" style="background:var(--cta)"><img src="assets/icons/sector_defi.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
-          <span class="t-state held">Held</span>
+          <span class="t-state held"><i class="pico" style="--m:url('assets/icons/state_held.png');width:11px;height:11px;background:#2f9752"></i>Held</span>
         </div>
         <div class="t-name">DeFi</div>
         <div class="t-clan" style="color:#6B31E6"><span class="dot" style="background:#6B31E6"></span>Horn Syndicate</div>
@@ -3940,7 +3944,7 @@
       <button type="button" class="tile" data-sector="l1s" aria-pressed="false" aria-label="L1s sector, held by Stampede DAO, reward pool 5,100 $BULL">
         <div class="t-top">
           <span class="t-icon" style="background:var(--green)"><img src="assets/icons/sector_l1s.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
-          <span class="t-state held">Held</span>
+          <span class="t-state held"><i class="pico" style="--m:url('assets/icons/state_held.png');width:11px;height:11px;background:#2f9752"></i>Held</span>
         </div>
         <div class="t-name">L1s</div>
         <div class="t-clan" style="color:#43C06A"><span class="dot" style="background:#43C06A"></span>Stampede DAO</div>
@@ -3950,7 +3954,7 @@
       <button type="button" class="tile" data-sector="gaming" aria-pressed="false" aria-label="Gaming sector, held by Ghost Pack, reward pool 2,900 $BULL">
         <div class="t-top">
           <span class="t-icon" style="background:var(--speed)"><img src="assets/icons/sector_gaming.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
-          <span class="t-state held">Held</span>
+          <span class="t-state held"><i class="pico" style="--m:url('assets/icons/state_held.png');width:11px;height:11px;background:#2f9752"></i>Held</span>
         </div>
         <div class="t-name">Gaming</div>
         <div class="t-clan" style="color:#7C5CE6"><span class="dot" style="background:#7C5CE6"></span>Ghost Pack</div>
@@ -3973,7 +3977,7 @@
       <button type="button" class="tile" data-sector="rwa" aria-pressed="false" aria-label="RWA sector, held by Golden Hooves, reward pool 3,300 $BULL">
         <div class="t-top">
           <span class="t-icon" style="background:var(--gold)"><img src="assets/icons/sector_rwa.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
-          <span class="t-state held">Held</span>
+          <span class="t-state held"><i class="pico" style="--m:url('assets/icons/state_held.png');width:11px;height:11px;background:#2f9752"></i>Held</span>
         </div>
         <div class="t-name">RWA</div>
         <div class="t-clan" style="color:#C7920E"><span class="dot" style="background:#F0B429"></span>Golden Hooves</div>
@@ -3997,7 +4001,7 @@
         <span class="yours">Yours</span>
         <div class="t-top">
           <span class="t-icon" style="background:#3C93E8"><img src="assets/icons/sector_privacy.png" width="22" height="22" alt="" style="vertical-align:middle"></span>
-          <span class="t-state held">Held</span>
+          <span class="t-state held"><i class="pico" style="--m:url('assets/icons/state_held.png');width:11px;height:11px;background:#2f9752"></i>Held</span>
         </div>
         <div class="t-name">Privacy</div>
         <div class="t-clan" style="color:#6B31E6"><span class="dot" style="background:#6B31E6"></span>Horn Syndicate</div>
@@ -4197,9 +4201,9 @@
           </span>
         </div>
         <div class="hot-stats" aria-label="Power 96, Speed 88, Stamina 91">
-          <span class="mini"><span class="tdot" style="background:var(--green)"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#fff"/></svg></span><b>96</b></span>
-          <span class="mini"><span class="tdot" style="background:var(--speed)"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="14" width="4" height="7" rx="1.4" fill="#fff"/><rect x="10" y="9" width="4" height="12" rx="1.4" fill="#fff"/><rect x="17" y="4" width="4" height="17" rx="1.4" fill="#fff"/></svg></span><b>88</b></span>
-          <span class="mini"><span class="tdot" style="background:var(--coral)"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.5 3 8.8C3 5.6 5.5 3 8.6 3c2 0 3.4 1.1 3.4 1.1S13.4 3 15.4 3C18.5 3 21 5.6 21 8.8 21 14.5 12 21 12 21z" fill="#fff"/></svg></span><b>91</b></span>
+          <span class="mini"><span class="tdot" style="background:var(--green)"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><b>96</b></span>
+          <span class="mini"><span class="tdot" style="background:var(--speed)"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><b>88</b></span>
+          <span class="mini"><span class="tdot" style="background:var(--coral)"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><b>91</b></span>
         </div>
         <div class="buy-row">
           <div class="price">
