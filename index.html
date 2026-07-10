@@ -3224,8 +3224,8 @@
           <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6 7 .8-5 4.6 1.4 6.9L12 17l-6.4 3.3L7 13.4 2 8.8 9 8z" fill="#FFE7A6"/></svg>
           Wheel of Fortune
         </span>
-        <b>Free spin ready</b>
-        <p>Win up to 500 GRIT, boosters or a rare bull.</p>
+        <b id="spinState">Free spin ready</b>
+        <p id="spinSub">Win 10 to 100 GRIT, once a day.</p>
         <button type="button" class="sbtn" data-bqgo="view-spin">
           <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Spin now
@@ -5626,6 +5626,9 @@
     if(!s||s.error) return;
     setGrit(s.grit);
     if(s.bull){ var e=document.querySelector('#view-home .card.featured .energy'); if(e) e.innerHTML=BOLT+' '+s.bull.energy+'/'+s.bull.energy_max+' Energy'; }
+    var ss=document.getElementById('spinState'), sn=document.getElementById('spinSub');
+    if(ss) ss.textContent = s.spun_today ? 'Come back tomorrow' : 'Free spin ready';
+    if(sn) sn.textContent = s.spun_today ? 'Your next free spin unlocks tomorrow.' : 'Win 10 to 100 GRIT, once a day.';
   }
   window.bqSetGrit = setGrit;
   window.bqToast = function(m){ walletMsg(m); };
