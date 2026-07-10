@@ -5375,7 +5375,7 @@
   var URL_='https://cewumdioknvjtsiolxce.supabase.co';
   var KEY_='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNld3VtZGlva252anRzaW9seGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2OTI3NzUsImV4cCI6MjA5OTI2ODc3NX0.n_r2gixZZTuTyJOiUhCZMpPKp5mUYtdM9bShs-nWkWk';
   var BOLT='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>';
-  var sb=null, mode='signup', modal;
+  var sb=null, mode='signup', modal, acctLabel='';
 
   function tier(r){ if(r==null)return{l:'Common',c:'#9AA6B2'}; if(r<=50)return{l:'Legendary',c:'#F0B429'}; if(r<=300)return{l:'Epic',c:'#7C5CE6'}; if(r<=1200)return{l:'Rare',c:'#4DA6F5'}; return{l:'Common',c:'#9AA6B2'}; }
 
@@ -5477,6 +5477,8 @@
   function loadAndShow(routeHome){
     return sb.auth.getUser().then(function(res){
       var u=res.data&&res.data.user; if(!u) throw new Error('no-session');
+      var wal=u.user_metadata&&u.user_metadata.wallet;
+      acctLabel = wal ? (wal.slice(0,4)+'…'+wal.slice(-4)) : (u.email?u.email.split('@')[0]:'');
       return fetchBull(u, 4).then(function(ub){
         if(!ub) throw new Error('no-bull');
         return sb.from('profiles').select('username').eq('id',u.id).maybeSingle().then(function(p){
@@ -5489,10 +5491,16 @@
   function logErr(e){ if(window.console) console.error('BullQuest:', (e&&e.message)||e); }
 
   function injectSignout(){
-    if(document.querySelector('.bq-signout')) return;
-    var b=document.createElement('button'); b.className='bq-signout'; b.textContent='Sign out';
-    b.addEventListener('click', function(){ sb.auth.signOut().then(function(){ location.reload(); }); });
-    document.body.appendChild(b);   // body, not #view-home, so it survives on every view
+    var box=document.querySelector('.bq-acct');
+    if(!box){
+      box=document.createElement('div'); box.className='bq-acct';
+      box.style.cssText='position:fixed;top:10px;right:12px;z-index:60;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.92);padding:5px 6px 5px 11px;border-radius:20px;box-shadow:0 2px 8px rgba(20,16,40,.14);font-family:inherit';
+      var lbl=document.createElement('span'); lbl.className='lbl'; lbl.style.cssText='font-size:11.5px;font-weight:800;color:#4B3B7A;letter-spacing:.2px;font-variant-numeric:tabular-nums';
+      var btn=document.createElement('button'); btn.textContent='Sign out'; btn.style.cssText='border:0;background:#EEE9FB;color:#6B31E6;font-size:11px;font-weight:800;padding:5px 9px;border-radius:14px;cursor:pointer;font-family:inherit';
+      btn.addEventListener('click', function(){ sb.auth.signOut().then(function(){ location.reload(); }); });
+      box.appendChild(lbl); box.appendChild(btn); document.body.appendChild(box);
+    }
+    var l=box.querySelector('.lbl'); l.textContent=acctLabel||''; l.style.display=acctLabel?'':'none';
   }
 
   // gate entry buttons behind real auth - ALWAYS block the router; queue the action if the SDK isn't ready yet
