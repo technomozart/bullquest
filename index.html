@@ -3777,7 +3777,7 @@
       Provably fair &middot; seed <code id="seed">a91f&hellip;7c2e</code>
     </div>
 
-    <button type="button" class="cta" id="chargeBtn" data-bqtoast="Live duels are coming soon - this is a preview">
+    <button type="button" class="cta" id="chargeBtn">
       <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#fff"/></svg>
       Charge!
     </button>
@@ -4860,13 +4860,60 @@
     recalc();
   });
 
+  var DISC = { pow:'clash', spd:'chase', sta:'standoff' };
+  var energyEl = root.querySelector('.energy');
+  var busy = false;
+  function setEnergy(e, mx){ if(energyEl) energyEl.innerHTML = energyEl.innerHTML.replace(/\d+\s*\/\s*\d+/, e+'/'+mx); }
+
+  function refreshFromServer(){
+    if(!(window.bqGame && window.bqGame.ready())) return;
+    window.bqGame.getState().then(function(s){
+      if(!s || s.error || !s.bull) return;
+      you = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
+      opp = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
+      setEnergy(s.bull.energy, s.bull.energy_max);
+      recalc();
+    }).catch(function(){});
+  }
+
+  var ov;
+  function showResult(r){
+    if(!ov){
+      ov=document.createElement('div'); ov.className='bq-duel-ov';
+      ov.style.cssText='position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(20,16,40,.6);backdrop-filter:blur(3px);padding:20px';
+      ov.innerHTML='<div style="width:100%;max-width:340px;background:#fff;border-radius:22px;padding:24px;text-align:center;font-family:inherit;box-shadow:0 24px 60px rgba(20,16,40,.4)"><div class="e" style="font-size:42px"></div><h2 class="t" style="margin:6px 0 2px;font-size:26px"></h2><p class="s" style="margin:0 0 14px;font-size:13.5px;color:#6B7280"></p><div class="rows" style="text-align:left;font-size:13px;color:#374151;background:#F5F5FA;border-radius:14px;padding:12px 14px;margin-bottom:16px;line-height:1.7"></div><button class="go" style="width:100%;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#4DA6F5,#3F98ED);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit">Continue</button></div>';
+      document.body.appendChild(ov);
+      ov.querySelector('.go').addEventListener('click', function(){ ov.style.display='none'; });
+      ov.addEventListener('click', function(e){ if(e.target===ov) ov.style.display='none'; });
+    }
+    var win=r.win;
+    ov.querySelector('.e').textContent = win?'🏆':'💥';
+    var t=ov.querySelector('.t'); t.textContent = win?'Victory':'Defeat'; t.style.color = win?'#2FA657':'#D8434B';
+    ov.querySelector('.s').textContent = (r.crit?'Rampage crit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance+' ('+r.stanceOutcome+' read)';
+    ov.querySelector('.rows').innerHTML =
+      '<div>Score <b>'+r.yourScore+'</b> vs '+r.oppScore+'</div>'+
+      '<div>GRIT <b style="color:'+(r.gritDelta>=0?'#2FA657':'#D8434B')+'">'+(r.gritDelta>=0?'+':'')+r.gritDelta+'</b> &nbsp; XP <b>+'+r.xpGain+'</b>'+(r.leveled?' &nbsp; <b style="color:#7C5CE6">LEVEL UP!</b>':'')+'</div>'+
+      '<div>Balance <b>'+r.state.grit+' GRIT</b> &nbsp; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &nbsp; '+r.state.wins+'W '+r.state.losses+'L</div>';
+    ov.style.display='flex';
+    setEnergy(r.state.energy, r.state.energy_max);
+    if(window.bqSetGrit) window.bqSetGrit(r.state.grit);
+  }
+
   chargeBtn.addEventListener('click', function () {
-    chargeBtn.classList.remove('pop');
-    void chargeBtn.offsetWidth;
-    chargeBtn.classList.add('pop');
+    chargeBtn.classList.remove('pop'); void chargeBtn.offsetWidth; chargeBtn.classList.add('pop');
+    if(busy) return;
+    if(!(window.bqGame && window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    busy=true;
+    window.bqGame.session().then(function(has){
+      if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+      return window.bqGame.resolve(DISC[state.stat], state.stance, 20)
+        .then(showResult)
+        .catch(function(e){ if(window.bqToast) window.bqToast((e&&e.message)||'Duel failed'); });
+    }).then(function(){ busy=false; }, function(){ busy=false; });
   });
 
   recalc();
+  (function waitGame(n){ if(window.bqGame && window.bqGame.ready()){ refreshFromServer(); } else if((n||0)<80){ setTimeout(function(){ waitGame((n||0)+1); }, 80); } })(0);
 })();
 
 /* ---------- ROUTER + toast (view switching, delegated clicks) ---------- */
@@ -5483,6 +5530,7 @@
         if(!ub) throw new Error('no-bull');
         return sb.from('profiles').select('username').eq('id',u.id).maybeSingle().then(function(p){
           populate((p&&p.data&&p.data.username)||'', ub);
+          sb.rpc('get_state').then(function(r){ applyLiveState(r&&r.data); }).catch(function(){});
           if(routeHome&&window.bqGo) window.bqGo('view-home');
         });
       });
@@ -5512,6 +5560,26 @@
     function go(){ sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); else openModal(intent==='login'?'login':'signup'); }); }
     if(sb) go(); else { var n=0; (function wait(){ if(sb) return go(); if(n++<60) setTimeout(wait,80); })(); }
   }, true);
+
+  // ---- live game state helpers + public game API (used by the Arena) ----
+  function setGrit(g){
+    if(typeof g!=='number') return;
+    var b=document.querySelector('#view-home .card.wallet .bal b'); if(b) b.textContent=g.toLocaleString();
+  }
+  function applyLiveState(s){
+    if(!s||s.error) return;
+    setGrit(s.grit);
+    if(s.bull){ var e=document.querySelector('#view-home .card.featured .energy'); if(e) e.innerHTML=BOLT+' '+s.bull.energy+'/'+s.bull.energy_max+' Energy'; }
+  }
+  window.bqSetGrit = setGrit;
+  window.bqToast = function(m){ walletMsg(m); };
+  window.bqOpenAuth = function(){ openModal('signup'); };
+  window.bqGame = {
+    ready: function(){ return !!sb; },
+    session: function(){ return sb ? sb.auth.getSession().then(function(s){ return !!s.data.session; }) : Promise.resolve(false); },
+    getState: function(){ return sb.rpc('get_state').then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    resolve: function(d,st,stake){ return sb.rpc('resolve_duel',{p_discipline:d,p_stance:st,p_stake:stake,p_client_seed:Math.random().toString(36).slice(2)+Date.now()}).then(function(r){ if(r.error) throw r.error; return r.data; }); }
+  };
 
   // ---- Sign in with Solana (Phantom / Solflare / Backpack) ----
   var wt;
