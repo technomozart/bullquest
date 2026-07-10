@@ -5555,6 +5555,24 @@
     el.querySelector('.bqauth-go').addEventListener('click', function(){ el.remove(); });
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
   }
+  function statTile(l,v,c){ return '<div style="background:#F5F5FA;border-radius:12px;padding:10px 4px"><div style="font-size:19px;font-weight:800;color:'+c+'">'+v+'</div><div style="font-size:11px;color:#6B7280;font-weight:700">'+l+'</div></div>'; }
+  function renderBulls(){
+    var v=document.getElementById('view-bulls'); if(!v||!curBull) return;
+    var b=curBull.bulls||{}, ub=curBull, t=tier(b.rarity_rank);
+    var grid=v.querySelector('#bullGrid'); if(grid) grid.style.display='none';
+    var det=v.querySelector('#detail'); if(det) det.style.display='none';
+    var panel=v.querySelector('#bqMyBull');
+    if(!panel){ panel=document.createElement('div'); panel.id='bqMyBull'; if(grid&&grid.parentNode) grid.parentNode.insertBefore(panel,grid); else v.appendChild(panel); }
+    panel.style.cssText='padding:0 14px 24px';
+    panel.innerHTML='<div style="background:#fff;border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(20,16,40,.08);text-align:center;max-width:420px;margin:0 auto">'+
+      '<div style="width:150px;height:150px;margin:0 auto 8px"><img src="'+b.image_url+'" alt="" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display=\'none\'"></div>'+
+      '<div style="font-size:22px;font-weight:800;color:#20143A">'+(b.name||('Bull #'+b.id))+'</div>'+
+      '<div style="margin:4px 0 14px;font-size:13px;color:#6B7280"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rank #'+b.rarity_rank+' of 5,000 &middot; Level '+ub.level+'</div>'+
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">'+statTile('Power',ub.power,'#43C06A')+statTile('Speed',ub.speed,'#7C5CE6')+statTile('Stam',ub.stamina,'#EE5B62')+'</div>'+
+      '<div style="font-size:12.5px;color:#6B7280">Record <b style="color:#20143A">'+ub.wins+'W '+ub.losses+'L</b> &middot; Energy '+ub.energy+'/'+ub.energy_max+'</div>'+
+      (b.body?'<div style="margin-top:10px;font-size:11.5px;color:#9AA6B2;line-height:1.5">'+b.body+' &middot; '+b.belly+' &middot; '+b.horns+' &middot; '+b.face+'</div>':'')+
+    '</div>';
+  }
   function loadAndShow(routeHome, reveal){
     return sb.auth.getUser().then(function(res){
       var u=res.data&&res.data.user; if(!u) throw new Error('no-session');
@@ -5567,6 +5585,7 @@
           populate((p&&p.data&&p.data.username)||'', ub);
           sb.rpc('get_state').then(function(r){ applyLiveState(r&&r.data); }).catch(function(){});
           if(window.bqArenaRefresh) window.bqArenaRefresh();
+          renderBulls();
           if(reveal){ var seen; try{ seen=localStorage.getItem('bq_claimed'); }catch(e){} if(!seen){ try{ localStorage.setItem('bq_claimed','1'); }catch(e){} showClaim(ub); } }
           if(routeHome&&window.bqGo) window.bqGo('view-home');
         });
@@ -5620,6 +5639,7 @@
     resolve: function(d,st,stake){ return sb.rpc('resolve_duel',{p_discipline:d,p_stance:st,p_stake:stake,p_client_seed:Math.random().toString(36).slice(2)+Date.now()}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
     spin: function(){ return sb.rpc('daily_spin').then(function(r){ if(r.error) throw r.error; return r.data; }); }
   };
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-bulls"]')) setTimeout(renderBulls, 50); }, false);
 
   // ---- Sign in with Solana (Phantom / Solflare / Backpack) ----
   var wt;
