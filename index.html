@@ -12,6 +12,7 @@
 /* pro nav icons wired as recolorable masks (keep active/inactive state via currentColor) */
 .nav a .nico{width:24px;height:24px;display:block;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
 .nav a.center .knob .nico{width:24px;height:24px;background:#fff}
+.sol{display:none}   /* SOL price lines hidden until on-chain trading exists */
 #view-home,#view-arena{min-height:100vh;padding:24px 14px;background:radial-gradient(120% 60% at 50% 0%,#EDF0F6 0%,#E3E7F0 100%)}
 
 /* ===== coming-soon toast (lives inside the sticky bottom nav; stays out of fixed layout) ===== */
@@ -2563,15 +2564,15 @@
   <div class="wrap">
     <div class="grid">
       <div class="bq-hero-copy">
-        <span class="bq-kicker"><svg viewBox="0 0 160 170" aria-hidden="true" style="--bull-body:#F0B429;--belly:#FBF1D6;--horn:#fff;--ring:#B9860E;--bull-leg:#C98F14;--brow:rgba(120,80,10,.3)"><use href="#bqBullLand"/></svg> A bull-themed game on Solana</span>
+        <span class="bq-kicker"><svg viewBox="0 0 160 170" aria-hidden="true" style="--bull-body:#F0B429;--belly:#FBF1D6;--horn:#fff;--ring:#B9860E;--bull-leg:#C98F14;--brow:rgba(120,80,10,.3)"><use href="#bqBullLand"/></svg> A bull-themed skill game</span>
         <h1>Collect. Train. Charge. <span class="hl">Own the bull market.</span></h1>
-        <p class="sub">Raise your own chunky bull, level it up through quests and duels, then charge into the Arena. Web-first, skill-driven, and truly yours on-chain - no walking required.</p>
+        <p class="sub">Raise your own chunky bull, level it up through quests and duels, then charge into the Arena. Web-first, skill-driven, and yours the moment you sign up — no crypto, no walking required.</p>
         <div class="cta-row">
           <a class="pill pill-cta" href="#play" id="play" data-bqgo="view-onboard">Play now - it's free</a>
           <a class="pill pill-ghost" href="#how">See how it works</a>
         </div>
         <div class="bq-trust">
-          <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8l8-4 8 4-8 4-8-4z" fill="#fff"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Solana Mainnet</span>
+          <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8l8-4 8 4-8 4-8-4z" fill="#fff"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Free to play</span>
           <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="12" rx="2" stroke="#fff" stroke-width="1.8"/><path d="M9 21h6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>Web-first</span>
           <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.8"/><path d="M6 18L18 6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>No walk-to-earn</span>
         </div>
@@ -2624,7 +2625,7 @@
         <div class="icosq" style="background:#EAF3E6"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 6.6H21l-5.3 3.9 2 6.5L12 16.3 6.3 20l2-6.5L3 9.6h6.6z" fill="#43C06A"/></svg></div>
         <div class="num">STEP 01</div>
         <h3>Get your free Bull</h3>
-        <p>Sign in and mint your starter bull in seconds. It's yours from the very first click.</p>
+        <p>Sign up with your email and we hand you a free Genesis bull on the spot — no wallet, no purchase. Yours from the very first click.</p>
       </div>
       <div class="bq-card">
         <div class="icosq" style="background:#E4EEF3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v4l-4 5 4 5v4H6v-4l4-5-4-5V3z" fill="#4DA6F5"/></svg></div>
@@ -2642,7 +2643,7 @@
         <div class="icosq" style="background:#FDF0DA"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 5v10l-8 5-8-5V7z" fill="#F5A623"/><path d="M12 6.5l4.6 2.8v6.4L12 17.5 7.4 15V9.3z" fill="#FDE3B4"/></svg></div>
         <div class="num">STEP 04</div>
         <h3>Own &amp; trade</h3>
-        <p>Your bulls and gear live on Solana. Hold them, upgrade them, or trade them freely.</p>
+        <p>Your bull's stats and history are saved to your account. On-chain ownership and open trading are on the roadmap.</p>
       </div>
     </div>
   </div>
@@ -2663,10 +2664,10 @@
             style="--bull-body:#7C5CE6;--belly:#EFE1FF;--horn:#EAD9FF;--ring:#F0B429;--bull-leg:#5B3F86;--brow:rgba(60,35,120,.28);--seam:#CBB6F2"><use href="#bqBullLand"/></svg>
         </div>
         <h3>Bull Ownership</h3>
-        <p>Each bull is a real on-chain asset with its own rarity, stats and history. Train it, style it, and keep it forever - no landlord, no lock-in.</p>
+        <p>Each bull is uniquely yours — its own rarity, stats and history, tied to your account from day one. Train it, style it, and keep it.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#43C06A"/><path d="M7 12.5l3 3 6-7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Play free, mint when you're ready</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#43C06A"/><path d="M7 12.5l3 3 6-7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>On-chain proof of every stat</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#43C06A"/><path d="M7 12.5l3 3 6-7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Free to claim — no wallet needed</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#43C06A"/><path d="M7 12.5l3 3 6-7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Every stat you earn stays with your bull</li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#43C06A"/><path d="M7 12.5l3 3 6-7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Yours to keep or trade forever</li>
         </ul>
       </div>
@@ -2860,7 +2861,7 @@
         <div class="econ-ic"><img src="assets/icons/coin_bull.png" width="28" height="28" alt=""></div>
         <h3>$BULL</h3>
         <div class="tag">Own &amp; trade</div>
-        <p>The on-chain token that powers ownership, governance and the open marketplace. Trade bulls and gear, back your clan, and share in the game you help grow.</p>
+        <p>The in-game token that will power ownership, governance and an open marketplace. Earn and hold it in-game now; on-chain trading unlocks at token launch.</p>
       </div>
     </div>
 
@@ -2980,7 +2981,7 @@
           </svg>
           BullQuest
         </a>
-        <p>A bull-themed, skill-first crypto game on Solana. Collect. Train. Charge. Own the bull market.</p>
+        <p>A bull-themed, skill-first game. Collect. Train. Charge. Own the bull market.</p>
       </div>
       <div class="foot-col">
         <h4>Game</h4>
@@ -3005,7 +3006,7 @@
       </div>
     </div>
     <div class="foot-bot">
-      <span>&copy; 2026 BullQuest. Built on Solana mainnet. Brand provisional.</span>
+      <span>&copy; 2026 BullQuest. Solana integration on the roadmap. Brand provisional.</span>
       <span>Not financial advice &middot; Play responsibly</span>
     </div>
   </div>
@@ -3143,7 +3144,7 @@
       <div class="bal"><b>3,420</b><span>GRIT</span></div>
       <div class="sub">
         <img src="assets/icons/coin_bull.png" width="18" height="18" alt="" style="vertical-align:middle">
-        <span>500</span><small>$BULL &middot; &asymp; $18.40</small>
+        <span>500</span><small>$BULL &middot; in-game</small>
       </div>
     </div>
 
@@ -4517,27 +4518,14 @@
     <div class="grab" aria-hidden="true"></div>
 
     <div class="card">
-      <button type="button" class="cta go-home" data-bqgo="view-home" data-entry="wallet" aria-label="Connect a Solana wallet to play">
-        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a3 3 0 0 1 3-3h11a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="13" r="1.6" fill="#fff"/></svg>
-        Connect Wallet
-      </button>
-
-      <div class="wallets" aria-label="Supported wallets: Phantom, Solflare, Backpack">
-        <button type="button" class="wchip go-home" data-bqgo="view-home" aria-label="Connect with Phantom"><span class="wd" style="background:#7C5CE6"></span>Phantom</button>
-        <button type="button" class="wchip go-home" data-bqgo="view-home" aria-label="Connect with Solflare"><span class="wd" style="background:#F5A623"></span>Solflare</button>
-        <button type="button" class="wchip go-home" data-bqgo="view-home" aria-label="Connect with Backpack"><span class="wd" style="background:#EE5B62"></span>Backpack</button>
-      </div>
-
-      <div class="or">or</div>
-
-      <button type="button" class="secondary go-home" data-bqgo="view-home" data-entry="email" aria-label="Continue with email, no wallet needed">
-        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Continue with email
+      <button type="button" class="cta go-home" data-bqgo="view-home" data-entry="email" aria-label="Sign up free and get your Genesis bull">
+        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="#fff" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Sign up free — get your bull
       </button>
 
       <div class="guest-wrap">
-        <button type="button" class="guest go-home" data-bqgo="view-home" data-entry="guest">
-          Just looking? <b>Play as guest</b>
+        <button type="button" class="guest go-home" data-bqgo="view-home" data-entry="login">
+          Already have an account? <b>Log in</b>
         </button>
       </div>
     </div>
@@ -4787,7 +4775,7 @@
       </span>
       <div class="rc-medal"><svg id="rcMedal" viewBox="0 0 24 24" aria-hidden="true"><use href="#spCoin"/></svg></div>
       <h2 class="rc-title" id="rcTitle">You won 12 $BULL!</h2>
-      <p class="rc-sub" id="rcSub">Added straight to your wallet.</p>
+      <p class="rc-sub" id="rcSub">Added to your balance.</p>
       <button type="button" class="rc-collect" id="rcCollect">
         <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4 10-11" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Collect reward
@@ -5270,17 +5258,17 @@
 
   // segment index -> prize (order matches the 12 discs, clockwise from top)
   var prizes = [
-    { kicker: 'You won',   title: '12 $BULL!',     sub: 'Added straight to your wallet.',        glyph: '#spCoin'  },
+    { kicker: 'You won',   title: '12 $BULL!',     sub: 'Added to your balance.',        glyph: '#spCoin'  },
     { kicker: 'You won',   title: '50 GRIT',       sub: 'Fuel for the next season push.',        glyph: '#spGem'   },
     { kicker: 'You won',   title: '5 HAY',         sub: 'More spins, more chances.',             glyph: '#spHay'   },
     { kicker: 'You won',   title: 'a x2 Boost!',   sub: 'Doubles your next battle reward.',      glyph: '#spX2'    },
     { kicker: 'You won',   title: 'a Lootbox!',    sub: 'Open it for mystery gear.',            glyph: '#spBox'   },
-    { kicker: 'You won',   title: '8 $BULL',       sub: 'Added straight to your wallet.',        glyph: '#spCoin'  },
+    { kicker: 'You won',   title: '8 $BULL',       sub: 'Added to your balance.',        glyph: '#spCoin'  },
     { kicker: 'You won',   title: '25 GRIT',       sub: 'Every point climbs the ladder.',        glyph: '#spGem'   },
     { kicker: 'So close',  title: 'Try again!',    sub: 'Come back tomorrow for a fresh spin.',  glyph: '#spRetry' },
     { kicker: 'You won',   title: '3 HAY',         sub: 'More spins, more chances.',             glyph: '#spHay'   },
     { kicker: 'Jackpot',   title: 'a Rare Bull!',  sub: 'A new fighter joins your stable.',      glyph: '#spBull'  },
-    { kicker: 'You won',   title: '20 $BULL',      sub: 'Added straight to your wallet.',        glyph: '#spCoin'  },
+    { kicker: 'You won',   title: '20 $BULL',      sub: 'Added to your balance.',        glyph: '#spCoin'  },
     { kicker: 'You won',   title: '100 GRIT',      sub: 'A big leap up the season track.',       glyph: '#spGem'   }
   ];
   // weighted odds so jackpot is rare, small prizes common
@@ -5426,36 +5414,53 @@
     modal.querySelector('#bqAuthSubmit').addEventListener('click', submit);
     modal.querySelector('#bqPass').addEventListener('keydown', function(e){ if(e.key==='Enter') submit(); });
   }
-  function openModal(){ if(!modal) buildModal(); errmsg(''); modal.hidden=false; modal.querySelector('#bqEmail').focus(); }
-  function closeModal(){ if(modal) modal.hidden=true; }
-  function errmsg(m){ if(modal) modal.querySelector('#bqAuthErr').textContent=m||''; }
-  function toggleMode(){
-    mode = mode==='signup' ? 'login' : 'signup';
+  function applyMode(){
+    if(!modal) return;
     modal.querySelector('#bqAuthTitle').textContent = mode==='signup'?'Claim your free Bull':'Welcome back';
-    modal.querySelector('#bqAuthSub').textContent = mode==='signup'?'Make an account and we’ll hand you a Genesis bull on the spot.':'Log in to get back to your bull.';
+    modal.querySelector('#bqAuthSub').textContent = mode==='signup'?'Make an account and we’ll hand you a free Genesis bull on the spot.':'Log in to get back to your bull.';
     modal.querySelector('#bqAuthSubmit').textContent = mode==='signup'?'Sign up & claim':'Log in';
     modal.querySelector('#bqAuthToggle').textContent = mode==='signup'?'Already have an account? Log in':'New here? Create an account';
+    modal.querySelector('#bqPass').setAttribute('autocomplete', mode==='signup'?'new-password':'current-password');
     errmsg('');
+  }
+  function openModal(intent){ if(!modal) buildModal(); mode = intent==='login'?'login':'signup'; applyMode(); modal.hidden=false; modal.querySelector('#bqEmail').focus(); }
+  function closeModal(){ if(modal) modal.hidden=true; }
+  function errmsg(m){ if(modal) modal.querySelector('#bqAuthErr').textContent=m||''; }
+  function toggleMode(){ mode = mode==='signup' ? 'login' : 'signup'; applyMode(); }
+  function friendly(e){
+    var m=(e&&e.message)||'';
+    if(/no-bull/.test(m)) return 'We’re still setting up your free bull — give it a few seconds, then refresh.';
+    if(/already registered|already exists|identity/i.test(m)) return 'That email already has an account — tap “Log in”.';
+    if(/invalid login/i.test(m)) return 'Wrong email or password.';
+    if(/rate limit/i.test(m)) return 'Too many attempts — wait a moment and retry.';
+    if(/sold out|fully claimed/i.test(m)) return 'All free bulls are claimed right now. Check back soon!';
+    return m||'Something went wrong. Try again.';
   }
   function submit(){
     var email=modal.querySelector('#bqEmail').value.trim();
     var pass=modal.querySelector('#bqPass').value;
-    if(!email||pass.length<6){ errmsg('Enter an email and a 6+ character password.'); return; }
-    var btn=modal.querySelector('#bqAuthSubmit'); btn.disabled=true; errmsg('');
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ errmsg('Enter a valid email address.'); return; }
+    if(pass.length<6){ errmsg('Password must be at least 6 characters.'); return; }
+    var btn=modal.querySelector('#bqAuthSubmit'), lbl=btn.textContent;
+    btn.disabled=true; btn.textContent = mode==='signup'?'Claiming your bull…':'Logging in…'; errmsg('');
     var p = mode==='signup'
       ? sb.auth.signUp({email:email,password:pass}).then(function(r){ if(r.error) throw r.error; return sb.auth.signInWithPassword({email:email,password:pass}); })
       : sb.auth.signInWithPassword({email:email,password:pass});
-    p.then(function(r){ if(r.error) throw r.error; closeModal(); return loadAndShow(true); })
-     .catch(function(e){ errmsg((e&&e.message)||'Something went wrong. Try again.'); })
-     .then(function(){ btn.disabled=false; });
+    p.then(function(r){ if(r.error) throw r.error; return loadAndShow(true); })
+     .then(function(){ closeModal(); })
+     .catch(function(e){ errmsg(friendly(e)); })
+     .then(function(){ btn.disabled=false; btn.textContent=lbl; });
   }
 
   function populate(username, ub){
     var b=ub.bulls||{}, t=tier(b.rarity_rank), el;
     var card=document.querySelector('#view-home .card.featured');
     if(card){
-      if(el=card.querySelector('.fname')) el.textContent='Bull #'+b.id;
+      var bname = b.name || ('Bull #'+b.id);
+      if(el=card.querySelector('.fname')) el.textContent=bname;
       if(el=card.querySelector('.hexbadge span')) el.textContent=ub.level;
+      if(el=card.querySelector('.hexbadge svg path')) el.setAttribute('fill', t.c);
+      if(el=card.querySelector('svg.bull[aria-label]')) el.setAttribute('aria-label','Your active bull, '+bname);
       if(el=card.querySelector('.rarity')) el.innerHTML='<span class="dot" style="background:'+t.c+'"></span>'+t.l;
       if(el=card.querySelector('.energy')) el.innerHTML=BOLT+' '+ub.energy+'/10 Energy';
       if(el=card.querySelector('.stat.pow .sv b')) el.textContent=ub.power;
@@ -5470,46 +5475,57 @@
         img.src=b.image_url; feat.appendChild(img);
       }
     }
-    if(username){
-      var hs=document.querySelectorAll('#view-home b, #view-home span, #view-home h1, #view-home h2');
-      for(var i=0;i<hs.length;i++){ if(hs[i].children.length===0 && /Hey,\s*Handler/i.test(hs[i].textContent)){ hs[i].textContent='Hey, '+username; break; } }
-    }
+    var greet=document.querySelector('#view-home .hi .n');
+    if(greet && username) greet.textContent='Hey, '+username;
     injectSignout();
   }
 
+  function fetchBull(u, tries){
+    return sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).limit(1).then(function(r){
+      if(r.error) throw r.error;
+      if(!r.data||!r.data.length){
+        if(tries>0) return new Promise(function(res){ setTimeout(res,700); }).then(function(){ return fetchBull(u, tries-1); });
+        return null;
+      }
+      return r.data[0];
+    });
+  }
   function loadAndShow(routeHome){
     return sb.auth.getUser().then(function(res){
-      var u=res.data&&res.data.user; if(!u) return;
-      return sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).limit(1).then(function(r){
-        if(r.error||!r.data||!r.data.length) return;
-        return sb.from('profiles').select('username').eq('id',u.id).single().then(function(p){
-          populate((p.data&&p.data.username)||'', r.data[0]);
+      var u=res.data&&res.data.user; if(!u) throw new Error('no-session');
+      return fetchBull(u, 4).then(function(ub){
+        if(!ub) throw new Error('no-bull');
+        return sb.from('profiles').select('username').eq('id',u.id).maybeSingle().then(function(p){
+          populate((p&&p.data&&p.data.username)||'', ub);
           if(routeHome&&window.bqGo) window.bqGo('view-home');
         });
       });
     });
   }
+  function logErr(e){ if(window.console) console.error('BullQuest:', (e&&e.message)||e); }
 
   function injectSignout(){
     if(document.querySelector('.bq-signout')) return;
     var b=document.createElement('button'); b.className='bq-signout'; b.textContent='Sign out';
     b.addEventListener('click', function(){ sb.auth.signOut().then(function(){ location.reload(); }); });
-    var home=document.querySelector('#view-home'); if(home) home.appendChild(b);
+    document.body.appendChild(b);   // body, not #view-home, so it survives on every view
   }
 
-  // gate the onboarding entry buttons behind real auth
+  // gate entry buttons behind real auth — ALWAYS block the router; queue the action if the SDK isn't ready yet
   document.addEventListener('click', function(e){
     var t=e.target.closest && e.target.closest('[data-entry]');
-    if(!t||!sb) return;
+    if(!t) return;
     e.preventDefault(); e.stopImmediatePropagation();
-    sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true); else openModal(); });
+    var intent=t.getAttribute('data-entry');
+    function go(){ sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); else openModal(intent==='login'?'login':'signup'); }); }
+    if(sb) go(); else { var n=0; (function wait(){ if(sb) return go(); if(n++<60) setTimeout(wait,80); })(); }
   }, true);
 
   // boot
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
     sb=window.supabase.createClient(URL_,KEY_);
-    sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true); });
+    sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); });
   })();
 })();
 </script>
