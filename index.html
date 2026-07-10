@@ -5305,23 +5305,17 @@
   var rcCollect= root.querySelector('#rcCollect');
   var rcDismiss= root.querySelector('#rcDismiss');
 
-  // segment index -> prize (order matches the 12 discs, clockwise from top)
+  // 12 wheel segments, all GRIT (server picks the landing index via daily_spin)
   var prizes = [
-    { kicker: 'You won',   title: '12 $BULL!',     sub: 'Added to your balance.',        glyph: '#spCoin'  },
-    { kicker: 'You won',   title: '50 GRIT',       sub: 'Fuel for the next season push.',        glyph: '#spGem'   },
-    { kicker: 'You won',   title: '5 HAY',         sub: 'More spins, more chances.',             glyph: '#spHay'   },
-    { kicker: 'You won',   title: 'a x2 Boost!',   sub: 'Doubles your next battle reward.',      glyph: '#spX2'    },
-    { kicker: 'You won',   title: 'a Lootbox!',    sub: 'Open it for mystery gear.',            glyph: '#spBox'   },
-    { kicker: 'You won',   title: '8 $BULL',       sub: 'Added to your balance.',        glyph: '#spCoin'  },
-    { kicker: 'You won',   title: '25 GRIT',       sub: 'Every point climbs the ladder.',        glyph: '#spGem'   },
-    { kicker: 'So close',  title: 'Try again!',    sub: 'Come back tomorrow for a fresh spin.',  glyph: '#spRetry' },
-    { kicker: 'You won',   title: '3 HAY',         sub: 'More spins, more chances.',             glyph: '#spHay'   },
-    { kicker: 'Jackpot',   title: 'a Rare Bull!',  sub: 'A new fighter joins your stable.',      glyph: '#spBull'  },
-    { kicker: 'You won',   title: '20 $BULL',      sub: 'Added to your balance.',        glyph: '#spCoin'  },
-    { kicker: 'You won',   title: '100 GRIT',      sub: 'A big leap up the season track.',       glyph: '#spGem'   }
+    { title: '15 GRIT', glyph: '#spGem' }, { title: '30 GRIT', glyph: '#spGem' },
+    { title: '20 GRIT', glyph: '#spGem' }, { title: '50 GRIT', glyph: '#spGem' },
+    { title: '10 GRIT', glyph: '#spGem' }, { title: '25 GRIT', glyph: '#spGem' },
+    { title: '40 GRIT', glyph: '#spGem' }, { title: '20 GRIT', glyph: '#spGem' },
+    { title: '35 GRIT', glyph: '#spGem' }, { title: '100 GRIT', glyph: '#spGem', jackpot: true },
+    { title: '30 GRIT', glyph: '#spGem' }, { title: '60 GRIT', glyph: '#spGem' }
   ];
-  // weighted odds so jackpot is rare, small prizes common
-  var weights = [14, 12, 13, 6, 5, 14, 12, 10, 8, 2, 4, 6];
+  var weights = [14,10,13,6,16,11,7,13,8,2,9,5];
+  var lastReward = null;
 
   var spinning = false;
   var turns = 0;
@@ -5336,10 +5330,11 @@
 
   function reveal(i) {
     var p = prizes[i];
-    rcKicker.textContent = p.kicker;
-    rcTitle.textContent = (p.kicker === 'You won' ? 'You won ' : (p.kicker === 'Jackpot' ? 'Jackpot! ' : '')) + p.title;
-    rcSub.textContent = p.sub;
+    rcKicker.textContent = p.jackpot ? 'Jackpot' : 'You won';
+    rcTitle.textContent = (p.jackpot ? 'Jackpot! ' : 'You won ') + p.title;
+    rcSub.textContent = 'Added to your GRIT balance.';
     rcMedal.querySelector('use').setAttribute('href', p.glyph);
+    if (lastReward && window.bqSetGrit) window.bqSetGrit(lastReward.grit);
     // confetti burst pieces
     if (!reduce) {
       burst.innerHTML = '';
@@ -5385,28 +5380,34 @@
     endSpin(pending);
   });
 
-  function spin() {
-    if (spinning) return;
-    pending = pickIndex();
-    spinning = true;
-    spinBtn.disabled = true;
-
+  function animate(i) {
+    pending = i; spinning = true; spinBtn.disabled = true;
     if (reduce) { endSpin(pending); return; }
-
     spinBtn.querySelector('.lbl').innerHTML = '<span class="dots"><i></i><i></i><i></i></span>';
     wheelSvg.classList.add('spinning');
-
-    // segment i sits at angle i*30 clockwise from top; rotate so it lands under the pointer
-    var jitter = (Math.random() * 20 - 10);      // stay well inside the 30deg wedge
+    var jitter = (Math.random() * 20 - 10);
     var landing = (360 - (pending * 30) + jitter);
-    var full = 5 * 360;                          // guaranteed full turns
-    var base = Math.ceil(turns / 360) * 360;     // clear any fractional leftover
+    var full = 5 * 360;
+    var base = Math.ceil(turns / 360) * 360;
     turns = base + full + landing;
     rot.style.transform = 'rotate(' + turns + 'deg)';
-
-    // little pointer tick near the end for flavour
     setTimeout(function () { pointer.classList.add('kick'); }, 3300);
     setTimeout(function () { pointer.classList.remove('kick'); }, 3500);
+  }
+  function spin() {
+    if (spinning) return;
+    if (!(window.bqGame && window.bqGame.ready())) { if (window.bqOpenAuth) window.bqOpenAuth(); return; }
+    spinBtn.disabled = true;
+    window.bqGame.session().then(function (has) {
+      if (!has) { if (window.bqOpenAuth) window.bqOpenAuth(); spinBtn.disabled = false; return; }
+      return window.bqGame.spin().then(function (d) { lastReward = d; animate(d.index); })
+        .catch(function (e) {
+          spinBtn.disabled = false;
+          var m = (e && e.message) || '';
+          if (/already spun/i.test(m)) { if (window.bqToast) window.bqToast('You already spun today - come back tomorrow!'); }
+          else if (window.bqToast) { window.bqToast(m || 'Spin failed'); }
+        });
+    });
   }
 
   spinBtn.addEventListener('click', spin);
@@ -5616,7 +5617,8 @@
     tier: function(rank){ return tier(rank); },
     session: function(){ return sb ? sb.auth.getSession().then(function(s){ return !!s.data.session; }) : Promise.resolve(false); },
     getState: function(){ return sb.rpc('get_state').then(function(r){ if(r.error) throw r.error; return r.data; }); },
-    resolve: function(d,st,stake){ return sb.rpc('resolve_duel',{p_discipline:d,p_stance:st,p_stake:stake,p_client_seed:Math.random().toString(36).slice(2)+Date.now()}).then(function(r){ if(r.error) throw r.error; return r.data; }); }
+    resolve: function(d,st,stake){ return sb.rpc('resolve_duel',{p_discipline:d,p_stance:st,p_stake:stake,p_client_seed:Math.random().toString(36).slice(2)+Date.now()}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    spin: function(){ return sb.rpc('daily_spin').then(function(r){ if(r.error) throw r.error; return r.data; }); }
   };
 
   // ---- Sign in with Solana (Phantom / Solflare / Backpack) ----
