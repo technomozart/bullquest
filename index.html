@@ -9,6 +9,9 @@
 .bq-view[hidden]{display:none}
 .bq-view{width:100%;box-sizing:border-box}
 .bq-view *{box-sizing:border-box}
+/* pro nav icons wired as recolorable masks (keep active/inactive state via currentColor) */
+.nav a .nico{width:24px;height:24px;display:block;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.nav a.center .knob .nico{width:24px;height:24px;background:#fff}
 #view-home,#view-arena{min-height:100vh;padding:24px 14px;background:radial-gradient(120% 60% at 50% 0%,#EDF0F6 0%,#E3E7F0 100%)}
 
 /* ===== coming-soon toast (lives inside the sticky bottom nav; stays out of fixed layout) ===== */
@@ -3289,23 +3292,23 @@
       <button type="button" class="bq-toast-x" data-bqtoast-dismiss aria-label="Dismiss notice">&times;</button>
     </div>
     <a href="#" aria-current="page" data-bqgo="view-home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_home.png')"></span>
       Home
     </a>
     <a href="#" data-bqgo="view-bulls">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6c0 4 3 6 7 6s7-2 7-6c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3M17 9c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 12c0 3 2.2 6 5 6s5-3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="13" r="1" fill="currentColor"/><circle cx="14" cy="13" r="1" fill="currentColor"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_bulls.png')"></span>
       Bulls
     </a>
     <a href="#" class="center" aria-label="Arena" data-bqgo="view-arena">
-      <span class="knob"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h11m0 0-4-4m4 4-4 4M18 5v14" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+      <span class="knob"><span class="nico" style="--m:url('assets/icons/nav_arena.png')"></span></span>
       <span>Arena</span>
     </a>
     <a href="#" data-bqgo="view-sectors">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_sectors.png')"></span>
       Sectors
     </a>
     <a href="#" data-bqgo="view-market">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_market.png')"></span>
       Market
     </a>
   </nav>
@@ -3596,23 +3599,23 @@
   <!-- ===== bottom nav ===== -->
   <nav class="nav" aria-label="Primary">
     <a href="#" data-bqgo="view-home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_home.png')"></span>
       Home
     </a>
     <a href="#" data-bqgo="view-bulls" aria-current="page">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6c0 4 3 6 7 6s7-2 7-6c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3M17 9c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 12c0 3 2.2 6 5 6s5-3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="13" r="1" fill="currentColor"/><circle cx="14" cy="13" r="1" fill="currentColor"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_bulls.png')"></span>
       Bulls
     </a>
     <a href="#" class="center" aria-label="Arena" data-bqgo="view-arena">
-      <span class="knob"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h11m0 0-4-4m4 4-4 4M18 5v14" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+      <span class="knob"><span class="nico" style="--m:url('assets/icons/nav_arena.png')"></span></span>
       <span>Arena</span>
     </a>
     <a href="#" data-bqgo="view-sectors">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_sectors.png')"></span>
       Sectors
     </a>
     <a href="#" data-bqgo="view-market">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_market.png')"></span>
       Market
     </a>
   </nav>
@@ -4113,23 +4116,23 @@
   <!-- ===== bottom nav ===== -->
   <nav class="nav" aria-label="Primary">
     <a href="#" data-bqgo="view-home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_home.png')"></span>
       Home
     </a>
     <a href="#" data-bqgo="view-bulls">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6c0 4 3 6 7 6s7-2 7-6c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3M17 9c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 12c0 3 2.2 6 5 6s5-3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="13" r="1" fill="currentColor"/><circle cx="14" cy="13" r="1" fill="currentColor"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_bulls.png')"></span>
       Bulls
     </a>
     <a href="#" class="center" aria-label="Arena" data-bqgo="view-arena">
-      <span class="knob"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h11m0 0-4-4m4 4-4 4M18 5v14" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+      <span class="knob"><span class="nico" style="--m:url('assets/icons/nav_arena.png')"></span></span>
       <span>Arena</span>
     </a>
     <a href="#" data-bqgo="view-sectors" aria-current="page">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_sectors.png')"></span>
       Sectors
     </a>
     <a href="#" data-bqgo="view-market">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_market.png')"></span>
       Market
     </a>
   </nav>
@@ -4397,23 +4400,23 @@
   <!-- ===== bottom nav ===== -->
   <nav class="nav" aria-label="Primary">
     <a href="#" data-bqgo="view-home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_home.png')"></span>
       Home
     </a>
     <a href="#" data-bqgo="view-bulls">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6c0 4 3 6 7 6s7-2 7-6c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3M17 9c1.6 0 2 1.4 2 3 0 1.6-1.4 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 12c0 3 2.2 6 5 6s5-3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="13" r="1" fill="currentColor"/><circle cx="14" cy="13" r="1" fill="currentColor"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_bulls.png')"></span>
       Bulls
     </a>
     <a href="#" class="center" aria-label="Arena" data-bqgo="view-arena">
-      <span class="knob"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h11m0 0-4-4m4 4-4 4M18 5v14" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+      <span class="knob"><span class="nico" style="--m:url('assets/icons/nav_arena.png')"></span></span>
       <span>Arena</span>
     </a>
     <a href="#" data-bqgo="view-sectors">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_sectors.png')"></span>
       Sectors
     </a>
     <a href="#" data-bqgo="view-market" aria-current="page">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="nico" style="--m:url('assets/icons/nav_market.png')"></span>
       Market
     </a>
   </nav>
