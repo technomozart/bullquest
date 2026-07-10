@@ -4872,6 +4872,23 @@
       you = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
       opp = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
       setEnergy(s.bull.energy, s.bull.energy_max);
+      var f=root.querySelector('.fighter.you'), b=window.bqGame.bull();
+      if(f){
+        var bname=(b&&b.bulls&&b.bulls.name)||('Bull #'+s.bull.id);
+        var nm=f.querySelector('.fname'); if(nm) nm.textContent=bname;
+        var lv=f.querySelector('.hexbadge span'); if(lv) lv.textContent=s.bull.level;
+        var t=(b&&b.bulls)?window.bqGame.tier(b.bulls.rarity_rank):null;
+        var ra=f.querySelector('.rarity'); if(ra&&t) ra.innerHTML='<span class="dot" style="background:'+t.c+'"></span>'+t.l;
+        var vals=f.querySelectorAll('.statrow .val'); if(vals.length===3){ vals[0].textContent=s.bull.power; vals[1].textContent=s.bull.speed; vals[2].textContent=s.bull.stamina; }
+        var mw=f.querySelector('.mascot-wrap'), url=b&&b.bulls&&b.bulls.image_url;
+        if(mw && url && !mw.querySelector('img.bqreal')){
+          var img=document.createElement('img'); img.className='bqreal'; img.alt=bname;
+          img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
+          img.onload=function(){ var sv=mw.querySelector('svg.bull'); if(sv) sv.style.display='none'; };
+          img.onerror=function(){ img.remove(); };
+          img.src=url; mw.appendChild(img);
+        }
+      }
       recalc();
     }).catch(function(){});
   }
@@ -4913,6 +4930,8 @@
   });
 
   recalc();
+  window.bqArenaRefresh = refreshFromServer;
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-arena"]')) setTimeout(refreshFromServer, 80); });
   (function waitGame(n){ if(window.bqGame && window.bqGame.ready()){ refreshFromServer(); } else if((n||0)<80){ setTimeout(function(){ waitGame((n||0)+1); }, 80); } })(0);
 })();
 
@@ -5422,7 +5441,7 @@
   var URL_='https://cewumdioknvjtsiolxce.supabase.co';
   var KEY_='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNld3VtZGlva252anRzaW9seGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2OTI3NzUsImV4cCI6MjA5OTI2ODc3NX0.n_r2gixZZTuTyJOiUhCZMpPKp5mUYtdM9bShs-nWkWk';
   var BOLT='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>';
-  var sb=null, mode='signup', modal, acctLabel='';
+  var sb=null, mode='signup', modal, acctLabel='', curBull=null;
 
   function tier(r){ if(r==null)return{l:'Common',c:'#9AA6B2'}; if(r<=50)return{l:'Legendary',c:'#F0B429'}; if(r<=300)return{l:'Epic',c:'#7C5CE6'}; if(r<=1200)return{l:'Rare',c:'#4DA6F5'}; return{l:'Common',c:'#9AA6B2'}; }
 
@@ -5528,9 +5547,11 @@
       acctLabel = wal ? (wal.slice(0,4)+'…'+wal.slice(-4)) : (u.email?u.email.split('@')[0]:'');
       return fetchBull(u, 4).then(function(ub){
         if(!ub) throw new Error('no-bull');
+        curBull = ub;
         return sb.from('profiles').select('username').eq('id',u.id).maybeSingle().then(function(p){
           populate((p&&p.data&&p.data.username)||'', ub);
           sb.rpc('get_state').then(function(r){ applyLiveState(r&&r.data); }).catch(function(){});
+          if(window.bqArenaRefresh) window.bqArenaRefresh();
           if(routeHome&&window.bqGo) window.bqGo('view-home');
         });
       });
@@ -5576,6 +5597,8 @@
   window.bqOpenAuth = function(){ openModal('signup'); };
   window.bqGame = {
     ready: function(){ return !!sb; },
+    bull: function(){ return curBull; },
+    tier: function(rank){ return tier(rank); },
     session: function(){ return sb ? sb.auth.getSession().then(function(s){ return !!s.data.session; }) : Promise.resolve(false); },
     getState: function(){ return sb.rpc('get_state').then(function(r){ if(r.error) throw r.error; return r.data; }); },
     resolve: function(d,st,stake){ return sb.rpc('resolve_duel',{p_discipline:d,p_stance:st,p_stake:stake,p_client_seed:Math.random().toString(36).slice(2)+Date.now()}).then(function(r){ if(r.error) throw r.error; return r.data; }); }
