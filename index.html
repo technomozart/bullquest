@@ -4488,13 +4488,26 @@
     <div class="grab" aria-hidden="true"></div>
 
     <div class="card">
-      <button type="button" class="cta go-home" data-bqgo="view-home" data-entry="email" aria-label="Sign up free and get your Genesis bull">
-        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="#fff" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Sign up free - get your bull
+      <button type="button" class="cta" data-wallet="auto" aria-label="Connect a Solana wallet">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a3 3 0 0 1 3-3h11a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="13" r="1.6" fill="#fff"/></svg>
+        Connect Wallet
+      </button>
+
+      <div class="wallets" aria-label="Supported wallets: Phantom, Solflare, Backpack">
+        <button type="button" class="wchip" data-wallet="phantom" aria-label="Connect with Phantom"><span class="wd" style="background:#7C5CE6"></span>Phantom</button>
+        <button type="button" class="wchip" data-wallet="solflare" aria-label="Connect with Solflare"><span class="wd" style="background:#F5A623"></span>Solflare</button>
+        <button type="button" class="wchip" data-wallet="backpack" aria-label="Connect with Backpack"><span class="wd" style="background:#EE5B62"></span>Backpack</button>
+      </div>
+
+      <div class="or">or</div>
+
+      <button type="button" class="secondary" data-entry="email" aria-label="Continue with email, no wallet needed">
+        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Continue with email
       </button>
 
       <div class="guest-wrap">
-        <button type="button" class="guest go-home" data-bqgo="view-home" data-entry="login">
+        <button type="button" class="guest" data-entry="login">
           Already have an account? <b>Log in</b>
         </button>
       </div>
@@ -5399,6 +5412,7 @@
   function toggleMode(){ mode = mode==='signup' ? 'login' : 'signup'; applyMode(); }
   function friendly(e){
     var m=(e&&e.message)||'';
+    if(/reject|denied|declined|cancel/i.test(m)) return 'You cancelled the wallet request.';
     if(/no-bull/.test(m)) return 'We’re still setting up your free bull - give it a few seconds, then refresh.';
     if(/already registered|already exists|identity/i.test(m)) return 'That email already has an account - tap “Log in”.';
     if(/invalid login/i.test(m)) return 'Wrong email or password.';
@@ -5489,6 +5503,46 @@
     var intent=t.getAttribute('data-entry');
     function go(){ sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); else openModal(intent==='login'?'login':'signup'); }); }
     if(sb) go(); else { var n=0; (function wait(){ if(sb) return go(); if(n++<60) setTimeout(wait,80); })(); }
+  }, true);
+
+  // ---- Sign in with Solana (Phantom / Solflare / Backpack) ----
+  var wt;
+  function walletMsg(t){
+    if(!wt){ wt=document.createElement('div'); wt.style.cssText='position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#20143A;color:#fff;padding:11px 16px;border-radius:12px;font-size:13.5px;font-weight:600;z-index:10000;box-shadow:0 10px 30px rgba(20,16,40,.4);max-width:88%;text-align:center;transition:opacity .3s'; document.body.appendChild(wt); }
+    wt.textContent=t; wt.style.opacity='1'; clearTimeout(wt._t); wt._t=setTimeout(function(){ wt.style.opacity='0'; },3600);
+  }
+  function getProvider(kind){
+    var ph=(window.phantom&&window.phantom.solana)||(window.solana&&window.solana.isPhantom?window.solana:null);
+    var sf=window.solflare&&(window.solflare.isSolflare?window.solflare:window.solflare);
+    var bp=(window.backpack&&window.backpack.solana)||(window.xnft&&window.xnft.solana)||null;
+    if(kind==='phantom') return ph;
+    if(kind==='solflare') return sf||null;
+    if(kind==='backpack') return bp;
+    return ph||sf||bp||window.solana||null; // auto
+  }
+  function toB64(bytes){ var s=''; for(var i=0;i<bytes.length;i++) s+=String.fromCharCode(bytes[i]); return btoa(s); }
+  function walletLogin(kind){
+    var prov=getProvider(kind);
+    if(!prov){ var nm=kind==='auto'?'A Solana wallet':(kind.charAt(0).toUpperCase()+kind.slice(1)); walletMsg(nm+' was not found. Install it, or use email below.'); return; }
+    walletMsg('Check your wallet to approve...');
+    Promise.resolve(prov.connect()).then(function(res){
+      var pk=(prov.publicKey||(res&&res.publicKey)).toString();
+      var msg='Sign in to BullQuest\n\nWallet: '+pk+'\nTime: '+new Date().toISOString();
+      return Promise.resolve(prov.signMessage(new TextEncoder().encode(msg),'utf8')).then(function(signed){
+        var sig=signed&&signed.signature?signed.signature:signed;
+        return fetch(URL_+'/functions/v1/wallet-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({pubkey:pk,signature:toB64(sig),message:msg})});
+      });
+    }).then(function(r){ return r.json(); })
+      .then(function(j){ if(j.error) throw new Error(j.error); return sb.auth.setSession(j.session); })
+      .then(function(){ return loadAndShow(true); })
+      .catch(function(e){ walletMsg(friendly(e)); });
+  }
+  document.addEventListener('click', function(e){
+    var t=e.target.closest && e.target.closest('[data-wallet]');
+    if(!t) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    if(!sb){ walletMsg('Still loading, try again in a second.'); return; }
+    walletLogin(t.getAttribute('data-wallet'));
   }, true);
 
   // boot
