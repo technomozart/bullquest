@@ -4893,9 +4893,8 @@
         if(mw && url && !mw.querySelector('img.bqreal')){
           var img=document.createElement('img'); img.className='bqreal'; img.alt=bname;
           img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
-          img.onload=function(){ var sv=mw.querySelector('svg.bull'); if(sv) sv.style.display='none'; };
-          img.onerror=function(){ img.remove(); };
-          img.src=url; mw.appendChild(img);
+          mw.appendChild(img);
+          bqBindImg(img, url, function(){ var sv=mw.querySelector('svg.bull'); if(sv) sv.style.display='none'; }, function(){ img.remove(); });
         }
       }
       recalc();
@@ -5530,9 +5529,8 @@
       if(feat && b.image_url && !feat.querySelector('img.bqreal')){
         var img=document.createElement('img'); img.className='bqreal'; img.alt='Your bull';
         img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
-        img.onload=function(){ var s=feat.querySelector('svg.bull'); if(s) s.style.display='none'; };
-        img.onerror=function(){ img.remove(); };
-        img.src=b.image_url; feat.appendChild(img);
+        feat.appendChild(img);
+        bqBindImg(img, b.image_url, function(){ var s=feat.querySelector('svg.bull'); if(s) s.style.display='none'; }, function(){ img.remove(); });
       }
     }
     var greet=document.querySelector('#view-home .hi .n');
@@ -5540,6 +5538,14 @@
     injectSignout();
   }
 
+  // Load a bull image with cache-busting retries so a stale 404 / slow CDN never strands the fallback.
+  function bqBindImg(imgEl, url, onOk, onFail){
+    if(!imgEl||!url){ if(onFail) onFail(imgEl); return; }
+    var n=0, base=String(url).split('?')[0];
+    imgEl.onload=function(){ imgEl.style.display=''; if(onOk) onOk(imgEl); };
+    imgEl.onerror=function(){ n++; if(n<=4){ setTimeout(function(){ imgEl.src=base+'?r='+n+'x'+(Date.now?Date.now():n); }, 300*n); } else if(onFail){ onFail(imgEl); } };
+    imgEl.src=base;
+  }
   function fetchBull(u, tries){
     return sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).limit(1).then(function(r){
       if(r.error) throw r.error;
@@ -5596,7 +5602,7 @@
           '<div class="bqrev-rays" style="background:conic-gradient('+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00)"></div>'+
           '<div class="bqrev-aura" style="background:radial-gradient(circle,'+t.c+'99,'+t.c+'00 70%)"></div>'+
           '<div class="bqrev-fb" style="background:radial-gradient(circle,'+t.c+'26,'+t.c+'00 72%)">🐂</div>'+
-          '<img class="bqrev-bull" alt="" src="'+b.image_url+'" onload="this.previousElementSibling.style.opacity=0" onerror="this.style.display=\'none\'">'+
+          '<img id="bqRevImg" class="bqrev-bull" alt="" style="display:none">'+
         '</div>'+
         '<div class="bqrev-name">'+nm+'</div>'+
         '<div><span class="bqrev-pill" style="color:'+t.c+';background:'+t.c+'1c"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+'</span><span class="bqrev-rank">Rank #'+b.rarity_rank+' / 5,000</span></div>'+
@@ -5609,6 +5615,8 @@
         '<p class="bqrev-note">This bull is yours. Welcome to the herd.</p>'+
       '</div>';
     document.body.appendChild(el);
+    var rimg=el.querySelector('#bqRevImg'), rfb=el.querySelector('.bqrev-fb');
+    bqBindImg(rimg, b.image_url, function(){ if(rfb) rfb.style.opacity=0; }, function(){ if(rimg) rimg.style.display='none'; });
     el.querySelector('.bqrev-go').addEventListener('click', function(){ el.remove(); });
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
   }
@@ -5622,7 +5630,7 @@
     if(!panel){ panel=document.createElement('div'); panel.id='bqMyBull'; if(grid&&grid.parentNode) grid.parentNode.insertBefore(panel,grid); else v.appendChild(panel); }
     panel.style.cssText='padding:0 14px 24px';
     panel.innerHTML='<div style="background:#fff;border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(20,16,40,.08);text-align:center;max-width:420px;margin:0 auto">'+
-      '<div style="width:150px;height:150px;margin:0 auto 8px"><img src="'+b.image_url+'" alt="" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display=\'none\'"></div>'+
+      '<div style="width:150px;height:150px;margin:0 auto 8px"><img id="bqPanelImg" alt="" style="width:100%;height:100%;object-fit:contain"></div>'+
       '<div style="font-size:22px;font-weight:800;color:#20143A">'+(b.name||('Bull #'+b.id))+'</div>'+
       '<div style="margin:4px 0 14px;font-size:13px;color:#6B7280"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rank #'+b.rarity_rank+' of 5,000 &middot; Level '+ub.level+'</div>'+
       '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">'+statTile('Power',ub.power,'#43C06A','stat_power')+statTile('Speed',ub.speed,'#7C5CE6','stat_speed')+statTile('Stam',ub.stamina,'#EE5B62','stat_stamina')+statTile('Temper',ub.temper,'#E6961B','stat_temper')+'</div>'+
@@ -5630,6 +5638,7 @@
       '<button type="button" onclick="if(window.showToast)showToast(\'Share links are coming soon\')" style="margin-top:14px;border:0;background:#EEE9FB;color:#6B31E6;font-size:13px;font-weight:800;padding:10px 16px;border-radius:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px"><i class="pico" style="--m:url(assets/icons/ui_share.png);width:15px;height:15px;background:#6B31E6"></i>Share my bull</button>'+
       (b.body?'<div style="margin-top:10px;font-size:11.5px;color:#9AA6B2;line-height:1.5">'+b.body+' &middot; '+b.belly+' &middot; '+b.horns+' &middot; '+b.face+'</div>':'')+
     '</div>';
+    bqBindImg(panel.querySelector('#bqPanelImg'), b.image_url);
   }
   function loadAndShow(routeHome, reveal){
     return sb.auth.getUser().then(function(res){
