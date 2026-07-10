@@ -5545,15 +5545,63 @@
   function showClaim(ub){
     var b=ub&&ub.bulls; if(!b) return;
     var t=tier(b.rarity_rank);
-    var el=document.createElement('div'); el.className='bqauth';
-    el.innerHTML='<div class="bqauth-card" style="max-width:340px">'+
-      '<div style="font-size:12px;font-weight:800;letter-spacing:1px;color:#7C5CE6">YOUR FREE GENESIS BULL</div>'+
-      '<div style="width:150px;height:150px;margin:10px auto 6px"><img src="'+b.image_url+'" alt="" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display=\'none\'"></div>'+
-      '<h2 style="margin:2px 0;font-size:23px;color:#20143A">'+(b.name||('Bull #'+b.id))+'</h2>'+
-      '<p class="sub" style="margin:0 0 16px"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rank #'+b.rarity_rank+' of 5,000</p>'+
-      '<button class="bqauth-go">Enter BullQuest</button></div>';
+    if(!document.getElementById('bq-reveal-css')){
+      var st=document.createElement('style'); st.id='bq-reveal-css';
+      st.textContent=
+        '@keyframes bqRevPop{0%{transform:scale(.72) translateY(20px);opacity:0}58%{transform:scale(1.035) translateY(0)}100%{transform:scale(1);opacity:1}}'+
+        '@keyframes bqRevFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}'+
+        '@keyframes bqRevGlow{0%,100%{transform:scale(1);opacity:.72}50%{transform:scale(1.13);opacity:1}}'+
+        '@keyframes bqRevSpin{to{transform:rotate(360deg)}}'+
+        '@keyframes bqRevFall{0%{transform:translateY(-24px) rotate(0);opacity:0}8%{opacity:1}100%{transform:translateY(112vh) rotate(600deg);opacity:0}}'+
+        '@keyframes bqRevIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}'+
+        '.bqrev{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(130% 100% at 50% -12%,rgba(124,92,230,.55),rgba(19,13,38,.88));backdrop-filter:blur(4px);overflow:hidden}'+
+        '.bqrev-card{position:relative;width:100%;max-width:360px;background:#fff;border-radius:28px;padding:22px 22px 20px;text-align:center;box-shadow:0 30px 90px rgba(18,9,46,.55);animation:bqRevPop .58s cubic-bezier(.2,1.25,.3,1) both}'+
+        '.bqrev-eye{font-size:11.5px;font-weight:800;letter-spacing:1.7px}'+
+        '.bqrev-stage{position:relative;width:200px;height:172px;margin:8px auto 2px;display:flex;align-items:center;justify-content:center}'+
+        '.bqrev-rays{position:absolute;width:212px;height:212px;border-radius:50%;animation:bqRevSpin 16s linear infinite;opacity:.55}'+
+        '.bqrev-aura{position:absolute;width:182px;height:182px;border-radius:50%;filter:blur(7px);animation:bqRevGlow 2.7s ease-in-out infinite}'+
+        '.bqrev-fb{position:absolute;width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:80px;transition:opacity .35s}'+
+        '.bqrev-bull{position:relative;width:150px;height:150px;object-fit:contain;animation:bqRevFloat 3.4s ease-in-out infinite;filter:drop-shadow(0 10px 15px rgba(20,10,50,.24))}'+
+        '.bqrev-name{margin:8px 0 7px;font-size:24px;font-weight:800;color:#20143A;letter-spacing:-.3px;line-height:1.1}'+
+        '.bqrev-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;padding:5px 12px;border-radius:20px}'+
+        '.bqrev-rank{font-size:12.5px;color:#8A8598;font-weight:700;margin-left:3px}'+
+        '.bqrev-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:17px 0 2px;animation:bqRevIn .5s .35s both}'+
+        '.bqrev-stat{background:#F5F4FA;border-radius:13px;padding:9px 4px}'+
+        '.bqrev-stat b{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}'+
+        '.bqrev-stat span{font-size:10px;color:#8A8598;font-weight:800;letter-spacing:.5px;text-transform:uppercase}'+
+        '.bqrev-go{width:100%;margin-top:15px;padding:15px;border:0;border-radius:15px;background:linear-gradient(180deg,#4DA6F5,#3F8FE8);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 10px 22px rgba(63,143,232,.4)}'+
+        '.bqrev-go:active{transform:translateY(1px)}'+
+        '.bqrev-note{margin:11px 0 0;font-size:11.5px;color:#9AA6B2}'+
+        '.bqrev-cf{position:absolute;top:-24px;border-radius:2px;animation:bqRevFall linear infinite}'+
+        '@media(prefers-reduced-motion:reduce){.bqrev-card,.bqrev-bull,.bqrev-aura,.bqrev-rays,.bqrev-cf,.bqrev-stats{animation:none!important}.bqrev-cf{display:none}}';
+      document.head.appendChild(st);
+    }
+    var pal=['#F0B429','#7C5CE6','#4DA6F5','#43C06A','#EE5B62','#FF9F1C',t.c];
+    var cf=''; for(var i=0;i<18;i++){ var L=(i*53+9)%100, w=6+((i*5)%6), dur=(2.7+((i*7)%9)*0.16).toFixed(2), dl=((i%6)*0.22).toFixed(2), rot=(i*47)%360;
+      cf+='<span class="bqrev-cf" style="left:'+L+'%;width:'+w+'px;height:'+(w+6)+'px;background:'+pal[i%pal.length]+';animation-duration:'+dur+'s;animation-delay:'+dl+'s;transform:rotate('+rot+'deg)"></span>'; }
+    var nm=(b.name||('Bull #'+b.id));
+    var el=document.createElement('div'); el.className='bqrev';
+    el.innerHTML=cf+
+      '<div class="bqrev-card">'+
+        '<div class="bqrev-eye" style="color:'+t.c+'">YOUR FREE GENESIS BULL</div>'+
+        '<div class="bqrev-stage">'+
+          '<div class="bqrev-rays" style="background:conic-gradient('+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00)"></div>'+
+          '<div class="bqrev-aura" style="background:radial-gradient(circle,'+t.c+'99,'+t.c+'00 70%)"></div>'+
+          '<div class="bqrev-fb" style="background:radial-gradient(circle,'+t.c+'26,'+t.c+'00 72%)">🐂</div>'+
+          '<img class="bqrev-bull" alt="" src="'+b.image_url+'" onload="this.previousElementSibling.style.opacity=0" onerror="this.style.display=\'none\'">'+
+        '</div>'+
+        '<div class="bqrev-name">'+nm+'</div>'+
+        '<div><span class="bqrev-pill" style="color:'+t.c+';background:'+t.c+'1c"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+'</span><span class="bqrev-rank">Rank #'+b.rarity_rank+' / 5,000</span></div>'+
+        '<div class="bqrev-stats">'+
+          '<div class="bqrev-stat"><b style="color:#43C06A">'+ub.power+'</b><span>Power</span></div>'+
+          '<div class="bqrev-stat"><b style="color:#7C5CE6">'+ub.speed+'</b><span>Speed</span></div>'+
+          '<div class="bqrev-stat"><b style="color:#EE5B62">'+ub.stamina+'</b><span>Stamina</span></div>'+
+        '</div>'+
+        '<button class="bqrev-go">Enter BullQuest</button>'+
+        '<p class="bqrev-note">This bull is yours. Welcome to the herd.</p>'+
+      '</div>';
     document.body.appendChild(el);
-    el.querySelector('.bqauth-go').addEventListener('click', function(){ el.remove(); });
+    el.querySelector('.bqrev-go').addEventListener('click', function(){ el.remove(); });
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
   }
   function statTile(l,v,c){ return '<div style="background:#F5F5FA;border-radius:12px;padding:10px 4px"><div style="font-size:19px;font-weight:800;color:'+c+'">'+v+'</div><div style="font-size:11px;color:#6B7280;font-weight:700">'+l+'</div></div>'; }
