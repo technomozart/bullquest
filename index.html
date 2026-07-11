@@ -3573,13 +3573,13 @@
 
     <div class="fighter opp">
       <div class="nameplate">
-        <span class="fname">Titan</span>
+        <span class="fname">Challenger</span>
         <div class="meta-row">
-          <div class="hexbadge" aria-label="Level 13">
-            <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#EE5B62"/><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#fff" opacity=".14"/></svg>
-            <span>13</span>
+          <div class="hexbadge" aria-label="Level unknown">
+            <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#9AA6B2"/><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="#fff" opacity=".14"/></svg>
+            <span>?</span>
           </div>
-          <span class="rarity"><span class="dot" style="background:#4DA6F5"></span>Rare</span>
+          <span class="rarity"><span class="dot" style="background:#9AA6B2"></span>Near your level</span>
         </div>
       </div>
       <div class="mascot-wrap">
@@ -3587,9 +3587,9 @@
         <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2560.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
       </div>
       <div class="statrow">
-        <div class="stat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><span class="val">70</span></div>
-        <div class="stat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><span class="val">78</span></div>
-        <div class="stat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><span class="val">66</span></div>
+        <div class="stat pow"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png')"></i></span><span class="val">?</span></div>
+        <div class="stat spd"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png')"></i></span><span class="val">?</span></div>
+        <div class="stat sta"><span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png')"></i></span><span class="val">?</span></div>
       </div>
     </div>
   </div>
@@ -4651,12 +4651,8 @@
         var ra=f.querySelector('.rarity'); if(ra&&t) ra.innerHTML='<span class="dot" style="background:'+t.c+'"></span>'+t.l;
         var vals=f.querySelectorAll('.statrow .val'); if(vals.length===3){ vals[0].textContent=s.bull.power; vals[1].textContent=s.bull.speed; vals[2].textContent=s.bull.stamina; }
         var mw=f.querySelector('.mascot-wrap'), url=b&&b.bulls&&b.bulls.image_url;
-        if(mw && url && !mw.querySelector('img.bqreal')){
-          var img=document.createElement('img'); img.className='bqreal'; img.alt=bname;
-          img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
-          mw.appendChild(img);
-          bqBindImg(img, url, function(){ var sv=mw.querySelector('.bull'); if(sv&&sv!==img) sv.style.display='none'; }, function(){ img.remove(); });
-        }
+        var mwImg=mw&&mw.querySelector('img.bull');
+        if(mwImg && url){ mwImg.alt=bname; bqBindImg(mwImg, url); }
       }
       recalc();
     }).catch(function(){});
@@ -5288,12 +5284,8 @@
       if(el=card.querySelector('.stat.spd .sv b')) el.textContent=ub.speed;
       if(el=card.querySelector('.stat.sta .sv b')) el.textContent=ub.stamina;
       var feat=card.querySelector('.feat-bull');
-      if(feat && b.image_url && !feat.querySelector('img.bqreal')){
-        var img=document.createElement('img'); img.className='bqreal'; img.alt='Your bull';
-        img.style.cssText='width:100%;height:100%;object-fit:contain;display:block';
-        feat.appendChild(img);
-        bqBindImg(img, b.image_url, function(){ var s=feat.querySelector('.bull'); if(s&&s!==img) s.style.display='none'; }, function(){ img.remove(); });
-      }
+      var featImg=feat&&feat.querySelector('img.bull');
+      if(featImg && b.image_url){ featImg.alt='Your bull'; bqBindImg(featImg, b.image_url); }
     }
     var rk=document.querySelector('#view-home .rankhex span'); if(rk) rk.textContent=ub.level;
     if(b.image_url){ // avatar + training show the player's OWN bull, not a random one
