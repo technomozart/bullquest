@@ -5190,6 +5190,25 @@
   var KEY_='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNld3VtZGlva252anRzaW9seGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2OTI3NzUsImV4cCI6MjA5OTI2ODc3NX0.n_r2gixZZTuTyJOiUhCZMpPKp5mUYtdM9bShs-nWkWk';
   var BOLT='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>';
   var sb=null, mode='signup', modal, acctLabel='', curBull=null;
+  // --- launch safety: Cloudflare Turnstile CAPTCHA on signup + sold-out waitlist ---
+  var TURNSTILE_SITE_KEY='1x00000000000000000000AA'; // TEST key: renders + always passes. Swap for your real Turnstile site key (see docs/LAUNCH_SAFETY.md).
+  var tsWidgetId=null, captchaToken='';
+  function loadTurnstile(){ if(window.turnstile||document.getElementById('bqTsScript')) return; var s=document.createElement('script'); s.id='bqTsScript'; s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async=true; s.defer=true; document.head.appendChild(s); }
+  function renderTurnstile(){ var el=modal&&modal.querySelector('#bqTurnstile'); if(!el) return; if(!window.turnstile){ setTimeout(renderTurnstile,200); return; } captchaToken=''; if(tsWidgetId!==null){ try{ window.turnstile.reset(tsWidgetId); }catch(e){} return; } try{ tsWidgetId=window.turnstile.render(el,{sitekey:TURNSTILE_SITE_KEY,callback:function(t){captchaToken=t;},'expired-callback':function(){captchaToken='';},'error-callback':function(){captchaToken='';}}); }catch(e){} }
+  function updateBullsLeft(){ var bl=modal&&modal.querySelector('#bqBullsLeft'); if(!bl||!sb) return; sb.rpc('bulls_remaining').then(function(r){ var n=r&&r.data; if(typeof n!=='number') return; if(n<=0){ closeModal(); showWaitlist(''); } else if(mode==='signup'){ bl.style.display=''; bl.textContent=n.toLocaleString()+' free bulls left'; } }).catch(function(){}); }
+  function showWaitlist(email){
+    var el=document.createElement('div'); el.className='bqauth';
+    el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot">🐂</div><h2>All bulls are claimed</h2><p class="sub">The 5,000 Genesis bulls are taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
+    document.body.appendChild(el);
+    var card=el.querySelector('.bqauth-card'), inp=el.querySelector('#bqWlEmail'); inp.value=email||'';
+    el.querySelector('.bqauth-x').addEventListener('click', function(){ el.remove(); });
+    el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
+    el.querySelector('#bqWlGo').addEventListener('click', function(){
+      var e=(inp.value||'').trim(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){ el.querySelector('#bqWlErr').textContent='Enter a valid email.'; return; }
+      var g=el.querySelector('#bqWlGo'); g.disabled=true; g.textContent='Joining...';
+      sb.rpc('join_waitlist',{p_email:e}).then(function(r){ if(r&&r.data&&r.data.ok){ card.innerHTML='<div class="bqauth-mascot">&#127881;</div><h2>You are on the list</h2><p class="sub">We will email you the moment a bull opens up. Thanks for the patience.</p><button class="bqauth-go" id="bqWlDone">Done</button>'; card.querySelector('#bqWlDone').addEventListener('click', function(){ el.remove(); }); } else { g.disabled=false; g.textContent='Join the waitlist'; el.querySelector('#bqWlErr').textContent='Could not join, please try again.'; } }).catch(function(){ g.disabled=false; g.textContent='Join the waitlist'; });
+    });
+  }
 
   function tier(r){ if(r==null)return{l:'Common',c:'#9AA6B2'}; if(r<=50)return{l:'Legendary',c:'#F0B429'}; if(r<=300)return{l:'Epic',c:'#7C5CE6'}; if(r<=1200)return{l:'Rare',c:'#4DA6F5'}; return{l:'Common',c:'#9AA6B2'}; }
 
@@ -5199,9 +5218,11 @@
       +'<div class="bqauth-mascot">🐂</div>'
       +'<h2 id="bqAuthTitle">Claim your free Bull</h2>'
       +'<p class="sub" id="bqAuthSub">Make an account and we’ll hand you a Genesis bull on the spot.</p>'
+      +'<p id="bqBullsLeft" style="margin:-4px 0 10px;font-size:12px;font-weight:800;color:#43C06A;text-align:center;display:none"></p>'
       +'<input id="bqEmail" type="email" placeholder="you@email.com" autocomplete="email">'
       +'<input id="bqPass" type="password" placeholder="Password (6+ characters)" autocomplete="current-password">'
       +'<p class="bqauth-err" id="bqAuthErr"></p>'
+      +'<div id="bqTurnstile" style="display:none;justify-content:center;margin:2px 0 8px"></div>'
       +'<button class="bqauth-go" id="bqAuthSubmit">Sign up &amp; claim</button>'
       +'<button class="bqauth-toggle" id="bqAuthToggle">Already have an account? Log in</button></div>';
     document.body.appendChild(modal);
@@ -5218,9 +5239,12 @@
     modal.querySelector('#bqAuthSubmit').textContent = mode==='signup'?'Sign up & claim':'Log in';
     modal.querySelector('#bqAuthToggle').textContent = mode==='signup'?'Already have an account? Log in':'New here? Create an account';
     modal.querySelector('#bqPass').setAttribute('autocomplete', mode==='signup'?'new-password':'current-password');
+    var ts=modal.querySelector('#bqTurnstile'); if(ts) ts.style.display = mode==='signup' ? 'flex' : 'none';
+    var bl=modal.querySelector('#bqBullsLeft'); if(bl) bl.style.display='none';
+    if(mode==='signup'){ renderTurnstile(); updateBullsLeft(); }
     errmsg('');
   }
-  function openModal(intent){ if(!modal) buildModal(); mode = intent==='login'?'login':'signup'; applyMode(); modal.hidden=false; modal.querySelector('#bqEmail').focus(); }
+  function openModal(intent){ loadTurnstile(); if(!modal) buildModal(); mode = intent==='login'?'login':'signup'; applyMode(); modal.hidden=false; modal.querySelector('#bqEmail').focus(); }
   function closeModal(){ if(modal) modal.hidden=true; }
   function errmsg(m){ if(modal) modal.querySelector('#bqAuthErr').textContent=m||''; }
   function toggleMode(){ mode = mode==='signup' ? 'login' : 'signup'; applyMode(); }
@@ -5239,14 +5263,15 @@
     var pass=modal.querySelector('#bqPass').value;
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ errmsg('Enter a valid email address.'); return; }
     if(pass.length<6){ errmsg('Password must be at least 6 characters.'); return; }
+    if(mode==='signup' && window.turnstile && !captchaToken){ errmsg('Please complete the verification below.'); return; }
     var btn=modal.querySelector('#bqAuthSubmit'), lbl=btn.textContent;
     btn.disabled=true; btn.textContent = mode==='signup'?'Claiming your bull…':'Logging in…'; errmsg('');
     var p = mode==='signup'
-      ? sb.auth.signUp({email:email,password:pass}).then(function(r){ if(r.error) throw r.error; return sb.auth.signInWithPassword({email:email,password:pass}); })
+      ? sb.auth.signUp({email:email,password:pass,options: captchaToken?{captchaToken:captchaToken}:{}}).then(function(r){ if(r.error) throw r.error; return sb.auth.signInWithPassword({email:email,password:pass}); })
       : sb.auth.signInWithPassword({email:email,password:pass});
     p.then(function(r){ if(r.error) throw r.error; return loadAndShow(true, mode==='signup'); })
      .then(function(){ closeModal(); })
-     .catch(function(e){ errmsg(friendly(e)); })
+     .catch(function(e){ var m=(e&&e.message)||''; if(mode==='signup' && /sold out|fully claimed/i.test(m)){ closeModal(); showWaitlist(email); } else { errmsg(friendly(e)); if(mode==='signup') renderTurnstile(); } })
      .then(function(){ btn.disabled=false; btn.textContent=lbl; });
   }
 
