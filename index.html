@@ -4636,6 +4636,21 @@
   }
 
   var ov;
+  function duelConfetti(host){
+    if(!document.getElementById('bq-duel-cf-css')){ var st=document.createElement('style'); st.id='bq-duel-cf-css'; st.textContent='@keyframes bqDcf{0%{transform:translateY(-12px) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(340px) rotate(600deg);opacity:0}}'; document.head.appendChild(st); }
+    [].forEach.call(host.querySelectorAll(':scope > span.bqdcf'), function(s){ s.remove(); });
+    var pal=['#F0B429','#7C5CE6','#4DA6F5','#43C06A','#EE5B62','#FF9F1C'];
+    for(var i=0;i<18;i++){ var s=document.createElement('span'); s.className='bqdcf'; var L=(i*53+9)%100, w=6+((i*5)%6); s.style.cssText='position:absolute;top:6%;left:'+L+'%;width:'+w+'px;height:'+(w+6)+'px;border-radius:2px;pointer-events:none;background:'+pal[i%pal.length]+';animation:bqDcf '+(1.8+((i*7)%8)*0.15).toFixed(2)+'s linear '+((i%6)*0.12).toFixed(2)+'s forwards'; host.appendChild(s); setTimeout((function(el){return function(){ if(el&&el.parentNode) el.remove(); };})(s), 3600); }
+  }
+  function maybeArenaGuide(){
+    var seen; try{ seen=localStorage.getItem('bq_arena_guide'); }catch(e){}
+    if(seen) return; try{ localStorage.setItem('bq_arena_guide','1'); }catch(e){}
+    var el=document.createElement('div'); el.style.cssText='position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(20,16,40,.6);backdrop-filter:blur(3px);padding:20px';
+    el.innerHTML='<div style="width:100%;max-width:340px;background:#fff;border-radius:22px;padding:24px;font-family:inherit;box-shadow:0 24px 60px rgba(20,16,40,.4)"><div style="text-align:center;font-size:38px">&#9876;&#65039;</div><h2 style="margin:4px 0 4px;font-size:22px;text-align:center;color:#20143A">How duels work</h2><p style="margin:0 0 14px;font-size:13.5px;color:#6B7280;text-align:center">Beat a challenger near your level and win GRIT toward your airdrop.</p><div style="font-size:13.5px;color:#374151;line-height:1.65;background:#F5F5FA;border-radius:14px;padding:12px 14px;margin-bottom:16px"><div style="margin-bottom:6px"><b>1. Discipline</b> &middot; pick which stat clashes (Power / Speed / Stamina).</div><div style="margin-bottom:6px"><b>2. Stance</b> &middot; Charge beats Feint beats Brace beats Charge. Read your rival.</div><div><b>3. Charge!</b> &middot; the counter tips the odds. Win = GRIT + XP.</div></div><button class="go" style="width:100%;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#4DA6F5,#3F8FE8);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit">Got it, let me duel</button></div>';
+    document.body.appendChild(el);
+    el.querySelector('.go').addEventListener('click', function(){ el.remove(); });
+    el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
+  }
   function showResult(r){
     if(!ov){
       ov=document.createElement('div'); ov.className='bq-duel-ov';
@@ -4646,8 +4661,10 @@
       ov.addEventListener('click', function(e){ if(e.target===ov) ov.style.display='none'; });
     }
     var win=r.win;
-    ov.querySelector('.e').textContent = win?'🏆':'💥';
-    var t=ov.querySelector('.t'); t.textContent = win?'Victory':'Defeat'; t.style.color = win?'#2FA657':'#D8434B';
+    var streak=0; try{ streak=parseInt(localStorage.getItem('bq_ws')||'0',10)||0; }catch(e){}
+    streak = win ? streak+1 : 0; try{ localStorage.setItem('bq_ws', String(streak)); }catch(e){}
+    ov.querySelector('.e').textContent = win ? (streak>=3?'🔥':'🏆') : '💥';
+    var t=ov.querySelector('.t'); t.textContent = win ? (streak>=2 ? streak+' in a row!' : 'Victory') : 'Defeat'; t.style.color = win?'#2FA657':'#D8434B';
     ov.querySelector('.s').textContent = (r.crit?'Critical hit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance+' ('+r.stanceOutcome+' read)';
     var o=r.opponent||{};
     ov.querySelector('.rows').innerHTML =
@@ -4659,6 +4676,7 @@
     var ovals=document.querySelectorAll('#view-arena .fighter.opp .statrow .val');
     if(ovals.length===3 && o.power!=null){ ovals[0].textContent=o.power; ovals[1].textContent=o.speed; ovals[2].textContent=o.stamina; }
     ov.style.display='flex';
+    if(win) duelConfetti(ov);
     setEnergy(r.state.energy, r.state.energy_max);
     if(window.bqSetGrit) window.bqSetGrit(r.state.grit);
   }
@@ -4678,7 +4696,7 @@
 
   recalc();
   window.bqArenaRefresh = refreshFromServer;
-  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-arena"]')) setTimeout(refreshFromServer, 80); });
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-arena"]')){ setTimeout(refreshFromServer, 80); setTimeout(maybeArenaGuide, 420); } });
   (function waitGame(n){ if(window.bqGame && window.bqGame.ready()){ refreshFromServer(); } else if((n||0)<80){ setTimeout(function(){ waitGame((n||0)+1); }, 80); } })(0);
 })();
 
