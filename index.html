@@ -5419,7 +5419,7 @@
       '<div style="margin:4px 0 14px;font-size:13px;color:#6B7280"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rank #'+b.rarity_rank+' of 5,000 &middot; Level '+ub.level+'</div>'+
       '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">'+statTile('Power',ub.power,'#43C06A','stat_power')+statTile('Speed',ub.speed,'#7C5CE6','stat_speed')+statTile('Stam',ub.stamina,'#EE5B62','stat_stamina')+statTile('Temper',ub.temper,'#E6961B','stat_temper')+'</div>'+
       '<div style="font-size:12.5px;color:#6B7280">Record <b style="color:#20143A">'+ub.wins+'W '+ub.losses+'L</b> &middot; Energy '+ub.energy+'/'+ub.energy_max+'</div>'+
-      '<button type="button" onclick="if(window.showToast)showToast(\'Share links are coming soon\')" style="margin-top:14px;border:0;background:#EEE9FB;color:#6B31E6;font-size:13px;font-weight:800;padding:10px 16px;border-radius:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px"><i class="pico" style="--m:url(assets/icons/ui_share.png);width:15px;height:15px;background:#6B31E6"></i>Share my bull</button>'+
+      '<button type="button" onclick="if(window.bqShareBull)window.bqShareBull()" style="margin-top:14px;border:0;background:#EEE9FB;color:#6B31E6;font-size:13px;font-weight:800;padding:10px 16px;border-radius:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px"><i class="pico" style="--m:url(assets/icons/ui_share.png);width:15px;height:15px;background:#6B31E6"></i>Share my bull</button>'+
       (b.body?'<div style="margin-top:10px;font-size:11.5px;color:#9AA6B2;line-height:1.5">'+b.body+' &middot; '+b.belly+' &middot; '+b.horns+' &middot; '+b.face+'</div>':'')+
     '</div>';
     bqBindImg(panel.querySelector('#bqPanelImg'), b.image_url);
@@ -5730,6 +5730,50 @@
   }
   window.bqLeaderboard = showLeaderboard;
   document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('#bqLbBtn')){ e.preventDefault(); showLeaderboard(); } });
+
+  // ---- Growth: shareable bull image card ----
+  function rrect(x,rx,ry,w,h,r){ x.beginPath(); x.moveTo(rx+r,ry); x.arcTo(rx+w,ry,rx+w,ry+h,r); x.arcTo(rx+w,ry+h,rx,ry+h,r); x.arcTo(rx,ry+h,rx,ry,r); x.arcTo(rx,ry,rx+w,ry,r); x.closePath(); }
+  function shareOrDownload(blob, filename){
+    if(!blob){ if(window.showToast) showToast('Could not build the card'); return; }
+    var file=null; try{ file=new File([blob],filename,{type:'image/png'}); }catch(e){}
+    if(file && navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
+      navigator.share({ files:[file], text:'My BullQuest bull. Claim a free one and gather GRIT for the $BULL airdrop.' }).catch(function(){ dl(); });
+    } else dl();
+    function dl(){ var u=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=u; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); },2000); if(window.showToast) showToast('Card saved - share it anywhere'); }
+  }
+  function shareBullCard(){
+    if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
+    if(!curBull){ if(window.showToast) showToast('Loading your bull...'); return; }
+    if(window.showToast) showToast('Building your share card...');
+    var b=curBull.bulls||{}, ub=curBull, t=tier(b.rarity_rank);
+    sb.rpc('leaderboard').then(function(r){ var d=(r&&r.data)||{}; draw(d.yourGrit, d.yourRank); }).catch(function(){ draw(null,null); });
+    function draw(grit, rank){
+      var W=1080,H=1080, c=document.createElement('canvas'); c.width=W;c.height=H; var x=c.getContext('2d');
+      var g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,'#6E35E9'); g.addColorStop(1,'#4A22C6'); x.fillStyle=g; x.fillRect(0,0,W,H);
+      x.globalAlpha=.10; x.fillStyle='#fff'; x.beginPath(); x.arc(170,170,230,0,7); x.fill(); x.beginPath(); x.arc(950,910,270,0,7); x.fill(); x.globalAlpha=1;
+      var logo=new Image(); logo.crossOrigin='anonymous'; logo.src='assets/icons/logo.png';
+      var bull=new Image(); bull.crossOrigin='anonymous'; bull.src=(b.image_url||'').split('?')[0];
+      var n=2; logo.onload=r2; logo.onerror=r2; bull.onload=r2; bull.onerror=r2;
+      function r2(){ if(--n>0) return; paint(); }
+      function ct(s,cx,cy,font,color){ x.font=font; x.fillStyle=color; x.textAlign='center'; x.textBaseline='alphabetic'; x.fillText(s,cx,cy); }
+      function paint(){
+        try{ if(logo.naturalWidth) x.drawImage(logo, W/2-165, 58, 74, 74); }catch(e){}
+        ct('BULLQUEST', W/2+34, 114, '800 48px -apple-system,Segoe UI,Roboto,sans-serif', '#fff');
+        var cy=468; var gg=x.createRadialGradient(W/2,cy,40,W/2,cy,330); gg.addColorStop(0,t.c); gg.addColorStop(1,'rgba(255,255,255,0)'); x.globalAlpha=.55; x.fillStyle=gg; x.beginPath(); x.arc(W/2,cy,330,0,7); x.fill(); x.globalAlpha=1;
+        try{ if(bull.naturalWidth) x.drawImage(bull, W/2-270, cy-270, 540, 540); }catch(e){}
+        ct((b.name||('Bull #'+b.id)), W/2, 802, '800 54px -apple-system,Segoe UI,Roboto,sans-serif', '#fff');
+        var rl=t.l.toUpperCase(); x.font='800 30px -apple-system,Segoe UI,Roboto,sans-serif'; var rw=x.measureText(rl).width+56; x.fillStyle=t.c; rrect(x,W/2-rw/2,828,rw,52,26); x.fill(); ct(rl, W/2, 864, '800 30px -apple-system,Segoe UI,Roboto,sans-serif', '#fff');
+        var stats=[['POWER',ub.power],['SPEED',ub.speed],['STAM',ub.stamina]], cw=210, gp=24, tw=cw*3+gp*2, sx=W/2-tw/2, sy=912;
+        stats.forEach(function(s,i){ var px=sx+i*(cw+gp); x.fillStyle='rgba(255,255,255,.14)'; rrect(x,px,sy,cw,88,18); x.fill(); ct(String(s[1]==null?'-':s[1]), px+cw/2, sy+48, '800 42px -apple-system,Segoe UI,Roboto,sans-serif', '#fff'); ct(s[0], px+cw/2, sy+74, '800 18px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.75)'); });
+        var foot = (grit!=null) ? (grit.toLocaleString()+' GRIT gathered'+(rank?'   ·   Rank #'+rank:'')) : 'Gathering GRIT for the $BULL airdrop';
+        ct(foot, W/2, 1032, '800 30px -apple-system,Segoe UI,Roboto,sans-serif', '#FFE7A6');
+        ct('Claim a free bull at technomozart.github.io/bullquest', W/2, 1066, '600 24px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.9)');
+        try{ c.toBlob(function(blob){ shareOrDownload(blob, 'bullquest-'+(b.id||'bull')+'.png'); }, 'image/png'); }
+        catch(e){ if(window.showToast) showToast('Could not export the card'); }
+      }
+    }
+  }
+  window.bqShareBull = shareBullCard;
 
   initFeedback();
 
