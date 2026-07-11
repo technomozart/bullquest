@@ -3031,6 +3031,7 @@
             Airdrop unlocks at $BULL launch
           </div>
           <button type="button" id="bqLbBtn" style="margin-top:11px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:14px;height:14px;background:#fff"></i>Airdrop leaderboard &rsaquo;</button>
+          <button type="button" id="bqInviteBtn" style="margin-top:11px;margin-left:8px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_share.png');width:14px;height:14px;background:#fff"></i>Invite friends</button>
         </div>
       </div>
 
@@ -5294,7 +5295,7 @@
       ? sb.auth.signUp({email:email,password:pass,options: captchaToken?{captchaToken:captchaToken}:{}}).then(function(r){ if(r.error) throw r.error; return sb.auth.signInWithPassword({email:email,password:pass}); })
       : sb.auth.signInWithPassword({email:email,password:pass});
     p.then(function(r){ if(r.error) throw r.error; return loadAndShow(true, mode==='signup'); })
-     .then(function(){ closeModal(); })
+     .then(function(){ closeModal(); if(mode==='signup') recordReferralIfAny(); })
      .catch(function(e){ var m=(e&&e.message)||''; if(mode==='signup' && /sold out|fully claimed/i.test(m)){ closeModal(); showWaitlist(email); } else { errmsg(friendly(e)); if(mode==='signup') renderTurnstile(); } })
      .then(function(){ btn.disabled=false; btn.textContent=lbl; });
   }
@@ -5794,6 +5795,36 @@
       b.disabled=false; b.textContent=ol;
     }).catch(function(){ b.disabled=false; b.textContent=ol; if(msg) msg.textContent='Could not join, please try again.'; });
   });
+
+  // ---- Referral: capture ?ref, record after signup, invite overlay ----
+  try{ var _rm=location.search.match(/[?&]ref=([A-Za-z0-9]{4,24})/); if(_rm) localStorage.setItem('bq_ref', _rm[1]); }catch(e){}
+  function recordReferralIfAny(){
+    var ref; try{ ref=localStorage.getItem('bq_ref'); }catch(e){}
+    if(!ref||!sb) return;
+    sb.rpc('record_referral',{p_ref_code:ref}).then(function(){ try{ localStorage.removeItem('bq_ref'); }catch(e){} }).catch(function(){});
+  }
+  function showInvite(){
+    if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
+    sb.rpc('get_state').then(function(r){
+      var ref=(r&&r.data&&r.data.ref)||{}, code=ref.code||'', count=ref.count||0;
+      var link='https://technomozart.github.io/bullquest/?ref='+code;
+      var el=document.createElement('div'); el.className='bqfb-ov';
+      el.innerHTML='<div class="bqfb" style="max-width:420px;text-align:center">'+
+        '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE FRIENDS</div>'+
+        '<h3 style="margin:2px 0 4px;font-size:21px">Grow the herd</h3>'+
+        '<p class="sub" style="margin:0 0 16px">Every friend who joins and gathers GRIT grows the whole airdrop. '+(count>0?('<b style="color:#20143A">'+count+'</b> joined via your link so far.'):'Be the first to bring someone in.')+'</p>'+
+        '<div style="display:flex;gap:8px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" class="send" style="flex:none;padding:12px 18px">Copy</button></div>'+
+        '<div class="bqfb-actions" style="margin-top:14px"><button type="button" class="cancel" id="bqRefShare">Share link</button><button type="button" class="send" id="bqRefClose">Done</button></div></div>';
+      document.body.appendChild(el);
+      el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
+      el.querySelector('#bqRefClose').addEventListener('click', function(){ el.remove(); });
+      function copy(){ var i=el.querySelector('#bqRefLink'); try{ i.select(); }catch(e){} if(navigator.clipboard){ navigator.clipboard.writeText(link).then(function(){ if(window.showToast) showToast('Link copied'); },function(){}); } else { try{ document.execCommand('copy'); if(window.showToast) showToast('Link copied'); }catch(e){} } }
+      el.querySelector('#bqRefCopy').addEventListener('click', copy);
+      el.querySelector('#bqRefShare').addEventListener('click', function(){ var txt='Claim a free bull on BullQuest and gather GRIT for the $BULL airdrop. '+link; if(navigator.share){ navigator.share({text:txt}).catch(function(){}); } else copy(); });
+    }).catch(function(){ if(window.showToast) showToast('Could not load your invite link'); });
+  }
+  window.bqInvite = showInvite;
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('#bqInviteBtn')){ e.preventDefault(); showInvite(); } });
 
   initFeedback();
 
