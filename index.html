@@ -5891,9 +5891,11 @@
     var TINT={ '#F0B429':'#FBF1DC','#7C5CE6':'#F0ECFB','#4DA6F5':'#E4EEF3','#9AA6B2':'#EEF1F4' };
     function tileHtml(b){ var t=tier(b.rarity_rank), img=b.image_url||bqMktImg(b.id), bg=TINT[t.c]||'#F1EFF7';
       return '<button type="button" class="bqmkt-tile" data-id="'+b.id+'" style="--rc-bg:'+bg+'" aria-label="Bull #'+b.id+', '+t.l+', rarity rank '+b.rarity_rank+'">'+
-        '<div class="bqmkt-thumb"><img loading="lazy" decoding="async" src="'+img+'" alt="Bull #'+b.id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none">🐂</span></div>'+
+        '<div class="bqmkt-thumb"><img class="bqmkt-im" decoding="async" data-src="'+img+'" alt="Bull #'+b.id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none">🐂</span></div>'+
         '<div class="bqmkt-row"><span class="bqmkt-id">#'+b.id+'</span><span class="bqmkt-rar" style="color:'+t.c+'"><span class="d" style="background:'+t.c+'"></span>'+t.l+'</span></div>'+
         '<div class="bqmkt-rank">Rarity rank #'+b.rarity_rank+'</div></button>'; }
+    var imgIO = window.IntersectionObserver ? new IntersectionObserver(function(ens){ ens.forEach(function(en){ if(!en.isIntersecting) return; var im=en.target; imgIO.unobserve(im); im.src=im.getAttribute('data-src'); }); }, {rootMargin:'500px'}) : null;
+    function observeImgs(fromIdx){ for(var i=fromIdx;i<grid.children.length;i++){ var im=grid.children[i].querySelector('.bqmkt-im'); if(!im) continue; if(imgIO) imgIO.observe(im); else im.src=im.getAttribute('data-src'); } }
     function updateMeta(){ var shown=grid.children.length, lbl={all:'bulls',leg:'Legendary',epic:'Epic',rare:'Rare',common:'Common'}[filter];
       if(searchId!=null){ metaEl.textContent = shown? ('Bull #'+searchId) : ('No bull #'+searchId+' (1-5,000)'); return; }
       metaEl.textContent = (total!=null)? ('Showing '+shown.toLocaleString()+' of '+total.toLocaleString()+' '+lbl) : (shown+' '+lbl);
@@ -5904,7 +5906,7 @@
       fetch(q,{headers:bqMktHeaders(offset===0&&searchId==null)}).then(function(res){ var cr=res.headers.get('content-range'); if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') total=parseInt(p[1],10); } return res.json(); })
       .then(function(rows){ loading=false;
         if(!rows||!rows.length){ if(offset===0){ grid.innerHTML=''; } done=true; statusEl.textContent = grid.children.length? '' : 'No bulls found.'; updateMeta(); return; }
-        var html=''; for(var i=0;i<rows.length;i++) html+=tileHtml(rows[i]); grid.insertAdjacentHTML('beforeend', html); offset+=rows.length;
+        var startIdx=grid.children.length; var html=''; for(var i=0;i<rows.length;i++) html+=tileHtml(rows[i]); grid.insertAdjacentHTML('beforeend', html); observeImgs(startIdx); offset+=rows.length;
         if(searchId!=null||rows.length<PAGE){ done=true; statusEl.textContent = searchId!=null?'':'That’s the whole collection.'; } else statusEl.textContent='';
         updateMeta(); if(!done && window.IntersectionObserver && sentinel.getBoundingClientRect().top < window.innerHeight+600) fetchPage(); })
       .catch(function(){ loading=false; statusEl.textContent='Could not load the collection. Tap a filter to retry.'; }); }
