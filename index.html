@@ -5305,6 +5305,10 @@
       }
     }
     var rk=document.querySelector('#view-home .rankhex span'); if(rk) rk.textContent=ub.level;
+    if(b.image_url){ // avatar + training show the player's OWN bull, not a random one
+      var av=document.querySelector('#view-home .avatar .disc img'); if(av) bqBindImg(av, b.image_url);
+      var tr=document.querySelector('#view-home .tc img'); if(tr) bqBindImg(tr, b.image_url);
+    }
     var greet=document.querySelector('#view-home .hi .n');
     if(greet && username) greet.textContent='Hey, '+username;
     injectSignout();
