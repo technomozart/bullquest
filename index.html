@@ -5548,6 +5548,103 @@
     walletLogin(t.getAttribute('data-wallet'));
   }, true);
 
+  // ---- Feedback widget (bug report + suggestion), visible on every screen ----
+  function initFeedback(){
+    if(document.getElementById('bqFbBtn')) return;
+    var st=document.createElement('style'); st.textContent=[
+      '#bqFbBtn{position:fixed;left:14px;bottom:86px;z-index:9998;display:inline-flex;align-items:center;gap:7px;background:#20143A;color:#fff;border:0;padding:10px 14px;border-radius:22px;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 8px 22px rgba(20,10,50,.35);font-family:inherit}',
+      '#bqFbBtn:hover{background:#2c1d52;transform:translateY(-1px)}#bqFbBtn:active{transform:translateY(0)}',
+      '@media(max-width:520px){#bqFbBtn{bottom:80px;padding:9px 12px}}',
+      '.bqfb-ov{position:fixed;inset:0;z-index:10001;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,14,40,.55);backdrop-filter:blur(3px)}',
+      '@media(min-width:560px){.bqfb-ov{align-items:center;padding:20px}}',
+      '.bqfb{width:100%;max-width:460px;background:#fff;border-radius:22px 22px 0 0;padding:20px 20px 22px;font-family:inherit;box-shadow:0 -10px 40px rgba(20,10,50,.3);max-height:92vh;overflow:auto}',
+      '@media(min-width:560px){.bqfb{border-radius:22px}}',
+      '.bqfb h3{margin:0 0 3px;font-size:19px;color:#20143A}.bqfb .sub{margin:0 0 14px;font-size:13px;color:#8A85A0}',
+      '.bqfb-seg{display:flex;gap:8px;margin-bottom:13px}',
+      '.bqfb-seg button{flex:1;border:1.5px solid #E6E8EF;background:#fff;color:#4B3B7A;font-weight:800;font-size:14px;padding:11px;border-radius:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px}',
+      '.bqfb-seg button.on{border-color:#7C5CE6;background:#F3EFFE;color:#6B31E6}',
+      '.bqfb textarea{width:100%;box-sizing:border-box;min-height:108px;border:1.5px solid #E6E8EF;border-radius:13px;padding:12px 13px;font-size:14.5px;font-family:inherit;resize:vertical}.bqfb textarea:focus{outline:none;border-color:#7C5CE6}',
+      '.bqfb-drop{margin-top:11px;border:1.5px dashed #D9DCE6;border-radius:13px;padding:14px;text-align:center;color:#8A85A0;font-size:13px;cursor:pointer;transition:all .15s}.bqfb-drop.hover{border-color:#7C5CE6;background:#F7F5FE;color:#6B31E6}',
+      '.bqfb-thumb{margin-top:10px;display:none;align-items:center;gap:10px;background:#F5F4FA;border-radius:12px;padding:8px 10px;font-size:12.5px;color:#4B3B7A}.bqfb-thumb img{width:44px;height:44px;object-fit:cover;border-radius:8px}.bqfb-thumb button{margin-left:auto;border:0;background:#EEE9FB;color:#6B31E6;font-weight:800;font-size:12px;padding:6px 10px;border-radius:10px;cursor:pointer;font-family:inherit}',
+      '.bqfb-ctx{margin:12px 0 2px;font-size:11.5px;color:#9AA6B2}',
+      '.bqfb-actions{display:flex;gap:10px;margin-top:16px}.bqfb-actions .cancel{border:0;background:#F0F1F5;color:#4B3B7A;font-weight:800;padding:14px 18px;border-radius:13px;cursor:pointer;font-family:inherit}.bqfb-actions .send{flex:1;border:0;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-weight:800;font-size:15px;padding:14px;border-radius:13px;cursor:pointer;font-family:inherit}.bqfb-actions .send:disabled{opacity:.6;cursor:default}',
+      '.bqfb-done{text-align:center;padding:6px 0}'
+    ].join(''); document.head.appendChild(st);
+
+    var btn=document.createElement('button'); btn.id='bqFbBtn'; btn.type='button'; btn.setAttribute('aria-label','Report a bug or suggest an idea');
+    btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg>Feedback';
+    btn.addEventListener('click', openFb); document.body.appendChild(btn);
+
+    var ov, kind='bug', file=null;
+    function currentView(){ var v=document.querySelector('.bq-view:not([hidden])'); return v?v.id.replace('view-',''):'landing'; }
+    function openFb(){
+      kind='bug'; file=null;
+      ov=document.createElement('div'); ov.className='bqfb-ov';
+      ov.innerHTML='<div class="bqfb" role="dialog" aria-label="Send feedback">'+
+        '<h3>Send feedback</h3><p class="sub">Found a bug or have an idea? We read every one.</p>'+
+        '<div class="bqfb-seg">'+
+          '<button type="button" data-k="bug" class="on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="8" y="8" width="8" height="11" rx="4"/><path d="M12 8V5M9 3.5l1.4 1.8M15 3.5l-1.4 1.8M8 11H4M8 15.5H4M16 11h4M16 15.5h4M8.5 8l-2-2M15.5 8l2-2"/></svg>Bug</button>'+
+          '<button type="button" data-k="suggestion"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-4 11.6c.8.7 1 1.6 1 2.4h6c0-.8.2-1.7 1-2.4A6.5 6.5 0 0 0 12 2.5z"/></svg>Suggestion</button>'+
+        '</div>'+
+        '<textarea id="bqfbMsg" placeholder="Describe the bug: what happened, and what did you expect?"></textarea>'+
+        '<div class="bqfb-drop" id="bqfbDrop">Drag a screenshot here, or <b>tap to attach</b></div>'+
+        '<input type="file" id="bqfbFile" accept="image/*" style="display:none">'+
+        '<div class="bqfb-thumb" id="bqfbThumb"></div>'+
+        '<div class="bqfb-ctx" id="bqfbCtx"></div>'+
+        '<div class="bqfb-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="send">Send feedback</button></div>'+
+      '</div>';
+      document.body.appendChild(ov);
+      var card=ov.querySelector('.bqfb');
+      ov.querySelector('#bqfbCtx').textContent='Attached automatically: screen ('+currentView()+'), browser, and size.';
+      ov.querySelectorAll('.bqfb-seg button').forEach(function(b){ b.addEventListener('click', function(){
+        ov.querySelectorAll('.bqfb-seg button').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); kind=b.getAttribute('data-k');
+        ov.querySelector('#bqfbMsg').placeholder = kind==='bug' ? 'Describe the bug: what happened, and what did you expect?' : 'Describe your idea and why it would help.';
+      }); });
+      var fileInput=ov.querySelector('#bqfbFile'), drop=ov.querySelector('#bqfbDrop'), thumb=ov.querySelector('#bqfbThumb');
+      drop.addEventListener('click', function(){ fileInput.click(); });
+      fileInput.addEventListener('change', function(){ if(fileInput.files&&fileInput.files[0]) setFile(fileInput.files[0]); });
+      ['dragenter','dragover'].forEach(function(e){ drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.add('hover'); }); });
+      ['dragleave','drop'].forEach(function(e){ drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.remove('hover'); }); });
+      drop.addEventListener('drop', function(ev){ var f=ev.dataTransfer&&ev.dataTransfer.files&&ev.dataTransfer.files[0]; if(f) setFile(f); });
+      function setFile(f){
+        if(!/^image\//.test(f.type)){ if(window.showToast) showToast('Please attach an image'); return; }
+        if(f.size>6*1024*1024){ if(window.showToast) showToast('Image too large (max 6MB)'); return; }
+        file=f; var url=URL.createObjectURL(f);
+        thumb.style.display='flex'; thumb.innerHTML='<img src="'+url+'" alt=""><span>'+(f.name||'screenshot').slice(0,28)+'</span><button type="button">Remove</button>';
+        thumb.querySelector('button').addEventListener('click', function(){ file=null; thumb.style.display='none'; thumb.innerHTML=''; fileInput.value=''; drop.style.display='block'; });
+        drop.style.display='none';
+      }
+      ov.querySelector('.cancel').addEventListener('click', closeFb);
+      ov.addEventListener('click', function(e){ if(e.target===ov) closeFb(); });
+      ov.querySelector('.send').addEventListener('click', function(){ submitFb(ov.querySelector('.send'), card); });
+      setTimeout(function(){ var m=ov&&ov.querySelector('#bqfbMsg'); if(m) m.focus(); }, 60);
+    }
+    function closeFb(){ if(ov){ ov.remove(); ov=null; } }
+    function submitFb(send, card){
+      var msg=(ov.querySelector('#bqfbMsg').value||'').trim();
+      if(msg.length<3){ if(window.showToast) showToast('Please add a bit more detail'); return; }
+      if(!sb){ if(window.showToast) showToast('Still loading, try again in a second'); return; }
+      send.disabled=true; send.textContent='Sending...';
+      var ctx={ page:currentView(), url:location.href, ua:navigator.userAgent, scr:(window.innerWidth+'x'+window.innerHeight) };
+      function finish(imgUrl){
+        sb.rpc('submit_feedback', { p_kind:kind, p_message:msg, p_page:ctx.page, p_url:ctx.url, p_user_agent:ctx.ua, p_screen:ctx.scr, p_image_url:imgUrl||null })
+          .then(function(r){
+            if(r&&r.data&&r.data.ok){ card.innerHTML='<div class="bqfb-done"><div style="font-size:44px">&#127881;</div><h3>Thank you</h3><p class="sub">We got your '+(kind==='bug'?'bug report':'suggestion')+'. It helps a lot.</p><div class="bqfb-actions"><button type="button" class="send" id="bqfbClose">Done</button></div></div>'; card.querySelector('#bqfbClose').addEventListener('click', closeFb); }
+            else { send.disabled=false; send.textContent='Send feedback'; if(window.showToast) showToast('Could not send, please try again'); }
+          }).catch(function(){ send.disabled=false; send.textContent='Send feedback'; if(window.showToast) showToast('Could not send, please try again'); });
+      }
+      if(file){
+        var ext=((file.name||'png').split('.').pop()||'png').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5)||'png';
+        var path=(Date.now()+'-'+Math.random().toString(36).slice(2,10))+'.'+ext;
+        sb.storage.from('feedback').upload(path, file, { contentType:file.type, upsert:false }).then(function(u){
+          if(u&&u.error){ finish(null); return; }
+          var pub=sb.storage.from('feedback').getPublicUrl(path); finish(pub&&pub.data&&pub.data.publicUrl);
+        }).catch(function(){ finish(null); });
+      } else finish(null);
+    }
+  }
+  initFeedback();
+
   // boot
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
