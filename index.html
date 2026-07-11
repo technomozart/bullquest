@@ -5310,7 +5310,7 @@
       if(el=card.querySelector('.hexbadge svg path')) el.setAttribute('fill', t.c);
       if(el=card.querySelector('.bull')) el.setAttribute('aria-label','Your active bull, '+bname);
       if(el=card.querySelector('.rarity')) el.innerHTML='<span class="dot" style="background:'+t.c+'"></span>'+t.l;
-      if(el=card.querySelector('.energy')) el.innerHTML=BOLT+' '+ub.energy+'/10 Energy';
+      if(el=card.querySelector('.energy')) el.innerHTML=BOLT+' '+ub.energy+'/'+ub.energy_max+' Energy';
       if(el=card.querySelector('.stat.pow .sv b')) el.textContent=ub.power;
       if(el=card.querySelector('.stat.spd .sv b')) el.textContent=ub.speed;
       if(el=card.querySelector('.stat.sta .sv b')) el.textContent=ub.stamina;
@@ -5416,6 +5416,13 @@
     var b=curBull.bulls||{}, ub=curBull, t=tier(b.rarity_rank);
     var grid=v.querySelector('#bullGrid'); if(grid) grid.style.display='none';
     var det=v.querySelector('#detail'); if(det) det.style.display='none';
+    // de-mock the surrounding chrome so it matches the one real bull (was a fake "6 bulls" collection)
+    var cnt=v.querySelector('.head-l .n small'); if(cnt) cnt.textContent='1 bull';
+    var filters=v.querySelector('.filters'); if(filters) filters.style.display='none';
+    var sortBtn=v.querySelector('.topbar .iconbtn'); if(sortBtn) sortBtn.style.display='none';
+    var labels=v.querySelectorAll('.sheet .seclabel');
+    if(labels[0]){ var fh=labels[0].querySelector('#filterHint'); if(fh) fh.textContent=''; var h3=labels[0].querySelector('h3'); if(h3) h3.textContent='Your Bull'; }
+    if(labels[1]) labels[1].style.display='none';
     var panel=v.querySelector('#bqMyBull');
     if(!panel){ panel=document.createElement('div'); panel.id='bqMyBull'; if(grid&&grid.parentNode) grid.parentNode.insertBefore(panel,grid); else v.appendChild(panel); }
     panel.style.cssText='padding:0 14px 24px';
