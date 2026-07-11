@@ -4654,6 +4654,7 @@
         var mwImg=mw&&mw.querySelector('img.bull');
         if(mwImg && url){ mwImg.alt=bname; bqBindImg(mwImg, url); }
       }
+      var ovs=root.querySelectorAll('.fighter.opp .statrow .val'); for(var oi=0;oi<ovs.length;oi++) ovs[oi].textContent='?';
       recalc();
     }).catch(function(){});
   }
@@ -4671,11 +4672,16 @@
     var win=r.win;
     ov.querySelector('.e').textContent = win?'🏆':'💥';
     var t=ov.querySelector('.t'); t.textContent = win?'Victory':'Defeat'; t.style.color = win?'#2FA657':'#D8434B';
-    ov.querySelector('.s').textContent = (r.crit?'Rampage crit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance+' ('+r.stanceOutcome+' read)';
+    ov.querySelector('.s').textContent = (r.crit?'Critical hit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance+' ('+r.stanceOutcome+' read)';
+    var o=r.opponent||{};
     ov.querySelector('.rows').innerHTML =
-      '<div>Score <b>'+r.yourScore+'</b> vs '+r.oppScore+'</div>'+
+      '<div>Your score <b>'+r.yourScore+'</b> &nbsp;vs&nbsp; challenger <b>'+r.oppScore+'</b></div>'+
+      '<div>Challenger was <b>'+(o.power!=null?o.power:'?')+'</b> Pow &middot; <b>'+(o.speed!=null?o.speed:'?')+'</b> Spd &middot; <b>'+(o.stamina!=null?o.stamina:'?')+'</b> Sta</div>'+
       '<div>GRIT <b style="color:'+(r.gritDelta>=0?'#2FA657':'#D8434B')+'">'+(r.gritDelta>=0?'+':'')+r.gritDelta+'</b> &nbsp; XP <b>+'+r.xpGain+'</b>'+(r.leveled?' &nbsp; <b style="color:#7C5CE6">LEVEL UP!</b>':'')+'</div>'+
       '<div>Balance <b>'+r.state.grit+' GRIT</b> &nbsp; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &nbsp; '+r.state.wins+'W '+r.state.losses+'L</div>';
+    // reveal the challenger's stats on the VS card too (fills the ? for this fight)
+    var ovals=document.querySelectorAll('#view-arena .fighter.opp .statrow .val');
+    if(ovals.length===3 && o.power!=null){ ovals[0].textContent=o.power; ovals[1].textContent=o.speed; ovals[2].textContent=o.stamina; }
     ov.style.display='flex';
     setEnergy(r.state.energy, r.state.energy_max);
     if(window.bqSetGrit) window.bqSetGrit(r.state.grit);
