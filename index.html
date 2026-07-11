@@ -3107,32 +3107,7 @@
         <div class="qt"><b>Daily Goals</b><span>Play to gather GRIT for your airdrop</span></div>
       </div>
 
-      <a href="#" class="quest" data-bqgo="view-spin" style="text-decoration:none;color:inherit">
-        <span class="qi" style="background:var(--amber)" aria-hidden="true"><i class="pico" style="--m:url('assets/icons/ui_refresh.png');width:18px;height:18px;background:#fff"></i></span>
-        <div class="qbody">
-          <div class="qname"><b>Take your daily spin</b><span class="qp" id="bqQuestSpin">Go &rsaquo;</span></div>
-          <div class="bar"><i id="bqQuestSpinBar" style="width:8%;background:var(--amber)"></i></div>
-        </div>
-        <span class="reward"><img src="assets/icons/gem_grit.png" width="15" height="15" alt="" style="vertical-align:middle">10-100</span>
-      </a>
-
-      <a href="#" class="quest" data-bqgo="view-arena" style="text-decoration:none;color:inherit">
-        <span class="qi" style="background:var(--coral)" aria-hidden="true"><i class="pico" style="--m:url('assets/icons/nav_arena.png');width:18px;height:18px;background:#fff"></i></span>
-        <div class="qbody">
-          <div class="qname"><b>Win a duel in the Arena</b><span class="qp">Go &rsaquo;</span></div>
-          <div class="bar"><i style="width:8%;background:var(--coral)"></i></div>
-        </div>
-        <span class="reward"><img src="assets/icons/gem_grit.png" width="15" height="15" alt="" style="vertical-align:middle">+XP</span>
-      </a>
-
-      <a href="#" class="quest" data-bqgo="view-arena" style="text-decoration:none;color:inherit">
-        <span class="qi" style="background:var(--speed)" aria-hidden="true"><i class="pico" style="--m:url('assets/icons/stat_power.png');width:18px;height:18px;background:#fff"></i></span>
-        <div class="qbody">
-          <div class="qname"><b>Level up your bull</b><span class="qp">Go &rsaquo;</span></div>
-          <div class="bar"><i style="width:8%;background:var(--speed)"></i></div>
-        </div>
-        <span class="reward"><img src="assets/icons/gem_grit.png" width="15" height="15" alt="" style="vertical-align:middle">+stats</span>
-      </a>
+      <div id="bqQuestList"></div>
     </div>
 
     <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/ui_training.png')"></i>Training</h3><a class="link" href="#" data-bqtoast="Gym - coming soon">Gym <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
@@ -5487,11 +5462,38 @@
     var ss=document.getElementById('spinState'), sn=document.getElementById('spinSub');
     if(ss) ss.textContent = s.spun_today ? 'Come back tomorrow' : 'Free spin ready';
     if(sn) sn.textContent = s.spun_today ? 'Your next free spin unlocks tomorrow.' : 'Win 10 to 100 GRIT, once a day.';
-    var qs=document.getElementById('bqQuestSpin'), qsb=document.getElementById('bqQuestSpinBar');
-    if(qs) qs.innerHTML = s.spun_today ? 'Done' : 'Go &rsaquo;';
-    if(qsb) qsb.style.width = s.spun_today ? '100%' : '8%';
+    if(s.quests) renderQuests(s.quests);
     var sr=document.getElementById('bqSpinReady'); if(sr) sr.textContent = s.spun_today ? 'Come back tomorrow' : 'Free daily spin';
   }
+  function renderQuests(q){
+    q=q||{}; var claims=q.claims||[]; var el=document.getElementById('bqQuestList'); if(!el) return;
+    var list=[
+      {key:'spin', label:'Take your daily spin', reward:25, done:!!q.spin_done, cur:(q.spin_done?1:0), goal:1, go:'view-spin', color:'var(--amber)', icon:'ui_refresh'},
+      {key:'win', label:'Win a duel', reward:50, done:((q.wins_today||0)>=1), cur:Math.min(q.wins_today||0,1), goal:1, go:'view-arena', color:'var(--coral)', icon:'nav_arena'},
+      {key:'duel3', label:'Play 3 duels', reward:40, done:((q.duels_today||0)>=3), cur:Math.min(q.duels_today||0,3), goal:3, go:'view-arena', color:'var(--speed)', icon:'stat_power'}
+    ];
+    el.innerHTML=list.map(function(x){
+      var claimed=claims.indexOf(x.key)>=0, pct=Math.max(6,Math.round(x.cur/x.goal*100)), right, tag, attr;
+      if(claimed){ right='<span class="reward" style="color:#2FA657;font-weight:800"><i class="pico" style="--m:url(assets/icons/ui_check.png);width:13px;height:13px;background:#2FA657;vertical-align:-2px"></i> Claimed</span>'; tag='div'; attr=''; }
+      else if(x.done){ right='<button type="button" class="bqclaim" data-key="'+x.key+'" style="border:0;background:#43C06A;color:#fff;font-size:12px;font-weight:800;padding:8px 13px;border-radius:12px;cursor:pointer;font-family:inherit">Claim +'+x.reward+'</button>'; tag='div'; attr=''; }
+      else { right='<span class="reward"><img src="assets/icons/gem_grit.png" width="15" height="15" alt="" style="vertical-align:middle">'+x.cur+'/'+x.goal+'</span>'; tag='a'; attr=' href="#" data-bqgo="'+x.go+'"'; }
+      return '<'+tag+' class="quest"'+attr+' style="text-decoration:none;color:inherit">'+
+        '<span class="qi" style="background:'+x.color+'" aria-hidden="true"><i class="pico" style="--m:url(assets/icons/'+x.icon+'.png);width:18px;height:18px;background:#fff"></i></span>'+
+        '<div class="qbody"><div class="qname"><b>'+x.label+'</b><span class="qp">'+(claimed?'Done':(x.done?'Ready':x.cur+'/'+x.goal))+'</span></div>'+
+        '<div class="bar"><i style="width:'+(claimed||x.done?100:pct)+'%;background:'+x.color+'"></i></div></div>'+
+        right+'</'+tag+'>';
+    }).join('');
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest&&e.target.closest('.bqclaim'); if(!b||!sb) return;
+    e.preventDefault(); var key=b.getAttribute('data-key'); b.disabled=true; var old=b.textContent; b.textContent='...';
+    sb.rpc('claim_quest',{p_key:key}).then(function(r){
+      var d=r&&r.data;
+      if(d&&d.ok){ setGrit(d.grit); if(window.showToast) showToast('+'+d.reward+' GRIT claimed'); sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.quests) renderQuests(g.data.quests); }); }
+      else { b.disabled=false; b.textContent=old; if(window.showToast) showToast(d&&d.error==='already-claimed'?'Already claimed':'Not ready yet'); }
+    }).catch(function(){ b.disabled=false; b.textContent=old; });
+  });
+  renderQuests({});
   window.bqSetGrit = setGrit;
   window.bqToast = function(m){ walletMsg(m); };
   window.bqOpenAuth = function(){ openModal('signup'); };
