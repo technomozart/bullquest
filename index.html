@@ -20,6 +20,8 @@
 .lstat .tile .pico{width:12px;height:12px;background:#fff}
 .seclabel h3 .pico{width:15px;height:15px;background:currentColor;margin-right:6px;vertical-align:-2px}
 .decor{position:absolute;pointer-events:none}
+.bq-arena .mascot-wrap img{width:100%;height:auto;display:block}
+.bq-onboard .mascot-wrap img{width:100%;height:auto;display:block}
 .sol{display:none}   /* SOL price lines hidden until on-chain trading exists */
 #view-home,#view-arena{min-height:100vh;padding:24px 14px;background:radial-gradient(120% 60% at 50% 0%,#EDF0F6 0%,#E3E7F0 100%)}
 
@@ -3544,7 +3546,7 @@
       </button>
       <div>
         <div class="title">The Arena</div>
-        <div class="subtitle">Ranked stat-clash &middot; Bronze League</div>
+        <div class="subtitle">Stat-clash duels &middot; win GRIT</div>
       </div>
     </div>
     <div class="energy" aria-label="Energy: 7 of 10">
@@ -3642,7 +3644,7 @@
       <span class="bicon"><i class="pico" style="--m:url('assets/icons/item_energy.png');width:22px;height:22px;background:#6b4a05"></i></span>
       <span class="btext">
         <span class="bt">Energy Drink</span>
-        <span class="bs">+6% win chance this battle &middot; x2 owned</span>
+        <span class="bs">+6% win chance &middot; boosters coming soon</span>
       </span>
       <span class="toggle" aria-hidden="true"></span>
     </button>
@@ -3659,15 +3661,11 @@
         <div class="rw-h">Stake &amp; reward</div>
         <div class="payouts">
           <div class="pay">
-            <img class="coin" src="assets/icons/coin_bull.png" alt="" style="object-fit:contain">
-            <span class="pv"><b>+40</b><span>$BULL</span></span>
-          </div>
-          <div class="pay">
             <img class="coin" src="assets/icons/gem_grit.png" alt="" style="object-fit:contain">
-            <span class="pv"><b>+120</b><span>GRIT</span></span>
+            <span class="pv"><b id="rwWin">+22</b><span>GRIT if you win</span></span>
           </div>
         </div>
-        <div class="stake-note">Stake <b>25 $BULL</b> &middot; you only risk your stake</div>
+        <div class="stake-note">Stake <b id="rwStake">25</b> GRIT &middot; you only risk your stake</div>
       </div>
     </div>
 
