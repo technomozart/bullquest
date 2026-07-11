@@ -3025,6 +3025,7 @@
             <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             Airdrop unlocks at $BULL launch
           </div>
+          <button type="button" id="bqLbBtn" style="margin-top:11px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:14px;height:14px;background:#fff"></i>Airdrop leaderboard &rsaquo;</button>
         </div>
       </div>
 
@@ -5668,6 +5669,50 @@
       } else finish(null);
     }
   }
+  // ---- Airdrop leaderboard ----
+  function showLeaderboard(){
+    if(!sb){ if(window.showToast) showToast('Still loading, try again in a second'); return; }
+    var el=document.createElement('div'); el.className='bqfb-ov'; el._data=null;
+    el.innerHTML='<div class="bqfb" style="max-width:440px">'+
+      '<div style="text-align:center"><div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">GRIT AIRDROP</div>'+
+      '<h3 style="margin:2px 0 3px;font-size:21px">Leaderboard</h3>'+
+      '<p class="sub" style="margin:0 0 14px">The more GRIT you gather now, the bigger your future $BULL airdrop.</p></div>'+
+      '<div id="bqLbBody"><div style="text-align:center;color:#8A85A0;padding:28px 0">Loading...</div></div>'+
+      '<div class="bqfb-actions" style="margin-top:14px"><button type="button" class="cancel" id="bqLbShare">Share my rank</button><button type="button" class="send" id="bqLbClose">Close</button></div></div>';
+    document.body.appendChild(el);
+    el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
+    el.querySelector('#bqLbClose').addEventListener('click', function(){ el.remove(); });
+    el.querySelector('#bqLbShare').addEventListener('click', function(){
+      var d=el._data; if(!d){ return; }
+      var txt='I am #'+(d.yourRank||'?')+' of '+(d.total||'?')+' on the BullQuest airdrop leaderboard with '+((d.yourGrit||0).toLocaleString())+' GRIT, gathering for the $BULL airdrop. https://technomozart.github.io/bullquest/';
+      if(navigator.share){ navigator.share({text:txt}).catch(function(){}); }
+      else if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(function(){ if(window.showToast) showToast('Copied - paste it anywhere'); }); }
+      else if(window.showToast) showToast('Sharing not supported here');
+    });
+    sb.rpc('leaderboard').then(function(r){ renderLeaderboard(el, r&&r.data); }).catch(function(){ renderLeaderboard(el, null); });
+  }
+  function renderLeaderboard(el, d){
+    var body=el.querySelector('#bqLbBody'); if(!body) return;
+    if(!d || d.error){ body.innerHTML='<div style="text-align:center;color:#8A85A0;padding:24px 0">Sign in to see your airdrop rank.</div>'; return; }
+    el._data=d; var you=d.you, rows=d.top||[];
+    var yourCard='<div style="background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">'+
+      '<div style="font-size:26px;font-weight:800;min-width:44px">#'+(d.yourRank||'-')+'</div>'+
+      '<div style="flex:1"><div style="font-weight:800;font-size:15px">You</div><div style="font-size:12px;opacity:.85">of '+(d.total||0)+' player'+((d.total===1)?'':'s')+'</div></div>'+
+      '<div style="text-align:right"><div style="font-weight:800;font-size:19px">'+((d.yourGrit||0).toLocaleString())+'</div><div style="font-size:11px;opacity:.85">GRIT</div></div></div>';
+    var medal=['#F0B429','#AEB8C2','#CD7F32'];
+    var list=rows.map(function(x){
+      var mine=(x.handle===you);
+      var badge = x.rank<=3 ? '<span style="display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:'+medal[x.rank-1]+';color:#fff;font-weight:800;font-size:12px">'+x.rank+'</span>' : '<span style="display:inline-block;width:24px;text-align:center;font-weight:800;color:#8A85A0;font-size:13px">'+x.rank+'</span>';
+      return '<div style="display:flex;align-items:center;gap:11px;padding:9px 8px;border-radius:11px;'+(mine?'background:#F3EFFE':'')+'">'+badge+
+        '<div style="flex:1;font-weight:700;font-size:13.5px;color:'+(mine?'#6B31E6':'#20143A')+'">'+x.handle+(mine?' (you)':'')+'</div>'+
+        '<div style="font-weight:800;font-size:13.5px;color:#20143A"><img src="assets/icons/gem_grit.png" width="13" height="13" alt="" style="vertical-align:-1px;margin-right:3px">'+(x.grit||0).toLocaleString()+'</div></div>';
+    }).join('');
+    var footer = (d.total<=1) ? '<div style="text-align:center;color:#8A85A0;font-size:12.5px;margin-top:12px">You are first on the board. It fills as players join, and every GRIT you gather locks in your lead.</div>' : '';
+    body.innerHTML = yourCard + '<div style="max-height:46vh;overflow:auto">'+list+'</div>' + footer;
+  }
+  window.bqLeaderboard = showLeaderboard;
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('#bqLbBtn')){ e.preventDefault(); showLeaderboard(); } });
+
   initFeedback();
 
   // boot
