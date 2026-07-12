@@ -3023,7 +3023,7 @@
           <div class="season-k"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:13px;height:13px;background:currentColor;vertical-align:-1px;margin-right:5px"></i>GRIT Airdrop &middot; Preseason</div>
           <div class="tier">
             <b id="bqGritBand" style="font-size:27px">0</b>
-            <span style="font-size:13px;font-weight:800;opacity:.82;margin-left:6px">GRIT gathered</span>
+            <span style="font-size:13px;font-weight:800;opacity:.82;margin-left:6px">GRIT gathered</span><button type="button" class="bqhelp" data-help="grit" aria-label="What is GRIT" style="background:rgba(255,255,255,.28);color:#fff;margin-left:7px">?</button>
           </div>
           <div class="togo">Your future <b>$BULL</b> airdrop grows with every GRIT you earn.</div>
           <div class="ends">
@@ -3379,7 +3379,7 @@
   <div class="sheet">
     <div class="grab" aria-hidden="true"></div>
 
-    <div class="seclabel"><h3>Discipline</h3><span class="hint">Pick the stat that clashes</span></div>
+    <div class="seclabel"><h3>Discipline<button type="button" class="bqhelp" data-help="discipline" aria-label="What is Discipline">?</button></h3><span class="hint">Pick the stat that clashes</span></div>
     <div class="disciplines" role="group" aria-label="Choose discipline">
       <button type="button" class="chip d-pow" data-stat="pow" aria-pressed="true">
         <span class="tile"><img src="assets/icons/disc_clash.png" width="24" height="24" alt=""></span>
@@ -3395,7 +3395,7 @@
       </button>
     </div>
 
-    <div class="seclabel"><h3>Stance</h3><span class="hint">Skill layer &middot; soft counters</span></div>
+    <div class="seclabel"><h3>Stance<button type="button" class="bqhelp" data-help="stance" aria-label="What is Stance">?</button></h3><span class="hint">Skill layer &middot; soft counters</span></div>
     <div class="stances" role="group" aria-label="Choose stance">
       <button type="button" class="stance" data-stance="charge" aria-pressed="true">
         <span class="sicon"><img src="assets/icons/stance_charge.png" width="24" height="24" alt=""></span>
@@ -5272,7 +5272,57 @@
     if(location.hash==='#market'||location.hash==='#view-market') setTimeout(ensureInit, 400);
   })();
 
+  // ---- How to Play guide + tap-to-explain hints (make the game self-explanatory) ----
+  var HELP = {
+    grit:['GRIT','The token you earn by playing - win duels, take your daily spin, finish quests. When the $BULL token launches your GRIT becomes your airdrop, so the more you gather now, the bigger your share.'],
+    energy:['Energy','Each duel costs 2 energy. It refills on its own: 1 point every 15 minutes, up to your bull’s max (higher for rarer bulls).'],
+    stats:['Power, Speed & Stamina','Your bull’s three battle stats. Which one decides a duel depends on the Discipline you choose, so lead with your strongest.'],
+    temper:['Temper','Your crit stat. The higher it is, the more often your bull lands a critical hit for bonus power in a duel.'],
+    rarity:['Rarity','From Common to Legendary. Rarity sets your bull’s starting stats and energy - rarer bulls start stronger, but skill still decides fights.'],
+    level:['Level','Your bull levels up automatically as it wins duels. Every level makes all three battle stats stronger.'],
+    discipline:['Discipline','Chooses which stat wins the duel: Clash uses Power, Chase uses Speed, Standoff uses Stamina. Pick the one your bull is strongest in.'],
+    stance:['Stance','A rock-paper-scissors layer: Charge beats Feint, Feint beats Brace, Brace beats Charge. Read your rival’s stance to tip the odds your way.'],
+    streak:['Daily streak','Come back on back-to-back days to keep your streak alive for steady bonus GRIT.']
+  };
+  function bqCard(html, z){ var el=document.createElement('div'); el.className='bqfb-ov'; el.style.zIndex=z||10002; el.innerHTML=html; document.body.appendChild(el); function close(){ el.remove(); } el.addEventListener('click', function(e){ if(e.target===el) close(); }); return {el:el, close:close}; }
+  function showHelpTip(key){
+    var h=HELP[key]; if(!h) return;
+    var c=bqCard('<div class="bqfb" style="max-width:350px;text-align:left"><h3 style="margin:0 0 6px">'+h[0]+'</h3><p style="margin:0;font-size:14px;color:#4B4A63;line-height:1.6">'+h[1]+'</p><div class="bqfb-actions" style="margin-top:16px"><button type="button" class="send" style="flex:1">Got it</button></div></div>');
+    c.el.querySelector('.send').addEventListener('click', c.close);
+  }
+  function showHowTo(){
+    var S=function(icon,title,body){ return '<div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid #F0F0F5"><div style="flex:none;width:34px;height:34px;border-radius:11px;background:#F3EFFE;display:grid;place-items:center;font-size:17px">'+icon+'</div><div><b style="color:#20143A;font-size:14.5px">'+title+'</b><div style="font-size:13px;color:#6B7280;line-height:1.55;margin-top:2px">'+body+'</div></div></div>'; };
+    var c=bqCard('<div class="bqfb" style="max-width:460px;max-height:88vh;overflow:auto">'+
+      '<div style="text-align:center;margin-bottom:8px"><div style="font-size:34px">🐂</div><h3 style="margin:2px 0 2px">How BullQuest works</h3><p class="sub" style="margin:0">Claim a bull, make it stronger, battle to earn GRIT.</p></div>'+
+      S('🎯','The goal','Everyone gets a free bull. Battle other bulls and finish daily challenges to gather <b>GRIT</b>. When the $BULL token launches your GRIT becomes your airdrop, so gathering now pays off later.')+
+      S('📊','Your bull','<b>Power, Speed, Stamina</b> are its battle stats and <b>Temper</b> is its crit chance. <b>Rarity</b> sets its starting strength, and it <b>levels up</b> automatically as it wins.')+
+      S('⚔️','How a duel works','Pick a <b>Discipline</b> (Clash uses Power, Chase uses Speed, Standoff uses Stamina), then a <b>Stance</b> - Charge beats Feint beats Brace beats Charge. Rivals are matched near your bull, so skill decides it. Win = GRIT + XP.')+
+      S('⚡','Energy','Each duel costs 2 energy, and it refills on its own - 1 point every 15 minutes.')+
+      S('🎁','Free GRIT every day','Take your <b>daily spin</b>, finish <b>daily quests</b>, and keep a <b>login streak</b> going for steady GRIT with no risk.')+
+      S('🏆','Never pay to win','You can’t buy power. A rarer bull starts stronger, but your choices and consistency decide who wins.')+
+      S('🗺️','Coming soon','<b>Sector Wars</b> - team up in clans to control crypto sectors and share the rewards.')+
+      '<button type="button" class="send" style="width:100%;margin-top:16px;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit">Let’s go</button>'+
+    '</div>', 10003);
+    c.el.querySelector('.send').addEventListener('click', c.close);
+  }
+  window.bqHowTo = showHowTo;
+  function initHelp(){
+    if(document.getElementById('bqHelpBtn')) return;
+    var st=document.createElement('style'); st.textContent=[
+      '#bqHelpBtn{position:fixed;left:14px;bottom:134px;z-index:9998;width:40px;height:40px;border-radius:50%;border:0;background:#6B31E6;color:#fff;font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 8px 22px rgba(107,49,230,.4);font-family:inherit;display:grid;place-items:center}',
+      '#bqHelpBtn:hover{background:#5a29c4;transform:translateY(-1px)}#bqHelpBtn:active{transform:translateY(0)}',
+      '@media(max-width:520px){#bqHelpBtn{bottom:128px}}',
+      '.bqhelp{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:#E6E1F5;color:#6B31E6;font-size:11px;font-weight:800;cursor:pointer;vertical-align:middle;margin-left:6px;border:0;font-family:inherit;flex:none;line-height:1}'
+    ].join(''); document.head.appendChild(st);
+    var b=document.createElement('button'); b.id='bqHelpBtn'; b.type='button'; b.setAttribute('aria-label','How to play'); b.textContent='?';
+    b.addEventListener('click', showHowTo); document.body.appendChild(b);
+    document.addEventListener('click', function(e){ var t=e.target.closest && e.target.closest('[data-help]'); if(t){ e.preventDefault(); e.stopPropagation(); showHelpTip(t.getAttribute('data-help')); } }, true);
+    var seen; try{ seen=localStorage.getItem('bq_howto'); }catch(e){}
+    if(!seen){ setTimeout(function(){ if(document.querySelector('.bqrev-card')) return; try{ localStorage.setItem('bq_howto','1'); }catch(e){} showHowTo(); }, 1400); }
+  }
+
   initFeedback();
+  initHelp();
 
   // boot
   (function ready(){
