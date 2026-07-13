@@ -4854,7 +4854,59 @@
     if(sn) sn.textContent = s.spun_today ? 'Your next free spin unlocks tomorrow.' : 'Win 10 to 100 GRIT, once a day.';
     if(s.quests) renderQuests(s.quests);
     var sr=document.getElementById('bqSpinReady'); if(sr) sr.textContent = s.spun_today ? 'Come back tomorrow' : 'Free daily spin';
+    try{ renderGettingStarted(s); }catch(e){}
   }
+  // First-run "Getting started" checklist: guides a brand-new player to their first duel win,
+  // first spin, and first quest claim (activation). Driven by real state; self-hides once done,
+  // dismissed, or for established players (5+ duels).
+  function renderGettingStarted(s){
+    var sheet=document.querySelector('#view-home .sheet'); if(!sheet) return;
+    var ex=document.getElementById('bqGetStarted');
+    var ub=curBull||{}, q=(s&&s.quests)||{};
+    var played=(ub.wins||0)+(ub.losses||0);
+    var hidden=false, doneFlag=false;
+    try{ hidden=!!localStorage.getItem('bq_gs_hidden'); doneFlag=!!localStorage.getItem('bq_gs_done'); }catch(e){}
+    var steps=[
+      {k:'bull',  label:'Claim your free bull',   reward:0,  done:true,                          go:null},
+      {k:'duel',  label:'Win your first duel',    reward:50, done:((ub.wins||0)>0),               go:'view-arena'},
+      {k:'spin',  label:'Take your daily spin',   reward:25, done:!!(s&&s.spun_today),            go:'view-spin'},
+      {k:'quest', label:'Claim a daily quest',    reward:0,  done:(((q.claims||[]).length)>0),    go:'quests'}
+    ];
+    var doneN=steps.filter(function(x){return x.done;}).length, allDone=doneN>=steps.length;
+    if(allDone){ try{ localStorage.setItem('bq_gs_done','1'); }catch(e){} }
+    if(hidden || doneFlag || allDone || played>=5){ if(ex) ex.remove(); return; }
+    if(!ex){ ex=document.createElement('div'); ex.id='bqGetStarted'; sheet.insertBefore(ex, sheet.firstChild); }
+    ex.className='card';
+    ex.style.cssText='padding:15px 16px;margin-bottom:14px;border:1.5px solid #E9E3FB;background:linear-gradient(180deg,#FBF9FF,#fff)';
+    var rows=steps.map(function(x){
+      var chk = x.done
+        ? '<span style="flex:none;width:24px;height:24px;border-radius:50%;background:#43C06A;display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
+        : '<span style="flex:none;width:24px;height:24px;border-radius:50%;border:2px solid #D6CEF0"></span>';
+      var reward = x.reward? '<span style="font-size:11.5px;font-weight:800;color:#6B31E6;background:#EEE9FB;padding:2px 8px;border-radius:9px;margin-left:auto;flex:none">+'+x.reward+' GRIT</span>' : '';
+      var actionable=(!x.done && x.go);
+      var chev = actionable? '<svg width="16" height="16" viewBox="0 0 24 24" style="flex:none;margin-left:'+(x.reward?'6px':'auto')+'"><path d="M9 6l6 6-6 6" fill="none" stroke="#B7ADD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '';
+      var tag = actionable? 'button':'div';
+      var attr = actionable? ' type="button" data-gs="'+x.go+'"':'';
+      return '<'+tag+attr+' style="display:flex;align-items:center;gap:11px;width:100%;padding:9px 0;border:0;background:none;font-family:inherit;cursor:'+(actionable?'pointer':'default')+';text-align:left">'+
+        chk+'<span style="font-size:14px;font-weight:'+(x.done?'600':'800')+';color:'+(x.done?'#9AA6B2':'#20143A')+';'+(x.done?'text-decoration:line-through':'')+'">'+x.label+'</span>'+reward+chev+
+      '</'+tag+'>';
+    }).join('<div style="height:1px;background:#F0EDF8"></div>');
+    ex.innerHTML=
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+
+        '<b style="font-size:13px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#6B31E6">Getting started</b>'+
+        '<span style="font-size:12px;font-weight:800;color:#9AA6B2">'+doneN+' of '+steps.length+'</span>'+
+        '<button type="button" id="bqGsX" aria-label="Dismiss" style="margin-left:auto;border:0;background:none;color:#B7ADD6;font-size:19px;cursor:pointer;line-height:1;font-family:inherit">&times;</button>'+
+      '</div>'+
+      '<p style="margin:0 0 6px;font-size:12.5px;color:#8A85A0">A few quick wins to start gathering GRIT for the airdrop.</p>'+
+      rows;
+    ex.querySelector('#bqGsX').addEventListener('click', function(){ try{ localStorage.setItem('bq_gs_hidden','1'); }catch(e){} ex.remove(); });
+  }
+  document.addEventListener('click', function(e){
+    var b=e.target.closest && e.target.closest('[data-gs]'); if(!b) return;
+    var go=b.getAttribute('data-gs');
+    if(go==='quests'){ var ql=document.getElementById('bqQuestList'); if(ql&&ql.scrollIntoView) ql.scrollIntoView({behavior:'smooth',block:'center'}); }
+    else if(window.bqGo) window.bqGo(go);
+  });
   function renderQuests(q){
     q=q||{}; var claims=q.claims||[]; var el=document.getElementById('bqQuestList'); if(!el) return;
     var list=[
