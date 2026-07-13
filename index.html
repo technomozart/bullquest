@@ -4140,6 +4140,9 @@
         if(mwImg && url){ mwImg.alt=bname; bqBindImg(mwImg, url); }
       }
       var ovs=root.querySelectorAll('.fighter.opp .statrow .val'); for(var oi=0;oi<ovs.length;oi++) ovs[oi].textContent='?';
+      var opn=root.querySelector('.fighter.opp .fname'); if(opn) opn.textContent='Challenger';
+      var opl=root.querySelector('.fighter.opp .hexbadge span'); if(opl) opl.textContent='?';
+      var opr=root.querySelector('.fighter.opp .rarity'); if(opr) opr.innerHTML='<span class="dot" style="background:#9AA6B2"></span>Near your level';
       recalc();
     }).catch(function(){});
   }
@@ -4177,14 +4180,25 @@
     var t=ov.querySelector('.t'); t.textContent = win ? (streak>=2 ? streak+' in a row!' : 'Victory') : 'Defeat'; t.style.color = win?'#2FA657':'#D8434B';
     ov.querySelector('.s').textContent = (r.crit?'Critical hit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance+' ('+r.stanceOutcome+' read)';
     var o=r.opponent||{};
+    var oName=(o.name?(window.bqEsc?window.bqEsc(String(o.name)):'Challenger'):'Challenger');
     ov.querySelector('.rows').innerHTML =
-      '<div>Your score <b>'+r.yourScore+'</b> &nbsp;vs&nbsp; challenger <b>'+r.oppScore+'</b></div>'+
-      '<div>Challenger was <b>'+(o.power!=null?o.power:'?')+'</b> Pow &middot; <b>'+(o.speed!=null?o.speed:'?')+'</b> Spd &middot; <b>'+(o.stamina!=null?o.stamina:'?')+'</b> Sta</div>'+
+      '<div>Your score <b>'+r.yourScore+'</b> &nbsp;vs&nbsp; '+oName+' <b>'+r.oppScore+'</b></div>'+
+      '<div>'+oName+' was <b>'+(o.power!=null?o.power:'?')+'</b> Pow &middot; <b>'+(o.speed!=null?o.speed:'?')+'</b> Spd &middot; <b>'+(o.stamina!=null?o.stamina:'?')+'</b> Sta</div>'+
       '<div>GRIT <b style="color:'+(r.gritDelta>=0?'#2FA657':'#D8434B')+'">'+(r.gritDelta>=0?'+':'')+r.gritDelta+'</b> &nbsp; XP <b>+'+r.xpGain+'</b>'+(r.leveled?' &nbsp; <b style="color:#7C5CE6">LEVEL UP!</b>':'')+'</div>'+
       '<div>Balance <b>'+r.state.grit+' GRIT</b> &nbsp; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &nbsp; '+r.state.wins+'W '+r.state.losses+'L</div>';
-    // reveal the challenger's stats on the VS card too (fills the ? for this fight)
-    var ovals=document.querySelectorAll('#view-arena .fighter.opp .statrow .val');
-    if(ovals.length===3 && o.power!=null){ ovals[0].textContent=o.power; ovals[1].textContent=o.speed; ovals[2].textContent=o.stamina; }
+    // reveal the opponent's identity + stats on the VS card (name/avatar come from resolve_duel)
+    var oppF=document.querySelector('#view-arena .fighter.opp');
+    if(oppF){
+      var ovals=oppF.querySelectorAll('.statrow .val');
+      if(ovals.length===3 && o.power!=null){ ovals[0].textContent=o.power; ovals[1].textContent=o.speed; ovals[2].textContent=o.stamina; }
+      if(o.name){
+        var ofn=oppF.querySelector('.fname'); if(ofn) ofn.textContent=o.name;
+        var oln=oppF.querySelector('.hexbadge span'); if(oln) oln.textContent=(o.level!=null?o.level:'?');
+        var otier=(window.bqGame&&o.rarity_rank!=null)?window.bqGame.tier(o.rarity_rank):null;
+        var orr=oppF.querySelector('.rarity'); if(orr&&otier) orr.innerHTML='<span class="dot" style="background:'+otier.c+'"></span>'+otier.l;
+        var oimg=oppF.querySelector('.mascot-wrap img.bull'); if(oimg&&o.bull_id){ oimg.alt=String(o.name); oimg.src='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+o.bull_id+'.webp'; }
+      }
+    }
     var sn=document.getElementById('seed'); if(sn&&r.seed) sn.textContent=r.seed;
     ov.style.display='flex';
     if(win) duelConfetti(ov);
