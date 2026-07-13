@@ -3435,10 +3435,10 @@
         <div class="payouts">
           <div class="pay">
             <img class="coin" src="assets/icons/gem_grit.png" alt="" style="object-fit:contain">
-            <span class="pv"><b id="rwWin">+18</b><span>GRIT if you win</span></span>
+            <span class="pv"><b id="rwWin">+14</b><span>GRIT if you win</span></span>
           </div>
         </div>
-        <div class="stake-note">Stake <b id="rwStake">20</b> GRIT &middot; you only risk your stake</div>
+        <div class="stake-note">Stake <b id="rwStake">20</b> GRIT &middot; lose <b>12</b> if you fall</div>
       </div>
     </div>
 
@@ -4078,12 +4078,12 @@
   ring.setAttribute('stroke-dasharray', C.toFixed(2));
 
   var state = { stat: 'pow', stance: 'charge', boost: false };
+  var baseOdds = 50;  // real win odds from get_state (your bull's rarity + level edge)
 
   function recalc() {
-    var y = you[state.stat], o = opp[state.stat];
-    var pct = y / (y + o) * 100;
-    pct += (stanceNudge[state.stance] - 4);
-    // booster is not yet implemented server-side; it must not move the displayed odds.
+    // Win odds come from the bull's real rarity + level edge (server-computed). Stance is a blind read
+    // that nudges it; the near-mirror opponent means the discipline pick barely moves the base odds.
+    var pct = baseOdds + (stanceNudge[state.stance] - 4);
     pct = Math.round(Math.max(5, Math.min(95, pct)));
     winPct.textContent = pct + '%';
     ring.style.strokeDashoffset = (C * (1 - pct / 100)).toFixed(2);
@@ -4124,6 +4124,7 @@
     if(!(window.bqGame && window.bqGame.ready())) return;
     window.bqGame.getState().then(function(s){
       if(!s || s.error || !s.bull) return;
+      baseOdds = (typeof s.bull.win_odds === 'number') ? s.bull.win_odds : 50;
       you = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
       opp = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
       setEnergy(s.bull.energy, s.bull.energy_max);
@@ -4185,7 +4186,8 @@
       '<div>Your score <b>'+r.yourScore+'</b> &nbsp;vs&nbsp; '+oName+' <b>'+r.oppScore+'</b></div>'+
       '<div>'+oName+' was <b>'+(o.power!=null?o.power:'?')+'</b> Pow &middot; <b>'+(o.speed!=null?o.speed:'?')+'</b> Spd &middot; <b>'+(o.stamina!=null?o.stamina:'?')+'</b> Sta</div>'+
       '<div>GRIT <b style="color:'+(r.gritDelta>=0?'#2FA657':'#D8434B')+'">'+(r.gritDelta>=0?'+':'')+r.gritDelta+'</b> &nbsp; XP <b>+'+r.xpGain+'</b>'+(r.leveled?' &nbsp; <b style="color:#7C5CE6">LEVEL UP!</b>':'')+'</div>'+
-      '<div>Balance <b>'+r.state.grit+' GRIT</b> &nbsp; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &nbsp; '+r.state.wins+'W '+r.state.losses+'L</div>';
+      '<div>Balance <b>'+r.state.grit+' GRIT</b> &nbsp; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &nbsp; '+r.state.wins+'W '+r.state.losses+'L</div>'+
+      ((r.edge && r.edge>0) ? '<div style="color:#7C5CE6;font-weight:700;margin-top:2px">Rarity + level edge &middot; +'+r.edge+'% win chance</div>' : '');
     // reveal the opponent's identity + stats on the VS card (name/avatar come from resolve_duel)
     var oppF=document.querySelector('#view-arena .fighter.opp');
     if(oppF){
