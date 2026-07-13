@@ -2563,17 +2563,17 @@
 
           <div class="stat-card f" style="left:-8%;top:6%;--r:-5deg">
             <div class="ic" style="background:#43C06A"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 6.6H21l-5.3 3.9 2 6.5L12 16.3 6.3 20l2-6.5L3 9.6h6.6z" fill="#fff"/></svg></div>
-            <div class="meta"><span class="l">Power</span><span class="v">5.9</span></div>
+            <div class="meta"><span class="l">Power</span><span class="v">24</span></div>
             <span class="delta" style="background:#E4F5EA;color:#2FA657">+2</span>
           </div>
           <div class="stat-card f" style="right:-10%;top:24%;--r:6deg;animation-delay:.8s">
             <div class="ic" style="background:#7C5CE6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="4" height="7" rx="1.5" fill="#fff"/><rect x="10" y="9" width="4" height="11" rx="1.5" fill="#fff"/><rect x="16" y="5" width="4" height="15" rx="1.5" fill="#fff"/></svg></div>
-            <div class="meta"><span class="l">Speed</span><span class="v">7.2</span></div>
+            <div class="meta"><span class="l">Speed</span><span class="v">28</span></div>
             <span class="delta" style="background:#EEE8FC;color:#6B45D6">+3</span>
           </div>
           <div class="stat-card f" style="right:-2%;bottom:12%;--r:-4deg;animation-delay:1.4s">
             <div class="ic" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1 9 2.7 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.3 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z" fill="#fff"/></svg></div>
-            <div class="meta"><span class="l">Stamina</span><span class="v">6.4</span></div>
+            <div class="meta"><span class="l">Stamina</span><span class="v">21</span></div>
             <span class="delta" style="background:#FDE9EA;color:#D8434B">+1</span>
           </div>
 
@@ -2821,7 +2821,7 @@
         <div class="econ-ic"><img src="assets/icons/coin_bull.png" width="28" height="28" alt=""></div>
         <h3>$BULL</h3>
         <div class="tag">Own &amp; trade</div>
-        <p>The in-game token that will power ownership, governance and an open marketplace. Earn and hold it in-game now; on-chain trading unlocks at token launch.</p>
+        <p>The in-game token that will power ownership, governance and an open marketplace. It launches later, airdropped to GRIT holders - so gather GRIT now to earn your share.</p>
       </div>
     </div>
 
@@ -2947,10 +2947,10 @@
       </div>
       <div class="foot-col">
         <h4>Community</h4>
-        <a href="#">Discord</a>
-        <a href="#">X / Twitter</a>
-        <a href="#">Telegram</a>
-        <a href="#">Blog</a>
+        <a href="#" data-bqtoast="Our Discord opens with the public launch">Discord</a>
+        <a href="#" data-bqtoast="Follow us on X, live at the public launch">X / Twitter</a>
+        <a href="#" data-bqtoast="Our Telegram opens with the public launch">Telegram</a>
+        <a href="#" data-bqtoast="The blog goes live at the public launch">Blog</a>
       </div>
     </div>
     <div class="foot-bot">
@@ -4657,7 +4657,7 @@
       var tr=document.querySelector('#view-home .tc img'); if(tr) bqBindImg(tr, b.image_url);
     }
     var greet=document.querySelector('#view-home .hi .n');
-    if(greet && username) greet.textContent='Hey, '+username;
+    if(greet) greet.textContent = (username && !/^handler_[0-9a-f]{6}$/i.test(username)) ? ('Hey, '+username) : 'Hey there';
     injectSignout();
   }
 
