@@ -5193,7 +5193,7 @@
   function recordReferralIfAny(){
     var ref; try{ ref=localStorage.getItem('bq_ref'); }catch(e){}
     if(!ref||!sb) return;
-    sb.rpc('record_referral',{p_ref_code:ref}).then(function(){ try{ localStorage.removeItem('bq_ref'); }catch(e){} }).catch(function(){});
+    sb.rpc('record_referral',{p_ref_code:ref}).then(function(r){ try{ localStorage.removeItem('bq_ref'); }catch(e){} var d=r&&r.data; if(d&&d.ok&&d.reward){ if(window.showToast) showToast('+'+d.reward+' GRIT from your friend’s invite!'); sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.grit!=null&&window.bqSetGrit) window.bqSetGrit(g.data.grit); }).catch(function(){}); } }).catch(function(){});
   }
   function showInvite(){
     if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
@@ -5204,7 +5204,7 @@
       el.innerHTML='<div class="bqfb" style="max-width:420px;text-align:center">'+
         '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE FRIENDS</div>'+
         '<h3 style="margin:2px 0 4px;font-size:21px">Grow the herd</h3>'+
-        '<p class="sub" style="margin:0 0 16px">Every friend who joins and gathers GRIT grows the whole airdrop. '+(count>0?('<b style="color:#20143A">'+count+'</b> joined via your link so far.'):'Be the first to bring someone in.')+'</p>'+
+        '<p class="sub" style="margin:0 0 16px">Earn <b style="color:#20143A">100 GRIT</b> for every friend who joins with your link, and they get <b style="color:#20143A">50</b> too. '+(count>0?('<b style="color:#20143A">'+count+'</b> joined so far.'):'Be the first to bring someone in.')+'</p>'+
         '<div style="display:flex;gap:8px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" class="send" style="flex:none;padding:12px 18px">Copy</button></div>'+
         '<div class="bqfb-actions" style="margin-top:14px"><button type="button" class="cancel" id="bqRefShare">Share link</button><button type="button" class="send" id="bqRefClose">Done</button></div></div>';
       document.body.appendChild(el);
