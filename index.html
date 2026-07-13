@@ -4549,7 +4549,7 @@
   var BOLT='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>';
   var sb=null, mode='signup', modal, acctLabel='', curBull=null;
   // --- launch safety: Cloudflare Turnstile CAPTCHA on signup + sold-out waitlist ---
-  var TURNSTILE_SITE_KEY='1x00000000000000000000AA'; // TEST key: renders + always passes. Swap for your real Turnstile site key (see docs/LAUNCH_SAFETY.md).
+  var TURNSTILE_SITE_KEY='0x4AAAAAAD1Air3ZqokI6e_a'; // real Cloudflare Turnstile site key (BullQuest widget, hostname technomozart.github.io). Enforced once CAPTCHA is enabled in Supabase Auth.
   var tsWidgetId=null, captchaToken='';
   function loadTurnstile(){ if(window.turnstile||document.getElementById('bqTsScript')) return; var s=document.createElement('script'); s.id='bqTsScript'; s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async=true; s.defer=true; document.head.appendChild(s); }
   function renderTurnstile(){ var el=modal&&modal.querySelector('#bqTurnstile'); if(!el) return; if(!window.turnstile){ setTimeout(renderTurnstile,200); return; } captchaToken=''; if(tsWidgetId!==null){ try{ window.turnstile.reset(tsWidgetId); }catch(e){} return; } try{ tsWidgetId=window.turnstile.render(el,{sitekey:TURNSTILE_SITE_KEY,callback:function(t){captchaToken=t;},'expired-callback':function(){captchaToken='';},'error-callback':function(){captchaToken='';}}); }catch(e){} }
