@@ -5017,7 +5017,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var claimed=claims.indexOf(x.key)>=0, pct=Math.max(6,Math.round(x.cur/x.goal*100)), right, tag, attr;
       if(claimed){ right='<span class="reward" style="color:#2FA657;font-weight:800"><i class="pico" style="--m:url(assets/icons/ui_check.png);width:13px;height:13px;background:#2FA657;vertical-align:-2px"></i> Claimed</span>'; tag='div'; attr=''; }
       else if(x.done){ right='<button type="button" class="bqclaim" data-key="'+x.key+'" style="border:0;background:#43C06A;color:#fff;font-size:12px;font-weight:800;padding:8px 13px;border-radius:12px;cursor:pointer;font-family:inherit">Claim +'+x.reward+'</button>'; tag='div'; attr=''; }
-      else { right='<span class="reward"><img src="assets/icons/gem_grit.png" width="15" height="15" alt="" style="vertical-align:middle">'+x.cur+'/'+x.goal+'</span>'; tag='a'; attr=' href="#" data-bqgo="'+x.go+'"'; }
+      else { right='<span class="reward"><img src="assets/icons/gem_grit.png" width="15" height="15" alt="" style="vertical-align:middle">+'+x.reward+'</span>'; tag='a'; attr=' href="#" data-bqgo="'+x.go+'"'; }
       return '<'+tag+' class="quest"'+attr+' style="text-decoration:none;color:inherit">'+
         '<span class="qi" style="background:'+x.color+'" aria-hidden="true"><i class="pico" style="--m:url(assets/icons/'+x.icon+'.png);width:18px;height:18px;background:#fff"></i></span>'+
         '<div class="qbody"><div class="qname"><b>'+x.label+'</b><span class="qp">'+(claimed?'Done':(x.done?'Ready':x.cur+'/'+x.goal))+'</span></div>'+
