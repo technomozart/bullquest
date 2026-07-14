@@ -5585,7 +5585,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       fetch(ENDPOINT,{ method:'POST', headers:{ 'Content-Type':'application/json', 'apikey':KEY_, 'Authorization':'Bearer '+KEY_ }, body:JSON.stringify({messages:convo.slice(-10)}) })
         .then(function(r){ if(!r.ok) throw new Error('not-ready'); return r.json(); })
         .then(function(d){ typing(false); var reply=(d&&d.reply)||"Sorry, I couldn't answer that one. Try the [docs](docs.html) or the Feedback button."; addMsg('bot',reply); convo.push({role:'assistant',content:reply}); if(d&&d.ticketFiled) addTick(); })
-        .catch(function(e){ typing(false); addMsg('bot',(e&&e.message==='not-ready')?"The assistant is being switched on and will be live shortly. For now, check the [docs](docs.html) or the Feedback button.":"I couldn't reach the server. Please check your connection and try again."); })
+        .catch(function(){ typing(false); addMsg('bot',"I can't reach the assistant right now - it may still be switching on. Please try again in a moment, or browse the [docs](docs.html)."); })
         .then(function(){ busy=false; sendBtn.disabled=false; input.focus(); });
     }
     btn.addEventListener('click',function(){ if(panel.classList.contains('on')){ panel.classList.remove('on'); } else { panel.classList.add('on'); greet(); setTimeout(function(){ input.focus(); },60); } });
