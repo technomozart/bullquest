@@ -5498,6 +5498,22 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
     sb=window.supabase.createClient(URL_,KEY_);
+    // error visibility: report uncaught JS errors to the founder dashboard.
+    // Deduped + capped per session, fire-and-forget (rpc builder has no .catch), never throws.
+    (function(){
+      var seen={}, sent=0;
+      function report(msg){
+        try{
+          if(!sb) return;
+          msg=String(msg||'').slice(0,400); if(!msg) return;
+          var page=(location.pathname+location.hash)||'';
+          var k=msg+'|'+page; if(seen[k]||sent>=25) return; seen[k]=1; sent++;
+          sb.rpc('log_client_error',{p_msg:msg,p_page:page,p_agent:(navigator.userAgent||'').slice(0,200)}).then(function(){},function(){});
+        }catch(_e){}
+      }
+      window.addEventListener('error', function(e){ if(e&&e.message) report(e.message); });
+      window.addEventListener('unhandledrejection', function(e){ var r=e&&e.reason; report((r&&r.message)||String(r||'')); });
+    })();
     sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); });
   })();
 })();
