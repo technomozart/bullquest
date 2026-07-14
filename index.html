@@ -4631,6 +4631,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       +'<h2 id="bqAuthTitle">Claim your free bull</h2>'
       +'<p class="sub" id="bqAuthSub">Make an account and we’ll hand you a Genesis bull on the spot.</p>'
       +'<p id="bqBullsLeft" style="margin:-4px 0 10px;font-size:12px;font-weight:800;color:#43C06A;text-align:center;display:none"></p>'
+      +'<p id="bqRefBonus" style="margin:-2px 0 11px;font-size:12.5px;font-weight:800;color:#6B31E6;background:#F3EFFE;border-radius:11px;padding:9px 11px;text-align:center;line-height:1.4;display:none"></p>'
       +'<input id="bqEmail" type="email" placeholder="you@email.com" autocomplete="email">'
       +'<input id="bqPass" type="password" placeholder="Password (6+ characters)" autocomplete="current-password">'
       +'<p class="bqauth-err" id="bqAuthErr"></p>'
@@ -4653,6 +4654,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     modal.querySelector('#bqPass').setAttribute('autocomplete', mode==='signup'?'new-password':'current-password');
     var ts=modal.querySelector('#bqTurnstile'); if(ts) ts.style.display = 'flex';  // CAPTCHA on signup AND login (Supabase enforces it on sign-in too)
     var bl=modal.querySelector('#bqBullsLeft'); if(bl) bl.style.display='none';
+    var rb=modal.querySelector('#bqRefBonus');
+    if(rb){ var hr; try{ hr=localStorage.getItem('bq_ref'); }catch(e){}
+      if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? ('🎁 '+window.bqRefName+' invited you - reach level 2 and you both get bonus GRIT.') : '🎁 You were invited - reach level 2 and you and your friend both get bonus GRIT.'); rb.style.display=''; }
+      else { rb.style.display='none'; } }
     renderTurnstile(); if(mode==='signup'){ updateBullsLeft(); }
     errmsg('');
   }
@@ -5298,6 +5303,25 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
   // ---- Referral: capture ?ref, record after signup, invite overlay ----
   try{ var _rm=location.search.match(/[?&]ref=([A-Za-z0-9]{4,24})/); if(_rm) localStorage.setItem('bq_ref', _rm[1]); }catch(e){}
+  // A referred visitor arrived via ?ref=code: greet them by their inviter's name and push them to claim.
+  function maybeShowRefBanner(){
+    var code; try{ var m=location.search.match(/[?&]ref=([A-Za-z0-9]{4,24})/); code=m&&m[1]; }catch(e){}
+    if(!code||!sb||document.getElementById('bqRefBar')) return;
+    sb.rpc('ref_info',{p_code:code}).then(function(r){
+      var d=(r&&r.data)||{}; if(!d.ok) return;
+      var who=d.username||''; window.bqRefName=who||null;
+      var safe=who?(window.bqEsc?window.bqEsc(who):String(who).replace(/[<>&"]/g,'')):'A friend';
+      var host=document.getElementById('view-landing')||document.body;
+      var bar=document.createElement('div'); bar.id='bqRefBar';
+      bar.style.cssText='display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;background:linear-gradient(90deg,#6E35E9,#8B5CF6);color:#fff;padding:11px 34px 11px 16px;font-family:inherit;font-weight:700;font-size:13.5px;text-align:center;position:relative;z-index:60';
+      bar.innerHTML='<span>🐂 <b>'+safe+'</b> invited you - claim your free bull, you both get bonus GRIT.</span>'+
+        '<button type="button" id="bqRefBarGo" style="border:0;background:#fff;color:#6B31E6;font-weight:800;font-size:13px;padding:8px 15px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap">Claim free bull</button>'+
+        '<button type="button" id="bqRefBarX" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:rgba(255,255,255,.85);font-size:19px;line-height:1;cursor:pointer;padding:4px 8px">&times;</button>';
+      host.insertBefore(bar, host.firstChild);
+      var g=bar.querySelector('#bqRefBarGo'); if(g) g.addEventListener('click', function(){ if(window.bqOpenAuth) window.bqOpenAuth(); });
+      var x=bar.querySelector('#bqRefBarX'); if(x) x.addEventListener('click', function(){ bar.remove(); });
+    }).then(function(){},function(){});
+  }
   function recordReferralIfAny(){
     var ref; try{ ref=localStorage.getItem('bq_ref'); }catch(e){}
     if(!ref||!sb) return;
@@ -5514,7 +5538,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       window.addEventListener('error', function(e){ if(e&&e.message) report(e.message); });
       window.addEventListener('unhandledrejection', function(e){ var r=e&&e.reason; report((r&&r.message)||String(r||'')); });
     })();
-    sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); });
+    sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); else { try{ maybeShowRefBanner(); }catch(e){} } });
   })();
 })();
 </script>
