@@ -34,7 +34,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* 16px form fields so iOS Safari does not zoom the whole page on focus (override inline sizes) */
   input,textarea,select{font-size:16px !important}
   /* comfortable finger-sized tap targets for the small controls */
-  .fchip,.wchip{min-height:42px}
+  .fchip,.wchip,.bqmkt-chip,.bqmkt-sort,.extraspin{min-height:40px}
 }
 
 /* ===== coming-soon toast (lives inside the sticky bottom nav; stays out of fixed layout) ===== */
@@ -5105,7 +5105,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       '@media(max-width:520px){#bqFbBtn{bottom:80px;padding:9px 12px}}',
       '.bqfb-ov{position:fixed;inset:0;z-index:10001;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,14,40,.55);backdrop-filter:blur(3px)}',
       '@media(min-width:560px){.bqfb-ov{align-items:center;padding:20px}}',
-      '.bqfb{width:100%;max-width:460px;background:#fff;border-radius:22px 22px 0 0;padding:20px 20px 22px;font-family:inherit;box-shadow:0 -10px 40px rgba(20,10,50,.3);max-height:92vh;overflow:auto}',
+      '.bqfb{width:100%;max-width:460px;background:#fff;border-radius:22px 22px 0 0;padding:20px 20px calc(22px + env(safe-area-inset-bottom,0px));font-family:inherit;box-shadow:0 -10px 40px rgba(20,10,50,.3);max-height:92vh;max-height:92dvh;overflow:auto}',
       '@media(min-width:560px){.bqfb{border-radius:22px}}',
       '.bqfb h3{margin:0 0 3px;font-size:19px;color:#20143A}.bqfb .sub{margin:0 0 14px;font-size:13px;color:#8A85A0}',
       '.bqfb-seg{display:flex;gap:8px;margin-bottom:13px}',
