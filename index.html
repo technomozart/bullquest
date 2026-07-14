@@ -4639,9 +4639,9 @@
     modal.querySelector('#bqAuthSubmit').textContent = mode==='signup'?'Sign up & claim':'Log in';
     modal.querySelector('#bqAuthToggle').textContent = mode==='signup'?'Already have an account? Log in':'New here? Create an account';
     modal.querySelector('#bqPass').setAttribute('autocomplete', mode==='signup'?'new-password':'current-password');
-    var ts=modal.querySelector('#bqTurnstile'); if(ts) ts.style.display = mode==='signup' ? 'flex' : 'none';
+    var ts=modal.querySelector('#bqTurnstile'); if(ts) ts.style.display = 'flex';  // CAPTCHA on signup AND login (Supabase enforces it on sign-in too)
     var bl=modal.querySelector('#bqBullsLeft'); if(bl) bl.style.display='none';
-    if(mode==='signup'){ renderTurnstile(); updateBullsLeft(); }
+    renderTurnstile(); if(mode==='signup'){ updateBullsLeft(); }
     errmsg('');
   }
   function openModal(intent){ loadTurnstile(); if(!modal) buildModal(); mode = intent==='login'?'login':'signup'; applyMode(); modal.hidden=false; modal.querySelector('#bqEmail').focus(); }
@@ -4663,14 +4663,14 @@
     var pass=modal.querySelector('#bqPass').value;
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ errmsg('Enter a valid email address.'); return; }
     if(pass.length<6){ errmsg('Password must be at least 6 characters.'); return; }
-    if(mode==='signup' && window.turnstile && !captchaToken){ errmsg('Please complete the verification below.'); return; }
+    if(window.turnstile && !captchaToken){ errmsg('Please complete the verification below.'); return; }
     var btn=modal.querySelector('#bqAuthSubmit'), lbl=btn.textContent;
     btn.disabled=true; btn.textContent = mode==='signup'?'Claiming your bull…':'Logging in…'; errmsg('');
     var p = mode==='signup'
       // signUp returns a session directly (accounts are auto-confirmed), so we do NOT do a second
       // sign-in - that redundant signInWithPassword has no captcha token and fails when CAPTCHA is on.
       ? sb.auth.signUp({email:email,password:pass,options: captchaToken?{captchaToken:captchaToken}:{}}).then(function(r){ if(r.error) throw r.error; if(r.data&&r.data.session) return r; return sb.auth.signInWithPassword({email:email,password:pass}); })
-      : sb.auth.signInWithPassword({email:email,password:pass});
+      : sb.auth.signInWithPassword({email:email,password:pass,options: captchaToken?{captchaToken:captchaToken}:{}});
     p.then(function(r){ if(r.error) throw r.error; return loadAndShow(true, mode==='signup'); })
      .then(function(){ closeModal(); if(mode==='signup') recordReferralIfAny(); })
      .catch(function(e){
