@@ -4667,7 +4667,9 @@
     var btn=modal.querySelector('#bqAuthSubmit'), lbl=btn.textContent;
     btn.disabled=true; btn.textContent = mode==='signup'?'Claiming your bull…':'Logging in…'; errmsg('');
     var p = mode==='signup'
-      ? sb.auth.signUp({email:email,password:pass,options: captchaToken?{captchaToken:captchaToken}:{}}).then(function(r){ if(r.error) throw r.error; return sb.auth.signInWithPassword({email:email,password:pass}); })
+      // signUp returns a session directly (accounts are auto-confirmed), so we do NOT do a second
+      // sign-in - that redundant signInWithPassword has no captcha token and fails when CAPTCHA is on.
+      ? sb.auth.signUp({email:email,password:pass,options: captchaToken?{captchaToken:captchaToken}:{}}).then(function(r){ if(r.error) throw r.error; if(r.data&&r.data.session) return r; return sb.auth.signInWithPassword({email:email,password:pass}); })
       : sb.auth.signInWithPassword({email:email,password:pass});
     p.then(function(r){ if(r.error) throw r.error; return loadAndShow(true, mode==='signup'); })
      .then(function(){ closeModal(); if(mode==='signup') recordReferralIfAny(); })
