@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>BullQuest · Analytics</title>
+<style>
+  :root{
+    --violet:#6B31E6; --violet2:#7C5CE6; --bg:#F4F2FB; --card:#fff;
+    --ink:#20143A; --body:#5B5570; --faint:#9AA0AE; --hair:#ECEAF3;
+    --green:#2FA657; --amber:#E0930F; --blue:#4DA6F5;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);
+    -webkit-font-smoothing:antialiased;padding:calc(20px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom))}
+  .wrap{max-width:820px;margin:0 auto}
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.3px}
+  .brand .dot{width:26px;height:26px;border-radius:8px;background:linear-gradient(180deg,var(--violet2),var(--violet));display:grid;place-items:center;color:#fff;font-size:15px}
+  .brand small{font-weight:700;font-size:12px;color:var(--faint);letter-spacing:.3px;text-transform:uppercase;margin-left:2px}
+  .spacer{flex:1}
+  button.refresh{border:0;background:var(--violet);color:#fff;font-family:inherit;font-weight:800;font-size:13.5px;
+    padding:10px 16px;border-radius:11px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;min-height:42px}
+  button.refresh:active{transform:translateY(1px)}
+  button.refresh[disabled]{opacity:.55;cursor:default}
+  .stamp{font-size:12px;color:var(--faint);font-weight:600;width:100%}
+
+  .msg{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:26px 22px;text-align:center;color:var(--body);font-size:15px;line-height:1.55}
+  .msg h2{margin:0 0 8px;color:var(--ink);font-size:18px}
+  .msg a{color:var(--violet);font-weight:800;text-decoration:none}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+  .kpi{background:var(--card);border:1px solid var(--hair);border-radius:15px;padding:15px 16px}
+  .kpi .lab{font-size:11.5px;font-weight:800;color:var(--faint);text-transform:uppercase;letter-spacing:.5px}
+  .kpi .val{font-size:30px;font-weight:800;letter-spacing:-1px;margin-top:5px;font-variant-numeric:tabular-nums}
+  .kpi .sub{font-size:12px;color:var(--body);font-weight:600;margin-top:2px}
+
+  .panel{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:18px 18px 20px;margin-bottom:14px}
+  .panel h3{margin:0 0 4px;font-size:15px;font-weight:800}
+  .panel .hint{margin:0 0 16px;font-size:12.5px;color:var(--faint);font-weight:600}
+
+  .funnel{display:flex;flex-direction:column;gap:11px}
+  .fstage{}
+  .fstage .frow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .fstage .fname{font-size:13.5px;font-weight:700;color:var(--ink)}
+  .fstage .fnum{font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums}
+  .fstage .fnum span{color:var(--faint);font-weight:700;margin-left:6px}
+  .track{height:12px;background:#F1EEF9;border-radius:7px;overflow:hidden}
+  .track i{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,var(--violet2),var(--violet));transition:width .5s cubic-bezier(.22,.61,.36,1)}
+
+  .rets{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ret{background:#FAF8FF;border:1px solid var(--hair);border-radius:13px;padding:14px 15px;text-align:center}
+  .ret .rlab{font-size:11.5px;font-weight:800;color:var(--faint);text-transform:uppercase;letter-spacing:.5px}
+  .ret .rpct{font-size:28px;font-weight:800;letter-spacing:-1px;margin-top:4px;font-variant-numeric:tabular-nums}
+  .ret .rsub{font-size:12px;color:var(--body);font-weight:600;margin-top:1px}
+  .ret.dim .rpct{color:var(--faint)}
+
+  .chart{margin-top:4px}
+  .legend{display:flex;gap:16px;margin-bottom:10px;font-size:12px;font-weight:700;color:var(--body)}
+  .legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  svg{width:100%;height:auto;display:block;overflow:visible}
+  .foot{font-size:11.5px;color:var(--faint);font-weight:600;text-align:center;margin-top:20px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><span class="dot">🐂</span> BullQuest <small>Analytics</small></div>
+    <div class="spacer"></div>
+    <button class="refresh" id="refresh">↻ Refresh</button>
+    <div class="stamp" id="stamp"></div>
+  </div>
+  <div id="root"><div class="msg">Loading…</div></div>
+  <div class="foot">
+    Privacy-first: no third-party trackers, no cookies, no PII. Just counts of who signed up and who came back.
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  var URL_='https://cewumdioknvjtsiolxce.supabase.co';
+  var KEY_='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNld3VtZGlva252anRzaW9seGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2OTI3NzUsImV4cCI6MjA5OTI2ODc3NX0.n_r2gixZZTuTyJOiUhCZMpPKp5mUYtdM9bShs-nWkWk';
+  var root=document.getElementById('root'), stamp=document.getElementById('stamp'), btn=document.getElementById('refresh');
+  var sb=null;
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function pct(a,b){ return b>0?Math.round(a/b*100):0; }
+  function msg(html){ root.innerHTML='<div class="msg">'+html+'</div>'; }
+
+  function kpi(lab,val,sub){ return '<div class="kpi"><div class="lab">'+esc(lab)+'</div><div class="val">'+esc(val)+'</div>'+(sub?'<div class="sub">'+esc(sub)+'</div>':'')+'</div>'; }
+
+  function stage(name,n,base,showPct){
+    var p=pct(n,base);
+    return '<div class="fstage"><div class="frow"><span class="fname">'+esc(name)+'</span>'+
+      '<span class="fnum">'+n+(showPct?'<span>'+p+'% of signups</span>':'')+'</span></div>'+
+      '<div class="track"><i style="width:'+Math.max(2,p)+'%"></i></div></div>';
+  }
+
+  function retCard(lab,ret,elig,windowTxt){
+    if(elig<=0) return '<div class="ret dim"><div class="rlab">'+lab+'</div><div class="rpct">—</div><div class="rsub">collecting data</div></div>';
+    return '<div class="ret"><div class="rlab">'+lab+'</div><div class="rpct">'+pct(ret,elig)+'%</div><div class="rsub">'+ret+' of '+elig+' '+windowTxt+'</div></div>';
+  }
+
+  function chart(series){
+    series=series||[];
+    if(!series.length) return '';
+    var W=760, H=170, padB=22, padT=8, n=series.length, gw=W/n;
+    var max=1; series.forEach(function(d){ max=Math.max(max,d.signups||0,d.active||0); });
+    var bars='';
+    series.forEach(function(d,i){
+      var x=i*gw, bw=Math.min(13,(gw-8)/2), gap=3, cx=x+gw/2;
+      var hS=(d.signups||0)/max*(H-padB-padT), hA=(d.active||0)/max*(H-padB-padT);
+      var y0=H-padB;
+      // active bar (left), signups bar (right)
+      bars+='<rect x="'+(cx-bw-gap/2)+'" y="'+(y0-hA)+'" width="'+bw+'" height="'+hA+'" rx="3" fill="#4DA6F5"></rect>';
+      bars+='<rect x="'+(cx+gap/2)+'" y="'+(y0-hS)+'" width="'+bw+'" height="'+hS+'" rx="3" fill="#7C5CE6"></rect>';
+      var lbl=String(d.day).slice(5); // MM-DD
+      if(i%2===0||i===n-1) bars+='<text x="'+cx+'" y="'+(H-6)+'" text-anchor="middle" font-size="9.5" fill="#9AA0AE" font-weight="700">'+esc(lbl)+'</text>';
+    });
+    return '<div class="legend"><span><b style="background:#7C5CE6"></b>Signups</span><span><b style="background:#4DA6F5"></b>Active users</span></div>'+
+      '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Daily signups and active users, last 14 days">'+bars+'</svg>';
+  }
+
+  function render(d){
+    var html='';
+    // KPIs
+    html+='<div class="grid">'+
+      kpi('Total users', d.users_total)+
+      kpi('Active today', d.dau_today, 'unique opens')+
+      kpi('Avg daily (7d)', d.dau_7d_avg)+
+      kpi('Signups today', d.signups_today)+
+      kpi('Signups (7d)', d.signups_7d)+
+    '</div>';
+
+    // Funnel
+    var su=d.funnel_signed_up||0;
+    html+='<div class="panel"><h3>Activation funnel</h3><p class="hint">How far each signup gets. Lifetime, all users.</p><div class="funnel">'+
+      stage('Signed up', su, su, false)+
+      stage('Played a duel', d.funnel_dueled||0, su, true)+
+      stage('Came back another day', d.funnel_returned||0, su, true)+
+    '</div></div>';
+
+    // Retention
+    html+='<div class="panel"><h3>Retention</h3><p class="hint">Of users who signed up after tracking began ('+esc(d.measuring_since)+'), how many returned.</p><div class="rets">'+
+      retCard('D1 return', d.d1_retained||0, d.d1_eligible||0, 'came back next day')+
+      retCard('D7 return', d.d7_retained||0, d.d7_eligible||0, 'back within 7 days')+
+    '</div></div>';
+
+    // Chart
+    html+='<div class="panel"><h3>Last 14 days</h3><p class="hint">Daily signups vs unique active users.</p><div class="chart">'+chart(d.series)+'</div></div>';
+
+    root.innerHTML=html;
+    var g=d.generated_at?new Date(d.generated_at):null;
+    stamp.textContent = g ? ('Updated '+g.toLocaleString()) : '';
+  }
+
+  function load(){
+    btn.setAttribute('disabled','');
+    sb.auth.getSession().then(function(s){
+      if(!s.data.session){
+        msg('<h2>Not signed in</h2>Open the <a href="./">BullQuest app</a> and sign in first, then come back here.');
+        btn.removeAttribute('disabled'); return;
+      }
+      return sb.rpc('admin_analytics').then(function(r){
+        btn.removeAttribute('disabled');
+        if(r.error){ msg('<h2>Something went wrong</h2>'+esc(r.error.message||'RPC error')); return; }
+        var d=r.data;
+        if(!d || d.error){ msg('<h2>Not authorized</h2>This account isn\'t an admin. Sign in with the founder account.'); return; }
+        render(d);
+      });
+    }).catch(function(e){ btn.removeAttribute('disabled'); msg('<h2>Error</h2>'+esc((e&&e.message)||e)); });
+  }
+
+  function ready(){
+    if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
+    sb=window.supabase.createClient(URL_,KEY_);
+    btn.addEventListener('click',load);
+    load();
+  }
+  ready();
+})();
+</script>
+</body>
+</html>
