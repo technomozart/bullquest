@@ -3025,7 +3025,7 @@
             <b id="bqGritBand" style="font-size:27px">0</b>
             <span style="font-size:13px;font-weight:800;opacity:.82;margin-left:6px">GRIT gathered</span><button type="button" class="bqhelp" data-help="grit" aria-label="What is GRIT" style="background:rgba(255,255,255,.28);color:#fff;margin-left:7px">?</button>
           </div>
-          <div class="togo">Your future <b>$BULL</b> airdrop grows with every GRIT you earn.</div>
+          <div class="togo">Every GRIT you gather now grows your <b>$BULL</b> airdrop later.</div>
           <div class="ends">
             <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             Airdrop unlocks at $BULL launch
@@ -3043,7 +3043,7 @@
           <span class="pip on"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>4</small></span>
           <span class="pip on today"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>5</small></span>
         </div>
-        <div class="lab"><i class="pico" style="--m:url('assets/icons/ui_streak.png');width:15px;height:15px;background:#fff;vertical-align:middle;margin-right:4px;opacity:.9"></i><b id="bqStreakLab" style="display:inline-block">1-day</b><span>login streak</span></div>
+        <div class="lab"><i class="pico" style="--m:url('assets/icons/ui_streak.png');width:15px;height:15px;background:#fff;vertical-align:middle;margin-right:4px;opacity:.9"></i><b id="bqStreakLab" style="display:inline-block">1-day</b><span>streak</span></div>
       </div>
     </div>
   </div>
@@ -3813,7 +3813,7 @@
       <span class="ck" aria-hidden="true">
         <svg width="15" height="15" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
-      <p>Start with 1 free Bull. <span>No crypto experience needed.</span></p>
+      <p>Your first bull is on the house. <span>No wallet or crypto experience needed.</span></p>
     </div>
 
     <p class="legal">
@@ -5117,24 +5117,24 @@
       kind='bug'; file=null;
       ov=document.createElement('div'); ov.className='bqfb-ov';
       ov.innerHTML='<div class="bqfb" role="dialog" aria-label="Send feedback">'+
-        '<h3>Send feedback</h3><p class="sub">Found a bug or have an idea? We read every one.</p>'+
+        '<h3>Send feedback</h3><p class="sub">Hit a bug or cooking up an idea? A real human reads every one.</p>'+
         '<div class="bqfb-seg">'+
           '<button type="button" data-k="bug" class="on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="8" y="8" width="8" height="11" rx="4"/><path d="M12 8V5M9 3.5l1.4 1.8M15 3.5l-1.4 1.8M8 11H4M8 15.5H4M16 11h4M16 15.5h4M8.5 8l-2-2M15.5 8l2-2"/></svg>Bug</button>'+
           '<button type="button" data-k="suggestion"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-4 11.6c.8.7 1 1.6 1 2.4h6c0-.8.2-1.7 1-2.4A6.5 6.5 0 0 0 12 2.5z"/></svg>Suggestion</button>'+
         '</div>'+
-        '<textarea id="bqfbMsg" placeholder="Describe the bug: what happened, and what did you expect?"></textarea>'+
-        '<div class="bqfb-drop" id="bqfbDrop">Drag a screenshot here, or <b>tap to attach</b></div>'+
+        '<textarea id="bqfbMsg" placeholder="What broke, and what did you expect to happen instead?"></textarea>'+
+        '<div class="bqfb-drop" id="bqfbDrop">Drop a screenshot here, or <b>tap to add one</b></div>'+
         '<input type="file" id="bqfbFile" accept="image/*" style="display:none">'+
         '<div class="bqfb-thumb" id="bqfbThumb"></div>'+
         '<div class="bqfb-ctx" id="bqfbCtx"></div>'+
-        '<div class="bqfb-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="send">Send feedback</button></div>'+
+        '<div class="bqfb-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="send">Send it</button></div>'+
       '</div>';
       document.body.appendChild(ov);
       var card=ov.querySelector('.bqfb');
-      ov.querySelector('#bqfbCtx').textContent='Attached automatically: screen ('+currentView()+'), browser, and size.';
+      ov.querySelector('#bqfbCtx').textContent='We auto-attach your screen ('+currentView()+'), browser, and size.';
       ov.querySelectorAll('.bqfb-seg button').forEach(function(b){ b.addEventListener('click', function(){
         ov.querySelectorAll('.bqfb-seg button').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); kind=b.getAttribute('data-k');
-        ov.querySelector('#bqfbMsg').placeholder = kind==='bug' ? 'Describe the bug: what happened, and what did you expect?' : 'Describe your idea and why it would help.';
+        ov.querySelector('#bqfbMsg').placeholder = kind==='bug' ? 'What broke, and what did you expect to happen instead?' : 'What is the idea, and how would it make BullQuest better?';
       }); });
       var fileInput=ov.querySelector('#bqfbFile'), drop=ov.querySelector('#bqfbDrop'), thumb=ov.querySelector('#bqfbThumb');
       drop.addEventListener('click', function(){ fileInput.click(); });
