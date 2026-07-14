@@ -23,7 +23,19 @@
 .bq-arena .mascot-wrap img{width:100%!important;height:auto!important;display:block}
 .bq-onboard .mascot-wrap img{width:100%!important;height:auto!important;display:block}
 .sol{display:none}   /* SOL price lines hidden until on-chain trading exists */
-#view-home,#view-arena{min-height:100vh;padding:24px 14px;background:radial-gradient(120% 60% at 50% 0%,#EDF0F6 0%,#E3E7F0 100%)}
+#view-home,#view-arena{min-height:100vh;min-height:100dvh;padding:24px 14px;background:radial-gradient(120% 60% at 50% 0%,#EDF0F6 0%,#E3E7F0 100%)}
+
+/* ===== mobile polish (phone-first app) ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+body{overscroll-behavior-y:contain}
+button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
+@media(max-width:560px){
+  /* 16px form fields so iOS Safari does not zoom the whole page on focus (override inline sizes) */
+  input,textarea,select{font-size:16px !important}
+  /* comfortable finger-sized tap targets for the small controls */
+  .fchip,.wchip{min-height:42px}
+}
 
 /* ===== coming-soon toast (lives inside the sticky bottom nav; stays out of fixed layout) ===== */
 .bq-toast{position:absolute;left:12px;right:12px;bottom:calc(100% + 12px);z-index:30;display:flex;align-items:center;gap:10px;background:#1C1F24;color:#fff;border-radius:14px;padding:12px 12px 12px 16px;box-shadow:0 14px 32px rgba(20,10,50,.4);opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease;font-family:system-ui,"Segoe UI",Roboto,sans-serif}
