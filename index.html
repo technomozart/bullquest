@@ -2610,7 +2610,7 @@
         <div class="icosq" style="background:#F3ECFB"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#7C5CE6"/></svg></div>
         <div class="num">STEP 03</div>
         <h3>Charge into the Arena</h3>
-        <p>Pick your stance and read your rival in fast, skill-based ranked duels.</p>
+        <p>Pick your discipline and stance, then charge into fast, ranked duels.</p>
       </div>
       <div class="bq-card">
         <div class="icosq" style="background:#FDF0DA"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 5v10l-8 5-8-5V7z" fill="#F5A623"/><path d="M12 6.5l4.6 2.8v6.4L12 17.5 7.4 15V9.3z" fill="#FDE3B4"/></svg></div>
@@ -3395,7 +3395,7 @@
       </button>
     </div>
 
-    <div class="seclabel"><h3>Stance<button type="button" class="bqhelp" data-help="stance" aria-label="What is Stance">?</button></h3><span class="hint">Skill layer &middot; soft counters</span></div>
+    <div class="seclabel"><h3>Stance<button type="button" class="bqhelp" data-help="stance" aria-label="What is Stance">?</button></h3><span class="hint">Blind clash &middot; soft counters</span></div>
     <div class="stances" role="group" aria-label="Choose stance">
       <button type="button" class="stance" data-stance="charge" aria-pressed="true">
         <span class="sicon"><img src="assets/icons/stance_charge.png" width="24" height="24" alt=""></span>
@@ -3410,7 +3410,7 @@
         <span class="stname">Brace</span><span class="sttip">beats Charge</span>
       </button>
     </div>
-    <p class="rps-note">You lead with <b id="stanceEcho">Charge</b> - read your rival, the counter tips the odds.</p>
+    <p class="rps-note">You commit <b id="stanceEcho">Charge</b> blind - the clash against their hidden stance is revealed when you charge.</p>
 
     <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/item_booster.png')"></i>Booster</h3><span class="hint">Optional &middot; 1 slot</span></div>
     <button type="button" class="booster" disabled aria-disabled="true" aria-label="Energy Drink booster - coming soon">
@@ -4081,9 +4081,9 @@
   var baseOdds = 50;  // real win odds from get_state (your bull's rarity + level edge)
 
   function recalc() {
-    // Win odds come from the bull's real rarity + level edge (server-computed). Stance is a blind read
-    // that nudges it; the near-mirror opponent means the discipline pick barely moves the base odds.
-    var pct = baseOdds + (stanceNudge[state.stance] - 4);
+    // Win odds come from the bull's real rarity + level edge (server-computed). Stance is a BLIND commit
+    // vs a hidden, random opponent stance, so the pick does not change the pre-fight odds (honest).
+    var pct = baseOdds;
     pct = Math.round(Math.max(5, Math.min(95, pct)));
     winPct.textContent = pct + '%';
     ring.style.strokeDashoffset = (C * (1 - pct / 100)).toFixed(2);
@@ -4158,11 +4158,12 @@
   function maybeArenaGuide(){
     var seen; try{ seen=localStorage.getItem('bq_arena_guide'); }catch(e){}
     if(seen) return; try{ localStorage.setItem('bq_arena_guide','1'); }catch(e){}
-    var el=document.createElement('div'); el.style.cssText='position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(20,16,40,.6);backdrop-filter:blur(3px);padding:20px';
-    el.innerHTML='<div style="width:100%;max-width:340px;background:#fff;border-radius:22px;padding:24px;font-family:inherit;box-shadow:0 24px 60px rgba(20,16,40,.4)"><div style="text-align:center;font-size:38px">&#9876;&#65039;</div><h2 style="margin:4px 0 4px;font-size:22px;text-align:center;color:#20143A">How duels work</h2><p style="margin:0 0 14px;font-size:13.5px;color:#6B7280;text-align:center">Beat a challenger near your level and win GRIT toward your airdrop.</p><div style="font-size:13.5px;color:#374151;line-height:1.65;background:#F5F5FA;border-radius:14px;padding:12px 14px;margin-bottom:16px"><div style="margin-bottom:6px"><b>1. Discipline</b> &middot; pick which stat clashes (Power / Speed / Stamina).</div><div style="margin-bottom:6px"><b>2. Stance</b> &middot; Charge beats Feint beats Brace beats Charge. Read your rival.</div><div><b>3. Charge!</b> &middot; the counter tips the odds. Win = GRIT + XP.</div></div><button class="go" style="width:100%;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#4DA6F5,#3F8FE8);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit">Got it, let me duel</button></div>';
+    var el=document.createElement('div'); el.className='bqfb-ov'; el.setAttribute('role','dialog'); el.setAttribute('aria-modal','true'); el.setAttribute('aria-label','How duels work'); el.style.cssText='position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(20,16,40,.6);backdrop-filter:blur(3px);padding:20px';
+    el.innerHTML='<div style="width:100%;max-width:340px;background:#fff;border-radius:22px;padding:24px;font-family:inherit;box-shadow:0 24px 60px rgba(20,16,40,.4)"><div style="text-align:center;font-size:38px">&#9876;&#65039;</div><h2 style="margin:4px 0 4px;font-size:22px;text-align:center;color:#20143A">How duels work</h2><p style="margin:0 0 14px;font-size:13.5px;color:#6B7280;text-align:center">Beat a challenger near your level and win GRIT toward your airdrop.</p><div style="font-size:13.5px;color:#374151;line-height:1.65;background:#F5F5FA;border-radius:14px;padding:12px 14px;margin-bottom:16px"><div style="margin-bottom:6px"><b>1. Discipline</b> &middot; pick which stat clashes (Power / Speed / Stamina).</div><div style="margin-bottom:6px"><b>2. Stance</b> &middot; Charge beats Feint beats Brace beats Charge, but you commit blind.</div><div><b>3. Charge!</b> &middot; the clash is revealed as you charge. Win = GRIT + XP.</div></div><button class="go" style="width:100%;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#4DA6F5,#3F8FE8);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit">Got it, let me duel</button></div>';
     document.body.appendChild(el);
-    el.querySelector('.go').addEventListener('click', function(){ el.remove(); });
+    var ggo=el.querySelector('.go'); ggo.addEventListener('click', function(){ el.remove(); });
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
+    setTimeout(function(){ try{ ggo.focus(); }catch(e){} }, 30);
   }
   function showResult(r){
     if(!r || r.error || !r.state){ return; }
@@ -4182,8 +4183,12 @@
     ov.querySelector('.s').textContent = (r.crit?'Critical hit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance+' ('+r.stanceOutcome+' read)';
     var o=r.opponent||{};
     var oName=(o.name?(window.bqEsc?window.bqEsc(String(o.name)):'Challenger'):'Challenger');
+    // scores are rounded to 1dp, so a genuine win can display as an equal tie; nudge the loser's shown
+    // number down 0.1 so the banner never looks self-contradictory (Victory with identical scores).
+    var ys=r.yourScore, os=r.oppScore;
+    if(ys===os){ if(r.win){ os=Math.round((os-0.1)*10)/10; } else { ys=Math.round((ys-0.1)*10)/10; } }
     ov.querySelector('.rows').innerHTML =
-      '<div>Your score <b>'+r.yourScore+'</b> &nbsp;vs&nbsp; '+oName+' <b>'+r.oppScore+'</b></div>'+
+      '<div>Your score <b>'+ys+'</b> &nbsp;vs&nbsp; '+oName+' <b>'+os+'</b></div>'+
       '<div>'+oName+' was <b>'+(o.power!=null?o.power:'?')+'</b> Pow &middot; <b>'+(o.speed!=null?o.speed:'?')+'</b> Spd &middot; <b>'+(o.stamina!=null?o.stamina:'?')+'</b> Sta</div>'+
       '<div>GRIT <b style="color:'+(r.gritDelta>=0?'#2FA657':'#D8434B')+'">'+(r.gritDelta>=0?'+':'')+r.gritDelta+'</b> &nbsp; XP <b>+'+r.xpGain+'</b>'+(r.leveled?' &nbsp; <b style="color:#7C5CE6">LEVEL UP!</b>':'')+'</div>'+
       '<div>Balance <b>'+r.state.grit+' GRIT</b> &nbsp; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &nbsp; '+r.state.wins+'W '+r.state.losses+'L</div>'+
@@ -4851,10 +4856,43 @@
       var setg=document.createElement('button'); setg.setAttribute('aria-label','Settings'); setg.title='Settings';
       setg.style.cssText='border:0;background:#EEE9FB;width:26px;height:26px;border-radius:13px;cursor:pointer;display:grid;place-items:center;font-family:inherit';
       setg.innerHTML='<i class="pico" style="--m:url(assets/icons/ui_settings.png);width:15px;height:15px;background:#6B31E6"></i>';
-      setg.addEventListener('click', function(){ if(window.showToast) showToast('Settings are coming soon'); });
+      setg.addEventListener('click', function(){ showSetName(); });
       box.appendChild(lbl); box.appendChild(site); box.appendChild(setg); box.appendChild(btn); document.body.appendChild(box);
     }
     var l=box.querySelector('.lbl'); l.textContent=acctLabel||''; l.style.display=acctLabel?'':'none';
+  }
+  // Set a display name (shown on the leaderboard + in duels). Server-validated via set_username.
+  function showSetName(){
+    if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
+    var el=document.createElement('div'); el.className='bqfb-ov';
+    el.innerHTML='<div class="bqfb" style="max-width:400px;text-align:center">'+
+      '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">DISPLAY NAME</div>'+
+      '<h3 style="margin:2px 0 4px;font-size:21px">Pick your handle</h3>'+
+      '<p class="sub" style="margin:0 0 14px">Shown on the leaderboard and in duels. 3 to 18 letters, numbers, spaces, - or _.</p>'+
+      '<input id="bqSnInput" maxlength="18" placeholder="e.g. IronHoof" style="width:100%;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:15px;font-family:inherit;color:#20143A;box-sizing:border-box">'+
+      '<div id="bqSnMsg" style="min-height:16px;font-size:12.5px;margin-top:8px;color:#D8434B"></div>'+
+      '<div class="bqfb-actions" style="margin-top:8px"><button type="button" class="cancel" id="bqSnCancel">Cancel</button><button type="button" class="send" id="bqSnSave">Save name</button></div></div>';
+    document.body.appendChild(el);
+    el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
+    el.querySelector('#bqSnCancel').addEventListener('click', function(){ el.remove(); });
+    var inp=el.querySelector('#bqSnInput'), msg=el.querySelector('#bqSnMsg'), save=el.querySelector('#bqSnSave');
+    setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 30);
+    function submit(){
+      var v=(inp.value||'').trim(); msg.style.color='#D8434B'; msg.textContent='';
+      if(v.length<3||v.length>18){ msg.textContent='Use 3 to 18 characters.'; return; }
+      if(!/^[A-Za-z0-9 _-]+$/.test(v)){ msg.textContent='Letters, numbers, spaces, - and _ only.'; return; }
+      save.disabled=true; save.textContent='Saving...';
+      sb.rpc('set_username',{p_name:v}).then(function(r){
+        var d=(r&&r.data)||{}; save.disabled=false; save.textContent='Save name';
+        if(r&&r.error){ msg.textContent='Could not save, try again.'; return; }
+        if(d.error){ var m={taken:'That name is taken.','bad-length':'Use 3 to 18 characters.','bad-chars':'Letters, numbers, spaces, - and _ only.',reserved:'That name is reserved.'}; msg.textContent=m[d.error]||'Could not save that name.'; return; }
+        if(d.ok){ el.remove(); if(window.showToast) showToast('Name set to '+d.username);
+          var g=[].slice.call(document.querySelectorAll('#view-home *')).filter(function(x){return x.children.length===0 && /^Hey\b/.test((x.textContent||'').trim());})[0];
+          if(g) g.textContent='Hey, '+d.username; }
+      }).catch(function(){ save.disabled=false; save.textContent='Save name'; msg.textContent='Could not save, try again.'; });
+    }
+    save.addEventListener('click', submit);
+    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') submit(); });
   }
 
   // gate entry buttons behind real auth - ALWAYS block the router; queue the action if the SDK isn't ready yet
@@ -4900,6 +4938,8 @@
     if(s.quests) renderQuests(s.quests);
     var sr=document.getElementById('bqSpinReady'); if(sr) sr.textContent = s.spun_today ? 'Come back tomorrow' : 'Free daily spin';
     try{ renderGettingStarted(s); }catch(e){}
+    // a pending (play-gated) referral pays out once the player has progressed - retry it here after each state refresh
+    try{ recordReferralIfAny(); }catch(e){}
   }
   // First-run "Getting started" checklist: guides a brand-new player to their first duel win,
   // first spin, and first quest claim (activation). Driven by real state; self-hides once done,
@@ -5026,7 +5066,13 @@
       .then(function(j){ if(j.error) throw new Error(j.error); return sb.auth.setSession(j.session); })
       .then(function(){ return loadAndShow(true, true); })
       .then(function(){ try{ recordReferralIfAny(); }catch(e){} })
-      .catch(function(e){ walletMsg(friendly(e)); });
+      .catch(function(e){
+        // On wallet signup failure, re-query the live count: a drained 5,000-bull pool routes to the waitlist.
+        sb.rpc('bulls_remaining').then(function(rr){ var n=rr&&rr.data;
+          if(typeof n==='number' && n<=0){ showWaitlist(''); }
+          else { walletMsg(friendly(e)); }
+        }).catch(function(){ walletMsg(friendly(e)); });
+      });
   }
   document.addEventListener('click', function(e){
     var t=e.target.closest && e.target.closest('[data-wallet]');
@@ -5164,7 +5210,7 @@
     var medal=['#F0B429','#AEB8C2','#CD7F32'];
     function lbName(h){ if(h && /^handler_[0-9a-f]{6}$/i.test(h)) return 'Player '+h.slice(-6).toUpperCase(); return bqEsc(h||'Player'); }
     var list=rows.map(function(x){
-      var mine=(d.yourRank!=null && x.rank===d.yourRank);
+      var mine=(x.is_me===true);
       var badge = x.rank<=3 ? '<span style="display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:'+medal[x.rank-1]+';color:#fff;font-weight:800;font-size:12px">'+x.rank+'</span>' : '<span style="display:inline-block;width:24px;text-align:center;font-weight:800;color:#8A85A0;font-size:13px">'+x.rank+'</span>';
       return '<div style="display:flex;align-items:center;gap:11px;padding:9px 8px;border-radius:11px;'+(mine?'background:#F3EFFE':'')+'">'+badge+
         '<div style="flex:1;font-weight:700;font-size:13.5px;color:'+(mine?'#6B31E6':'#20143A')+'">'+lbName(x.handle)+(mine?' (you)':'')+'</div>'+
@@ -5240,7 +5286,17 @@
   function recordReferralIfAny(){
     var ref; try{ ref=localStorage.getItem('bq_ref'); }catch(e){}
     if(!ref||!sb) return;
-    sb.rpc('record_referral',{p_ref_code:ref}).then(function(r){ try{ localStorage.removeItem('bq_ref'); }catch(e){} var d=r&&r.data; if(d&&d.ok&&d.reward){ if(window.showToast) showToast('+'+d.reward+' GRIT from your friend’s invite!'); sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.grit!=null&&window.bqSetGrit) window.bqSetGrit(g.data.grit); }).catch(function(){}); } }).catch(function(){});
+    sb.rpc('record_referral',{p_ref_code:ref}).then(function(r){
+      var d=(r&&r.data)||{};
+      // The reward is play-gated (pays once you reach level 2). Keep the pending ref in localStorage so a
+      // later call (after playing) pays it out; only clear it once resolved for good.
+      var done = d.rewarded || d.note==='already-rewarded' || d.error==='bad-code' || d.error==='self';
+      if(done){ try{ localStorage.removeItem('bq_ref'); }catch(e){} }
+      if(d.rewarded && d.reward){
+        if(window.showToast) showToast('+'+d.reward+' GRIT unlocked from your friend’s invite!');
+        sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.grit!=null&&window.bqSetGrit) window.bqSetGrit(g.data.grit); }).catch(function(){});
+      }
+    }).catch(function(){});
   }
   function showInvite(){
     if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
@@ -5251,7 +5307,7 @@
       el.innerHTML='<div class="bqfb" style="max-width:420px;text-align:center">'+
         '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE FRIENDS</div>'+
         '<h3 style="margin:2px 0 4px;font-size:21px">Grow the herd</h3>'+
-        '<p class="sub" style="margin:0 0 16px">Earn <b style="color:#20143A">100 GRIT</b> for every friend who joins with your link, and they get <b style="color:#20143A">50</b> too. '+(count>0?('<b style="color:#20143A">'+count+'</b> joined so far.'):'Be the first to bring someone in.')+'</p>'+
+        '<p class="sub" style="margin:0 0 16px">Earn <b style="color:#20143A">100 GRIT</b> for every friend who joins with your link and plays to level 2, and they get <b style="color:#20143A">50</b> too. '+(count>0?('<b style="color:#20143A">'+count+'</b> unlocked so far.'):'Be the first to bring someone in.')+'</p>'+
         '<div style="display:flex;gap:8px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" class="send" style="flex:none;padding:12px 18px">Copy</button></div>'+
         '<div class="bqfb-actions" style="margin-top:14px"><button type="button" class="cancel" id="bqRefShare">Share link</button><button type="button" class="send" id="bqRefClose">Done</button></div></div>';
       document.body.appendChild(el);
@@ -5380,7 +5436,7 @@
     rarity:['Rarity','From Common to Legendary. Rarity sets your bull’s starting stats and energy - rarer bulls start stronger, but skill still decides fights.'],
     level:['Level','Your bull levels up automatically as it wins duels. Every level makes all three battle stats stronger.'],
     discipline:['Discipline','Chooses which stat wins the duel: Clash uses Power, Chase uses Speed, Standoff uses Stamina. Pick the one your bull is strongest in.'],
-    stance:['Stance','A rock-paper-scissors layer: Charge beats Feint, Feint beats Brace, Brace beats Charge. Read your rival’s stance to tip the odds your way.'],
+    stance:['Stance','A rock-paper-scissors clash: Charge beats Feint, Feint beats Brace, Brace beats Charge. You commit blind against a hidden opposing stance, so it swings the fight but cannot be read in advance.'],
     streak:['Daily streak','Come back on back-to-back days to keep your streak alive for steady bonus GRIT.']
   };
   function bqCard(html, z){ var el=document.createElement('div'); el.className='bqfb-ov'; el.style.zIndex=z||10002; el.innerHTML=html; document.body.appendChild(el); function close(){ el.remove(); } el.addEventListener('click', function(e){ if(e.target===el) close(); }); return {el:el, close:close}; }
