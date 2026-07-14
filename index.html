@@ -4845,7 +4845,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         return sb.from('profiles').select('username').eq('id',u.id).maybeSingle().then(function(p){
           populate((p&&p.data&&p.data.username)||'', ub);
           sb.rpc('get_state').then(function(r){ applyLiveState(r&&r.data); }).catch(function(){});
-          sb.rpc('ping_active').catch(function(){});   // analytics: record "active today" (once/user/day)
+          sb.rpc('ping_active').then(function(){}, function(){});   // analytics: record "active today" (once/user/day) - fire-and-forget (rpc builder has no .catch)
           if(window.bqArenaRefresh) window.bqArenaRefresh();
           renderBulls();
           if(reveal){ var seen; try{ seen=localStorage.getItem('bq_claimed'); }catch(e){} if(!seen){ try{ localStorage.setItem('bq_claimed','1'); }catch(e){} showClaim(ub); } }
