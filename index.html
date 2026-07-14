@@ -3117,7 +3117,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       </div>
     </div>
 
-    <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/ui_quests.png')"></i>Daily Quests</h3><span class="link" style="color:var(--faint);font-weight:700">Resets 8h</span></div>
+    <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/ui_quests.png')"></i>Daily Quests</h3><span class="link" style="color:var(--faint);font-weight:700">Resets daily</span></div>
     <div class="card">
       <div class="quest-head">
         <span class="chest" aria-hidden="true">
@@ -5314,7 +5314,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var host=document.getElementById('view-landing')||document.body;
       var bar=document.createElement('div'); bar.id='bqRefBar';
       bar.style.cssText='display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;background:linear-gradient(90deg,#6E35E9,#8B5CF6);color:#fff;padding:11px 34px 11px 16px;font-family:inherit;font-weight:700;font-size:13.5px;text-align:center;position:relative;z-index:60';
-      bar.innerHTML='<span>🐂 <b>'+safe+'</b> invited you - claim your free bull, you both get bonus GRIT.</span>'+
+      bar.innerHTML='<span>🐂 <b>'+safe+'</b> invited you - claim your free bull, and you both earn bonus GRIT as you play.</span>'+
         '<button type="button" id="bqRefBarGo" style="border:0;background:#fff;color:#6B31E6;font-weight:800;font-size:13px;padding:8px 15px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap">Claim free bull</button>'+
         '<button type="button" id="bqRefBarX" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:rgba(255,255,255,.85);font-size:19px;line-height:1;cursor:pointer;padding:4px 8px">&times;</button>';
       host.insertBefore(bar, host.firstChild);
@@ -5346,7 +5346,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       el.innerHTML='<div class="bqfb" style="max-width:420px;text-align:center">'+
         '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE FRIENDS</div>'+
         '<h3 style="margin:2px 0 4px;font-size:21px">Grow the herd</h3>'+
-        '<p class="sub" style="margin:0 0 16px">Earn <b style="color:#20143A">100 GRIT</b> for every friend who joins with your link and plays to level 2, and they get <b style="color:#20143A">50</b> too. '+(count>0?('<b style="color:#20143A">'+count+'</b> unlocked so far.'):'Be the first to bring someone in.')+'</p>'+
+        '<p class="sub" style="margin:0 0 16px">Earn <b style="color:#20143A">100 GRIT</b> for every friend (up to 50) who joins with your link and plays to level 2, and they get <b style="color:#20143A">50</b> too. '+(count>0?('<b style="color:#20143A">'+count+'</b> unlocked so far.'):'Be the first to bring someone in.')+'</p>'+
         '<div style="display:flex;gap:8px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" class="send" style="flex:none;padding:12px 18px">Copy</button></div>'+
         '<div class="bqfb-actions" style="margin-top:14px"><button type="button" class="cancel" id="bqRefShare">Share link</button><button type="button" class="send" id="bqRefClose">Done</button></div></div>';
       document.body.appendChild(el);
