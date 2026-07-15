@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3}</style></head><body><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"></head><body><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -4736,7 +4736,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   var BOLT='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>';
   var sb=null, mode='signup', modal, acctLabel='', curBull=null;
   // --- launch safety: Cloudflare Turnstile CAPTCHA on signup + sold-out waitlist ---
-  var TURNSTILE_SITE_KEY='0x4AAAAAAD1Air3ZqokI6e_a'; // real Cloudflare Turnstile site key (BullQuest widget, hostname technomozart.github.io). Enforced once CAPTCHA is enabled in Supabase Auth.
+  var TURNSTILE_SITE_KEY='0x4AAAAAAD1Air3ZqokI6e_a'; // real Cloudflare Turnstile site key (BullQuest widget). Add bullquest.fun to the widget's allowed hostnames in Cloudflare before enabling CAPTCHA in Supabase Auth (was scoped to technomozart.github.io).
   var tsWidgetId=null, captchaToken='';
   function loadTurnstile(){ if(window.turnstile||document.getElementById('bqTsScript')) return; var s=document.createElement('script'); s.id='bqTsScript'; s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async=true; s.defer=true; document.head.appendChild(s); }
   function renderTurnstile(){ var el=modal&&modal.querySelector('#bqTurnstile'); if(!el) return; if(!window.turnstile){ setTimeout(renderTurnstile,200); return; } captchaToken=''; if(tsWidgetId!==null){ try{ window.turnstile.reset(tsWidgetId); }catch(e){} return; } try{ tsWidgetId=window.turnstile.render(el,{sitekey:TURNSTILE_SITE_KEY,callback:function(t){captchaToken=t;},'expired-callback':function(){captchaToken='';},'error-callback':function(){captchaToken='';}}); }catch(e){} }
@@ -5365,7 +5365,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     el.querySelector('#bqLbClose').addEventListener('click', function(){ el.remove(); });
     el.querySelector('#bqLbShare').addEventListener('click', function(){
       var d=el._data; if(!d){ return; }
-      var txt='Ranked #'+(d.yourRank||'?')+' of '+(d.total||'?')+' on the BullQuest airdrop board with '+((d.yourGrit||0).toLocaleString())+' GRIT. Charging for the $BULL airdrop. https://technomozart.github.io/bullquest/';
+      var txt='Ranked #'+(d.yourRank||'?')+' of '+(d.total||'?')+' on the BullQuest airdrop board with '+((d.yourGrit||0).toLocaleString())+' GRIT. Charging for the $BULL airdrop. https://bullquest.fun/';
       if(navigator.share){ navigator.share({text:txt}).catch(function(){}); }
       else if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(function(){ if(window.showToast) showToast('Copied - paste it anywhere'); }); }
       else if(window.showToast) showToast('Sharing not supported here');
@@ -5431,7 +5431,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         stats.forEach(function(s,i){ var px=sx+i*(cw+gp); x.fillStyle='rgba(255,255,255,.14)'; rrect(x,px,sy,cw,88,18); x.fill(); ct(String(s[1]==null?'-':s[1]), px+cw/2, sy+48, '800 42px -apple-system,Segoe UI,Roboto,sans-serif', '#fff'); ct(s[0], px+cw/2, sy+74, '800 18px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.75)'); });
         var foot = (grit!=null) ? (grit.toLocaleString()+' GRIT gathered'+(rank?'   ·   Rank #'+rank:'')) : 'Gathering GRIT for the $BULL airdrop';
         ct(foot, W/2, 1032, '800 30px -apple-system,Segoe UI,Roboto,sans-serif', '#FFE7A6');
-        ct('Claim a free bull at technomozart.github.io/bullquest', W/2, 1066, '600 24px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.9)');
+        ct('Claim a free bull at bullquest.fun', W/2, 1066, '600 24px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.9)');
         try{ c.toBlob(function(blob){ shareOrDownload(blob, 'bullquest-'+(b.id||'bull')+'.png'); }, 'image/png'); }
         catch(e){ if(window.showToast) showToast('Could not export the card'); }
       }
@@ -5494,7 +5494,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
     sb.rpc('get_state').then(function(r){
       var ref=(r&&r.data&&r.data.ref)||{}, code=ref.code||'', count=ref.count||0;
-      var link='https://technomozart.github.io/bullquest/?ref='+code;
+      var link='https://bullquest.fun/?ref='+code;
       var el=document.createElement('div'); el.className='bqfb-ov';
       el.innerHTML='<div class="bqfb" style="max-width:420px;text-align:center">'+
         '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE FRIENDS</div>'+
