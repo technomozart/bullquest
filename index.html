@@ -4276,6 +4276,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     var views = document.querySelectorAll('.bq-view');
     for (var i = 0; i < views.length; i++) { views[i].hidden = (views[i].id !== id); }
     window.scrollTo(0, 0);
+    try { if (typeof maybeRenderEntryGoogle === 'function') maybeRenderEntryGoogle(); } catch(e){}
   }
   window.bqGo = bqGo;
   window.showToast = function(m){ showToast(m); };
@@ -5093,9 +5094,14 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       }catch(e){}
     });
   }
+  function maybeRenderEntryGoogle(){
+    if(!window.bqGoogleOn) return;
+    var v=document.getElementById('view-onboard');
+    if(v && !v.hidden){ renderGoogleBtn(document.getElementById('bqGoogleEntry')); }
+  }
   function checkGoogleEnabled(){
     fetch(URL_+'/auth/v1/settings',{headers:{apikey:KEY_}}).then(function(r){ return r.json(); }).then(function(j){
-      if(j && j.external && j.external.google){ window.bqGoogleOn=true; renderGoogleBtn(document.getElementById('bqGoogleEntry')); }
+      if(j && j.external && j.external.google){ window.bqGoogleOn=true; loadGSI(function(){}); maybeRenderEntryGoogle(); }
     }, function(){});
   }
   checkGoogleEnabled();
