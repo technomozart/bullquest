@@ -4187,8 +4187,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       ov.style.cssText='position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(20,16,40,.6);backdrop-filter:blur(3px);padding:20px';
       ov.innerHTML='<div style="width:100%;max-width:340px;background:#fff;border-radius:22px;padding:24px;text-align:center;font-family:inherit;box-shadow:0 24px 60px rgba(20,16,40,.4)"><div class="e" style="font-size:42px"></div><h2 class="t" style="margin:6px 0 2px;font-size:26px"></h2><p class="s" style="margin:0 0 14px;font-size:13.5px;color:#6B7280"></p><div class="rows" style="text-align:left;font-size:13px;color:#374151;background:#F5F5FA;border-radius:14px;padding:12px 14px;margin-bottom:16px;line-height:1.7"></div><button class="go" style="width:100%;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#4DA6F5,#3F98ED);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit">Continue</button></div>';
       document.body.appendChild(ov);
-      ov.querySelector('.go').addEventListener('click', function(){ ov.style.display='none'; setTimeout(refreshFromServer, 20); });
-      ov.addEventListener('click', function(e){ if(e.target===ov){ ov.style.display='none'; setTimeout(refreshFromServer, 20); } });
+      var hideOpp=function(){ var op=document.querySelector('#view-arena .fighter.opp'); if(!op) return;
+        op.querySelectorAll('.statrow .val').forEach(function(v){ v.textContent='?'; });
+        var _f=op.querySelector('.fname'); if(_f) _f.textContent='Challenger';
+        var _l=op.querySelector('.hexbadge span'); if(_l) _l.textContent='?';
+        var _r=op.querySelector('.rarity'); if(_r) _r.innerHTML='<span class="dot" style="background:#9AA6B2"></span>Near your level'; };
+      ov.querySelector('.go').addEventListener('click', function(){ ov.style.display='none'; hideOpp(); setTimeout(refreshFromServer, 20); });
+      ov.addEventListener('click', function(e){ if(e.target===ov){ ov.style.display='none'; hideOpp(); setTimeout(refreshFromServer, 20); } });
     }
     var win=r.win;
     var streak=0; try{ streak=parseInt(localStorage.getItem('bq_ws')||'0',10)||0; }catch(e){}
