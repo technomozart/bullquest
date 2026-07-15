@@ -5165,19 +5165,26 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   function renderGettingStarted(s){
     var sheet=document.querySelector('#view-home .sheet'); if(!sheet) return;
     var ex=document.getElementById('bqGetStarted');
-    var ub=curBull||{}, q=(s&&s.quests)||{};
-    var played=(ub.wins||0)+(ub.losses||0);
+    // Source the checklist from FRESH server state (s), not the stale load-time curBull, so a win/spin
+    // this session ticks immediately. The +50/+25 rewards ARE the daily 'win'/'spin' quests (same keys),
+    // so we let the player claim them right here instead of hunting for a separate quest list.
+    var ub=curBull||{}, q=(s&&s.quests)||{}, sbull=(s&&s.bull)||{}, claims=(q.claims||[]);
+    var wins=(sbull.wins!=null?sbull.wins:(ub.wins||0)), losses=(sbull.losses!=null?sbull.losses:(ub.losses||0));
+    var winsToday=(q.wins_today||0), spun=!!(s&&s.spun_today);
+    var wonClaimed=(claims.indexOf('win')>=0), spinClaimed=(claims.indexOf('spin')>=0);
+    var played=wins+losses;
     var hidden=false, doneFlag=false;
     try{ hidden=!!localStorage.getItem('bq_gs_hidden'); doneFlag=!!localStorage.getItem('bq_gs_done'); }catch(e){}
     var steps=[
-      {k:'bull',  label:'Claim your free bull',   reward:0,  done:true,                          go:null},
-      {k:'duel',  label:'Win your first duel',    reward:50, done:((ub.wins||0)>0),               go:'view-arena'},
-      {k:'spin',  label:'Take your daily spin',   reward:25, done:!!(s&&s.spun_today),            go:'view-spin'},
-      {k:'quest', label:'Claim a daily quest',    reward:0,  done:(((q.claims||[]).length)>0),    go:'quests'}
+      {k:'bull',  label:'Claim your free bull',   reward:0,  done:true,                                    go:null},
+      {k:'duel',  label:'Win your first duel',    reward:50, done:(wins>0||winsToday>0||wonClaimed), claimKey:'win',  claimable:(winsToday>=1 && !wonClaimed), claimed:wonClaimed, go:'view-arena'},
+      {k:'spin',  label:'Take your daily spin',   reward:25, done:(spun||spinClaimed),               claimKey:'spin', claimable:(spun && !spinClaimed),        claimed:spinClaimed, go:'view-spin'},
+      {k:'quest', label:'Claim a daily quest',    reward:0,  done:(claims.length>0),                       go:'quests'}
     ];
     var doneN=steps.filter(function(x){return x.done;}).length, allDone=doneN>=steps.length;
-    if(allDone){ try{ localStorage.setItem('bq_gs_done','1'); }catch(e){} }
-    if(hidden || doneFlag || allDone || played>=5){ if(ex) ex.remove(); return; }
+    var pendingClaim=steps.some(function(x){return x.claimable;});  // keep the card open while a reward is still grabbable
+    if(allDone && !pendingClaim){ try{ localStorage.setItem('bq_gs_done','1'); }catch(e){} }
+    if(hidden || ((doneFlag||allDone||played>=5) && !pendingClaim)){ if(ex) ex.remove(); return; }
     if(!ex){ ex=document.createElement('div'); ex.id='bqGetStarted'; sheet.insertBefore(ex, sheet.firstChild); }
     ex.className='card';
     ex.style.cssText='padding:15px 16px;margin-bottom:14px;border:1.5px solid #E9E3FB;background:linear-gradient(180deg,#FBF9FF,#fff)';
@@ -5185,13 +5192,19 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var chk = x.done
         ? '<span style="flex:none;width:24px;height:24px;border-radius:50%;background:#43C06A;display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
         : '<span style="flex:none;width:24px;height:24px;border-radius:50%;border:2px solid #D6CEF0"></span>';
-      var reward = x.reward? '<span style="font-size:11.5px;font-weight:800;color:#6B31E6;background:#EEE9FB;padding:2px 8px;border-radius:9px;margin-left:auto;flex:none">+'+x.reward+' GRIT</span>' : '';
+      var right;
+      if(x.claimable){ right='<button type="button" class="bqclaim" data-key="'+x.claimKey+'" style="margin-left:auto;flex:none;border:0;background:#43C06A;color:#fff;font-size:12px;font-weight:800;padding:7px 12px;border-radius:11px;cursor:pointer;font-family:inherit">Claim +'+x.reward+'</button>'; }
+      else if(x.claimed){ right='<span style="margin-left:auto;flex:none;font-size:11.5px;font-weight:800;color:#2FA657">Claimed</span>'; }
+      else if(x.reward){ right='<span style="font-size:11.5px;font-weight:800;color:#6B31E6;background:#EEE9FB;padding:2px 8px;border-radius:9px;margin-left:auto;flex:none">+'+x.reward+' GRIT</span>'; }
+      else { right=''; }
       var actionable=(!x.done && x.go);
-      var chev = actionable? '<svg width="16" height="16" viewBox="0 0 24 24" style="flex:none;margin-left:'+(x.reward?'6px':'auto')+'"><path d="M9 6l6 6-6 6" fill="none" stroke="#B7ADD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '';
+      var chev = !actionable? '' : (x.reward
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" style="flex:none;margin-left:6px"><path d="M9 6l6 6-6 6" fill="none" stroke="#B7ADD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        : '<svg width="16" height="16" viewBox="0 0 24 24" style="flex:none;margin-left:auto"><path d="M9 6l6 6-6 6" fill="none" stroke="#B7ADD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
       var tag = actionable? 'button':'div';
       var attr = actionable? ' type="button" data-gs="'+x.go+'"':'';
       return '<'+tag+attr+' style="display:flex;align-items:center;gap:11px;width:100%;padding:9px 0;border:0;background:none;font-family:inherit;cursor:'+(actionable?'pointer':'default')+';text-align:left">'+
-        chk+'<span style="font-size:14px;font-weight:'+(x.done?'600':'800')+';color:'+(x.done?'#9AA6B2':'#20143A')+';'+(x.done?'text-decoration:line-through':'')+'">'+x.label+'</span>'+reward+chev+
+        chk+'<span style="font-size:14px;font-weight:'+(x.done?'600':'800')+';color:'+(x.done?'#9AA6B2':'#20143A')+';'+((x.done&&!x.claimable)?'text-decoration:line-through':'')+'">'+x.label+'</span>'+right+chev+
       '</'+tag+'>';
     }).join('<div style="height:1px;background:#F0EDF8"></div>');
     ex.innerHTML=
@@ -5234,7 +5247,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     e.preventDefault(); var key=b.getAttribute('data-key'); b.disabled=true; var old=b.textContent; b.textContent='...';
     sb.rpc('claim_quest',{p_key:key}).then(function(r){
       var d=r&&r.data;
-      if(d&&d.ok){ setGrit(d.grit); if(window.showToast) showToast('+'+d.reward+' GRIT claimed'); sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.quests) renderQuests(g.data.quests); }); }
+      if(d&&d.ok){ setGrit(d.grit); if(window.showToast) showToast('+'+d.reward+' GRIT claimed'); sb.rpc('get_state').then(function(g){ if(g&&g.data) applyLiveState(g.data); }); }
       else { b.disabled=false; b.textContent=old; if(window.showToast) showToast(d&&d.error==='already-claimed'?'Already claimed':'Not ready yet'); }
     }).catch(function(){ b.disabled=false; b.textContent=old; });
   });
