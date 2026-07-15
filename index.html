@@ -4237,6 +4237,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
       return window.bqGame.resolve(DISC[state.stat], state.stance, 20)
         .then(showResult)
+        .then(function(){ setTimeout(refreshFromServer, 60); })  // reset the next setup: hide the opponent again, apply level-ups/stat changes
         .catch(function(e){ if(window.bqToast) window.bqToast((e&&e.message)||"Duel didn't land, try again."); });
     }).then(function(){ busy=false; }, function(){ busy=false; });
   });
@@ -4949,7 +4950,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   function applyLiveState(s){
     if(!s||s.error) return;
     setGrit(s.grit);
-    if(s.bull){ var e=document.querySelector('#view-home .card.featured .energy'); if(e) e.innerHTML=BOLT+' '+s.bull.energy+'/'+s.bull.energy_max+' Energy'; }
+    if(s.bull){ var hc=document.querySelector('#view-home .card.featured'), he;
+      if(hc){
+        if(he=hc.querySelector('.energy')) he.innerHTML=BOLT+' '+s.bull.energy+'/'+s.bull.energy_max+' Energy';
+        if(he=hc.querySelector('.hexbadge span')) he.textContent=s.bull.level;
+        if(he=hc.querySelector('.stat.pow .sv b')) he.textContent=s.bull.power;
+        if(he=hc.querySelector('.stat.spd .sv b')) he.textContent=s.bull.speed;
+        if(he=hc.querySelector('.stat.sta .sv b')) he.textContent=s.bull.stamina;
+      }
+      var hr=document.querySelector('#view-home .rankhex span'); if(hr) hr.textContent=s.bull.level;
+    }
     // real login streak (client-side, honest)
     var n=bqStreak();
     var sl=document.getElementById('bqStreakLab'); if(sl) sl.textContent=n+(n===1?'-day':'-day');
@@ -4964,6 +4974,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     // a pending (play-gated) referral pays out once the player has progressed - retry it here after each state refresh
     try{ recordReferralIfAny(); }catch(e){}
   }
+  // Refresh Home whenever the player navigates back to it (bottom nav, arena/spin back button, etc.) so a
+  // win, spin, claim, or level-up shows immediately instead of only after a full page reload.
+  document.addEventListener('click', function(e){
+    if(e.target.closest && e.target.closest('[data-bqgo="view-home"]') && sb){
+      setTimeout(function(){ sb.rpc('get_state').then(function(r){ applyLiveState(r&&r.data); }, function(){}); }, 90);
+    }
+  });
   // First-run "Getting started" checklist: guides a brand-new player to their first duel win,
   // first spin, and first quest claim (activation). Driven by real state; self-hides once done,
   // dismissed, or for established players (5+ duels).
