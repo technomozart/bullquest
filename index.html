@@ -199,6 +199,15 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .lvl-hex svg{position:absolute;inset:0;width:100%;height:100%}
 #view-landing .lvl-hex .lab{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:7.5px;font-weight:800;letter-spacing:.6px;color:#fff;background:rgba(28,31,36,.55);padding:2px 6px;border-radius:999px;white-space:nowrap}
 #view-landing .lvl-hex b{position:relative;z-index:1;color:#fff;font-weight:800;font-size:16px;line-height:1}
+
+/* ===== Level badge: premium gem emblem (shared by every .hexbadge + landing .lvl-hex) ===== */
+.hexbadge,#view-landing .lvl-hex{--hc:#7C5CE6;position:relative}
+.hexbadge>svg,#view-landing .lvl-hex>svg{display:none}
+.hexbadge::before,.hexbadge::after,#view-landing .lvl-hex::before,#view-landing .lvl-hex::after{content:"";position:absolute;pointer-events:none;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+.hexbadge::before,#view-landing .lvl-hex::before{inset:0;background:var(--hc);background:color-mix(in srgb,var(--hc) 46%,#140a2c)}
+.hexbadge::after,#view-landing .lvl-hex::after{inset:2px;background:var(--hc);background:radial-gradient(125% 62% at 50% -10%,rgba(255,255,255,.6),rgba(255,255,255,0) 58%),linear-gradient(180deg,color-mix(in srgb,var(--hc) 60%,#fff) 0%,var(--hc) 50%,color-mix(in srgb,var(--hc) 70%,#000) 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -2px 3px rgba(0,0,0,.3)}
+.hexbadge>span,.hexbadge>b,#view-landing .lvl-hex>b{z-index:2;text-shadow:0 1px 1.5px rgba(18,7,42,.55)}
+.hexbadge{filter:drop-shadow(0 3px 5px rgba(20,10,50,.32))}
 #view-landing .energy-pill{position:absolute;right:12px;bottom:12px;background:linear-gradient(180deg,#F8C24C,#F0A61C);color:#fff;font-weight:800;font-size:12.5px;padding:5px 11px 5px 8px;border-radius:999px;display:flex;align-items:center;gap:4px;box-shadow:0 5px 12px rgba(240,166,28,.45)}
 #view-landing .energy-pill svg{width:14px;height:14px;flex:none}
 #view-landing .bull-body{padding:16px 18px 20px}
@@ -780,6 +789,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-arena .meta-row { display: flex; align-items: center; gap: 6px; }
   .bq-arena .hexbadge { position: relative; width: 34px; height: 34px; display: grid; place-items: center; flex: none; }
   .bq-arena .hexbadge span { position: relative; z-index: 1; color: #fff; font-weight: 800; font-size: 12px; line-height: 1; }
+  .bq-arena .fighter.you .hexbadge { --hc: #4DA6F5; }
+  .bq-arena .fighter.opp .hexbadge { --hc: #9AA6B2; }
   .bq-arena .rarity {
     display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 9px;
     border-radius: 999px; background: rgba(255,255,255,.92); font-size: 11px; font-weight: 700;
@@ -2714,7 +2725,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#EFE7DA">
         <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2935.webp" alt="BullQuest Bull #2935" style="width:100%;height:100%;object-fit:contain">
-        <span class="lvl-hex"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#9AA7B4"/></svg><span class="lab">LVL</span><b>1</b></span>
+        <span class="lvl-hex" style="--hc:#9AA7B4"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#9AA7B4"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 10 of 10"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>10/10</span>
       </div>
       <div class="bull-body">
@@ -2735,7 +2746,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#E4EEF3">
         <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_908.webp" alt="BullQuest Bull #908" style="width:100%;height:100%;object-fit:contain">
-        <span class="lvl-hex"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#4DA6F5"/></svg><span class="lab">LVL</span><b>1</b></span>
+        <span class="lvl-hex" style="--hc:#4DA6F5"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#4DA6F5"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 12 of 12"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>12/12</span>
       </div>
       <div class="bull-body">
@@ -2756,7 +2767,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#F3ECFB">
         <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1044.webp" alt="BullQuest Bull #1044" style="width:100%;height:100%;object-fit:contain">
-        <span class="lvl-hex"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#7C5CE6"/></svg><span class="lab">LVL</span><b>1</b></span>
+        <span class="lvl-hex" style="--hc:#7C5CE6"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#7C5CE6"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 14 of 14"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>14/14</span>
       </div>
       <div class="bull-body">
@@ -2777,7 +2788,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#FBF1DC">
         <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="BullQuest Bull #4915" style="width:100%;height:100%;object-fit:contain">
-        <span class="lvl-hex"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#F0B429"/></svg><span class="lab">LVL</span><b>1</b></span>
+        <span class="lvl-hex" style="--hc:#F0B429"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#F0B429"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 16 of 16"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>16/16</span>
       </div>
       <div class="bull-body">
@@ -4150,6 +4161,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         var lv=f.querySelector('.hexbadge span'); if(lv) lv.textContent=s.bull.level;
         var t=(b&&b.bulls)?window.bqGame.tier(b.bulls.rarity_rank):null;
         var ra=f.querySelector('.rarity'); if(ra&&t) ra.innerHTML='<span class="dot" style="background:'+t.c+'"></span>'+t.l;
+        var yh=f.querySelector('.hexbadge'); if(yh&&t) yh.style.setProperty('--hc', t.c);
         var vals=f.querySelectorAll('.statrow .val'); if(vals.length===3){ vals[0].textContent=s.bull.power; vals[1].textContent=s.bull.speed; vals[2].textContent=s.bull.stamina; }
         var mw=f.querySelector('.mascot-wrap'), url=b&&b.bulls&&b.bulls.image_url;
         var mwImg=mw&&mw.querySelector('img.bull');
@@ -4158,6 +4170,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var ovs=root.querySelectorAll('.fighter.opp .statrow .val'); for(var oi=0;oi<ovs.length;oi++) ovs[oi].textContent='?';
       var opn=root.querySelector('.fighter.opp .fname'); if(opn) opn.textContent='Challenger';
       var opl=root.querySelector('.fighter.opp .hexbadge span'); if(opl) opl.textContent='?';
+      var oph=root.querySelector('.fighter.opp .hexbadge'); if(oph) oph.style.setProperty('--hc','#9AA6B2');
       var opr=root.querySelector('.fighter.opp .rarity'); if(opr) opr.innerHTML='<span class="dot" style="background:#9AA6B2"></span>Near your level';
       recalc();
     }).catch(function(){});
@@ -4191,6 +4204,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         op.querySelectorAll('.statrow .val').forEach(function(v){ v.textContent='?'; });
         var _f=op.querySelector('.fname'); if(_f) _f.textContent='Challenger';
         var _l=op.querySelector('.hexbadge span'); if(_l) _l.textContent='?';
+        var _h=op.querySelector('.hexbadge'); if(_h) _h.style.setProperty('--hc','#9AA6B2');
         var _r=op.querySelector('.rarity'); if(_r) _r.innerHTML='<span class="dot" style="background:#9AA6B2"></span>Near your level'; };
       ov.querySelector('.go').addEventListener('click', function(){ ov.style.display='none'; hideOpp(); setTimeout(refreshFromServer, 20); });
       ov.addEventListener('click', function(e){ if(e.target===ov){ ov.style.display='none'; hideOpp(); setTimeout(refreshFromServer, 20); } });
@@ -4222,6 +4236,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         var ofn=oppF.querySelector('.fname'); if(ofn) ofn.textContent=o.name;
         var oln=oppF.querySelector('.hexbadge span'); if(oln) oln.textContent=(o.level!=null?o.level:'?');
         var otier=(window.bqGame&&o.rarity_rank!=null)?window.bqGame.tier(o.rarity_rank):null;
+        var orh=oppF.querySelector('.hexbadge'); if(orh&&otier) orh.style.setProperty('--hc', otier.c);
         var orr=oppF.querySelector('.rarity'); if(orr&&otier) orr.innerHTML='<span class="dot" style="background:'+otier.c+'"></span>'+otier.l;
         var oimg=oppF.querySelector('.mascot-wrap img.bull'); if(oimg&&o.bull_id){ oimg.alt=String(o.name); oimg.src='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+o.bull_id+'.webp'; }
       }
@@ -4718,7 +4733,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var bname = b.name || ('Bull #'+b.id);
       if(el=card.querySelector('.fname')) el.textContent=bname;
       if(el=card.querySelector('.hexbadge span')) el.textContent=ub.level;
-      if(el=card.querySelector('.hexbadge svg path')) el.setAttribute('fill', t.c);
+      if(el=card.querySelector('.hexbadge')) el.style.setProperty('--hc', t.c);
       if(el=card.querySelector('.bull')) el.setAttribute('aria-label','Your active bull, '+bname);
       if(el=card.querySelector('.rarity')) el.innerHTML='<span class="dot" style="background:'+t.c+'"></span>'+t.l;
       if(el=card.querySelector('.energy')) el.innerHTML=BOLT+' '+ub.energy+'/'+ub.energy_max+' Energy';
