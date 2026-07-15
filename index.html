@@ -3826,10 +3826,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
       <div class="or">or</div>
 
-      <button type="button" class="secondary" data-google id="bqGoogleEntry" style="display:none" aria-label="Continue with Google">
-        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Continue with Google
-      </button>
+      <div id="bqGoogleEntry" style="display:none;justify-content:center;margin-bottom:6px"></div>
 
       <button type="button" class="secondary" data-entry="email" aria-label="Continue with email, no wallet needed">
         <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4772,7 +4769,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       +'<p class="sub" id="bqAuthSub">Make an account and we’ll hand you a Genesis bull on the spot.</p>'
       +'<p id="bqBullsLeft" style="margin:-4px 0 10px;font-size:12px;font-weight:800;color:#43C06A;text-align:center;display:none"></p>'
       +'<p id="bqRefBonus" style="margin:-2px 0 11px;font-size:12.5px;font-weight:800;color:#6B31E6;background:#F3EFFE;border-radius:11px;padding:9px 11px;text-align:center;line-height:1.4;display:none"></p>'
-      +'<button type="button" data-google id="bqGoogleModalBtn" style="display:none;width:100%;align-items:center;justify-content:center;gap:10px;background:#fff;color:#20143A;border:1.5px solid #E2E0EC;border-radius:13px;padding:12px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>Continue with Google</button>'
+      +'<div id="bqGoogleModalBtn" style="display:none;justify-content:center;margin-bottom:10px"></div>'
       +'<div id="bqGoogleOr" style="display:none;align-items:center;gap:10px;color:#9A96A8;font-size:12px;font-weight:700;margin:0 0 12px"><span style="flex:1;height:1px;background:#EAE8F0"></span>or<span style="flex:1;height:1px;background:#EAE8F0"></span></div>'
       +'<input id="bqEmail" type="email" placeholder="you@email.com" autocomplete="email">'
       +'<input id="bqPass" type="password" placeholder="Password (6+ characters)" autocomplete="current-password">'
@@ -4800,7 +4797,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     if(rb){ var hr; try{ hr=localStorage.getItem('bq_ref'); }catch(e){}
       if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? (window.bqRefName+' invited you - reach level 2 and you both get bonus GRIT.') : 'You were invited - reach level 2 and you and your friend both get bonus GRIT.'); rb.style.display=''; }
       else { rb.style.display='none'; } }
-    var gmb=modal.querySelector('#bqGoogleModalBtn'), gmo=modal.querySelector('#bqGoogleOr'); if(gmb&&gmo){ var gvis=window.bqGoogleOn?'flex':'none'; gmb.style.display=gvis; gmo.style.display=gvis; }
+    if(window.bqGoogleOn){ var gmb=modal.querySelector('#bqGoogleModalBtn'), gmo=modal.querySelector('#bqGoogleOr'); if(gmb) renderGoogleBtn(gmb); if(gmo) gmo.style.display='flex'; }
     renderTurnstile(); if(mode==='signup'){ updateBullsLeft(); }
     errmsg('');
   }
@@ -5068,31 +5065,40 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     if(sb) go(); else { var n=0; (function wait(){ if(sb) return go(); if(n++<60) setTimeout(wait,80); })(); }
   }, true);
 
-  // ---- Google (Gmail) sign-in. The button stays hidden until the Google provider is actually enabled in
-  //      Supabase Auth (checked live via /auth/v1/settings), so there is never a dead button before setup. ----
-  function googleSignIn(){
-    if(!sb) return;
-    try{
-      Promise.resolve(sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.origin + location.pathname, queryParams:{ prompt:'select_account' } } }))
-        .then(function(r){ if(r&&r.error){ if(!modal) buildModal(); if(modal.hidden) openModal('signup'); errmsg('Google sign-in is being set up. Please use email or a wallet for now.'); } }, function(){});
-    }catch(e){}
+  // ---- Google (Gmail) sign-in via Google Identity Services + Supabase signInWithIdToken (ID-token flow, no
+  //      client secret). The Google button is rendered only once the Google provider is actually enabled in
+  //      Supabase (checked live via /auth/v1/settings), so there is never a dead button. ----
+  var GOOGLE_CLIENT_ID='686617545074-1flndb7ojit62rupj59svodo0mft4ok3.apps.googleusercontent.com';
+  var gsiInit=false;
+  function loadGSI(cb){
+    if(window.google&&window.google.accounts&&window.google.accounts.id) return cb();
+    var ex=document.getElementById('bqGsiScript');
+    if(ex){ ex.addEventListener('load',cb); return; }
+    var s=document.createElement('script'); s.id='bqGsiScript'; s.src='https://accounts.google.com/gsi/client'; s.async=true; s.defer=true;
+    s.addEventListener('load',cb); document.head.appendChild(s);
   }
-  function revealGoogle(){
-    var a=document.getElementById('bqGoogleEntry'); if(a) a.style.display='flex';
-    if(modal){ var b=modal.querySelector('#bqGoogleModalBtn'), d=modal.querySelector('#bqGoogleOr'); if(b) b.style.display='flex'; if(d) d.style.display='flex'; }
+  function handleGoogleCred(resp){
+    if(!resp||!resp.credential||!sb) return;
+    sb.auth.signInWithIdToken({ provider:'google', token: resp.credential })
+      .then(function(r){ if(r.error) throw r.error; return loadAndShow(true, true); })
+      .then(function(){ try{ closeModal(); }catch(e){} try{ recordReferralIfAny(); }catch(e){} })
+      .catch(function(e){ if(!modal) buildModal(); if(modal.hidden) openModal('signup'); errmsg('Google sign-in failed: '+((e&&e.message)||'please try again')); });
+  }
+  function renderGoogleBtn(el){
+    if(!el) return; el.style.display='flex';
+    loadGSI(function(){
+      try{
+        if(!gsiInit){ window.google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCred, auto_select:false, cancel_on_tap_outside:true }); gsiInit=true; }
+        el.innerHTML=''; window.google.accounts.id.renderButton(el, { type:'standard', theme:'outline', size:'large', text:'continue_with', shape:'pill', logo_alignment:'center', width:300 });
+      }catch(e){}
+    });
   }
   function checkGoogleEnabled(){
     fetch(URL_+'/auth/v1/settings',{headers:{apikey:KEY_}}).then(function(r){ return r.json(); }).then(function(j){
-      if(j && j.external && j.external.google){ window.bqGoogleOn=true; revealGoogle(); }
+      if(j && j.external && j.external.google){ window.bqGoogleOn=true; renderGoogleBtn(document.getElementById('bqGoogleEntry')); }
     }, function(){});
   }
   checkGoogleEnabled();
-  document.addEventListener('click', function(e){
-    var g=e.target.closest && e.target.closest('[data-google]');
-    if(!g) return;
-    e.preventDefault(); e.stopImmediatePropagation();
-    googleSignIn();
-  }, true);
 
   // ---- live game state helpers + public game API (used by the Arena) ----
   function setGrit(g){
