@@ -5354,7 +5354,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var d=(r&&r.data)||{};
       // The reward is play-gated (pays once you reach level 2). Keep the pending ref in localStorage so a
       // later call (after playing) pays it out; only clear it once resolved for good.
-      var done = d.rewarded || d.note==='already-rewarded' || d.error==='bad-code' || d.error==='self';
+      var done = d.rewarded || d.note==='already-rewarded' || d.error==='bad-code' || d.error==='self' || d.error==='reciprocal' || d.error==='too-late';
       if(done){ try{ localStorage.removeItem('bq_ref'); }catch(e){} }
       if(d.rewarded && d.reward){
         if(window.showToast) showToast('+'+d.reward+' GRIT unlocked from your friend’s invite!');
