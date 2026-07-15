@@ -72,10 +72,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .bq *{max-width:100%}
 #view-landing .bq img,#view-landing .bq svg{display:block}
 #view-landing .bq .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 22px}
-#view-landing .bq h1,#view-landing .bq h2,#view-landing .bq h3{margin:0;line-height:1.08;font-weight:800;letter-spacing:-.7px}
+#view-landing .bq h1,#view-landing .bq h2,#view-landing .bq h3{margin:0;line-height:1.08;font-weight:800;letter-spacing:-.7px;text-wrap:balance}
 #view-landing .bq h1{font-weight:800;letter-spacing:-1.2px;word-spacing:-1px}
 #view-landing .bq h2{letter-spacing:-1px}
-#view-landing .bq p{margin:0}
+#view-landing .bq p{margin:0;text-wrap:pretty}
 #view-landing .bq a{text-decoration:none;color:inherit}
 #view-landing .bq-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
@@ -160,7 +160,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .bq-head{text-align:center;max-width:640px;margin:0 auto 46px}
 #view-landing .bq-eyebrow{color:var(--cta);font-weight:800;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:12px}
 #view-landing .bq-head h2{font-size:36px;color:var(--ink);margin-bottom:14px}
-#view-landing .bq-head p{color:var(--body);font-size:17px}
+#view-landing .bq-head p{color:var(--body);font-size:17px;text-wrap:pretty}
 #view-landing .bq-violet .bq-head h2{color:#fff}
 #view-landing .bq-violet .bq-eyebrow{color:#D9C7FB}
 #view-landing .bq-violet .bq-head p{color:rgba(255,255,255,.9)}
@@ -188,7 +188,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .pillar li svg{width:18px;height:18px;flex:none;margin-top:1px}
 @media(max-width:840px){#view-landing .bq-pillars{grid-template-columns:1fr}}
 
-#view-landing .bq-rail{display:flex;gap:20px;justify-content:safe center;overflow-x:auto;padding:6px 22px 22px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+#view-landing .bq-rail{display:flex;gap:20px;justify-content:safe center;overflow-x:auto;padding:22px 22px 32px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
 #view-landing .bq-rail::-webkit-scrollbar{height:8px}
 #view-landing .bq-rail::-webkit-scrollbar-thumb{background:#dfe4ea;border-radius:99px}
 #view-landing .bull-card{scroll-snap-align:start;flex:0 0 268px;background:#fff;border-radius:20px;box-shadow:var(--shadow-lift);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
@@ -201,12 +201,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .lvl-hex b{position:relative;z-index:1;color:#fff;font-weight:800;font-size:16px;line-height:1}
 
 /* ===== Level badge: premium gem emblem (shared by every .hexbadge + landing .lvl-hex) ===== */
-.hexbadge,#view-landing .lvl-hex{--hc:#7C5CE6;position:relative}
+.hexbadge{--hc:#7C5CE6;position:relative}
+#view-landing .lvl-hex{--hc:#7C5CE6}
 .hexbadge>svg,#view-landing .lvl-hex>svg{display:none}
 .hexbadge::before,.hexbadge::after,#view-landing .lvl-hex::before,#view-landing .lvl-hex::after{content:"";position:absolute;pointer-events:none;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
 .hexbadge::before,#view-landing .lvl-hex::before{inset:0;background:var(--hc);background:color-mix(in srgb,var(--hc) 46%,#140a2c)}
 .hexbadge::after,#view-landing .lvl-hex::after{inset:2px;background:var(--hc);background:radial-gradient(125% 62% at 50% -10%,rgba(255,255,255,.6),rgba(255,255,255,0) 58%),linear-gradient(180deg,color-mix(in srgb,var(--hc) 60%,#fff) 0%,var(--hc) 50%,color-mix(in srgb,var(--hc) 70%,#000) 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -2px 3px rgba(0,0,0,.3)}
-.hexbadge>span,.hexbadge>b,#view-landing .lvl-hex>b{z-index:2;text-shadow:0 1px 1.5px rgba(18,7,42,.55)}
+.hexbadge>span,.hexbadge>b,#view-landing .lvl-hex>b,#view-landing .lvl-hex>span{z-index:2;text-shadow:0 1px 1.5px rgba(18,7,42,.55)}
 .hexbadge{filter:drop-shadow(0 3px 5px rgba(20,10,50,.32))}
 #view-landing .energy-pill{position:absolute;right:12px;bottom:12px;background:linear-gradient(180deg,#F8C24C,#F0A61C);color:#fff;font-weight:800;font-size:12.5px;padding:5px 11px 5px 8px;border-radius:999px;display:flex;align-items:center;gap:4px;box-shadow:0 5px 12px rgba(240,166,28,.45)}
 #view-landing .energy-pill svg{width:14px;height:14px;flex:none}
@@ -2599,7 +2600,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
             <span class="delta" style="background:#EEE8FC;color:#6B45D6">+3</span>
           </div>
           <div class="stat-card f" style="right:-2%;bottom:12%;--r:-4deg;animation-delay:1.4s">
-            <div class="ic" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1 9 2.7 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.3 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z" fill="#fff"/></svg></div>
+            <div class="ic" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6C7 16.2 3.5 13 3.5 8.9 3.5 6.2 5.6 4.1 8.2 4.1 9.8 4.1 11.2 4.9 12 6.1 12.8 4.9 14.2 4.1 15.8 4.1 18.4 4.1 20.5 6.2 20.5 8.9 20.5 13 17 16.2 12 20.6Z" fill="#fff"/></svg></div>
             <div class="meta"><span class="l">Stamina</span><span class="v">21</span></div>
             <span class="delta" style="background:#FDE9EA;color:#D8434B">+1</span>
           </div>
@@ -2737,7 +2738,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         <div class="stat-row">
           <div class="mini-stat"><div class="ch" style="background:#43C06A"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 6.6H21l-5.3 3.9 2 6.5L12 16.3 6.3 20l2-6.5L3 9.6h6.6z" fill="#fff"/></svg></div><div class="lab">POWER</div><div class="val">13</div></div>
           <div class="mini-stat"><div class="ch" style="background:#7C5CE6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="4" height="7" rx="1.5" fill="#fff"/><rect x="10" y="9" width="4" height="11" rx="1.5" fill="#fff"/><rect x="16" y="5" width="4" height="15" rx="1.5" fill="#fff"/></svg></div><div class="lab">SPEED</div><div class="val">15</div></div>
-          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1 9 2.7 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.3 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">16</div></div>
+          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6C7 16.2 3.5 13 3.5 8.9 3.5 6.2 5.6 4.1 8.2 4.1 9.8 4.1 11.2 4.9 12 6.1 12.8 4.9 14.2 4.1 15.8 4.1 18.4 4.1 20.5 6.2 20.5 8.9 20.5 13 17 16.2 12 20.6Z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">16</div></div>
         </div>
         <div class="lvl-row"><span>Rarity rank</span><span>#2101 of 5000</span></div>
         <div class="lvl-bar"><div class="lvl-fill" style="--w:58%;background:var(--common)"></div></div>
@@ -2758,7 +2759,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         <div class="stat-row">
           <div class="mini-stat"><div class="ch" style="background:#43C06A"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 6.6H21l-5.3 3.9 2 6.5L12 16.3 6.3 20l2-6.5L3 9.6h6.6z" fill="#fff"/></svg></div><div class="lab">POWER</div><div class="val">18</div></div>
           <div class="mini-stat"><div class="ch" style="background:#7C5CE6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="4" height="7" rx="1.5" fill="#fff"/><rect x="10" y="9" width="4" height="11" rx="1.5" fill="#fff"/><rect x="16" y="5" width="4" height="15" rx="1.5" fill="#fff"/></svg></div><div class="lab">SPEED</div><div class="val">16</div></div>
-          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1 9 2.7 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.3 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">15</div></div>
+          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6C7 16.2 3.5 13 3.5 8.9 3.5 6.2 5.6 4.1 8.2 4.1 9.8 4.1 11.2 4.9 12 6.1 12.8 4.9 14.2 4.1 15.8 4.1 18.4 4.1 20.5 6.2 20.5 8.9 20.5 13 17 16.2 12 20.6Z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">15</div></div>
         </div>
         <div class="lvl-row"><span>Rarity rank</span><span>#501 of 5000</span></div>
         <div class="lvl-bar"><div class="lvl-fill" style="--w:90%;background:var(--rare)"></div></div>
@@ -2779,7 +2780,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         <div class="stat-row">
           <div class="mini-stat"><div class="ch" style="background:#43C06A"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 6.6H21l-5.3 3.9 2 6.5L12 16.3 6.3 20l2-6.5L3 9.6h6.6z" fill="#fff"/></svg></div><div class="lab">POWER</div><div class="val">23</div></div>
           <div class="mini-stat"><div class="ch" style="background:#7C5CE6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="4" height="7" rx="1.5" fill="#fff"/><rect x="10" y="9" width="4" height="11" rx="1.5" fill="#fff"/><rect x="16" y="5" width="4" height="15" rx="1.5" fill="#fff"/></svg></div><div class="lab">SPEED</div><div class="val">24</div></div>
-          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1 9 2.7 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.3 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">21</div></div>
+          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6C7 16.2 3.5 13 3.5 8.9 3.5 6.2 5.6 4.1 8.2 4.1 9.8 4.1 11.2 4.9 12 6.1 12.8 4.9 14.2 4.1 15.8 4.1 18.4 4.1 20.5 6.2 20.5 8.9 20.5 13 17 16.2 12 20.6Z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">21</div></div>
         </div>
         <div class="lvl-row"><span>Rarity rank</span><span>#91 of 5000</span></div>
         <div class="lvl-bar"><div class="lvl-fill" style="--w:98%;background:var(--epic)"></div></div>
@@ -2800,7 +2801,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         <div class="stat-row">
           <div class="mini-stat"><div class="ch" style="background:#43C06A"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 6.6H21l-5.3 3.9 2 6.5L12 16.3 6.3 20l2-6.5L3 9.6h6.6z" fill="#fff"/></svg></div><div class="lab">POWER</div><div class="val">29</div></div>
           <div class="mini-stat"><div class="ch" style="background:#7C5CE6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="4" height="7" rx="1.5" fill="#fff"/><rect x="10" y="9" width="4" height="11" rx="1.5" fill="#fff"/><rect x="16" y="5" width="4" height="15" rx="1.5" fill="#fff"/></svg></div><div class="lab">SPEED</div><div class="val">30</div></div>
-          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9C1 9 2.7 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.3 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">27</div></div>
+          <div class="mini-stat"><div class="ch" style="background:#EE5B62"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6C7 16.2 3.5 13 3.5 8.9 3.5 6.2 5.6 4.1 8.2 4.1 9.8 4.1 11.2 4.9 12 6.1 12.8 4.9 14.2 4.1 15.8 4.1 18.4 4.1 20.5 6.2 20.5 8.9 20.5 13 17 16.2 12 20.6Z" fill="#fff"/></svg></div><div class="lab">STAMINA</div><div class="val">27</div></div>
         </div>
         <div class="lvl-row"><span>Rarity rank</span><span>#1 of 5000</span></div>
         <div class="lvl-bar"><div class="lvl-fill" style="--w:100%;background:var(--legend)"></div></div>
@@ -2815,7 +2816,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   <div class="wrap">
     <div class="bq-head">
       <div class="bq-eyebrow">Economy</div>
-      <h2>Two tokens. One simple rule: fun first.</h2>
+      <h2>Two currencies. One simple rule: fun first.</h2>
       <p>Earn by playing, own what you earn - and never pay to win. The economy is built to last, not to extract.</p>
     </div>
 
@@ -4743,7 +4744,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   function updateBullsLeft(){ var bl=modal&&modal.querySelector('#bqBullsLeft'); if(!bl||!sb) return; sb.rpc('bulls_remaining').then(function(r){ var n=r&&r.data; if(typeof n!=='number') return; if(n<=0){ closeModal(); showWaitlist(''); } else if(mode==='signup'){ bl.style.display=''; bl.textContent=n.toLocaleString()+' free bulls left'; } }).catch(function(){}); }
   function showWaitlist(email){
     var el=document.createElement('div'); el.className='bqauth';
-    el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot">🐂</div><h2>All bulls are claimed</h2><p class="sub">The 5,000 Genesis bulls are taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
+    el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot"><img src="assets/icons/logo.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div><h2>All bulls are claimed</h2><p class="sub">The 5,000 Genesis bulls are taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
     document.body.appendChild(el);
     var card=el.querySelector('.bqauth-card'), inp=el.querySelector('#bqWlEmail'); inp.value=email||'';
     el.querySelector('.bqauth-x').addEventListener('click', function(){ el.remove(); });
@@ -4760,7 +4761,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   function buildModal(){
     modal=document.createElement('div'); modal.className='bqauth'; modal.hidden=true;
     modal.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button>'
-      +'<div class="bqauth-mascot">🐂</div>'
+      +'<div class="bqauth-mascot"><img src="assets/icons/logo.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div>'
       +'<h2 id="bqAuthTitle">Claim your free bull</h2>'
       +'<p class="sub" id="bqAuthSub">Make an account and we’ll hand you a Genesis bull on the spot.</p>'
       +'<p id="bqBullsLeft" style="margin:-4px 0 10px;font-size:12px;font-weight:800;color:#43C06A;text-align:center;display:none"></p>'
@@ -4789,7 +4790,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     var bl=modal.querySelector('#bqBullsLeft'); if(bl) bl.style.display='none';
     var rb=modal.querySelector('#bqRefBonus');
     if(rb){ var hr; try{ hr=localStorage.getItem('bq_ref'); }catch(e){}
-      if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? ('🎁 '+window.bqRefName+' invited you - reach level 2 and you both get bonus GRIT.') : '🎁 You were invited - reach level 2 and you and your friend both get bonus GRIT.'); rb.style.display=''; }
+      if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? (window.bqRefName+' invited you - reach level 2 and you both get bonus GRIT.') : 'You were invited - reach level 2 and you and your friend both get bonus GRIT.'); rb.style.display=''; }
       else { rb.style.display='none'; } }
     renderTurnstile(); if(mode==='signup'){ updateBullsLeft(); }
     errmsg('');
@@ -4926,7 +4927,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         '<div class="bqrev-stage">'+
           '<div class="bqrev-rays" style="background:conic-gradient('+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00)"></div>'+
           '<div class="bqrev-aura" style="background:radial-gradient(circle,'+t.c+'99,'+t.c+'00 70%)"></div>'+
-          '<div class="bqrev-fb" style="background:radial-gradient(circle,'+t.c+'26,'+t.c+'00 72%)">🐂</div>'+
+          '<div class="bqrev-fb" style="background:radial-gradient(circle,'+t.c+'26,'+t.c+'00 72%)"><img src="assets/icons/logo.png" alt="" style="width:58%;height:58%;object-fit:contain"></div>'+
           '<img id="bqRevImg" class="bqrev-bull" alt="" style="display:none">'+
         '</div>'+
         '<div class="bqrev-name">'+nm+'</div>'+
@@ -5467,7 +5468,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var host=document.getElementById('view-landing')||document.body;
       var bar=document.createElement('div'); bar.id='bqRefBar';
       bar.style.cssText='display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;background:linear-gradient(90deg,#6E35E9,#8B5CF6);color:#fff;padding:11px 34px 11px 16px;font-family:inherit;font-weight:700;font-size:13.5px;text-align:center;position:relative;z-index:60';
-      bar.innerHTML='<span>🐂 <b>'+safe+'</b> invited you - claim your free bull, and you both earn bonus GRIT as you play.</span>'+
+      bar.innerHTML='<span><img src="assets/icons/logo.png" alt="" style="width:16px;height:16px;object-fit:contain;vertical-align:-3px;margin-right:3px"><b>'+safe+'</b> invited you - claim your free bull, and you both earn bonus GRIT as you play.</span>'+
         '<button type="button" id="bqRefBarGo" style="border:0;background:#fff;color:#6B31E6;font-weight:800;font-size:13px;padding:8px 15px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap">Claim free bull</button>'+
         '<button type="button" id="bqRefBarX" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:rgba(255,255,255,.85);font-size:19px;line-height:1;cursor:pointer;padding:4px 8px">&times;</button>';
       host.insertBefore(bar, host.firstChild);
@@ -5588,7 +5589,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     var TINT={ '#F0B429':'#FBF1DC','#7C5CE6':'#F0ECFB','#4DA6F5':'#E4EEF3','#9AA6B2':'#EEF1F4' };
     function tileHtml(b){ var t=tier(b.rarity_rank), img=b.image_url||bqMktImg(b.id), bg=TINT[t.c]||'#F1EFF7';
       return '<button type="button" class="bqmkt-tile" data-id="'+b.id+'" style="--rc-bg:'+bg+'" aria-label="Bull #'+b.id+', '+t.l+', rarity rank '+b.rarity_rank+'">'+
-        '<div class="bqmkt-thumb"><img class="bqmkt-im" decoding="async" data-src="'+img+'" alt="Bull #'+b.id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none">🐂</span></div>'+
+        '<div class="bqmkt-thumb"><img class="bqmkt-im" decoding="async" data-src="'+img+'" alt="Bull #'+b.id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none"><img src="assets/icons/logo.png" alt="" style="width:52%;height:52%;object-fit:contain"></span></div>'+
         '<div class="bqmkt-row"><span class="bqmkt-id">#'+b.id+'</span><span class="bqmkt-rar" style="color:'+t.c+'"><span class="d" style="background:'+t.c+'"></span>'+t.l+'</span></div>'+
         '<div class="bqmkt-rank">Rarity rank #'+b.rarity_rank+'</div></button>'; }
     var marketView=document.getElementById('view-market');
@@ -5638,16 +5639,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     c.el.querySelector('.send').addEventListener('click', c.close);
   }
   function showHowTo(){
-    var S=function(icon,title,body){ return '<div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid #F0F0F5"><div style="flex:none;width:34px;height:34px;border-radius:11px;background:#F3EFFE;display:grid;place-items:center;font-size:17px">'+icon+'</div><div><b style="color:#20143A;font-size:14.5px">'+title+'</b><div style="font-size:13px;color:#4B4A63;font-weight:500;line-height:1.55;margin-top:2px">'+body+'</div></div></div>'; };
+    var S=function(icon,title,body){ return '<div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid #F0F0F5"><div style="flex:none;width:34px;height:34px;border-radius:11px;background:#F3EFFE;display:grid;place-items:center"><i class="pico" style="--m:url(assets/icons/'+icon+'.png);width:18px;height:18px;background:#6B31E6"></i></div><div><b style="color:#20143A;font-size:14.5px">'+title+'</b><div style="font-size:13px;color:#4B4A63;font-weight:500;line-height:1.55;margin-top:2px">'+body+'</div></div></div>'; };
     var c=bqCard('<div class="bqfb" style="max-width:460px;max-height:88vh;overflow:auto">'+
-      '<div style="text-align:center;margin-bottom:8px"><div style="font-size:34px">🐂</div><h3 style="margin:2px 0 2px">How BullQuest works</h3><p class="sub" style="margin:0">Claim a bull, make it stronger, battle to earn GRIT.</p></div>'+
-      S('🎯','The goal','Everyone gets a free bull. Battle other bulls and finish daily challenges to gather <b>GRIT</b>. When the $BULL token launches your GRIT becomes your airdrop, so gathering now pays off later.')+
-      S('📊','Your bull','<b>Power, Speed, Stamina</b> are its battle stats and <b>Temper</b> is its crit chance. <b>Rarity</b> sets its starting strength, and it <b>levels up</b> automatically as it wins.')+
-      S('⚔️','How a duel works','Pick a <b>Discipline</b> (Clash uses Power, Chase uses Speed, Standoff uses Stamina), then a <b>Stance</b> - Charge beats Feint beats Brace beats Charge. Rivals are matched near your bull, so skill decides it. Win = GRIT + XP.')+
-      S('⚡','Energy','Each duel costs 2 energy, and it refills on its own - 1 point every 15 minutes.')+
-      S('🎁','Free GRIT every day','Take your <b>daily spin</b>, finish <b>daily quests</b>, and keep a <b>login streak</b> going for steady GRIT with no risk.')+
-      S('🏆','Never pay to win','You can’t buy power. A rarer bull starts stronger, but your choices and consistency decide who wins.')+
-      S('🗺️','Coming soon','<b>Sector Wars</b> - team up in clans to control crypto sectors and share the rewards.')+
+      '<div style="text-align:center;margin-bottom:8px"><img src="assets/icons/logo.png" alt="BullQuest" style="width:46px;height:46px;object-fit:contain;display:block;margin:0 auto 2px"><h3 style="margin:2px 0 2px">How BullQuest works</h3><p class="sub" style="margin:0">Claim a bull, make it stronger, battle to earn GRIT.</p></div>'+
+      S('gem_grit','The goal','Everyone gets a free bull. Battle other bulls and finish daily challenges to gather <b>GRIT</b>. When the $BULL token launches your GRIT becomes your airdrop, so gathering now pays off later.')+
+      S('nav_bulls','Your bull','<b>Power, Speed, Stamina</b> are its battle stats and <b>Temper</b> is its crit chance. <b>Rarity</b> sets its starting strength, and it <b>levels up</b> automatically as it wins.')+
+      S('nav_arena','How a duel works','Pick a <b>Discipline</b> (Clash uses Power, Chase uses Speed, Standoff uses Stamina), then a <b>Stance</b> - Charge beats Feint beats Brace beats Charge. Rivals are matched near your bull, so skill decides it. Win = GRIT + XP.')+
+      S('item_energy','Energy','Each duel costs 2 energy, and it refills on its own - 1 point every 15 minutes.')+
+      S('item_lootbox','Free GRIT every day','Take your <b>daily spin</b>, finish <b>daily quests</b>, and keep a <b>login streak</b> going for steady GRIT with no risk.')+
+      S('ui_trophy','Never pay to win','You can’t buy power. A rarer bull starts stronger, but your choices and consistency decide who wins.')+
+      S('nav_sectors','Coming soon','<b>Sector Wars</b> - team up in clans to control crypto sectors and share the rewards.')+
       '<button type="button" class="send" style="width:100%;margin-top:16px;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit">Let’s go</button>'+
     '</div>', 10003);
     c.el.querySelector('.send').addEventListener('click', c.close);
