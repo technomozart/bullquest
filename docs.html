@@ -71,18 +71,24 @@ var DOC = {"nav": [{"group": "Welcome", "items": [{"slug": "README", "title": "A
 var flat = [];
 DOC.nav.forEach(function(g){ g.items.forEach(function(i){ flat.push(i); }); });
 
-function buildSide(filter){
-  var s = document.getElementById('side'), html = '<input class="search" id="q" placeholder="Search docs..." value="'+(filter||'')+'">';
+function buildNav(filter){
+  var list = document.getElementById('navlist'), html = '';
   DOC.nav.forEach(function(g){
     var items = g.items.filter(function(i){ return !filter || i.title.toLowerCase().indexOf(filter.toLowerCase())>=0; });
     if(!items.length) return;
     html += '<div class="grp">'+g.group+'</div>';
     items.forEach(function(i){ html += '<a href="#'+i.slug+'" data-slug="'+i.slug+'">'+i.title+'</a>'; });
   });
-  s.innerHTML = html;
-  var q = document.getElementById('q');
-  q.addEventListener('input', function(){ buildSide(q.value); setTimeout(function(){ document.getElementById('q').focus(); },0); });
+  list.innerHTML = html;
   markActive();
+}
+function buildSide(){
+  // Build the search input ONCE (rebuilding it on every keystroke used to drop characters), then only
+  // refresh the nav list as the user types.
+  var s = document.getElementById('side');
+  s.innerHTML = '<input class="search" id="q" placeholder="Search docs..." autocomplete="off"><div id="navlist"></div>';
+  document.getElementById('q').addEventListener('input', function(){ buildNav(this.value); });
+  buildNav('');
 }
 function markActive(){
   var slug = (location.hash||'#'+DOC.first).slice(1);
