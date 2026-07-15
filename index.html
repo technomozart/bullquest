@@ -4006,12 +4006,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       <button type="button" class="spinbtn" id="spinBtn" aria-label="Spin the wheel, 1 free spin">
         <span class="lbl">SPIN</span>
       </button>
-      <button type="button" class="extraspin" id="extraBtn" aria-label="Extra spins coming soon" data-bqtoast="Extra spins unlock with HAY at the token launch">
+      <button type="button" class="extraspin" id="extraBtn" aria-label="Buy an extra spin with SOL">
         Extra spin
-        <span class="cost">
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="3" fill="#fff"/><path d="M3 11h18M3 15h18M8 7v12M13.5 7v12M18 7v12" stroke="#7C46EE" stroke-width="1.3" opacity=".6"/></svg>
-          soon
-        </span>
+        <span class="cost">0.03 SOL</span>
       </button>
     </div>
   </div>
@@ -4592,11 +4589,122 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
 
   spinBtn.addEventListener('click', spin);
-  // extraBtn is "coming soon" - it must NOT consume the real daily spin; it falls through to the data-bqtoast handler.
   rcCollect.addEventListener('click', closeResult);
   rcDismiss.addEventListener('click', closeResult);
   wrap.addEventListener('click', function (e) { if (e.target === wrap) closeResult(); });
   root.querySelector('.go-home').addEventListener('click', function () { closeResult(); });
+
+  // ---------- Paid extra spin (respin): pay SOL to the treasury, then spin again ----------
+  var web3Loading = null;
+  function loadWeb3(){
+    if (window.solanaWeb3) return Promise.resolve(window.solanaWeb3);
+    if (web3Loading) return web3Loading;
+    web3Loading = new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.8/lib/index.iife.min.js';
+      s.onload = function () { if (window.solanaWeb3) res(window.solanaWeb3); else { web3Loading = null; rej(new Error('web3-load')); } };
+      s.onerror = function () { web3Loading = null; rej(new Error('web3-load')); };
+      document.head.appendChild(s);
+    });
+    return web3Loading;
+  }
+  function friendlyRespin(j){
+    var map = {
+      'underpaid': 'The price just went up - open Extra spin again for the new price.',
+      'already-claimed': 'That payment was already used for a spin.',
+      'disabled': 'Extra spins are turned off right now.',
+      'memo-mismatch': "That payment couldn't be matched to your account.",
+      'wrong-recipient': 'The payment did not reach the treasury.',
+      'no-payment': 'No payment was found in that transaction.',
+      'tx-failed': 'The payment transaction failed on-chain.',
+      'not-authenticated': 'Please sign in again.',
+      'no-profile': 'No bull found on your account.'
+    };
+    return map[(j && j.error) || ''] || "Extra spin didn't go through.";
+  }
+  function refreshExtraPrice(){
+    if (!extraBtn || !(window.bqGame && window.bqGame.ready())) return;
+    window.bqGame.respinQuote().then(function (q) {
+      if (q && q.enabled && typeof q.price_sol !== 'undefined') {
+        var cost = extraBtn.querySelector('.cost');
+        if (cost) cost.textContent = q.price_sol + ' SOL';
+        extraBtn.disabled = false;
+      }
+    }).catch(function () {});
+  }
+  window.bqRefreshExtraPrice = refreshExtraPrice;
+  function callGrant(sig, tries){
+    return window.bqGame.respinGrant(sig).then(function (resp) {
+      var j = (resp && resp.body) || {};
+      if (resp && resp.status === 202 && j.retry && tries > 0) {
+        return new Promise(function (r) { setTimeout(r, 3500); }).then(function () { return callGrant(sig, tries - 1); });
+      }
+      return resp;
+    });
+  }
+  var respinBusy = false;
+  function respinPaid(){
+    if (spinning || respinBusy) return;
+    if (!(window.bqGame && window.bqGame.ready())) { if (window.bqOpenAuth) window.bqOpenAuth(); return; }
+    respinBusy = true; extraBtn.disabled = true;
+    var quote, provider, web3, fromStr;
+    window.bqGame.session().then(function (has) {
+      if (!has) { if (window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
+      return window.bqGame.respinQuote();
+    }).then(function (q) {
+      if (!q || q.enabled === false) throw new Error('disabled');
+      if (q.error) throw new Error(q.error);
+      quote = q;
+      if (!window.confirm('Extra spin costs ' + q.price_sol + ' SOL.\nPay from your Solana wallet and spin again?')) throw new Error('__silent__');
+      provider = window.bqGetProvider ? window.bqGetProvider('auto') : (window.solana || null);
+      if (!provider) throw new Error('no-wallet');
+      return loadWeb3();
+    }).then(function (w3) {
+      web3 = w3;
+      return Promise.resolve(provider.connect());
+    }).then(function (res) {
+      var pk = provider.publicKey || (res && res.publicKey);
+      if (!pk) throw new Error('no-wallet');
+      fromStr = pk.toString();
+      if (window.bqToast) window.bqToast('Preparing your payment...');
+      return window.bqGame.respinBlockhash();
+    }).then(function (bh) {
+      if (!bh || !bh.blockhash) throw new Error('blockhash');
+      var fromPk = new web3.PublicKey(fromStr);
+      var tx = new web3.Transaction({ recentBlockhash: bh.blockhash, feePayer: fromPk });
+      tx.add(web3.SystemProgram.transfer({ fromPubkey: fromPk, toPubkey: new web3.PublicKey(quote.treasury), lamports: Number(quote.lamports) }));
+      tx.add(new web3.TransactionInstruction({ keys: [], programId: new web3.PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr'), data: new TextEncoder().encode('bqrespin:' + quote.user) }));
+      if (window.bqToast) window.bqToast('Approve the ' + quote.price_sol + ' SOL payment in your wallet...');
+      if (!provider.signAndSendTransaction) throw new Error('no-send');
+      return provider.signAndSendTransaction(tx);
+    }).then(function (sent) {
+      var sig = (sent && sent.signature) ? sent.signature : sent;
+      if (sig && sig.toString) sig = sig.toString();
+      if (!sig) throw new Error('no-signature');
+      if (window.bqToast) window.bqToast('Payment sent - verifying on-chain...');
+      return callGrant(sig, 4);
+    }).then(function (resp) {
+      var j = (resp && resp.body) || {};
+      respinBusy = false; extraBtn.disabled = false;
+      if (j && !j.error && typeof j.index === 'number') { lastReward = j; animate(j.index); setTimeout(refreshExtraPrice, 500); }
+      else if (j && j.retry) { if (window.bqToast) window.bqToast('Still confirming - tap Extra spin again in a few seconds.'); }
+      else { if (window.bqToast) window.bqToast(friendlyRespin(j)); }
+    }).catch(function (e) {
+      respinBusy = false; extraBtn.disabled = false;
+      var m = (e && e.message) || '';
+      if (m === '__silent__') return;
+      var t = { 'no-wallet': 'Connect a Solana wallet (Phantom, Solflare, Backpack) to buy an extra spin.',
+                'disabled': 'Extra spins are turned off right now.',
+                'web3-load': "Couldn't load the payment library - check your connection and retry.",
+                'blockhash': "Couldn't reach Solana just now - please try again.",
+                'no-send': 'That wallet cannot send in-app. Try Phantom or Solflare.',
+                'no-signature': 'Payment cancelled.' };
+      if (window.bqToast) window.bqToast(t[m] || 'Extra spin was cancelled or failed.');
+    });
+  }
+  if (extraBtn) { extraBtn.removeAttribute('data-bqtoast'); extraBtn.addEventListener('click', respinPaid); }
+  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('[data-bqgo="view-spin"]')) setTimeout(refreshExtraPrice, 150); }, false);
+  refreshExtraPrice();
 })();
 </script>
 
@@ -5092,7 +5200,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     session: function(){ return sb ? sb.auth.getSession().then(function(s){ return !!s.data.session; }) : Promise.resolve(false); },
     getState: function(){ return sb.rpc('get_state').then(function(r){ if(r.error) throw r.error; return r.data; }); },
     resolve: function(d,st,stake){ return sb.rpc('resolve_duel',{p_discipline:d,p_stance:st,p_stake:stake,p_client_seed:Math.random().toString(36).slice(2)+Date.now()}).then(function(r){ if(r.error) throw r.error; if(r.data&&r.data.error){ var mm={'not enough energy':'Out of energy - it refills over time.','not enough GRIT':'You need at least 20 GRIT to duel.'}; var er=new Error(mm[r.data.error]||'Duel unavailable right now.'); er.code=r.data.error; throw er; } return r.data; }); },
-    spin: function(){ return sb.rpc('daily_spin').then(function(r){ if(r.error) throw r.error; if(r.data&&r.data.error) throw new Error(r.data.error); return r.data; }); }
+    spin: function(){ return sb.rpc('daily_spin').then(function(r){ if(r.error) throw r.error; if(r.data&&r.data.error) throw new Error(r.data.error); return r.data; }); },
+    respinQuote: function(){ return sb.rpc('respin_quote').then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    respinBlockhash: function(){ return fetch(URL_+'/functions/v1/respin',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_},body:JSON.stringify({action:'blockhash'})}).then(function(r){ return r.json(); }); },
+    respinGrant: function(signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/respin',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); }
   };
   document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-bulls"]')) setTimeout(renderBulls, 50); }, false);
 
@@ -5112,6 +5223,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     return ph||sf||bp||window.solana||null; // auto
   }
   function toB64(bytes){ var s=''; for(var i=0;i<bytes.length;i++) s+=String.fromCharCode(bytes[i]); return btoa(s); }
+  window.bqGetProvider = getProvider;
   function walletLogin(kind){
     var prov=getProvider(kind);
     if(!prov){ var nm=kind==='auto'?'A Solana wallet':(kind.charAt(0).toUpperCase()+kind.slice(1)); walletMsg(nm+' was not found. Install it, or use email below.'); return; }
