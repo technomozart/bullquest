@@ -4578,17 +4578,38 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   root.querySelector('.go-home').addEventListener('click', function () { closeResult(); });
 
   // ---------- Paid extra spin (respin): pay SOL to the treasury, then spin again ----------
-  var web3Loading = null;
+  var web3Loading = null, bufferLoading = null;
+  // web3.js's transaction encoder references a global `Buffer` that browsers don't provide; without it,
+  // SystemProgram.transfer throws "Buffer is not defined" and EVERY payment fails (was the respin bug).
+  // We vendor a same-origin Buffer polyfill and set window.Buffer before web3.js touches it.
+  function loadBuffer(){
+    if (window.Buffer && window.Buffer.from) return Promise.resolve();
+    if (bufferLoading) return bufferLoading;
+    bufferLoading = new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = 'assets/buffer.min.js';
+      s.onload = function () {
+        try { if (!(window.Buffer && window.Buffer.from) && window.buffer && window.buffer.Buffer) window.Buffer = window.buffer.Buffer; } catch (e) {}
+        if (window.Buffer && window.Buffer.from) res(); else { bufferLoading = null; rej(new Error('buffer-load')); }
+      };
+      s.onerror = function () { bufferLoading = null; rej(new Error('buffer-load')); };
+      document.head.appendChild(s);
+    });
+    return bufferLoading;
+  }
   function loadWeb3(){
     if (window.solanaWeb3) return Promise.resolve(window.solanaWeb3);
     if (web3Loading) return web3Loading;
-    web3Loading = new Promise(function (res, rej) {
-      var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.8/lib/index.iife.min.js';
-      s.onload = function () { if (window.solanaWeb3) res(window.solanaWeb3); else { web3Loading = null; rej(new Error('web3-load')); } };
-      s.onerror = function () { web3Loading = null; rej(new Error('web3-load')); };
-      document.head.appendChild(s);
+    web3Loading = loadBuffer().then(function () {
+      return new Promise(function (res, rej) {
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.8/lib/index.iife.min.js';
+        s.onload = function () { if (window.solanaWeb3) res(window.solanaWeb3); else rej(new Error('web3-load')); };
+        s.onerror = function () { rej(new Error('web3-load')); };
+        document.head.appendChild(s);
+      });
     });
+    web3Loading.catch(function () { web3Loading = null; }); // allow a retry after any load failure
     return web3Loading;
   }
   function friendlyRespin(j){
@@ -4676,8 +4697,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       respinBusy = false; extraBtn.disabled = false;
       var m = (e && e.message) || '';
       if (m === '__silent__') return;
+      try { console.error('[respin] failed:', e); } catch (_) {}
       var t = { 'no-wallet': 'Connect a Solana wallet (Phantom, Solflare, Backpack) to buy an extra spin.',
                 'disabled': 'Extra spins are turned off right now.',
+                'buffer-load': "Couldn't load the payment library - check your connection and retry.",
                 'web3-load': "Couldn't load the payment library - check your connection and retry.",
                 'blockhash': "Couldn't reach Solana just now - please try again.",
                 'no-send': 'That wallet cannot send in-app. Try Phantom or Solflare.',
