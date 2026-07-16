@@ -14,8 +14,11 @@
 .nav a.center .knob .nico{width:24px;height:24px;background:#fff}
 /* the bottom nav is position:fixed (always visible on tall pages), so reserve space so content never hides behind it */
 .bq-home,.bq-bulls,.bq-market,.bq-sectors{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
-/* removed the floating decorative particles across the app (founder to replace later) */
-.hero-ghost,.bq-onboard .spark{display:none!important}
+/* removed the floating decorative particles across the app (founder to replace later).
+   The ambient floaters are .confetti sparkle sets inside arena/spin/onboard/landing, plus .hero-ghost and .spark.
+   NB: this does NOT touch the purchase-celebration confetti (.bqcel-cf) or the claim reveal (.bqrev), which are body-level. */
+.hero-ghost,.spark,
+.bq-arena .confetti,.bq-spin .confetti,.bq-onboard .confetti,#view-landing .confetti{display:none!important}
 /* decorative confetti must never intercept clicks on the buttons beneath */
 .confetti,.confetti *{pointer-events:none}
 /* bottom nav hitbox fix: a link-drag was cancelling clicks (top/center dead). Stop dragging,
@@ -5878,14 +5881,14 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     }).then(function(q){ if(!q||q.error) throw new Error((q&&q.error)||'error');
       if(!window.confirm('Buy this '+q.rarity+' bull for '+q.price_sol+' SOL?\nPay from your Solana wallet.')) throw new Error('__silent__');
       return mktPay([{to:q.treasury, lamports:q.price_lamports}], q.memo).then(function(sig){
-        if(window.bqToast) window.bqToast('Payment sent - verifying on-chain...');
+        if(window.bqToast) window.bqToast('Payment sent - verifying on-chain...'); bqMktLoading(true, 'Confirming your purchase', 'Verifying your payment on Solana. This can take up to a minute, please keep this open.');
         return mktRetry(function(s){ return window.bqGame.mktMint(bullId, s); }, sig, 8);
       });
-    }).then(function(resp){ mktBusy=false; var j=(resp&&resp.body)||{};
+    }).then(function(resp){ mktBusy=false; bqMktLoading(false); var j=(resp&&resp.body)||{};
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id||bullId, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
-    }).catch(function(e){ mktBusy=false; var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buyPrimary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
+    }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buyPrimary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
   function buySecondary(listingId){
     if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
@@ -5896,14 +5899,14 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     }).then(function(q){ if(!q||q.error) throw new Error((q&&q.error)||'error');
       if(!window.confirm('Buy this bull for '+lamToSol(q.price_lamports)+' SOL?\nThe seller receives '+lamToSol(q.seller_lamports)+' SOL, and '+lamToSol(q.fee_lamports)+' SOL is the market fee.')) throw new Error('__silent__');
       return mktPay([{to:q.seller_pubkey, lamports:q.seller_lamports},{to:q.treasury, lamports:q.fee_lamports}], q.memo).then(function(sig){
-        if(window.bqToast) window.bqToast('Payment sent - verifying on-chain...');
+        if(window.bqToast) window.bqToast('Payment sent - verifying on-chain...'); bqMktLoading(true, 'Confirming your purchase', 'Verifying your payment on Solana. This can take up to a minute, please keep this open.');
         return mktRetry(function(s){ return window.bqGame.mktBuy(listingId, s); }, sig, 8);
       });
-    }).then(function(resp){ mktBusy=false; var j=(resp&&resp.body)||{};
+    }).then(function(resp){ mktBusy=false; bqMktLoading(false); var j=(resp&&resp.body)||{};
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
-    }).catch(function(e){ mktBusy=false; var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buySecondary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
+    }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buySecondary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
   // shared styles for the celebration, list sheet, and bull switcher (injected once)
   function ensureMktCss(){
@@ -5911,6 +5914,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     var st=document.createElement('style'); st.id='bq-mkt-css'; st.textContent=
       // box-sizing so width:100% + padding never overflows (was clipping the sheet buttons)
       '.bqcel *,.bqls *,.bqsw *{box-sizing:border-box}'+
+      // buy/verify loading overlay (the on-chain confirmation can take up to a minute)
+      '.bqload{position:fixed;inset:0;z-index:10003;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(130% 100% at 50% -10%,rgba(124,92,230,.6),rgba(19,13,38,.9));backdrop-filter:blur(5px)}'+
+      '.bqload-card{background:#fff;border-radius:24px;padding:30px 26px;text-align:center;max-width:320px;box-sizing:border-box;box-shadow:0 30px 90px rgba(18,9,46,.55)}'+
+      '.bqload-sp{width:52px;height:52px;margin:0 auto 16px;border:5px solid #EDE7FB;border-top-color:#6B31E6;border-radius:50%;animation:bqspin .8s linear infinite}'+
+      '@keyframes bqspin{to{transform:rotate(360deg)}}'+
+      '.bqload-t{font-size:18px;font-weight:800;color:#20143A}'+
+      '.bqload-s{margin-top:7px;font-size:13px;color:#6B7280;line-height:1.5}'+
       // ---- celebration ----
       '.bqcel{position:fixed;inset:0;z-index:10002;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(130% 100% at 50% -10%,rgba(124,92,230,.6),rgba(19,13,38,.9));backdrop-filter:blur(5px);animation:bqcelIn .25s ease both}'+
       '.bqcel.out{animation:bqcelOut .2s ease forwards}'+
@@ -5981,6 +5991,15 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       '.bqsw-load,.bqsw-empty{text-align:center;color:#9AA6B2;font-size:13px;font-weight:700;padding:22px}';
     document.head.appendChild(st);
   }
+  // ----- Loading overlay shown while a payment is verified on-chain (can take up to a minute) -----
+  function bqMktLoading(show, title, sub){
+    var el=document.getElementById('bqMktLoad');
+    if(!show){ if(el) el.remove(); return; }
+    ensureMktCss();
+    if(!el){ el=document.createElement('div'); el.id='bqMktLoad'; el.className='bqload'; document.body.appendChild(el); }
+    el.innerHTML='<div class="bqload-card"><div class="bqload-sp"></div><div class="bqload-t">'+(title||'Working...')+'</div><div class="bqload-s">'+(sub||'')+'</div></div>';
+  }
+  window.bqMktLoading = bqMktLoading;
   // ----- Celebration when a bull is acquired -----
   function bqCelebrate(b, ub, opts){
     opts=opts||{}; ensureMktCss(); var t=tier(b.rarity_rank);
@@ -6003,8 +6022,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         '<div class="bqcel-stat"><b style="color:#EE5B62">'+ub.stamina+'</b><span>Stamina</span></div>'+
       '</div>':'')+
       '<div class="bqcel-acts">'+
-        (opts.setActive?'<button type="button" class="bqcel-btn primary" id="bqCelAct">Send this bull to the arena</button><button type="button" class="bqcel-btn ghost" id="bqCelClose">Keep my current bull</button>'
-                       :'<button type="button" class="bqcel-btn primary" id="bqCelClose">Let\'s go</button>')+
+        (opts.setActive?'<button type="button" class="bqcel-btn primary" id="bqCelAct">Set as my active bull</button><button type="button" class="bqcel-btn ghost" id="bqCelClose">Done</button>'
+                       :'<button type="button" class="bqcel-btn primary" id="bqCelClose">Awesome!</button>')+
       '</div>'+
     '</div>';
     document.body.appendChild(el);
@@ -6578,6 +6597,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   })();
 
   // boot
+  // register the service worker so a new deploy shows on the next normal refresh (Pages caches HTML 10 min)
+  if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('sw.js').catch(function(){}); }catch(e){} }
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
     sb=window.supabase.createClient(URL_,KEY_);
