@@ -6398,20 +6398,22 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     function loadListMap(cb){ fetch(URL_+'/rest/v1/bull_listings?select=bull_id,price_sol&status=eq.active',{headers:bqMktHeaders(false)}).then(function(r){return r.json();}).then(function(rows){ listMap={}; (rows||[]).forEach(function(l){ listMap[l.bull_id]=l.price_sol; }); if(cb)cb(); }, function(){ if(cb)cb(); }); }
     var marketView=document.getElementById('view-market');
     function loadVisible(){ if(marketView&&marketView.hasAttribute('hidden')) return; var vh=window.innerHeight||800, ims=grid.querySelectorAll('.bqmkt-im[data-src]'); for(var i=0;i<ims.length;i++){ var im=ims[i], rr=im.getBoundingClientRect(); if(rr.bottom>-500 && rr.top<vh+500){ im.src=im.getAttribute('data-src'); im.removeAttribute('data-src'); } } }
-    function updateMeta(){ var shown=grid.children.length, lbl={all:'bulls',leg:'Legendary',epic:'Epic',rare:'Rare',common:'Common'}[filter];
-      if(searchId!=null){ metaEl.textContent = shown? ('Bull #'+searchId) : ('No bull #'+searchId+'. The herd runs 1 to 5,000.'); return; }
+    function updateMeta(){ var shown=grid.children.length, lbl={all:'available',leg:'Legendary',epic:'Epic',rare:'Rare',common:'Common'}[filter];
+      if(searchId!=null){ metaEl.textContent = shown? ('Bull #'+searchId) : ('Bull #'+searchId+' is not for sale right now.'); return; }
       metaEl.textContent = (total!=null)? ('Showing '+shown.toLocaleString()+' of '+total.toLocaleString()+' '+lbl) : (shown+' '+lbl);
       var cnt=document.getElementById('bqMktCount'); if(cnt&&filter==='all'&&total!=null) cnt.textContent=total.toLocaleString(); }
     function fetchPage(){ if(loading||done) return; loading=true; if(offset>0) statusEl.textContent='Loading more...';
-      var q; if(searchId!=null){ q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed&id=eq.'+searchId; }
-      else { q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed&order='+(sortBy==='rank'?'rarity_rank.asc':'id.asc')+'&limit='+PAGE+'&offset='+offset; var rf=rangeFor(filter); if(rf) q+='&'+rf; }
+      // marketplace: only show bulls that are actually for sale (unclaimed system inventory).
+      // Bulls owned by players are not listed here; player listings show in the "For sale by players" section.
+      var q; if(searchId!=null){ q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed&id=eq.'+searchId+'&claimed=eq.false'; }
+      else { q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed&claimed=eq.false&order='+(sortBy==='rank'?'rarity_rank.asc':'id.asc')+'&limit='+PAGE+'&offset='+offset; var rf=rangeFor(filter); if(rf) q+='&'+rf; }
       fetch(q,{headers:bqMktHeaders(offset===0&&searchId==null)}).then(function(res){ var cr=res.headers.get('content-range'); if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') total=parseInt(p[1],10); } return res.json(); })
       .then(function(rows){ loading=false;
-        if(!rows||!rows.length){ if(offset===0){ grid.innerHTML=''; } done=true; statusEl.textContent = grid.children.length? '' : 'No bulls found.'; updateMeta(); return; }
+        if(!rows||!rows.length){ if(offset===0){ grid.innerHTML=''; } done=true; statusEl.textContent = grid.children.length? '' : 'No bulls available right now.'; updateMeta(); return; }
         var html=''; for(var i=0;i<rows.length;i++) html+=tileHtml(rows[i]); grid.insertAdjacentHTML('beforeend', html); loadVisible(); offset+=rows.length;
-        if(searchId!=null||rows.length<PAGE){ done=true; statusEl.textContent = searchId!=null?'':'That’s the whole collection.'; } else statusEl.textContent='';
+        if(searchId!=null||rows.length<PAGE){ done=true; statusEl.textContent = searchId!=null?'':'That’s every bull for sale right now.'; } else statusEl.textContent='';
         updateMeta(); if(!done && sentinel.getBoundingClientRect().top < (window.innerHeight||800)+500) fetchPage(); })
-      .catch(function(){ loading=false; statusEl.textContent='Could not load the collection. Tap a filter to retry.'; }); }
+      .catch(function(){ loading=false; statusEl.textContent='Could not load the market. Tap a filter to retry.'; }); }
     function reset(){ grid.innerHTML=''; offset=0; done=false; total=null; statusEl.textContent=''; fetchPage(); }
     document.getElementById('bqMktChips').addEventListener('click', function(e){ var b=e.target.closest('.bqmkt-chip'); if(!b) return; [].forEach.call(this.querySelectorAll('.bqmkt-chip'),function(c){c.classList.remove('on');}); b.classList.add('on'); filter=b.getAttribute('data-f'); searchId=null; searchEl.value=''; reset(); });
     sortEl.addEventListener('click', function(){ sortBy=sortBy==='id'?'rank':'id'; sortEl.textContent='Sort: '+(sortBy==='id'?'Number':'Rarest'); searchId=null; searchEl.value=''; reset(); });
