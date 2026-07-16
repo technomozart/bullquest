@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"></head><body><script>window.BQ_BUILD="1784201063";try{console.log("BullQuest build 1784201063");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"></head><body><script>window.BQ_BUILD="1784231127";try{console.log("BullQuest build 1784231127");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -2571,6 +2571,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       <a href="#economy">Economy</a>
       <a href="#roadmap">Roadmap</a>
       <a href="docs.html">Docs</a>
+      <a href="#airdrop" data-bqgo="view-airdrop" style="color:#FFD76A;font-weight:800">Airdrop</a>
     </div>
     <a class="pill pill-cta pill-sm" href="#play" data-bqgo="view-onboard">Play now</a>
     <label for="bqNavToggle" class="bq-burger" aria-hidden="true">&#9776;</label>
@@ -3069,6 +3070,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
             <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             Airdrop unlocks at $BULL launch
           </div>
+          <button type="button" data-bqgo="view-airdrop" style="margin-top:12px;width:100%;border:0;background:linear-gradient(180deg,#FFD976,#F0B429);color:#5a3d00;font-weight:800;font-size:13.5px;padding:11px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">&#129747; Claim your $BULL airdrop &rsaquo;</button>
           <button type="button" id="bqLbBtn" style="margin-top:11px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:14px;height:14px;background:#fff"></i>Airdrop leaderboard &rsaquo;</button>
           <button type="button" id="bqInviteBtn" style="margin-top:11px;margin-left:8px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_share.png');width:14px;height:14px;background:#fff"></i>Bring the herd</button>
         </div>
@@ -4038,6 +4040,96 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 </section>
 </div>
 <!-- END VIEW: SPIN -->
+
+<!-- ================= VIEW: AIRDROP ================= -->
+<div class="bq-view" id="view-airdrop" hidden>
+<style id="bq-air-css">
+#view-airdrop{--v:#6B31E6;--ink:#20143A;--gold:#F0B429;--faint:#8A8FA3;font-family:inherit;color:var(--ink);background:#F4F5F8;min-height:100vh}
+#view-airdrop *{box-sizing:border-box}
+#view-airdrop .bqair{max-width:520px;margin:0 auto;padding:0 0 96px}
+#view-airdrop .bqair-hero{background:linear-gradient(160deg,#7A3BF0,#6B31E6 60%,#5B27D6);color:#fff;padding:18px 20px 26px;border-radius:0 0 26px 26px;position:relative}
+#view-airdrop .bqair-back{position:absolute;top:16px;left:14px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;cursor:pointer;display:grid;place-items:center}
+#view-airdrop .bqair-back:hover{background:rgba(255,255,255,.26)}
+#view-airdrop .bqair-kicker{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:1.2px;color:#FCE9C6;margin:34px 0 6px}
+#view-airdrop .bqair-hero h1{font-size:26px;line-height:1.15;margin:0 0 6px;font-weight:800}
+#view-airdrop .bqair-hero>p{margin:0 0 16px;font-size:14px;color:rgba(255,255,255,.9);line-height:1.5}
+#view-airdrop .bqair-poolrow{display:flex;gap:10px}
+#view-airdrop .bqair-poolrow>div{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:10px 12px}
+#view-airdrop .bqair-poolrow b{display:block;font-size:17px;font-weight:800;color:#fff}
+#view-airdrop .bqair-poolrow span{font-size:10.5px;color:rgba(255,255,255,.82);line-height:1.3;display:block;margin-top:2px}
+#view-airdrop .bqair-card{background:#fff;border-radius:20px;box-shadow:0 8px 24px rgba(20,16,40,.07);padding:20px;margin:16px 16px 0}
+#view-airdrop .bqair-card h3{margin:0;font-size:17px;font-weight:800}
+#view-airdrop .bqair-p{margin:6px 0 14px;font-size:13.5px;color:var(--faint);line-height:1.5}
+#view-airdrop .bqair-reg{display:flex;gap:8px;margin-bottom:8px}
+#view-airdrop .bqair-reg input{flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:14px;font-family:inherit;color:var(--ink)}
+#view-airdrop .bqair-reg input:focus{outline:none;border-color:var(--v)}
+#view-airdrop .bqair-ghost{border:1.5px solid #E6E8EF;background:#fff;border-radius:12px;padding:0 15px;font-weight:700;font-size:13px;color:var(--v);cursor:pointer;white-space:nowrap}
+#view-airdrop .bqair-ghost:hover{background:#F3ECFB}
+#view-airdrop .bqair-btn{width:100%;border:0;border-radius:14px;padding:14px;font-size:15px;font-weight:800;color:#fff;background:linear-gradient(180deg,#5CA8F6,#3D8BEF);cursor:pointer;box-shadow:0 8px 18px rgba(61,139,239,.32)}
+#view-airdrop .bqair-btn:hover{filter:brightness(1.04)}
+#view-airdrop .bqair-btn:disabled{opacity:.6;cursor:default}
+#view-airdrop .bqair-msg{min-height:16px;font-size:12.5px;color:#D8434B;margin-bottom:8px}
+#view-airdrop .bqair-mehead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#view-airdrop .bqair-change{border:0;background:#F3ECFB;color:var(--v);font-weight:700;font-size:12px;padding:6px 10px;border-radius:999px;cursor:pointer;font-variant-numeric:tabular-nums;white-space:nowrap}
+#view-airdrop .bqair-stats{display:flex;gap:10px;margin:14px 0 12px}
+#view-airdrop .bqair-stat{flex:1;background:#F7F5FD;border:1px solid #EEE9FA;border-radius:14px;padding:12px 8px;text-align:center}
+#view-airdrop .bqair-stat b{display:block;font-size:18px;font-weight:800;color:var(--v);font-variant-numeric:tabular-nums}
+#view-airdrop .bqair-stat span{font-size:10.5px;color:var(--faint);margin-top:3px;display:block;line-height:1.25}
+#view-airdrop .bqair-next{font-size:12.5px;color:var(--faint);line-height:1.5;margin-bottom:12px}
+#view-airdrop .bqair-claim{text-align:center;font-weight:800;font-size:13px;color:#8a6d00;background:linear-gradient(180deg,#FFE9AE,#FFD976);border-radius:12px;padding:11px}
+#view-airdrop .bqair-cta{text-align:center;padding:6px 4px}
+#view-airdrop .bqair-cta h3{font-size:19px}
+#view-airdrop .bqair-steps{list-style:none;counter-reset:s;margin:12px 0 0;padding:0}
+#view-airdrop .bqair-steps li{counter-increment:s;position:relative;padding:11px 0 11px 42px;border-top:1px solid #F0F1F5}
+#view-airdrop .bqair-steps li:first-child{border-top:0}
+#view-airdrop .bqair-steps li::before{content:counter(s);position:absolute;left:0;top:11px;width:28px;height:28px;border-radius:50%;background:#F0E9FC;color:var(--v);font-weight:800;font-size:13px;display:grid;place-items:center}
+#view-airdrop .bqair-steps b{display:block;font-size:14px;font-weight:800}
+#view-airdrop .bqair-steps span{font-size:12.5px;color:var(--faint);line-height:1.45}
+#view-airdrop .bqair-sched{display:grid;gap:6px;margin-top:12px}
+#view-airdrop .bqair-round{display:grid;grid-template-columns:38px 1fr auto auto;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;background:#F7F8FB;font-size:13px}
+#view-airdrop .bqair-round .rn{font-weight:800;color:var(--v)}
+#view-airdrop .bqair-round .rd{color:var(--ink);font-weight:600}
+#view-airdrop .bqair-round .rp{font-weight:800;color:var(--gold)}
+#view-airdrop .bqair-round .rs{font-size:11px;color:var(--faint);font-weight:700}
+#view-airdrop .bqair-round.next{background:#F0E9FC;box-shadow:inset 0 0 0 1.5px var(--v)}
+#view-airdrop .bqair-round.next .rs{color:var(--v)}
+#view-airdrop .bqair-round.done{opacity:.6}
+#view-airdrop .bqair-round.done .rs{color:#22A06B}
+#view-airdrop .bqair-foot{font-size:12px;color:var(--faint);line-height:1.5;text-align:center;padding:16px 26px 0}
+</style>
+  <div class="bqair">
+    <header class="bqair-hero">
+      <button type="button" class="bqair-back" data-bqgo="view-home" aria-label="Back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="bqair-kicker">&#129747; $BULL AIRDROP &middot; PRESEASON</div>
+      <h1>Claim your share of $BULL</h1>
+      <p>Earn GRIT, lock in your allocation. 10% of the total supply, released over 3 months.</p>
+      <div class="bqair-poolrow">
+        <div><b id="airPool">10%</b><span>of $BULL this season</span></div>
+        <div><b id="airRounds">10 rounds</b><span>1% every ~9 days</span></div>
+        <div><b id="airReg">0 wallets</b><span>registered</span></div>
+      </div>
+    </header>
+    <section class="bqair-card" id="airMe"><p class="bqair-p">Loading&hellip;</p></section>
+    <section class="bqair-card">
+      <h3>How the airdrop works</h3>
+      <ol class="bqair-steps">
+        <li><b>Register your wallet</b><span>Paste your Solana address or connect Phantom. Receive-only, no signing, no risk to your funds.</span></li>
+        <li><b>Earn GRIT by playing</b><span>Spins, quests and duel wins all add to your GRIT earned. Spending GRIT never lowers your airdrop.</span></li>
+        <li><b>Every ~9 days, 1% unlocks</b><span>That 1% of $BULL is split across everyone by how much GRIT they earned during that round.</span></li>
+        <li><b>Claim at launch</b><span>Each round locks in your allocation. When $BULL goes live, you claim it all to your wallet.</span></li>
+      </ol>
+    </section>
+    <section class="bqair-card">
+      <h3>Release schedule</h3>
+      <p class="bqair-p">Ten rounds, 1% of supply each. The earlier and more you play, the bigger your share.</p>
+      <div class="bqair-sched" id="airSched"></div>
+    </section>
+    <p class="bqair-foot">$BULL is not live yet, so this locks in your allocation now and the claim opens at launch. Your wallet key always stays with you. BullQuest will never ask for your private key or seed phrase.</p>
+  </div>
+</div>
+<!-- END VIEW: AIRDROP -->
 
 <script>
 /* ---------- HOME view interactivity (season ring + spin wheel) ---------- */
@@ -5228,6 +5320,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         '<span class="div"></span>'+
         '<button class="ab" data-a="site" title="Back to the website" aria-label="Back to the website"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.6 12 3l9 7.6"/><path d="M5.5 9.4V20h13V9.4"/><path d="M10 20v-5.5h4V20"/></svg></button>'+
         '<button class="ab" data-a="wallet" title="Connect a wallet" aria-label="Connect a wallet" style="display:none"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><circle cx="17" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg></button>'+
+        '<button class="ab" data-a="airdrop" title="Airdrop" aria-label="Airdrop" style="color:#E0A100"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/><path d="M12 8S9.5 4.5 7.5 5.5 8 8 12 8zM12 8s2.5-3.5 4.5-2.5S16 8 12 8z"/></svg></button>'+
         '<button class="ab" data-a="set" title="Settings" aria-label="Settings"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg></button>'+
         '<button class="ab out" data-a="out" title="Sign out" aria-label="Sign out"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9"/><path d="M18 16l4-4-4-4"/><path d="M22 12H10"/></svg></button>';
       document.body.appendChild(box);
@@ -5235,6 +5328,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       box.querySelector('[data-a="wallet"]').addEventListener('click', function(){ if(window.bqConnectWallet) window.bqConnectWallet().then(function(){ var wb=box.querySelector('[data-a="wallet"]'); if(wb) wb.style.display='none'; }).catch(function(){}); });
       // show the "connect a wallet" button only for accounts that do not have one yet (e.g. Gmail signups)
       try{ sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return; sb.from('wallets').select('pubkey',{count:'exact',head:true}).eq('user_id',u.id).then(function(r){ if(!(r&&r.count>0)){ var wb=box.querySelector('[data-a="wallet"]'); if(wb) wb.style.display=''; } }, function(){}); }); }catch(e){}
+      box.querySelector('[data-a="airdrop"]').addEventListener('click', function(){ if(window.bqGo){ window.bqGo('view-airdrop'); if(window.bqRenderAirdrop) setTimeout(window.bqRenderAirdrop,60); } });
       box.querySelector('[data-a="set"]').addEventListener('click', function(){ showSetName(); });
       box.querySelector('[data-a="out"]').addEventListener('click', function(){ sb.auth.signOut().then(function(){ try{ sessionStorage.removeItem('bq_view'); }catch(e){} location.reload(); }); });
     }
@@ -6693,6 +6787,107 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         }).catch(logErr);
       } else { try{ maybeShowRefBanner(); }catch(e){} }
     });
+  })();
+
+  /* ---------- AIRDROP view (register wallet + allocation dashboard) ---------- */
+  (function(){
+    function fmt(n){ return (Number(n)||0).toLocaleString(); }
+    function shortAddr(a){ return a ? (a.slice(0,4)+'…'+a.slice(-4)) : ''; }
+    function pctStr(p){ p=Number(p)||0; if(p<=0) return '0%'; if(p<0.0001) return '<0.0001%'; return (p<0.01?p.toFixed(4):(p<1?p.toFixed(3):p.toFixed(2)))+'%'; }
+    function dstr(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }catch(e){ return ''; } }
+    var busy=false;
+
+    function renderOverview(o){
+      var e;
+      if(e=document.getElementById('airPool')) e.textContent=(o.pool_pct||10)+'%';
+      if(e=document.getElementById('airRounds')) e.textContent=(o.num_rounds||10)+' rounds';
+      if(e=document.getElementById('airReg')) e.textContent=fmt(o.registered_count)+' wallet'+(Number(o.registered_count)===1?'':'s');
+      var s=document.getElementById('airSched');
+      if(s&&o.rounds){
+        var next=null,i; for(i=0;i<o.rounds.length;i++){ if(o.rounds[i].status==='upcoming'){ next=o.rounds[i]; break; } }
+        s.innerHTML=o.rounds.map(function(x){
+          var done=x.status!=='upcoming'; var isNext=next&&x.round_no===next.round_no;
+          return '<div class="bqair-round'+(isNext?' next':'')+(done?' done':'')+'">'+
+            '<span class="rn">R'+x.round_no+'</span><span class="rd">'+dstr(x.snapshot_at)+'</span>'+
+            '<span class="rp">'+(x.pool_pct||1)+'%</span>'+
+            '<span class="rs">'+(done?'Allocated':(isNext?'Next up':'Upcoming'))+'</span></div>';
+        }).join('');
+      }
+    }
+
+    function renderMe(m){
+      var el=document.getElementById('airMe'); if(!el) return;
+      if(!m||m.loggedOut){
+        el.innerHTML='<div class="bqair-cta"><h3>Join the airdrop</h3><p class="bqair-p" style="margin:6px 0 16px">Sign in free, then register a Solana wallet to start earning your share of $BULL.</p><button type="button" class="bqair-btn" data-bqgo="view-onboard">Get started, it’s free</button></div>';
+        return;
+      }
+      if(!m.registered){
+        el.innerHTML=
+          '<h3>Register your payout wallet</h3>'+
+          '<p class="bqair-p">Paste the Solana address where you want your $BULL. Receive-only, we never ask for your key.</p>'+
+          '<div class="bqair-reg"><input id="airAddr" type="text" spellcheck="false" autocomplete="off" placeholder="Your Solana address"><button type="button" class="bqair-ghost" id="airPhantom">Phantom</button></div>'+
+          '<div id="airMsg" class="bqair-msg"></div>'+
+          '<button type="button" class="bqair-btn" id="airSave">Register wallet</button>';
+        wireReg(); return;
+      }
+      el.innerHTML=
+        '<div class="bqair-mehead"><h3>Your allocation</h3><button type="button" class="bqair-change" id="airChange">'+shortAddr(m.payout_pubkey)+' · change</button></div>'+
+        '<div class="bqair-stats">'+
+          '<div class="bqair-stat"><b>'+fmt(m.window_earned)+'</b><span>GRIT this round</span></div>'+
+          '<div class="bqair-stat"><b>'+pctStr(m.est_round_pct_of_supply)+'</b><span>est. this round</span></div>'+
+          '<div class="bqair-stat"><b>'+pctStr(m.total_pct_of_supply)+'</b><span>locked so far</span></div>'+
+        '</div>'+
+        '<div class="bqair-next">Next round <b>'+dstr(m.next_round_at)+'</b>. Your share = your GRIT earned this round divided by everyone’s, times 1% of supply.</div>'+
+        '<div class="bqair-claim">🔒 Claim opens at $BULL launch</div>';
+      var ch=document.getElementById('airChange'); if(ch) ch.addEventListener('click',function(){ changeWallet(m.payout_pubkey); });
+    }
+
+    function changeWallet(cur){
+      var el=document.getElementById('airMe'); if(!el) return;
+      el.innerHTML=
+        '<h3>Change payout wallet</h3>'+
+        '<div class="bqair-reg" style="margin-top:12px"><input id="airAddr" type="text" spellcheck="false" value="'+(cur||'')+'" placeholder="Your Solana address"><button type="button" class="bqair-ghost" id="airPhantom">Phantom</button></div>'+
+        '<div id="airMsg" class="bqair-msg"></div>'+
+        '<button type="button" class="bqair-btn" id="airSave">Save wallet</button>';
+      wireReg();
+    }
+
+    function wireReg(){
+      var ph=document.getElementById('airPhantom');
+      if(ph) ph.addEventListener('click',function(){
+        try{
+          var p=window.bqGetProvider?window.bqGetProvider('auto'):(window.solana||null);
+          if(!p){ setMsg('No Solana wallet detected. Paste your address instead.'); return; }
+          Promise.resolve(p.connect()).then(function(res){
+            var pk=p.publicKey||(res&&res.publicKey); if(pk){ var i=document.getElementById('airAddr'); if(i) i.value=pk.toString(); setMsg(''); }
+          }).catch(function(){});
+        }catch(e){}
+      });
+      var save=document.getElementById('airSave');
+      if(save) save.addEventListener('click',function(){
+        if(busy||!sb) return;
+        var addr=((document.getElementById('airAddr')||{}).value||'').trim();
+        if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(addr)){ setMsg('That does not look like a Solana address.'); return; }
+        busy=true; save.disabled=true; var old=save.textContent; save.textContent='Saving…';
+        sb.rpc('set_airdrop_wallet',{p_pubkey:addr}).then(function(r){
+          busy=false; save.disabled=false; save.textContent=old;
+          if(r&&r.error){ setMsg((r.error.message||'Could not save, try again')); return; }
+          if(window.bqToast) window.bqToast('Wallet registered for the airdrop');
+          window.bqRenderAirdrop();
+        }).catch(function(){ busy=false; save.disabled=false; save.textContent=old; setMsg('Network error, try again'); });
+      });
+    }
+    function setMsg(t){ var m=document.getElementById('airMsg'); if(m) m.textContent=t||''; }
+
+    window.bqRenderAirdrop=function(){
+      if(!sb){ setTimeout(window.bqRenderAirdrop,200); return; }
+      sb.rpc('airdrop_overview').then(function(r){ if(r&&r.data) renderOverview(r.data); }).catch(function(){});
+      sb.rpc('airdrop_me').then(function(r){ if(r&&r.error) renderMe({loggedOut:true}); else renderMe(r&&r.data); }).catch(function(){ renderMe({loggedOut:true}); });
+    };
+    document.addEventListener('click',function(e){
+      if(e.target.closest&&e.target.closest('[data-bqgo="view-airdrop"]')) setTimeout(window.bqRenderAirdrop,60);
+    },false);
+    try{ if(sessionStorage.getItem('bq_view')==='view-airdrop') setTimeout(window.bqRenderAirdrop,500); }catch(e){}
   })();
 })();
 </script>
