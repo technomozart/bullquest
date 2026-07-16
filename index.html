@@ -5665,22 +5665,50 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   function showInvite(){
     if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
-    sb.rpc('get_state').then(function(r){
-      var ref=(r&&r.data&&r.data.ref)||{}, code=ref.code||'', count=ref.count||0;
+    Promise.all([ sb.rpc('get_state'), sb.rpc('ref_leaderboard') ]).then(function(rr){
+      var st=(rr[0]&&rr[0].data)||{}, lb=(rr[1]&&rr[1].data)||{};
+      var ref=st.ref||{}, code=ref.code||'';
+      var me=lb.me||{invites:(ref.count||0), grit_earned:(ref.count||0)*100, rank:null};
+      var top=lb.top||[];
       var link='https://bullquest.fun/?ref='+code;
+      var shareText='Playing BullQuest: claim a FREE bull and gather GRIT for the $BULL airdrop. Skill wins, not your wallet. Grab a 50 GRIT head start with my link:';
+      var xUrl='https://twitter.com/intent/tweet?text='+encodeURIComponent(shareText)+'&url='+encodeURIComponent(link)+'&via=BullQuestSol';
+      var tgUrl='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(shareText);
+      var waUrl='https://wa.me/?text='+encodeURIComponent(shareText+' '+link);
+      var esc=function(s){ return window.bqEsc?window.bqEsc(String(s)):String(s).replace(/[<>&"]/g,''); };
+      var lbHtml = top.length ? top.map(function(row,i){
+        return '<div style="display:flex;align-items:center;gap:9px;padding:6px 0;font-size:13px">'+
+          '<span style="width:18px;font-weight:800;color:'+(i<3?'#6B31E6':'#9AA6B2')+'">'+(i+1)+'</span>'+
+          '<span style="flex:1;font-weight:700;color:#20143A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(row.name)+'</span>'+
+          '<span style="font-weight:800;color:#6B31E6">'+row.invites+'</span>'+
+        '</div>';
+      }).join('<div style="height:1px;background:#F0EDF8"></div>') : '<div style="text-align:center;color:#9AA6B2;font-size:13px;padding:10px">No invites yet. Be the first on the board.</div>';
+      function stat(v,l,c){ return '<div style="flex:1;text-align:center;background:#F6F4FD;border-radius:14px;padding:10px 4px"><div style="font-size:19px;font-weight:900;color:'+(c||'#20143A')+'">'+v+'</div><div style="font-size:10px;font-weight:700;color:#8A85A0;text-transform:uppercase;letter-spacing:.3px">'+l+'</div></div>'; }
       var el=document.createElement('div'); el.className='bqfb-ov';
-      el.innerHTML='<div class="bqfb" style="max-width:420px;text-align:center">'+
-        '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE FRIENDS</div>'+
-        '<h3 style="margin:2px 0 4px;font-size:21px">Grow the herd</h3>'+
-        '<p class="sub" style="margin:0 0 16px">Earn <b style="color:#20143A">100 GRIT</b> for every friend (up to 50) who joins with your link and plays to level 2, and they get <b style="color:#20143A">50</b> too. '+(count>0?('<b style="color:#20143A">'+count+'</b> unlocked so far.'):'Be the first to bring someone in.')+'</p>'+
-        '<div style="display:flex;gap:8px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" class="send" style="flex:none;padding:12px 18px">Copy</button></div>'+
-        '<div class="bqfb-actions" style="margin-top:14px"><button type="button" class="cancel" id="bqRefShare">Share link</button><button type="button" class="send" id="bqRefClose">Done</button></div></div>';
+      el.innerHTML='<div class="bqfb" style="max-width:440px">'+
+        '<div style="text-align:center"><div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE &amp; EARN</div>'+
+        '<h3 style="margin:2px 0 4px;font-size:22px">Grow the herd</h3>'+
+        '<p class="sub" style="margin:0 0 14px">Earn <b style="color:#20143A">100 GRIT</b> for every friend who joins and plays to level 2 (up to 50), and they get <b style="color:#20143A">50 GRIT</b> too.</p></div>'+
+        '<div style="display:flex;gap:8px;margin-bottom:14px">'+stat(me.invites||0,'Invited')+stat(me.grit_earned||0,'GRIT earned','#6B31E6')+stat(me.rank?('#'+me.rank):'—','Rank')+'</div>'+
+        '<div style="display:flex;gap:8px;margin-bottom:10px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" style="flex:none;padding:12px 16px;border:0;border-radius:12px;background:#20143A;color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit">Copy</button></div>'+
+        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">'+
+          '<button type="button" id="bqShX" style="padding:11px 6px;border:0;border-radius:12px;background:#111;color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit">Post on X</button>'+
+          '<button type="button" id="bqShTg" style="padding:11px 6px;border:0;border-radius:12px;background:#229ED9;color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit">Telegram</button>'+
+          '<button type="button" id="bqShWa" style="padding:11px 6px;border:0;border-radius:12px;background:#25D366;color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit">WhatsApp</button>'+
+        '</div>'+
+        '<div style="border:1px solid #EFECFA;border-radius:14px;padding:4px 12px 8px;margin-bottom:14px">'+
+          '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 6px;border-bottom:1px solid #F0EDF8;margin-bottom:2px"><b style="font-size:12px;font-weight:800;color:#6B31E6;letter-spacing:.4px;text-transform:uppercase">Top inviters</b><span style="font-size:11px;color:#9AA6B2;font-weight:700">Invites</span></div>'+lbHtml+
+        '</div>'+
+        '<button type="button" class="send" id="bqRefClose" style="width:100%">Done</button>'+
+      '</div>';
       document.body.appendChild(el);
       el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
       el.querySelector('#bqRefClose').addEventListener('click', function(){ el.remove(); });
-      function copy(){ var i=el.querySelector('#bqRefLink'); try{ i.select(); }catch(e){} if(navigator.clipboard){ navigator.clipboard.writeText(link).then(function(){ if(window.showToast) showToast('Link copied'); },function(){}); } else { try{ document.execCommand('copy'); if(window.showToast) showToast('Link copied'); }catch(e){} } }
+      function copy(){ var i=el.querySelector('#bqRefLink'); try{ i.select(); }catch(e){} var ok=function(){ if(window.showToast) showToast('Link copied'); }; if(navigator.clipboard){ navigator.clipboard.writeText(link).then(ok,function(){}); } else { try{ document.execCommand('copy'); ok(); }catch(e){} } }
       el.querySelector('#bqRefCopy').addEventListener('click', copy);
-      el.querySelector('#bqRefShare').addEventListener('click', function(){ var txt='Claim a free bull on BullQuest and gather GRIT for the $BULL airdrop. '+link; if(navigator.share){ navigator.share({text:txt}).catch(function(){}); } else copy(); });
+      el.querySelector('#bqShX').addEventListener('click', function(){ window.open(xUrl,'_blank','noopener'); });
+      el.querySelector('#bqShTg').addEventListener('click', function(){ window.open(tgUrl,'_blank','noopener'); });
+      el.querySelector('#bqShWa').addEventListener('click', function(){ window.open(waUrl,'_blank','noopener'); });
     }).catch(function(){ if(window.showToast) showToast('Could not load your invite link'); });
   }
   window.bqInvite = showInvite;
