@@ -3666,9 +3666,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       <div class="titlewrap">
         <span class="k">
           <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="none" stroke="#FFE7A6" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="none" stroke="#FFE7A6" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="none" stroke="#FFE7A6" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="none" stroke="#FFE7A6" stroke-width="2"/></svg>
-          Genesis Collection
+          Bull Market
         </span>
-        <h1>The 5,000 Bulls</h1>
+        <h1>Buy &amp; sell bulls</h1>
       </div>
       <span class="pill" id="bqMktCount" aria-label="Collection size">5,000</span>
     </header>
@@ -4805,6 +4805,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     });
   }
   window.bqBuyEnergy = energyPaid;
+  window.bqLoadWeb3 = loadWeb3; // shared by the marketplace module for building payment transactions
 })();
 </script>
 
@@ -5049,31 +5050,92 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
   }
   function statTile(l,v,c,icon){ return '<div style="background:#F5F5FA;border-radius:12px;padding:10px 4px">'+(icon?'<i class="pico" style="--m:url(assets/icons/'+icon+'.png);width:16px;height:16px;background:'+c+';display:block;margin:0 auto 3px"></i>':'')+'<div style="font-size:19px;font-weight:800;color:'+c+'">'+(v==null?'-':v)+'</div><div style="font-size:11px;color:#6B7280;font-weight:700">'+l+'</div></div>'; }
+  function bullCardImg(b){ return b.image_url || (URL_+'/storage/v1/object/public/bulls/nft_'+b.id+'.webp'); }
+  function bullCard(ub, isActive, listing){
+    var b=ub.bulls||{}, t=tier(b.rarity_rank);
+    var badge = isActive ? '<span class="bqbc-badge">Active</span>' : '';
+    var left  = isActive ? '<span class="bqbc-active">In the arena</span>'
+                         : '<button type="button" class="bqbc-btn" data-active="'+b.id+'">Set active</button>';
+    var right = listing ? '<button type="button" class="bqbc-btn warn" data-cancel="'+listing.id+'">Listed '+listing.price_sol+' SOL &middot; Remove</button>'
+                        : '<button type="button" class="bqbc-btn sell" data-list="'+b.id+'" data-name="'+((b.name||('Bull #'+b.id)).replace(/"/g,'&quot;'))+'">List for sale</button>';
+    return '<div class="bqbc'+(isActive?' on':'')+'">'+
+      '<div class="bqbc-top">'+
+        '<div class="bqbc-thumb"><img data-src="'+bullCardImg(b)+'" alt="'+(b.name||('Bull #'+b.id))+'"></div>'+
+        '<div class="bqbc-info">'+
+          '<div class="bqbc-name">'+(b.name||('Bull #'+b.id))+badge+'</div>'+
+          '<div class="bqbc-sub"><span style="width:9px;height:9px;border-radius:50%;background:'+t.c+'"></span>'+t.l+' &middot; #'+b.rarity_rank+' &middot; Lv '+ub.level+'</div>'+
+          '<div class="bqbc-rec">'+ub.wins+'W '+ub.losses+'L &middot; Energy '+ub.energy+'/'+ub.energy_max+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="bqbc-stats">'+statTile('Power',ub.power,'#43C06A','stat_power')+statTile('Speed',ub.speed,'#7C5CE6','stat_speed')+statTile('Stam',ub.stamina,'#EE5B62','stat_stamina')+statTile('Temper',ub.temper,'#E6961B','stat_temper')+'</div>'+
+      '<div class="bqbc-acts">'+left+right+'</div>'+
+    '</div>';
+  }
   function renderBulls(){
-    var v=document.getElementById('view-bulls'); if(!v||!curBull) return;
-    var b=curBull.bulls||{}, ub=curBull, t=tier(b.rarity_rank);
+    var v=document.getElementById('view-bulls'); if(!v) return;
     var grid=v.querySelector('#bullGrid'); if(grid) grid.style.display='none';
     var det=v.querySelector('#detail'); if(det) det.style.display='none';
-    // de-mock the surrounding chrome so it matches the one real bull (was a fake "6 bulls" collection)
-    var cnt=v.querySelector('.head-l .n small'); if(cnt) cnt.textContent='1 bull';
     var filters=v.querySelector('.filters'); if(filters) filters.style.display='none';
     var sortBtn=v.querySelector('.topbar .iconbtn'); if(sortBtn) sortBtn.style.display='none';
     var labels=v.querySelectorAll('.sheet .seclabel');
-    if(labels[0]){ var fh=labels[0].querySelector('#filterHint'); if(fh) fh.textContent=''; var h3=labels[0].querySelector('h3'); if(h3) h3.textContent='Your Bull'; }
     if(labels[1]) labels[1].style.display='none';
+    if(!document.getElementById('bq-bullcard-css')){
+      var st=document.createElement('style'); st.id='bq-bullcard-css'; st.textContent=
+        '.bqbc{background:#fff;border-radius:20px;padding:16px;box-shadow:0 8px 24px rgba(20,16,40,.08)}'+
+        '.bqbc.on{box-shadow:0 10px 28px rgba(124,92,230,.2);outline:2px solid #EDE7FB}'+
+        '.bqbc-top{display:flex;gap:13px;align-items:center}'+
+        '.bqbc-thumb{flex:none;width:74px;height:74px;border-radius:15px;background:#F1EFF7;display:grid;place-items:center;overflow:hidden}'+
+        '.bqbc-thumb img{width:100%;height:100%;object-fit:contain}'+
+        '.bqbc-info{flex:1;min-width:0}'+
+        '.bqbc-name{font-size:17px;font-weight:800;color:#20143A;display:flex;align-items:center;gap:7px;min-width:0}'+
+        '.bqbc-badge{font-size:10px;font-weight:800;color:#6B31E6;background:#F0ECFB;padding:2px 7px;border-radius:999px;flex:none}'+
+        '.bqbc-sub{margin-top:3px;font-size:12px;color:#6B7280;font-weight:700;display:flex;align-items:center;gap:5px}'+
+        '.bqbc-rec{margin-top:2px;font-size:11.5px;color:#9AA6B2;font-weight:700}'+
+        '.bqbc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}'+
+        '.bqbc-acts{display:flex;gap:9px;margin-top:12px}'+
+        '.bqbc-btn{flex:1;border:1.5px solid #E6E8EF;background:#fff;color:#4B3B7A;font-weight:800;font-size:12.5px;padding:10px 8px;border-radius:12px;cursor:pointer;font-family:inherit;text-align:center;line-height:1.2}'+
+        '.bqbc-btn.sell{border-color:#D5CCF2;background:#F6F2FE;color:#6B31E6}'+
+        '.bqbc-btn.warn{border-color:#F0D9DB;background:#FDF3F4;color:#C6474E}'+
+        '.bqbc-active{flex:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#3AA85F;background:#EAF7EF;border-radius:12px;padding:10px}';
+      document.head.appendChild(st);
+    }
     var panel=v.querySelector('#bqMyBull');
     if(!panel){ panel=document.createElement('div'); panel.id='bqMyBull'; if(grid&&grid.parentNode) grid.parentNode.insertBefore(panel,grid); else v.appendChild(panel); }
     panel.style.cssText='padding:0 14px 24px';
-    panel.innerHTML='<div style="background:#fff;border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(20,16,40,.08);text-align:center;max-width:420px;margin:0 auto">'+
-      '<div style="width:150px;height:150px;margin:0 auto 8px"><img id="bqPanelImg" alt="" style="width:100%;height:100%;object-fit:contain"></div>'+
-      '<div style="font-size:22px;font-weight:800;color:#20143A">'+(b.name||('Bull #'+b.id))+'</div>'+
-      '<div style="margin:4px 0 14px;font-size:13px;color:#6B7280"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rank #'+b.rarity_rank+' of 5,000 &middot; Level '+ub.level+'</div>'+
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">'+statTile('Power',ub.power,'#43C06A','stat_power')+statTile('Speed',ub.speed,'#7C5CE6','stat_speed')+statTile('Stam',ub.stamina,'#EE5B62','stat_stamina')+statTile('Temper',ub.temper,'#E6961B','stat_temper')+'</div>'+
-      '<div style="font-size:12.5px;color:#6B7280">Record <b style="color:#20143A">'+ub.wins+'W '+ub.losses+'L</b> &middot; Energy '+ub.energy+'/'+ub.energy_max+'</div>'+
-      '<button type="button" onclick="if(window.bqShareBull)window.bqShareBull()" style="margin-top:14px;border:0;background:#EEE9FB;color:#6B31E6;font-size:13px;font-weight:800;padding:10px 16px;border-radius:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px"><i class="pico" style="--m:url(assets/icons/ui_share.png);width:15px;height:15px;background:#6B31E6"></i>Share my bull</button>'+
-      (b.body?'<div style="margin-top:10px;font-size:11.5px;color:#9AA6B2;line-height:1.5">'+b.body+' &middot; '+b.belly+' &middot; '+b.horns+' &middot; '+b.face+'</div>':'')+
-    '</div>';
-    bqBindImg(panel.querySelector('#bqPanelImg'), b.image_url);
+    if(!panel._wired){ panel._wired=true; panel.addEventListener('click', function(e){
+      var a=e.target.closest('[data-active]'); if(a){ setActiveBull(parseInt(a.getAttribute('data-active'),10)); return; }
+      var l=e.target.closest('[data-list]'); if(l){ openListSheet(parseInt(l.getAttribute('data-list'),10), l.getAttribute('data-name')); return; }
+      var c=e.target.closest('[data-cancel]'); if(c){ cancelList(c.getAttribute('data-cancel')); return; }
+    }); }
+    if(!sb) return;
+    sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u){ panel.innerHTML=''; return; }
+      return Promise.all([
+        sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id),
+        (window.bqGame&&window.bqGame.getState)?window.bqGame.getState().catch(function(){return null;}):Promise.resolve(null),
+        sb.from('bull_listings').select('id,bull_id,price_sol,status').eq('seller_id',u.id).in('status',['active','reserved']).then(function(r){return (r&&r.data)||[];}, function(){return [];})
+      ]).then(function(arr){
+        var rows=(arr[0]&&arr[0].data)||[]; var stt=arr[1]; var activeId=(stt&&stt.bull&&stt.bull.id)||null; var listings=arr[2]||[];
+        var lmap={}; listings.forEach(function(x){ lmap[x.bull_id]=x; });
+        var cnt=v.querySelector('.head-l .n small'); if(cnt) cnt.textContent=rows.length+' bull'+(rows.length===1?'':'s');
+        var h3=(labels[0]&&labels[0].querySelector('h3')); if(h3) h3.textContent=(rows.length>1?'Your Bulls':'Your Bull');
+        var fh=(labels[0]&&labels[0].querySelector('#filterHint')); if(fh) fh.textContent='';
+        if(!rows.length){
+          panel.innerHTML='<div style="background:#fff;border-radius:22px;padding:26px 20px;box-shadow:0 8px 24px rgba(20,16,40,.08);text-align:center;max-width:420px;margin:0 auto">'+
+            '<div style="width:78px;height:78px;margin:0 auto 8px"><img src="assets/icons/logo.png" alt="" style="width:100%;height:100%;object-fit:contain;opacity:.5"></div>'+
+            '<div style="font-size:18px;font-weight:800;color:#20143A">No bulls yet</div>'+
+            '<p style="margin:8px 0 16px;font-size:13.5px;color:#6B7280;line-height:1.5">Pick one up from the market to start dueling and earning GRIT.</p>'+
+            '<button type="button" class="mkt-more" data-bqgo="view-market" style="border:0;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-weight:800;font-size:14px;padding:12px 22px;border-radius:14px;cursor:pointer;font-family:inherit">Browse the market</button></div>';
+          return;
+        }
+        if(!curBull && rows.length){ curBull = rows[0]; }
+        rows.sort(function(a,b){ return (b.bull_id===activeId?1:0)-(a.bull_id===activeId?1:0); });
+        var html='<div style="display:grid;gap:14px;max-width:460px;margin:0 auto">';
+        for(var i=0;i<rows.length;i++){ html+=bullCard(rows[i], rows[i].bull_id===activeId, lmap[rows[i].bull_id]); }
+        html+='</div><div style="text-align:center;margin-top:18px"><button type="button" class="mkt-more" data-bqgo="view-market" style="border:1.5px solid #E6E8EF;background:#fff;color:#6B31E6;font-weight:800;font-size:13.5px;padding:11px 20px;border-radius:14px;cursor:pointer;font-family:inherit">+ Buy more bulls</button></div>';
+        panel.innerHTML=html;
+        [].forEach.call(panel.querySelectorAll('img[data-src]'), function(im){ var s=im.getAttribute('data-src'); im.removeAttribute('data-src'); bqBindImg(im, s); });
+      });
+    }).catch(function(){});
   }
   function loadAndShow(routeHome, reveal){
     return sb.auth.getUser().then(function(res){
@@ -5376,7 +5438,18 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     respinBlockhash: function(){ return fetch(URL_+'/functions/v1/respin',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_},body:JSON.stringify({action:'blockhash'})}).then(function(r){ return r.json(); }); },
     respinGrant: function(signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/respin',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
     energyQuote: function(){ return sb.rpc('energy_quote').then(function(r){ if(r.error) throw r.error; return r.data; }); },
-    energyGrant: function(signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/energy',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); }
+    energyGrant: function(signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/energy',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
+    // ----- Marketplace RPCs (buyer/seller, authenticated) -----
+    mintQuote:      function(bullId){ return sb.rpc('mint_primary_quote',{p_bull_id:bullId}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    reservePrimary: function(bullId){ return sb.rpc('reserve_primary',{p_bull_id:bullId}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    reserveListing: function(id){ return sb.rpc('reserve_listing',{p_listing_id:id}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    createListing:  function(bullId,lam){ return sb.rpc('create_listing',{p_bull_id:bullId,p_price_lamports:lam}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    cancelListing:  function(id){ return sb.rpc('cancel_listing',{p_listing_id:id}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    setActiveBull:  function(bullId){ return sb.rpc('set_active_bull',{p_bull_id:bullId}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    // ----- Marketplace edge function (on-chain verified settlement) -----
+    mktBlockhash:   function(){ return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_},body:JSON.stringify({action:'blockhash'})}).then(function(r){ return r.json(); }); },
+    mktMint:        function(bullId,signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'mint',bull_id:bullId,signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
+    mktBuy:         function(listingId,signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'buy',listing_id:listingId,signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); }
   };
   document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-bulls"]')) setTimeout(renderBulls, 50); }, false);
 
@@ -5714,29 +5787,264 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   window.bqInvite = showInvite;
   document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('#bqInviteBtn')){ e.preventDefault(); showInvite(); } });
 
-  // ---- Market: real browsable gallery of all 5,000 Genesis bulls (honest showcase, no trading) ----
+  // ================= Bull Market: buy (primary + secondary) and sell (list your bull) =================
+  var mktBusy=false;
+  function primaryPriceSol(rank){ if(rank==null) return 0.05; if(rank<=50) return 2; if(rank<=300) return 0.6; if(rank<=1200) return 0.25; return 0.05; }
+  function lamToSol(l){ return Math.round(Number(l)/1e7)/100; }
+  function friendlyMkt(code){
+    var m={ 'reserved-by-other':'Someone is buying this one right now. Try another.',
+      'already-sold':'This bull was just sold. Try another.',
+      'already-claimed':'This bull was just taken. Try another.',
+      'not-available':'This listing is no longer available.',
+      'no-listing':'This listing is no longer available.',
+      'listing-cancelled':'This listing was cancelled.',
+      'seller-no-longer-owns':'The seller no longer has this bull.',
+      'too-many-reservations':'Finish your current purchase first.',
+      'slow-down':'One moment, then try again.',
+      'no-wallet':'Connect a Phantom wallet to buy or sell.',
+      'cannot-buy-own':'This is your own listing.',
+      'keep-one-bull':'Keep at least one bull to play. Get another first, then list this one.',
+      'bad-price':'Choose a price within the allowed range.',
+      'bad-bull':'That bull is not available.',
+      'no-bull':'That bull is not available.',
+      'underpaid':'The price changed. Open it again for the new price.',
+      'memo-mismatch':"That payment couldn't be matched to your account.",
+      'wrong-recipient':'The payment did not reach the right wallet.',
+      'no-payment':'No payment was found in that transaction.',
+      'tx-failed':'The payment failed on-chain.',
+      'verify-failed':"We couldn't verify that payment. Please contact support.",
+      'disabled':'The market is closed right now.',
+      'settle-failed':'The sale could not be completed. If you were charged, contact support.',
+      'not-authenticated':'Please sign in again.' };
+    return m[code]||'That did not go through. Please try again.';
+  }
+  function mktPayErr(m){
+    var t={ 'no-wallet':'Connect a Phantom wallet (or Solflare/Backpack) to buy or sell.',
+      'web3-load':"Couldn't load the payment library - check your connection and retry.",
+      'blockhash':"Couldn't reach Solana just now - please try again.",
+      'no-send':'That wallet cannot send in-app. Try Phantom or Solflare.',
+      'no-signature':'Payment cancelled.' };
+    return t[m]||friendlyMkt(m);
+  }
+  // build + sign + send a payment tx with the given transfers [{to,lamports}] plus a memo; resolves to the signature
+  function mktPay(transfers, memo){
+    var provider=window.bqGetProvider?window.bqGetProvider('auto'):(window.solana||null), web3, fromStr;
+    if(!provider) return Promise.reject(new Error('no-wallet'));
+    if(!window.bqLoadWeb3) return Promise.reject(new Error('web3-load'));
+    return window.bqLoadWeb3().then(function(w3){ web3=w3; return Promise.resolve(provider.connect()); })
+      .then(function(res){ var pk=provider.publicKey||(res&&res.publicKey); if(!pk) throw new Error('no-wallet'); fromStr=pk.toString();
+        if(window.bqToast) window.bqToast('Preparing your payment...'); return window.bqGame.mktBlockhash(); })
+      .then(function(bh){ if(!bh||!bh.blockhash) throw new Error('blockhash');
+        var fromPk=new web3.PublicKey(fromStr); var tx=new web3.Transaction({recentBlockhash:bh.blockhash, feePayer:fromPk});
+        transfers.forEach(function(t){ tx.add(web3.SystemProgram.transfer({fromPubkey:fromPk, toPubkey:new web3.PublicKey(t.to), lamports:Number(t.lamports)})); });
+        tx.add(new web3.TransactionInstruction({keys:[], programId:new web3.PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr'), data:new TextEncoder().encode(memo)}));
+        if(window.bqToast) window.bqToast('Approve the payment in your wallet...');
+        if(!provider.signAndSendTransaction) throw new Error('no-send');
+        return provider.signAndSendTransaction(tx); })
+      .then(function(sent){ var sig=(sent&&sent.signature)?sent.signature:sent; if(sig&&sig.toString) sig=sig.toString(); if(!sig) throw new Error('no-signature'); return sig; });
+  }
+  function mktRetry(fn, sig, tries){
+    return fn(sig).then(function(resp){ var j=(resp&&resp.body)||{};
+      if(resp&&resp.status===202&&j.retry&&tries>0){ return new Promise(function(r){setTimeout(r,3500);}).then(function(){ return mktRetry(fn,sig,tries-1); }); }
+      return resp; });
+  }
+  // after a bull is acquired, refresh the player's bull, roster, arena, and live state
+  function mktRefreshOwned(){
+    if(!sb) return;
+    sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return;
+      fetchBull(u,2).then(function(ub){ if(ub){ curBull=ub; } try{ renderBulls(); }catch(e){}
+        try{ if(window.bqArenaRefresh) window.bqArenaRefresh(); }catch(e){}
+        sb.rpc('get_state').then(function(r){ try{ applyLiveState(r&&r.data); }catch(e){} }, function(){});
+      }).catch(function(){});
+    });
+  }
+  function buyPrimary(bullId){
+    if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
+    if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    mktBusy=true;
+    window.bqGame.session().then(function(has){ if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
+      return window.bqGame.reservePrimary(bullId);
+    }).then(function(q){ if(!q||q.error) throw new Error((q&&q.error)||'error');
+      if(!window.confirm('Buy this '+q.rarity+' bull for '+q.price_sol+' SOL?\nPay from your Solana wallet.')) throw new Error('__silent__');
+      return mktPay([{to:q.treasury, lamports:q.price_lamports}], q.memo).then(function(sig){
+        if(window.bqToast) window.bqToast('Payment sent - verifying on-chain...');
+        return mktRetry(function(s){ return window.bqGame.mktMint(bullId, s); }, sig, 8);
+      });
+    }).then(function(resp){ mktBusy=false; var j=(resp&&resp.body)||{};
+      if(j&&j.ok){ if(window.bqToast) window.bqToast(j.already?'This bull is already yours.':'Bull purchased! It is now in your stable.'); mktRefreshOwned(); renderForSale(); }
+      else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
+      else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
+    }).catch(function(e){ mktBusy=false; var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buyPrimary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
+  }
+  function buySecondary(listingId){
+    if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
+    if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    mktBusy=true;
+    window.bqGame.session().then(function(has){ if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
+      return window.bqGame.reserveListing(listingId);
+    }).then(function(q){ if(!q||q.error) throw new Error((q&&q.error)||'error');
+      if(!window.confirm('Buy this bull for '+lamToSol(q.price_lamports)+' SOL?\nThe seller receives '+lamToSol(q.seller_lamports)+' SOL, and '+lamToSol(q.fee_lamports)+' SOL is the market fee.')) throw new Error('__silent__');
+      return mktPay([{to:q.seller_pubkey, lamports:q.seller_lamports},{to:q.treasury, lamports:q.fee_lamports}], q.memo).then(function(sig){
+        if(window.bqToast) window.bqToast('Payment sent - verifying on-chain...');
+        return mktRetry(function(s){ return window.bqGame.mktBuy(listingId, s); }, sig, 8);
+      });
+    }).then(function(resp){ mktBusy=false; var j=(resp&&resp.body)||{};
+      if(j&&j.ok){ if(window.bqToast) window.bqToast(j.already?'This bull is already yours.':'Bought! The bull is now in your stable.'); mktRefreshOwned(); renderForSale(); }
+      else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
+      else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
+    }).catch(function(e){ mktBusy=false; var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buySecondary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
+  }
+  // ----- Sell: list one of your bulls -----
+  function openListSheet(bullId, bullName){
+    if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    var el=document.createElement('div'); el.className='bqfb-ov';
+    el.innerHTML='<div class="bqfb" style="max-width:360px">'+
+      '<h3 style="margin:0 0 4px;font-size:19px;color:#20143A">List '+(bullName||('Bull #'+bullId))+'</h3>'+
+      '<p style="margin:0 0 14px;font-size:13px;color:#6B7280;line-height:1.5">Set your asking price. You keep 85%; a 15% market fee supports BullQuest. Buyers pay in SOL from their wallet.</p>'+
+      '<label style="display:block;font-size:12px;font-weight:800;color:#4B3B7A;margin-bottom:5px">Price in SOL</label>'+
+      '<input id="bqLPrice" type="number" min="0.005" step="0.01" inputmode="decimal" placeholder="0.25" style="width:100%;padding:12px 14px;border:1.5px solid #E6E8EF;border-radius:13px;font-size:16px;font-family:inherit;color:#20143A">'+
+      '<div id="bqLMath" style="margin-top:10px;font-size:12.5px;color:#6B7280;line-height:1.6"></div>'+
+      '<div class="bqfb-actions" style="margin-top:16px"><button type="button" class="send" id="bqLGo" disabled>List for sale</button><button type="button" class="cancel" id="bqLX">Cancel</button></div>'+
+    '</div>';
+    document.body.appendChild(el);
+    var price=el.querySelector('#bqLPrice'), math=el.querySelector('#bqLMath'), go=el.querySelector('#bqLGo');
+    function upd(){ var v=parseFloat(price.value); if(!(v>0)){ math.textContent=''; go.disabled=true; return; }
+      if(v<0.005){ math.innerHTML='<span style="color:#EE5B62">Minimum price is 0.005 SOL.</span>'; go.disabled=true; return; }
+      var you=Math.round(v*0.85*1e7)/1e7, fee=Math.round((v-you)*1e7)/1e7;
+      math.innerHTML='You receive <b style="color:#20143A">'+you+' SOL</b> &middot; market fee '+fee+' SOL'; go.disabled=false; }
+    price.addEventListener('input', upd);
+    function close(){ el.remove(); }
+    el.addEventListener('click', function(e){ if(e.target===el) close(); });
+    el.querySelector('#bqLX').addEventListener('click', close);
+    go.addEventListener('click', function(){ var v=parseFloat(price.value); if(!(v>=0.005)) return;
+      go.disabled=true; go.textContent='Listing...';
+      window.bqGame.createListing(bullId, Math.round(v*1e9)).then(function(r){
+        if(r&&r.ok){ close(); if(window.bqToast) window.bqToast('Listed for '+v+' SOL. Buyers can find it in the Market.'); try{ renderBulls(); }catch(e){} renderForSale(); }
+        else { go.disabled=false; go.textContent='List for sale'; if(window.bqToast) window.bqToast(friendlyMkt(r&&r.error)); }
+      }).catch(function(e){ go.disabled=false; go.textContent='List for sale'; if(window.bqToast) window.bqToast('Could not list right now. Try again.'); });
+    });
+    setTimeout(function(){ price.focus(); }, 60);
+  }
+  function cancelList(listingId){
+    if(!window.confirm('Remove this listing? Your bull stays yours.')) return;
+    window.bqGame.cancelListing(listingId).then(function(r){
+      if(r&&r.ok){ if(window.bqToast) window.bqToast('Listing removed.'); try{ renderBulls(); }catch(e){} renderForSale(); }
+      else { if(window.bqToast) window.bqToast(friendlyMkt(r&&r.error)); }
+    }).catch(function(){ if(window.bqToast) window.bqToast('Could not remove the listing. Try again.'); });
+  }
+  function setActiveBull(bullId){
+    window.bqGame.setActiveBull(bullId).then(function(r){
+      if(r&&r.ok){ if(window.bqToast) window.bqToast('This is now your active bull for duels.');
+        sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return;
+          sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).eq('bull_id',bullId).maybeSingle().then(function(rr){
+            if(rr&&rr.data){ curBull=rr.data; try{ if(typeof populate==='function') populate('',curBull); }catch(e){} }
+            try{ renderBulls(); }catch(e){} try{ if(window.bqArenaRefresh) window.bqArenaRefresh(); }catch(e){}
+            sb.rpc('get_state').then(function(g){ try{ applyLiveState(g&&g.data); }catch(e){} }, function(){});
+          });
+        });
+      } else { if(window.bqToast) window.bqToast(friendlyMkt(r&&r.error)); }
+    }).catch(function(){ if(window.bqToast) window.bqToast('Could not switch bull. Try again.'); });
+  }
+  window.bqMkt = { buyPrimary:buyPrimary, buySecondary:buySecondary, openListSheet:openListSheet, cancelList:cancelList, setActiveBull:setActiveBull, primaryPriceSol:primaryPriceSol };
+
+  // ----- "For sale by players" section rendered at the top of the Market sheet -----
+  var forSaleInited=false, myUidCache=null;
+  function fsCard(l){
+    var b=l.bulls||{}, t=tier(b.rarity_rank), img=b.image_url||bqMktImg(l.bull_id), mine=(myUidCache&&l.seller_id===myUidCache);
+    var act = mine
+      ? '<button type="button" class="bqfs-cancel" data-cancel="'+l.id+'">Remove listing</button>'
+      : '<button type="button" class="bqfs-buy" data-buy="'+l.id+'">Buy &middot; '+lamToSol(l.price_lamports)+' SOL</button>';
+    return '<div class="bqfs-card">'+
+      '<button type="button" class="bqfs-thumb" data-detail="'+l.bull_id+'"><img decoding="async" src="'+img+'" alt="Bull #'+l.bull_id+'" onerror="this.style.display=\'none\'"></button>'+
+      '<div class="bqfs-body"><div class="bqfs-name">'+(b.name||('Bull #'+l.bull_id))+'</div>'+
+      '<div class="bqfs-rar" style="color:'+t.c+'"><span class="d" style="background:'+t.c+'"></span>'+t.l+' &middot; #'+b.rarity_rank+'</div></div>'+
+      act+'</div>';
+  }
+  function renderForSale(){
+    var sheet=document.getElementById('bqMktSheet'); if(!sheet||!sb) return;
+    var wrap=document.getElementById('bqMktForSale');
+    if(!wrap){ wrap=document.createElement('div'); wrap.id='bqMktForSale'; sheet.insertBefore(wrap, sheet.firstChild); }
+    if(!forSaleInited){ forSaleInited=true; var st=document.createElement('style'); st.textContent=
+      '#bqMktForSale{margin-bottom:16px}'+
+      '#bqMktForSale .fs-head{display:flex;align-items:center;gap:8px;margin:0 2px 10px}'+
+      '#bqMktForSale .fs-head h3{margin:0;font-size:16px;font-weight:800;color:#20143A}'+
+      '#bqMktForSale .fs-head .n{font-size:12px;font-weight:800;color:#6B31E6;background:#F0ECFB;padding:2px 8px;border-radius:999px}'+
+      '.bqfs-card{display:flex;align-items:center;gap:11px;background:#fff;border-radius:16px;padding:9px 11px;box-shadow:0 5px 16px rgba(20,16,40,.07);margin-bottom:9px}'+
+      '.bqfs-thumb{flex:none;width:52px;height:52px;border:0;border-radius:12px;background:#F1EFF7;padding:0;cursor:pointer;overflow:hidden;display:grid;place-items:center}'+
+      '.bqfs-thumb img{width:100%;height:100%;object-fit:contain}'+
+      '.bqfs-body{flex:1;min-width:0}'+
+      '.bqfs-name{font-size:14.5px;font-weight:800;color:#20143A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'+
+      '.bqfs-rar{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;margin-top:2px}'+
+      '.bqfs-rar .d{width:8px;height:8px;border-radius:50%}'+
+      '.bqfs-buy{flex:none;border:0;cursor:pointer;font-family:inherit;background:linear-gradient(180deg,#5FB2F8,#4DA6F5);color:#fff;font-size:13px;font-weight:800;padding:9px 14px;border-radius:999px;box-shadow:0 6px 14px rgba(77,166,245,.34)}'+
+      '.bqfs-buy:active{transform:scale(.97)}'+
+      '.bqfs-cancel{flex:none;border:1.5px solid #E6E8EF;background:#fff;color:#6B7280;font-size:12.5px;font-weight:800;padding:8px 12px;border-radius:999px;cursor:pointer;font-family:inherit}'+
+      '#bqMktForSale .fs-empty{background:#F6F4FC;border-radius:16px;padding:16px;text-align:center;color:#6B7280;font-size:13px;font-weight:600;line-height:1.5}';
+      document.head.appendChild(st);
+      wrap.addEventListener('click', function(e){
+        var buy=e.target.closest('[data-buy]'); if(buy){ buySecondary(buy.getAttribute('data-buy')); return; }
+        var can=e.target.closest('[data-cancel]'); if(can){ cancelList(can.getAttribute('data-cancel')); return; }
+        var det=e.target.closest('[data-detail]'); if(det){ showBullDetail(det.getAttribute('data-detail')); return; }
+      });
+    }
+    Promise.resolve(sb.auth.getUser()).then(function(res){ myUidCache=(res&&res.data&&res.data.user&&res.data.user.id)||null;
+      return sb.from('bull_listings').select('id,bull_id,price_lamports,seller_id,status,bulls(name,rarity_rank,image_url)').eq('status','active').order('created_at',{ascending:false}).limit(40);
+    }).then(function(r){
+      var rows=(r&&r.data)||[];
+      var head='<div class="fs-head"><h3>For sale by players</h3>'+(rows.length?'<span class="n">'+rows.length+'</span>':'')+'</div>';
+      if(!rows.length){ wrap.innerHTML=head+'<div class="fs-empty">No player listings yet. Be the first - open <b>Bulls</b> and list one of yours, or buy a fresh bull from the collection below.</div>'; return; }
+      var html=head; for(var i=0;i<rows.length;i++) html+=fsCard(rows[i]); wrap.innerHTML=html;
+    }).catch(function(){ if(wrap) wrap.innerHTML=''; });
+  }
+  window.bqRenderForSale = renderForSale;
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-market"]')) setTimeout(renderForSale, 120); }, false);
+  // cover the case where Market is the view restored on load (no click fires)
+  setTimeout(function(){ var mv=document.getElementById('view-market'); if(mv&&!mv.hasAttribute('hidden')) renderForSale(); }, 900);
+
+  // ---- Market: real browsable gallery of all 5,000 Genesis bulls, now also the primary shop ----
   function bqMktImg(id){ return URL_+'/storage/v1/object/public/bulls/nft_'+id+'.webp'; }
   function bqMktHeaders(withCount){ var h={apikey:KEY_, Authorization:'Bearer '+KEY_}; if(withCount) h.Prefer='count=exact'; return h; }
   function showBullDetail(id){
+    id = parseInt(id,10);
     var el=document.createElement('div'); el.className='bqfb-ov';
-    var logged=!!curBull;
+    var logged=!!(window.bqGame&&window.bqGame.ready()&&curBull);
     el.innerHTML='<div class="bqfb" style="max-width:360px;text-align:center">'+
       '<div style="width:168px;height:168px;margin:2px auto 10px"><img id="bqBdImg" alt="Bull #'+id+'" style="width:100%;height:100%;object-fit:contain"></div>'+
-      '<div style="font-size:22px;font-weight:800;color:#20143A">Bull #'+id+'</div>'+
+      '<div id="bqBdName" style="font-size:22px;font-weight:800;color:#20143A">Bull #'+id+'</div>'+
       '<div id="bqBdMeta" style="margin-top:6px;font-size:13px;color:#6B7280">Loading...</div>'+
       '<div id="bqBdTraits" style="margin-top:12px;font-size:12px;color:#9AA6B2;line-height:1.6"></div>'+
-      '<div class="bqfb-actions" style="margin-top:16px;justify-content:center">'+(logged?'':'<button type="button" class="send" id="bqBdClaim">Claim a free bull</button>')+'<button type="button" class="cancel" id="bqBdClose">Close</button></div>'+
+      '<div id="bqBdAct" style="margin-top:16px"></div>'+
+      '<div class="bqfb-actions" style="margin-top:10px;justify-content:center"><button type="button" class="cancel" id="bqBdClose">Close</button></div>'+
     '</div>';
     document.body.appendChild(el);
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
     el.querySelector('#bqBdClose').addEventListener('click', function(){ el.remove(); });
-    var claim=el.querySelector('#bqBdClaim'); if(claim) claim.addEventListener('click', function(){ el.remove(); if(window.bqGo) window.bqGo('view-onboard'); });
     bqBindImg(el.querySelector('#bqBdImg'), bqMktImg(id));
-    fetch(URL_+'/rest/v1/bulls?select=*&id=eq.'+id, {headers:bqMktHeaders(false)}).then(function(r){return r.json();}).then(function(rows){
-      var b=rows&&rows[0]; if(!b){ el.querySelector('#bqBdMeta').textContent=''; return; } var t=tier(b.rarity_rank);
-      el.querySelector('#bqBdMeta').innerHTML='<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rarity rank #'+b.rarity_rank+' of 5,000'+(b.claimed?' &middot; Claimed':'');
-      var tr=[]; ['body','belly','horns','face'].forEach(function(k){ if(b[k]) tr.push(b[k]); });
-      el.querySelector('#bqBdTraits').textContent=tr.join('  ·  ');
+    var actEl=el.querySelector('#bqBdAct');
+    var pBull=fetch(URL_+'/rest/v1/bulls?select=*&id=eq.'+id, {headers:bqMktHeaders(false)}).then(function(r){return r.json();}).then(function(rows){return rows&&rows[0];});
+    var pList=sb?sb.from('bull_listings').select('id,price_lamports,seller_id,status').eq('bull_id',id).eq('status','active').maybeSingle().then(function(r){return r&&r.data;}).catch(function(){return null;}):Promise.resolve(null);
+    var pMine=(sb&&logged)?sb.auth.getUser().then(function(res){var u=res.data&&res.data.user; if(!u) return null; return sb.from('user_bulls').select('bull_id').eq('user_id',u.id).eq('bull_id',id).maybeSingle().then(function(rr){return {uid:u.id, owned:!!(rr&&rr.data)};}); }).catch(function(){return null;}):Promise.resolve(null);
+    Promise.all([pBull,pList,pMine]).then(function(a){
+      var b=a[0], listing=a[1], mine=a[2];
+      if(!b){ el.querySelector('#bqBdMeta').textContent=''; return; } var t=tier(b.rarity_rank);
+      el.querySelector('#bqBdName').textContent=b.name||('Bull #'+id);
+      el.querySelector('#bqBdMeta').innerHTML='<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+t.c+';vertical-align:middle;margin-right:5px"></span>'+t.l+' &middot; Rarity rank #'+b.rarity_rank+' of 5,000';
+      var tr=[]; ['body','belly','horns','face'].forEach(function(k){ if(b[k]) tr.push(b[k]); }); el.querySelector('#bqBdTraits').textContent=tr.join('  ·  ');
+      if(mine&&mine.owned){
+        actEl.innerHTML='<div style="font-size:12.5px;color:#43C06A;font-weight:800">This bull is in your stable</div>';
+      } else if(listing&&mine&&listing.seller_id===mine.uid){
+        actEl.innerHTML='<button type="button" class="cancel" style="width:100%" id="bqBdCancel">Remove your listing ('+lamToSol(listing.price_lamports)+' SOL)</button>';
+        el.querySelector('#bqBdCancel').addEventListener('click', function(){ el.remove(); cancelList(listing.id); });
+      } else if(listing){
+        actEl.innerHTML='<button type="button" id="bqBdBuy" style="width:100%;height:50px;border:0;border-radius:14px;background:linear-gradient(180deg,#5FB2F8,#4DA6F5);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 8px 18px rgba(77,166,245,.34)">Buy for '+lamToSol(listing.price_lamports)+' SOL</button><div style="font-size:11px;color:#9AA6B2;margin-top:6px">Sold by another player</div>';
+        el.querySelector('#bqBdBuy').addEventListener('click', function(){ el.remove(); if(!logged&&window.bqOpenAuth){ window.bqOpenAuth(); return; } buySecondary(listing.id); });
+      } else if(!b.claimed){
+        var ps=primaryPriceSol(b.rarity_rank);
+        actEl.innerHTML='<button type="button" id="bqBdBuy" style="width:100%;height:50px;border:0;border-radius:14px;background:linear-gradient(180deg,#5FB2F8,#4DA6F5);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 8px 18px rgba(77,166,245,.34)">Buy for '+ps+' SOL</button><div style="font-size:11px;color:#9AA6B2;margin-top:6px">Fresh bull, sold by BullQuest</div>';
+        el.querySelector('#bqBdBuy').addEventListener('click', function(){ el.remove(); if(!logged&&window.bqOpenAuth){ window.bqOpenAuth(); return; } buyPrimary(id); });
+      } else {
+        actEl.innerHTML='<div style="font-size:12.5px;color:#9AA6B2;font-weight:700">Owned by another player &middot; not for sale</div>';
+      }
     }).catch(function(){ el.querySelector('#bqBdMeta').textContent=''; });
   }
   (function initMarketGallery(){
