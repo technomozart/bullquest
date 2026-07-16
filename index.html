@@ -3093,7 +3093,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       </div>
     </div>
 
-    <div class="seclabel"><h3>Your Active Bull</h3><a class="link" href="#" data-bqtoast="Your whole herd, soon">All bulls <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+    <div class="seclabel"><h3>Your Active Bull</h3><a class="link" href="#" id="bqAllBulls">Switch bull <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     <div class="card featured">
       <div class="feat-top">
         <div class="feat-bull">
@@ -5057,7 +5057,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     var left  = isActive ? '<span class="bqbc-active">In the arena</span>'
                          : '<button type="button" class="bqbc-btn" data-active="'+b.id+'">Set active</button>';
     var right = listing ? '<button type="button" class="bqbc-btn warn" data-cancel="'+listing.id+'">Listed '+listing.price_sol+' SOL &middot; Remove</button>'
-                        : '<button type="button" class="bqbc-btn sell" data-list="'+b.id+'" data-name="'+((b.name||('Bull #'+b.id)).replace(/"/g,'&quot;'))+'">List for sale</button>';
+                        : '<button type="button" class="bqbc-btn sell" data-list="'+b.id+'" data-name="'+((b.name||('Bull #'+b.id)).replace(/"/g,'&quot;'))+'" data-rank="'+b.rarity_rank+'" data-img="'+bullCardImg(b)+'">List for sale</button>';
     return '<div class="bqbc'+(isActive?' on':'')+'">'+
       '<div class="bqbc-top">'+
         '<div class="bqbc-thumb"><img data-src="'+bullCardImg(b)+'" alt="'+(b.name||('Bull #'+b.id))+'"></div>'+
@@ -5104,7 +5104,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     panel.style.cssText='padding:0 14px 24px';
     if(!panel._wired){ panel._wired=true; panel.addEventListener('click', function(e){
       var a=e.target.closest('[data-active]'); if(a){ setActiveBull(parseInt(a.getAttribute('data-active'),10)); return; }
-      var l=e.target.closest('[data-list]'); if(l){ openListSheet(parseInt(l.getAttribute('data-list'),10), l.getAttribute('data-name')); return; }
+      var l=e.target.closest('[data-list]'); if(l){ openListSheet(parseInt(l.getAttribute('data-list'),10), l.getAttribute('data-name'), parseInt(l.getAttribute('data-rank'),10), l.getAttribute('data-img')); return; }
       var c=e.target.closest('[data-cancel]'); if(c){ cancelList(c.getAttribute('data-cancel')); return; }
     }); }
     if(!sb) return;
@@ -5868,7 +5868,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         return mktRetry(function(s){ return window.bqGame.mktMint(bullId, s); }, sig, 8);
       });
     }).then(function(resp){ mktBusy=false; var j=(resp&&resp.body)||{};
-      if(j&&j.ok){ if(window.bqToast) window.bqToast(j.already?'This bull is already yours.':'Bull purchased! It is now in your stable.'); mktRefreshOwned(); renderForSale(); }
+      if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id||bullId, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
     }).catch(function(e){ mktBusy=false; var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buyPrimary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
@@ -5886,33 +5886,193 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         return mktRetry(function(s){ return window.bqGame.mktBuy(listingId, s); }, sig, 8);
       });
     }).then(function(resp){ mktBusy=false; var j=(resp&&resp.body)||{};
-      if(j&&j.ok){ if(window.bqToast) window.bqToast(j.already?'This bull is already yours.':'Bought! The bull is now in your stable.'); mktRefreshOwned(); renderForSale(); }
+      if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
     }).catch(function(e){ mktBusy=false; var m=(e&&e.message)||''; if(m==='__silent__') return; try{console.error('[buySecondary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
-  // ----- Sell: list one of your bulls -----
-  function openListSheet(bullId, bullName){
-    if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
-    var el=document.createElement('div'); el.className='bqfb-ov';
-    el.innerHTML='<div class="bqfb" style="max-width:360px">'+
-      '<h3 style="margin:0 0 4px;font-size:19px;color:#20143A">List '+(bullName||('Bull #'+bullId))+'</h3>'+
-      '<p style="margin:0 0 14px;font-size:13px;color:#6B7280;line-height:1.5">Set your asking price. You keep 85%; a 15% market fee supports BullQuest. Buyers pay in SOL from their wallet.</p>'+
-      '<label style="display:block;font-size:12px;font-weight:800;color:#4B3B7A;margin-bottom:5px">Price in SOL</label>'+
-      '<input id="bqLPrice" type="number" min="0.005" step="0.01" inputmode="decimal" placeholder="0.25" style="width:100%;padding:12px 14px;border:1.5px solid #E6E8EF;border-radius:13px;font-size:16px;font-family:inherit;color:#20143A">'+
-      '<div id="bqLMath" style="margin-top:10px;font-size:12.5px;color:#6B7280;line-height:1.6"></div>'+
-      '<div class="bqfb-actions" style="margin-top:16px"><button type="button" class="send" id="bqLGo" disabled>List for sale</button><button type="button" class="cancel" id="bqLX">Cancel</button></div>'+
+  // shared styles for the celebration, list sheet, and bull switcher (injected once)
+  function ensureMktCss(){
+    if(document.getElementById('bq-mkt-css')) return;
+    var st=document.createElement('style'); st.id='bq-mkt-css'; st.textContent=
+      // ---- celebration ----
+      '.bqcel{position:fixed;inset:0;z-index:10002;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(130% 100% at 50% -10%,rgba(124,92,230,.6),rgba(19,13,38,.9));backdrop-filter:blur(5px);animation:bqcelIn .25s ease both}'+
+      '.bqcel.out{animation:bqcelOut .2s ease forwards}'+
+      '@keyframes bqcelIn{from{opacity:0}to{opacity:1}}@keyframes bqcelOut{to{opacity:0}}'+
+      '.bqcel-card{position:relative;width:100%;max-width:340px;background:#fff;border-radius:28px;padding:24px 22px 20px;text-align:center;box-shadow:0 30px 90px rgba(18,9,46,.6);animation:bqcelPop .55s cubic-bezier(.2,1.25,.3,1) both;overflow:hidden}'+
+      '@keyframes bqcelPop{0%{transform:scale(.7) translateY(24px);opacity:0}60%{transform:scale(1.03) translateY(0)}100%{transform:scale(1);opacity:1}}'+
+      '.bqcel-cf{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;opacity:0;animation:bqcelFall 2.6s linear forwards}'+
+      '@keyframes bqcelFall{0%{transform:translateY(-16px) rotate(0);opacity:0}12%{opacity:1}100%{transform:translateY(460px) rotate(560deg);opacity:0}}'+
+      '.bqcel-eye{font-size:11.5px;font-weight:800;letter-spacing:1.9px}'+
+      '.bqcel-stage{position:relative;width:168px;height:150px;margin:6px auto 4px;display:flex;align-items:center;justify-content:center}'+
+      '.bqcel-ring{position:absolute;width:178px;height:178px;border-radius:50%;animation:bqcelSpin 15s linear infinite;opacity:.6}'+
+      '.bqcel-glow{position:absolute;width:148px;height:148px;border-radius:50%;filter:blur(8px);animation:bqcelGlow 2.6s ease-in-out infinite}'+
+      '.bqcel-bull{position:relative;width:130px;height:130px;object-fit:contain;animation:bqcelFloat 3.2s ease-in-out infinite;filter:drop-shadow(0 10px 14px rgba(20,10,50,.28))}'+
+      '@keyframes bqcelSpin{to{transform:rotate(360deg)}}@keyframes bqcelGlow{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.12);opacity:1}}@keyframes bqcelFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}'+
+      '.bqcel-title{font-size:25px;font-weight:900;color:#20143A;letter-spacing:-.5px}'+
+      '.bqcel-name{margin-top:2px;font-size:16px;font-weight:800;color:#4B3B7A}'+
+      '.bqcel-pill{display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:800}'+
+      '.bqcel-stats{display:flex;gap:9px;justify-content:center;margin:15px 0 2px}'+
+      '.bqcel-stat{background:#F5F5FA;border-radius:12px;padding:8px 0;flex:1;max-width:78px}'+
+      '.bqcel-stat b{display:block;font-size:18px;font-weight:900}.bqcel-stat span{font-size:10.5px;color:#6B7280;font-weight:700}'+
+      '.bqcel-acts{display:flex;flex-direction:column;gap:9px;margin-top:16px}'+
+      '.bqcel-btn{border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:15px;padding:14px;border-radius:15px}'+
+      '.bqcel-btn.primary{background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;box-shadow:0 10px 22px rgba(107,49,230,.34)}'+
+      '.bqcel-btn.ghost{background:#F1EEFA;color:#6B31E6}'+
+      // ---- list-for-sale bottom sheet ----
+      '.bqls{position:fixed;inset:0;z-index:10001;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,16,40,.5);backdrop-filter:blur(3px);animation:bqcelIn .2s ease both}'+
+      '.bqls.out{animation:bqcelOut .2s ease forwards}'+
+      '.bqls-card{position:relative;width:100%;max-width:440px;background:#fff;border-radius:26px 26px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom,0px));box-shadow:0 -20px 60px rgba(18,9,46,.3);animation:bqlsUp .34s cubic-bezier(.2,1,.3,1) both}'+
+      '@keyframes bqlsUp{from{transform:translateY(100%)}to{transform:translateY(0)}}'+
+      '.bqls-x{position:absolute;top:14px;right:16px;border:0;background:none;font-size:26px;line-height:1;color:#B8BEC8;cursor:pointer;font-family:inherit}'+
+      '.bqls-top{display:flex;align-items:center;gap:12px;margin-bottom:18px}'+
+      '.bqls-thumb{width:56px;height:56px;border-radius:14px;background:#F1EFF7;display:grid;place-items:center;overflow:hidden;flex:none}.bqls-thumb img{width:100%;height:100%;object-fit:contain}'+
+      '.bqls-name{font-size:18px;font-weight:800;color:#20143A}'+
+      '.bqls-rar{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;margin-top:2px}'+
+      '.bqls-label{font-size:12px;font-weight:800;color:#6B7280;margin-bottom:7px}'+
+      '.bqls-inputwrap{position:relative;display:flex;align-items:center}'+
+      '.bqls-inputwrap input{width:100%;padding:15px 58px 15px 16px;border:2px solid #ECEAF5;border-radius:16px;font-size:22px;font-weight:800;font-family:inherit;color:#20143A;background:#FAFAFE}'+
+      '.bqls-inputwrap input:focus{outline:none;border-color:#7C5CE6;background:#fff}'+
+      '.bqls-unit{position:absolute;right:18px;font-size:14px;font-weight:800;color:#9AA6B2;pointer-events:none}'+
+      '.bqls-chips{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}'+
+      '.bqls-chip{border:1.5px solid #E6E8EF;background:#fff;color:#4B3B7A;font-weight:800;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;font-family:inherit}'+
+      '.bqls-chip.on{border-color:#7C5CE6;background:#F3EEFE;color:#6B31E6}'+
+      '.bqls-split{background:#F6F4FC;border-radius:16px;padding:13px 15px;margin-top:16px}'+
+      '.bqls-srow{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:700;color:#20143A}'+
+      '.bqls-srow.muted{color:#9AA6B2;margin-top:7px;font-size:12.5px}.bqls-srow b{font-weight:900}.bqls-srow.muted b{font-weight:800}'+
+      '.bqls-go{width:100%;margin-top:18px;border:0;height:52px;border-radius:16px;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 10px 24px rgba(107,49,230,.34)}'+
+      '.bqls-go:disabled{opacity:.45;box-shadow:none;cursor:default}'+
+      '.bqls-cancel{width:100%;margin-top:9px;border:0;background:none;color:#9AA6B2;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;padding:6px}'+
+      // ---- bull switcher bottom sheet ----
+      '.bqsw{position:fixed;inset:0;z-index:10001;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,16,40,.5);backdrop-filter:blur(3px);animation:bqcelIn .2s ease both}'+
+      '.bqsw.out{animation:bqcelOut .2s ease forwards}'+
+      '.bqsw-sheet{width:100%;max-width:440px;background:#fff;border-radius:26px 26px 0 0;padding:10px 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -20px 60px rgba(18,9,46,.3);max-height:80vh;display:flex;flex-direction:column;animation:bqlsUp .34s cubic-bezier(.2,1,.3,1) both}'+
+      '.bqsw-grab{width:40px;height:4px;border-radius:99px;background:#E3E0EE;margin:2px auto 10px;flex:none}'+
+      '.bqsw-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex:none}'+
+      '.bqsw-head h3{margin:0;font-size:18px;font-weight:800;color:#20143A}'+
+      '.bqsw-x{border:0;background:none;font-size:26px;line-height:1;color:#B8BEC8;cursor:pointer;font-family:inherit}'+
+      '.bqsw-list{overflow-y:auto;-webkit-overflow-scrolling:touch}'+
+      '.bqsw-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1.5px solid #EEEDF4;background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:9px;cursor:pointer;font-family:inherit}'+
+      '.bqsw-row.on{border-color:#C9BCF3;background:#F7F4FE;cursor:default}'+
+      '.bqsw-thumb{width:48px;height:48px;border-radius:12px;background:#F1EFF7;display:grid;place-items:center;overflow:hidden;flex:none}.bqsw-thumb img{width:100%;height:100%;object-fit:contain}'+
+      '.bqsw-info{flex:1;min-width:0}'+
+      '.bqsw-name{display:block;font-size:15.5px;font-weight:800;color:#20143A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'+
+      '.bqsw-sub{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:11.5px;font-weight:700;color:#6B7280}'+
+      '.bqsw-badge{flex:none;font-size:11px;font-weight:800;color:#3AA85F;background:#EAF7EF;padding:5px 10px;border-radius:999px}'+
+      '.bqsw-go{flex:none;font-size:12px;font-weight:800;color:#6B31E6;background:#F0ECFB;padding:7px 12px;border-radius:999px}'+
+      '.bqsw-more{flex:none;margin-top:6px;border:1.5px solid #E6E8EF;background:#fff;color:#6B31E6;font-weight:800;font-size:13.5px;padding:11px;border-radius:14px;cursor:pointer;font-family:inherit;width:100%}'+
+      '.bqsw-load,.bqsw-empty{text-align:center;color:#9AA6B2;font-size:13px;font-weight:700;padding:22px}';
+    document.head.appendChild(st);
+  }
+  // ----- Celebration when a bull is acquired -----
+  function bqCelebrate(b, ub, opts){
+    opts=opts||{}; ensureMktCss(); var t=tier(b.rarity_rank);
+    var el=document.createElement('div'); el.className='bqcel';
+    var cols=['#F0B429','#7C5CE6','#4DA6F5','#43C06A','#EE5B62','#FFD36B','#B98CF2'], cf='';
+    for(var i=0;i<16;i++){ cf+='<i class="bqcel-cf" style="left:'+(4+i*6)+'%;background:'+cols[i%cols.length]+';animation-delay:'+(i*0.11).toFixed(2)+'s"></i>'; }
+    el.innerHTML='<div class="bqcel-card">'+cf+
+      '<div class="bqcel-eye" style="color:'+t.c+'">'+(opts.eyebrow||'NEW BULL')+'</div>'+
+      '<div class="bqcel-stage">'+
+        '<div class="bqcel-ring" style="background:conic-gradient(from 0deg,'+t.c+'00,'+t.c+'66,'+t.c+'00,'+t.c+'66,'+t.c+'00,'+t.c+'66,'+t.c+'00)"></div>'+
+        '<div class="bqcel-glow" style="background:radial-gradient(circle,'+t.c+'99,'+t.c+'00 70%)"></div>'+
+        '<img class="bqcel-bull" alt="'+((b.name||'').replace(/"/g,'')+'')+'">'+
+      '</div>'+
+      '<div class="bqcel-title">'+(opts.title||"It's yours!")+'</div>'+
+      '<div class="bqcel-name">'+(b.name||('Bull #'+b.id))+'</div>'+
+      '<div class="bqcel-pill" style="color:'+t.c+';background:'+t.c+'1c"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+' &middot; #'+b.rarity_rank+'</div>'+
+      (ub?'<div class="bqcel-stats">'+
+        '<div class="bqcel-stat"><b style="color:#43C06A">'+ub.power+'</b><span>Power</span></div>'+
+        '<div class="bqcel-stat"><b style="color:#7C5CE6">'+ub.speed+'</b><span>Speed</span></div>'+
+        '<div class="bqcel-stat"><b style="color:#EE5B62">'+ub.stamina+'</b><span>Stamina</span></div>'+
+      '</div>':'')+
+      '<div class="bqcel-acts">'+
+        (opts.setActive?'<button type="button" class="bqcel-btn primary" id="bqCelAct">Send this bull to the arena</button><button type="button" class="bqcel-btn ghost" id="bqCelClose">Keep my current bull</button>'
+                       :'<button type="button" class="bqcel-btn primary" id="bqCelClose">Let\'s go</button>')+
+      '</div>'+
     '</div>';
     document.body.appendChild(el);
-    var price=el.querySelector('#bqLPrice'), math=el.querySelector('#bqLMath'), go=el.querySelector('#bqLGo');
-    function upd(){ var v=parseFloat(price.value); if(!(v>0)){ math.textContent=''; go.disabled=true; return; }
-      if(v<0.005){ math.innerHTML='<span style="color:#EE5B62">Minimum price is 0.005 SOL.</span>'; go.disabled=true; return; }
-      var you=Math.round(v*0.85*1e7)/1e7, fee=Math.round((v-you)*1e7)/1e7;
-      math.innerHTML='You receive <b style="color:#20143A">'+you+' SOL</b> &middot; market fee '+fee+' SOL'; go.disabled=false; }
-    price.addEventListener('input', upd);
-    function close(){ el.remove(); }
+    bqBindImg(el.querySelector('.bqcel-bull'), b.image_url||bqMktImg(b.id));
+    function close(){ el.classList.add('out'); setTimeout(function(){ if(el.parentNode) el.remove(); }, 210); }
     el.addEventListener('click', function(e){ if(e.target===el) close(); });
-    el.querySelector('#bqLX').addEventListener('click', close);
+    el.querySelector('#bqCelClose').addEventListener('click', close);
+    var sa=el.querySelector('#bqCelAct'); if(sa) sa.addEventListener('click', function(){ close(); setActiveBull(b.id); });
+  }
+  function celebrateBull(bullId, opts){
+    if(!sb){ if(window.bqToast) window.bqToast('Bull purchased! It is now in your stable.'); return; }
+    sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user;
+      return Promise.all([
+        sb.from('bulls').select('*').eq('id',bullId).maybeSingle(),
+        u?sb.from('user_bulls').select('*').eq('user_id',u.id).eq('bull_id',bullId).maybeSingle():Promise.resolve(null)
+      ]);
+    }).then(function(a){ var b=a[0]&&a[0].data; var ub=a[1]&&a[1].data;
+      if(b) bqCelebrate(b, ub, opts||{}); else if(window.bqToast) window.bqToast('Bull purchased! It is now in your stable.');
+    }).catch(function(){ if(window.bqToast) window.bqToast('Bull purchased! It is now in your stable.'); });
+  }
+  // ----- Quick active-bull switcher (from the dashboard) -----
+  function openBullSwitcher(){
+    if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    ensureMktCss();
+    var el=document.createElement('div'); el.className='bqsw';
+    el.innerHTML='<div class="bqsw-sheet"><div class="bqsw-grab"></div>'+
+      '<div class="bqsw-head"><h3>Choose your bull</h3><button type="button" class="bqsw-x" aria-label="Close">&times;</button></div>'+
+      '<div class="bqsw-list" id="bqSwList"><div class="bqsw-load">Loading your herd...</div></div>'+
+      '<button type="button" class="bqsw-more" data-bqgo="view-market">+ Buy more bulls</button>'+
+    '</div>';
+    document.body.appendChild(el);
+    function close(){ el.classList.add('out'); setTimeout(function(){ if(el.parentNode) el.remove(); }, 200); }
+    el.addEventListener('click', function(e){ if(e.target===el) close(); if(e.target.closest('[data-bqgo]')) close(); });
+    el.querySelector('.bqsw-x').addEventListener('click', close);
+    var list=el.querySelector('#bqSwList');
+    list.addEventListener('click', function(e){ var r=e.target.closest('[data-bull]'); if(!r||r.classList.contains('on')) return; var id=parseInt(r.getAttribute('data-bull'),10); close(); setActiveBull(id); });
+    sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return null;
+      return Promise.all([ sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id), window.bqGame.getState().catch(function(){return null;}) ]);
+    }).then(function(arr){ if(!arr){ return; } var rows=(arr[0]&&arr[0].data)||[]; var activeId=(arr[1]&&arr[1].bull&&arr[1].bull.id)||null;
+      if(!rows.length){ list.innerHTML='<div class="bqsw-empty">No bulls yet. Grab one from the market to start dueling.</div>'; return; }
+      rows.sort(function(a,b){ return (b.bull_id===activeId?1:0)-(a.bull_id===activeId?1:0); });
+      var html=''; rows.forEach(function(ub){ var b=ub.bulls||{}, t=tier(b.rarity_rank), on=(ub.bull_id===activeId);
+        html+='<div class="bqsw-row'+(on?' on':'')+'" data-bull="'+b.id+'">'+
+          '<span class="bqsw-thumb"><img data-src="'+bullCardImg(b)+'" alt=""></span>'+
+          '<span class="bqsw-info"><span class="bqsw-name">'+(b.name||('Bull #'+b.id))+'</span>'+
+          '<span class="bqsw-sub"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+' &middot; Lv '+ub.level+' &middot; '+ub.energy+'/'+ub.energy_max+' NRG</span></span>'+
+          (on?'<span class="bqsw-badge">Active</span>':'<span class="bqsw-go">Set active</span>')+
+        '</div>';
+      });
+      list.innerHTML=html;
+      [].forEach.call(list.querySelectorAll('img[data-src]'), function(im){ var s=im.getAttribute('data-src'); im.removeAttribute('data-src'); bqBindImg(im,s); });
+    }).catch(function(){});
+  }
+  window.bqOpenBullSwitcher = openBullSwitcher;
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('#bqAllBulls')){ e.preventDefault(); openBullSwitcher(); } }, false);
+  // ----- Sell: list one of your bulls (on-brand bottom sheet) -----
+  function openListSheet(bullId, bullName, rank, img){
+    if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    ensureMktCss(); var t=tier(rank);
+    var el=document.createElement('div'); el.className='bqls';
+    el.innerHTML='<div class="bqls-card">'+
+      '<button type="button" class="bqls-x" aria-label="Close">&times;</button>'+
+      '<div class="bqls-top"><span class="bqls-thumb"><img alt=""></span>'+
+        '<div><div class="bqls-name">List '+(bullName||('Bull #'+bullId))+'</div>'+
+        '<div class="bqls-rar" style="color:'+t.c+'"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+'</div></div></div>'+
+      '<div class="bqls-label">Set your asking price</div>'+
+      '<div class="bqls-inputwrap"><input id="bqLPrice" type="number" min="0.005" step="0.01" inputmode="decimal" placeholder="0.25"><span class="bqls-unit">SOL</span></div>'+
+      '<div class="bqls-chips">'+['0.1','0.25','0.5','1','2'].map(function(v){return '<button type="button" class="bqls-chip" data-v="'+v+'">'+v+'</button>';}).join('')+'</div>'+
+      '<div class="bqls-split"><div class="bqls-srow"><span>You receive (85%)</span><b id="bqLYou">-</b></div>'+
+        '<div class="bqls-srow muted"><span>Market fee (15%)</span><b id="bqLFee">-</b></div></div>'+
+      '<button type="button" class="bqls-go" id="bqLGo" disabled>List for sale</button>'+
+      '<button type="button" class="bqls-cancel" id="bqLX2">Not now</button>'+
+    '</div>';
+    document.body.appendChild(el);
+    bqBindImg(el.querySelector('.bqls-thumb img'), img||bqMktImg(bullId));
+    var price=el.querySelector('#bqLPrice'), you=el.querySelector('#bqLYou'), fee=el.querySelector('#bqLFee'), go=el.querySelector('#bqLGo');
+    function upd(){ var v=parseFloat(price.value); if(!(v>0)){ you.textContent='-'; fee.textContent='-'; go.disabled=true; return; }
+      if(v<0.005){ you.textContent='min 0.005'; fee.textContent=''; go.disabled=true; return; }
+      var y=Math.round(v*0.85*1e6)/1e6, f=Math.round((v-y)*1e6)/1e6; you.textContent=y+' SOL'; fee.textContent=f+' SOL'; go.disabled=false; }
+    price.addEventListener('input', upd);
+    el.querySelector('.bqls-chips').addEventListener('click', function(e){ var c=e.target.closest('[data-v]'); if(!c) return; price.value=c.getAttribute('data-v'); upd(); [].forEach.call(this.querySelectorAll('.bqls-chip'),function(x){x.classList.remove('on');}); c.classList.add('on'); });
+    function close(){ el.classList.add('out'); setTimeout(function(){ if(el.parentNode) el.remove(); }, 200); }
+    el.addEventListener('click', function(e){ if(e.target===el) close(); });
+    el.querySelector('.bqls-x').addEventListener('click', close);
+    el.querySelector('#bqLX2').addEventListener('click', close);
     go.addEventListener('click', function(){ var v=parseFloat(price.value); if(!(v>=0.005)) return;
       go.disabled=true; go.textContent='Listing...';
       window.bqGame.createListing(bullId, Math.round(v*1e9)).then(function(r){
@@ -5920,7 +6080,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         else { go.disabled=false; go.textContent='List for sale'; if(window.bqToast) window.bqToast(friendlyMkt(r&&r.error)); }
       }).catch(function(e){ go.disabled=false; go.textContent='List for sale'; if(window.bqToast) window.bqToast('Could not list right now. Try again.'); });
     });
-    setTimeout(function(){ price.focus(); }, 60);
+    setTimeout(function(){ price.focus(); }, 80);
   }
   function cancelList(listingId){
     if(!window.confirm('Remove this listing? Your bull stays yours.')) return;
@@ -5946,7 +6106,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       } else { if(window.bqToast) window.bqToast(friendlyMkt(r&&r.error)); }
     }).catch(function(){ if(window.bqToast) window.bqToast('Could not switch bull. Try again.'); });
   }
-  window.bqMkt = { buyPrimary:buyPrimary, buySecondary:buySecondary, openListSheet:openListSheet, cancelList:cancelList, setActiveBull:setActiveBull, primaryPriceSol:primaryPriceSol };
+  window.bqMkt = { buyPrimary:buyPrimary, buySecondary:buySecondary, openListSheet:openListSheet, cancelList:cancelList, setActiveBull:setActiveBull, primaryPriceSol:primaryPriceSol, celebrate:bqCelebrate, openSwitcher:openBullSwitcher };
 
   // ----- "For sale by players" section rendered at the top of the Market sheet -----
   var forSaleInited=false, myUidCache=null;
