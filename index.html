@@ -5848,15 +5848,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       if(resp&&resp.status===202&&j.retry&&tries>0){ return new Promise(function(r){setTimeout(r,3500);}).then(function(){ return mktRetry(fn,sig,tries-1); }); }
       return resp; });
   }
-  // after a bull is acquired, refresh the player's bull, roster, arena, and live state
+  // after a bull is acquired, refresh the roster, arena, and live state (active bull is unchanged by a purchase)
   function mktRefreshOwned(){
     if(!sb) return;
-    sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return;
-      fetchBull(u,2).then(function(ub){ if(ub){ curBull=ub; } try{ renderBulls(); }catch(e){}
-        try{ if(window.bqArenaRefresh) window.bqArenaRefresh(); }catch(e){}
-        sb.rpc('get_state').then(function(r){ try{ applyLiveState(r&&r.data); }catch(e){} }, function(){});
-      }).catch(function(){});
-    });
+    try{ renderBulls(); }catch(e){}
+    try{ if(window.bqArenaRefresh) window.bqArenaRefresh(); }catch(e){}
+    sb.rpc('get_state').then(function(r){ try{ applyLiveState(r&&r.data); }catch(e){} }, function(){});
   }
   function buyPrimary(bullId){
     if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
@@ -5936,8 +5933,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     window.bqGame.setActiveBull(bullId).then(function(r){
       if(r&&r.ok){ if(window.bqToast) window.bqToast('This is now your active bull for duels.');
         sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return;
-          sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).eq('bull_id',bullId).maybeSingle().then(function(rr){
-            if(rr&&rr.data){ curBull=rr.data; try{ if(typeof populate==='function') populate('',curBull); }catch(e){} }
+          Promise.all([
+            sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).eq('bull_id',bullId).maybeSingle(),
+            sb.from('profiles').select('username').eq('id',u.id).maybeSingle()
+          ]).then(function(a){
+            var ub=a[0]&&a[0].data; var un=(a[1]&&a[1].data&&a[1].data.username)||'';
+            if(ub){ curBull=ub; try{ if(typeof populate==='function') populate(un,ub); }catch(e){} }
             try{ renderBulls(); }catch(e){} try{ if(window.bqArenaRefresh) window.bqArenaRefresh(); }catch(e){}
             sb.rpc('get_state').then(function(g){ try{ applyLiveState(g&&g.data); }catch(e){} }, function(){});
           });
