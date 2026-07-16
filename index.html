@@ -735,10 +735,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* ---------- confetti ---------- */
   .bq-arena .confetti { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .bq-arena .confetti svg {
-    position: absolute; display: block;
+    position: absolute; display: block; opacity: .5;
     animation: bqFloat 6s ease-in-out infinite;
     filter: drop-shadow(0 4px 8px rgba(40, 20, 90, .18));
   }
+  /* keep only a few subtle corner pieces; the rest cluttered the stage and drifted between the bulls */
+  .bq-arena .confetti .c5, .bq-arena .confetti .c6, .bq-arena .confetti .c7, .bq-arena .confetti .c8, .bq-arena .confetti .c9 { display: none; }
   .bq-arena .c1 { top: 6%;  left: 8%;   width: 26px; animation-delay: -.4s; }
   .bq-arena .c2 { top: 4%;  right: 12%; width: 34px; animation-delay: -2.1s; }
   .bq-arena .c3 { top: 20%; left: 4%;   width: 20px; animation-delay: -1.2s; }
@@ -873,9 +875,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-arena .chip .tile { width: 28px; height: 28px; border-radius: 11px; display: grid; place-items: center; }
   .bq-arena .chip .cname { font-size: 13px; font-weight: 800; color: var(--ink); line-height: 1; }
   .bq-arena .chip .cstat { font-size: 10.5px; font-weight: 700; color: var(--faint); letter-spacing: .3px; }
-  .bq-arena .chip.d-pow[aria-pressed="true"] { border-color: var(--green); box-shadow: 0 8px 20px rgba(67,192,106,.22); }
-  .bq-arena .chip.d-spd[aria-pressed="true"] { border-color: var(--speed); box-shadow: 0 8px 20px rgba(124,92,230,.22); }
-  .bq-arena .chip.d-sta[aria-pressed="true"] { border-color: var(--coral); box-shadow: 0 8px 20px rgba(238,91,98,.22); }
+  /* one consistent selection accent (violet) for both Discipline and Stance; the tile keeps its stat color */
+  .bq-arena .chip[aria-pressed="true"] { border-color: var(--speed); background: #F3EEFE; box-shadow: 0 8px 20px rgba(124,92,230,.20); }
   .bq-arena .chip.d-pow .tile { background: #E7F6EC; }
   .bq-arena .chip.d-spd .tile { background: #F0EBFC; }
   .bq-arena .chip.d-sta .tile { background: #FDECED; }
@@ -937,8 +938,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     transition: stroke-dashoffset .6s cubic-bezier(.34,1.4,.6,1);
   }
   .bq-arena .ring .center { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
-  .bq-arena .ring .center b { font-size: 20px; font-weight: 900; color: var(--ink); line-height: 1; }
-  .bq-arena .ring .center small { font-size: 9px; font-weight: 800; color: var(--faint); letter-spacing: .4px; text-transform: uppercase; }
+  .bq-arena .ring .center b { font-size: 18px; font-weight: 900; color: var(--ink); line-height: 1; }
+  .bq-arena .ringcol { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: none; }
+  .bq-arena .ringlab { font-size: 9px; font-weight: 800; color: var(--faint); letter-spacing: .4px; text-transform: uppercase; line-height: 1; }
   .bq-arena .rw-body { flex: 1; min-width: 0; }
   .bq-arena .rw-body .rw-h { font-size: 12px; font-weight: 800; color: var(--body); text-transform: uppercase; letter-spacing: .3px; }
   .bq-arena .payouts { display: flex; gap: 8px; margin: 8px 0 6px; }
@@ -3402,18 +3404,18 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
   <div class="sheet">
 
-    <div class="seclabel"><h3>Discipline<button type="button" class="bqhelp" data-help="discipline" aria-label="What is Discipline">?</button></h3><span class="hint">Pick the stat that clashes</span></div>
+    <div class="seclabel"><h3>Discipline<button type="button" class="bqhelp" data-help="discipline" aria-label="What is Discipline">?</button></h3><span class="hint">Pick your strongest stat</span></div>
     <div class="disciplines" role="group" aria-label="Choose discipline">
       <button type="button" class="chip d-pow" data-stat="pow" aria-pressed="true">
-        <span class="tile"><img src="assets/icons/disc_clash.png" width="24" height="24" alt=""></span>
+        <span class="tile"><i class="pico" style="--m:url('assets/icons/stat_power.png');width:22px;height:22px;background:#2FA657"></i></span>
         <span class="cname">Clash</span><span class="cstat">Power</span>
       </button>
       <button type="button" class="chip d-spd" data-stat="spd" aria-pressed="false">
-        <span class="tile"><img src="assets/icons/disc_chase.png" width="24" height="24" alt=""></span>
+        <span class="tile"><i class="pico" style="--m:url('assets/icons/stat_speed.png');width:22px;height:22px;background:#6B31E6"></i></span>
         <span class="cname">Chase</span><span class="cstat">Speed</span>
       </button>
       <button type="button" class="chip d-sta" data-stat="sta" aria-pressed="false">
-        <span class="tile"><img src="assets/icons/disc_standoff.png" width="24" height="24" alt=""></span>
+        <span class="tile"><i class="pico" style="--m:url('assets/icons/stat_stamina.png');width:22px;height:22px;background:#D8434B"></i></span>
         <span class="cname">Standoff</span><span class="cstat">Stamina</span>
       </button>
     </div>
@@ -3434,12 +3436,15 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       </button>
     </div>
     <div class="reward">
-      <div class="ring">
-        <svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">
-          <circle class="track" cx="44" cy="44" r="38"/>
-          <circle class="prog" id="winRing" cx="44" cy="44" r="38"/>
-        </svg>
-        <div class="center"><span><b id="winPct">54%</b><br><small>Win chance</small></span></div>
+      <div class="ringcol">
+        <div class="ring">
+          <svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">
+            <circle class="track" cx="44" cy="44" r="38"/>
+            <circle class="prog" id="winRing" cx="44" cy="44" r="38"/>
+          </svg>
+          <div class="center"><b id="winPct">54%</b></div>
+        </div>
+        <span class="ringlab">Win chance</span>
       </div>
       <div class="rw-body">
         <div class="rw-h">What's on the line</div>
@@ -3449,13 +3454,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
             <span class="pv"><b id="rwWin">+14</b><span>GRIT if you win</span></span>
           </div>
         </div>
-        <div class="stake-note">Stake <b id="rwStake">20</b> GRIT &middot; lose <b>12</b> if you fall</div>
+        <div class="stake-note">Lose <b>12</b> GRIT if you fall</div>
       </div>
     </div>
 
     <button type="button" class="cta" id="chargeBtn">
       <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#fff"/></svg>
-      Charge!
+      Fight!
     </button>
   </div>
 </section>
@@ -4085,9 +4090,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   var baseOdds = 50;  // real win odds from get_state (your bull's rarity + level edge)
 
   function recalc() {
-    // Win odds come from the bull's real rarity + level edge (server-computed). Stance is a BLIND commit
-    // vs a hidden, random opponent stance, so the pick does not change the pre-fight odds (honest).
+    // Base odds = the bull's real rarity + level edge (server-computed). On top of that, leading with your
+    // STRONGEST stat is a small real edge (mirrored in resolve_duel), so the % rewards a smart Discipline pick.
+    // Stance stays a blind rock-paper-scissors gamble, so it does not move the pre-fight estimate (honest).
     var pct = baseOdds;
+    var v = you || {}, lead = (state.stat==='spd' ? v.spd : state.stat==='sta' ? v.sta : v.pow) || 0;
+    var hi = Math.max(v.pow||0, v.spd||0, v.sta||0), lo = Math.min(v.pow||0, v.spd||0, v.sta||0);
+    if (hi > lo) { if (lead >= hi) pct += 3; else if (lead <= lo) pct -= 2; }
     pct = Math.round(Math.max(5, Math.min(95, pct)));
     winPct.textContent = pct + '%';
     ring.style.strokeDashoffset = (C * (1 - pct / 100)).toFixed(2);
@@ -4116,7 +4125,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   var DISC = { pow:'clash', spd:'chase', sta:'standoff' };
   var energyEl = root.querySelector('.energy');
   var busy = false;
-  function setEnergy(e, mx){ if(energyEl) energyEl.innerHTML = energyEl.innerHTML.replace(/\d+\s*\/\s*\d+/, e+'/'+mx); }
+  function setEnergy(e, mx){ if(energyEl){ energyEl.innerHTML = energyEl.innerHTML.replace(/\d+\s*\/\s*\d+/, e+'/'+mx); var rf=energyEl.querySelector('.erf'); if(rf) rf.style.display=(e<mx)?'':'none'; } }
   // Tap the energy pill to buy a full refill with SOL (also auto-offered when a duel runs out of energy).
   if(energyEl){
     energyEl.style.cursor='pointer'; energyEl.setAttribute('role','button'); energyEl.setAttribute('title','Refill energy with SOL');
