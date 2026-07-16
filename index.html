@@ -4250,9 +4250,11 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 /* ---------- ROUTER + toast (view switching, delegated clicks) ---------- */
 (function () {
   function bqGo(id) {
+    if (id === 'view-onboard' && window.bqLoggedIn) id = 'view-home'; // logged-in users skip the connect/signup screen
     var views = document.querySelectorAll('.bq-view');
     for (var i = 0; i < views.length; i++) { views[i].hidden = (views[i].id !== id); }
     window.scrollTo(0, 0);
+    try { sessionStorage.setItem('bq_view', id); } catch(e){} // remember the view so a refresh restores it instead of jumping into the game
     try { if (window.bqMaybeRenderGoogle) window.bqMaybeRenderGoogle(); } catch(e){}
   }
   window.bqGo = bqGo;
@@ -5076,6 +5078,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   function loadAndShow(routeHome, reveal){
     return sb.auth.getUser().then(function(res){
       var u=res.data&&res.data.user; if(!u) throw new Error('no-session');
+      window.bqLoggedIn = true;
       var wal=u.user_metadata&&u.user_metadata.wallet;
       acctLabel = wal ? (wal.slice(0,4)+'…'+wal.slice(-4)) : (u.email?u.email.split('@')[0]:'');
       return fetchBull(u, 4).then(function(ub){
@@ -5927,7 +5930,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       window.addEventListener('error', function(e){ if(e&&e.message) report(e.message); });
       window.addEventListener('unhandledrejection', function(e){ var r=e&&e.reason; report((r&&r.message)||String(r||'')); });
     })();
-    sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); else { try{ maybeShowRefBanner(); }catch(e){} } });
+    // On load, restore the view the user was last on (sessionStorage) instead of always jumping into the game.
+    // A fresh visit or a refresh on the landing keeps them on the landing; a refresh mid-game restores that view.
+    sb.auth.getSession().then(function(s){
+      if(s.data.session){
+        loadAndShow(false).then(function(){
+          var last; try{ last=sessionStorage.getItem('bq_view'); }catch(e){}
+          if(last && last!=='view-landing' && document.getElementById(last) && window.bqGo) window.bqGo(last);
+        }).catch(logErr);
+      } else { try{ maybeShowRefBanner(); }catch(e){} }
+    });
   })();
 })();
 </script>
