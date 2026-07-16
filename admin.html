@@ -75,7 +75,7 @@
 <body>
 <div class="wrap">
   <div class="top">
-    <div class="brand"><span class="dot">🐂</span> BullQuest <small>Analytics</small></div>
+    <div class="brand"><img src="assets/icons/logo.png" alt="BullQuest" style="width:28px;height:28px;object-fit:contain;display:block;flex:none"> BullQuest <small>Analytics</small></div>
     <div class="spacer"></div>
     <button class="refresh" id="refresh">↻ Refresh</button>
     <div class="stamp" id="stamp"></div>
@@ -187,12 +187,20 @@
         msg('<h2>Not signed in</h2>Open the <a href="./">BullQuest app</a> and sign in first, then come back here.');
         btn.removeAttribute('disabled'); return;
       }
-      return sb.rpc('admin_analytics').then(function(r){
-        btn.removeAttribute('disabled');
-        if(r.error){ msg('<h2>Something went wrong</h2>'+esc(r.error.message||'RPC error')); return; }
-        var d=r.data;
-        if(!d || d.error){ msg('<h2>Not authorized</h2>This account isn\'t an admin. Sign in with the founder account.'); return; }
-        render(d);
+      // The stored access token may have expired since the last visit; refresh it before the admin RPC
+      // so a stale token never surfaces as "JWT expired".
+      return sb.auth.refreshSession().then(function(rs){
+        if((rs&&rs.error) || !(rs&&rs.data&&rs.data.session)){
+          msg('<h2>Session expired</h2>Open the <a href="./">BullQuest app</a>, make sure you are still signed in, then come back and hit Refresh.');
+          btn.removeAttribute('disabled'); return;
+        }
+        return sb.rpc('admin_analytics').then(function(r){
+          btn.removeAttribute('disabled');
+          if(r.error){ msg('<h2>Something went wrong</h2>'+esc(r.error.message||'RPC error')); return; }
+          var d=r.data;
+          if(!d || d.error){ msg('<h2>Not authorized</h2>This account isn\'t an admin. Sign in with the founder account.'); return; }
+          render(d);
+        });
       });
     }).catch(function(e){ btn.removeAttribute('disabled'); msg('<h2>Error</h2>'+esc((e&&e.message)||e)); });
   }
