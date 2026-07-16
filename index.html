@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784239041";try{console.log("BullQuest build 1784239041");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784244220";try{console.log("BullQuest build 1784244220");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -3078,6 +3078,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
           <button type="button" data-bqgo="view-airdrop" style="margin-top:12px;width:100%;border:0;background:linear-gradient(180deg,#FFD976,#F0B429);color:#5a3d00;font-weight:800;font-size:13.5px;padding:11px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">&#129747; Claim your $BULL airdrop &rsaquo;</button>
           <button type="button" id="bqLbBtn" style="margin-top:11px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:14px;height:14px;background:#fff"></i>Airdrop leaderboard &rsaquo;</button>
           <button type="button" id="bqInviteBtn" style="margin-top:11px;margin-left:8px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_share.png');width:14px;height:14px;background:#fff"></i>Bring the herd</button>
+          <button type="button" data-bqgo="view-quests" style="margin-top:11px;margin-left:8px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_quests.png');width:14px;height:14px;background:#fff"></i>Earn GRIT &middot; Quests</button>
         </div>
       </div>
 
@@ -4085,6 +4086,49 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   </div>
 </div>
 <!-- END VIEW: AIRDROP -->
+
+<!-- ================= VIEW: QUESTS ================= -->
+<div class="bq-view" id="view-quests" hidden>
+<style id="bq-qst-css">
+#view-quests{--v:#6B31E6;--ink:#20143A;--faint:#8A8FA3;font-family:inherit;color:var(--ink);background:#F4F5F8;min-height:100vh}
+#view-quests *{box-sizing:border-box}
+#view-quests .qst{max-width:520px;margin:0 auto;padding:0 0 96px}
+#view-quests .qst-hero{background:linear-gradient(160deg,#7A3BF0,#6B31E6 60%,#5B27D6);color:#fff;padding:18px 20px 24px;border-radius:0 0 26px 26px;position:relative}
+#view-quests .qst-back{position:absolute;top:16px;left:14px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;cursor:pointer;display:grid;place-items:center}
+#view-quests .qst-back:hover{background:rgba(255,255,255,.26)}
+#view-quests .qst-kicker{font-size:11px;font-weight:800;letter-spacing:1.2px;color:#FCE9C6;margin:34px 0 6px}
+#view-quests .qst-hero h1{font-size:25px;margin:0 0 6px;font-weight:800}
+#view-quests .qst-hero>p{margin:0;font-size:13.5px;color:rgba(255,255,255,.9);line-height:1.5}
+#view-quests .qst-total{margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:800;color:#fff}
+#view-quests .qst-list{padding:16px 16px 0;display:grid;gap:12px}
+#view-quests .qcard{background:#fff;border-radius:18px;box-shadow:0 8px 24px rgba(20,16,40,.07);padding:15px;display:flex;align-items:center;gap:13px}
+#view-quests .qic{width:46px;height:46px;border-radius:13px;flex:none;display:grid;place-items:center;color:#fff}
+#view-quests .qic svg{width:24px;height:24px}
+#view-quests .qic.discord{background:#5865F2}#view-quests .qic.telegram{background:#2AABEE}#view-quests .qic.x{background:#111}
+#view-quests .qbody{flex:1;min-width:0}
+#view-quests .qbody b{font-size:15px;font-weight:800;display:block}
+#view-quests .qbody span{font-size:12px;color:var(--faint);line-height:1.4;display:block;margin-top:2px}
+#view-quests .qreward{font-size:12px;font-weight:800;color:#E0A100;margin-top:5px}
+#view-quests .qact{flex:none;display:flex;align-items:center;justify-content:flex-end;min-width:96px}
+#view-quests .qbtn{border:0;border-radius:11px;padding:10px 16px;font-weight:800;font-size:13px;cursor:pointer;color:#fff;font-family:inherit;white-space:nowrap}
+#view-quests .qbtn.discord{background:#5865F2}#view-quests .qbtn.telegram{background:#2AABEE}#view-quests .qbtn.x{background:#111}
+#view-quests .qbtn:active{transform:scale(.95)}
+#view-quests .qdone{display:inline-flex;align-items:center;gap:5px;background:#E7F7EE;color:#12A150;font-weight:800;font-size:13px;padding:9px 13px;border-radius:11px}
+#view-quests .qst-foot{font-size:12px;color:var(--faint);text-align:center;padding:18px 26px 0;line-height:1.5}
+</style>
+  <div class="qst">
+    <header class="qst-hero">
+      <button type="button" class="qst-back" data-bqgo="view-home" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="qst-kicker">&#127919; QUESTS</div>
+      <h1>Earn GRIT with quests</h1>
+      <p>Join the community and stack GRIT toward your airdrop and Sector Wars.</p>
+      <div class="qst-total" id="qstTotal">0 GRIT earned</div>
+    </header>
+    <div class="qst-list" id="qstList"></div>
+    <p class="qst-foot">GRIT you earn here adds to your balance, which grows your $BULL airdrop share and your weight in Sector Wars. Discord and Telegram are verified for real; X is on your honor.</p>
+  </div>
+</div>
+<!-- END VIEW: QUESTS -->
 
 <script>
 /* ---------- HOME view interactivity (season ring + spin wheel) ---------- */
@@ -6976,6 +7020,98 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       if(e.target.closest && e.target.closest('[data-bqgo="view-sectors"]')) setTimeout(window.bqRenderSectors,60);
     },false);
     try{ if(sessionStorage.getItem('bq_view')==='view-sectors') setTimeout(window.bqRenderSectors,500); }catch(e){}
+  })();
+
+  /* ---------- QUESTS view (verified Discord + Telegram, honor X) ---------- */
+  (function(){
+    var DISCORD_CLIENT='1527451236746531068';
+    var DISCORD_REDIRECT='https://cewumdioknvjtsiolxce.supabase.co/functions/v1/discord-verify';
+    var FN='https://cewumdioknvjtsiolxce.supabase.co/functions/v1';
+    var tgBot=null;
+    function esc(s){ return window.bqEsc?window.bqEsc(s):String(s==null?'':s); }
+    var ICONS={
+      discord:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 5.5A16 16 0 0015.5 4l-.3.5a12 12 0 013.4 1.7 12.5 12.5 0 00-10.8 0A12 12 0 018.8 4.5L8.5 4A16 16 0 004.5 5.5C2 9 1.5 12.4 1.8 15.8A16 16 0 006.5 18l.9-1.4c-.7-.3-1.4-.6-2-1l.5-.4a11 11 0 009.9 0l.5.4c-.6.4-1.3.7-2 1L15.5 18a16 16 0 004.7-2.2c.4-4-.5-7.4-2.7-10.3zM9 14c-.8 0-1.5-.8-1.5-1.8S8.2 10.4 9 10.4s1.5.8 1.5 1.8S9.8 14 9 14zm6 0c-.8 0-1.5-.8-1.5-1.8s.7-1.8 1.5-1.8 1.5.8 1.5 1.8S15.8 14 15 14z"/></svg>',
+      telegram:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.2 15.1c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L6.3 13.1l-4.8-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg>',
+      x:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.6-6-5.3 6H3l7-8L2.5 3h6l4.1 5.5zm-1 16h1.7L8 4.8H6.2z"/></svg>'
+    };
+    function refreshGrit(){ if(sb) sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.grit!=null&&window.bqSetGrit) window.bqSetGrit(g.data.grit); }).catch(function(){}); }
+
+    function render(st){
+      var total=document.getElementById('qstTotal'); if(total) total.textContent=(Number(st.total_earned)||0).toLocaleString()+' GRIT earned';
+      var list=document.getElementById('qstList'); if(!list) return;
+      var claimed=st.claimed||[]; list.innerHTML='';
+      (st.quests||[]).forEach(function(q){
+        var done=claimed.indexOf(q.slug)>=0;
+        var card=document.createElement('div'); card.className='qcard';
+        var actId='qact_'+q.slug;
+        var actHtml = done
+          ? '<span class="qdone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4 10-11"/></svg>Done</span>'
+          : (q.platform==='discord' ? '<button type="button" class="qbtn discord" data-q="discord">Connect</button>'
+            : q.platform==='x' ? '<button type="button" class="qbtn x" data-q="x">Follow</button>'
+            : '<span id="'+actId+'"></span>');
+        card.innerHTML='<span class="qic '+esc(q.platform)+'">'+(ICONS[q.platform]||'')+'</span>'+
+          '<div class="qbody"><b>'+esc(q.title)+'</b><span>'+esc(q.description)+'</span><div class="qreward">+'+q.reward+' GRIT'+(q.verified?'':' · honor')+'</div></div>'+
+          '<div class="qact">'+actHtml+'</div>';
+        list.appendChild(card);
+        if(!done){
+          if(q.platform==='discord'){ card.querySelector('[data-q="discord"]').addEventListener('click', startDiscord); }
+          else if(q.platform==='x'){ card.querySelector('[data-q="x"]').addEventListener('click', function(){ claimX(q.url); }); }
+          else if(q.platform==='telegram'){ mountTelegram(card.querySelector('#'+actId)); }
+        }
+      });
+    }
+    function startDiscord(){
+      if(!sb){ return; }
+      sb.rpc('quest_start_link',{p_platform:'discord'}).then(function(r){
+        var nonce=r&&r.data&&r.data.nonce; if(!nonce){ if(window.bqToast) window.bqToast('Sign in first'); return; }
+        window.location.href='https://discord.com/oauth2/authorize?client_id='+DISCORD_CLIENT+'&redirect_uri='+encodeURIComponent(DISCORD_REDIRECT)+'&response_type=code&scope=identify&state='+encodeURIComponent(nonce);
+      }).catch(function(){});
+    }
+    function claimX(url){
+      if(url) window.open(url,'_blank','noopener');
+      if(!sb) return;
+      sb.rpc('quest_claim_honor',{p_slug:'x_follow'}).then(function(r){
+        var d=r&&r.data; if(d&&d.ok){ if(window.bqToast) window.bqToast(d.already?'Already claimed':'+'+(d.reward||0)+' GRIT, thanks for the follow!'); window.bqRenderQuests(); refreshGrit(); }
+      }).catch(function(){});
+    }
+    window.bqTgAuth=function(user){
+      if(!sb||!user) return;
+      sb.auth.getSession().then(function(s){
+        var tokn=s&&s.data&&s.data.session&&s.data.session.access_token;
+        fetch(FN+'/telegram-verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+(tokn||'')},body:JSON.stringify({tg:user})})
+          .then(function(r){return r.json();}).then(function(d){
+            if(d&&d.ok){ if(window.bqToast) window.bqToast(d.already?'Already verified':'+'+(d.reward||0)+' GRIT, Telegram verified!'); window.bqRenderQuests(); refreshGrit(); }
+            else if(d&&d.error==='notmember'){ if(window.bqToast) window.bqToast('Join the Telegram channel first, then tap the button again'); }
+            else if(d&&d.error==='account-taken'){ if(window.bqToast) window.bqToast('That Telegram is already linked to another account'); }
+            else { if(window.bqToast) window.bqToast('Could not verify, try again'); }
+          }).catch(function(){ if(window.bqToast) window.bqToast('Network error, try again'); });
+      });
+    };
+    function mountTelegram(container){
+      if(!container) return;
+      function build(bot){
+        container.innerHTML='';
+        var s=document.createElement('script'); s.async=true; s.src='https://telegram.org/js/telegram-widget.js?22';
+        s.setAttribute('data-telegram-login',bot); s.setAttribute('data-size','medium');
+        s.setAttribute('data-onauth','bqTgAuth(user)'); s.setAttribute('data-request-access','write');
+        container.appendChild(s);
+      }
+      if(tgBot){ build(tgBot); return; }
+      fetch(FN+'/telegram-verify?action=botinfo').then(function(r){return r.json();}).then(function(d){ tgBot=(d&&d.username)||'BullQuestSol_bot'; build(tgBot); }).catch(function(){ tgBot='BullQuestSol_bot'; build(tgBot); });
+    }
+    window.bqRenderQuests=function(){
+      if(!sb){ setTimeout(window.bqRenderQuests,200); return; }
+      sb.rpc('quests_state').then(function(r){ if(r&&r.data) render(r.data); }).catch(function(){});
+    };
+    document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('[data-bqgo="view-quests"]')) setTimeout(window.bqRenderQuests,60); },false);
+    try{
+      var qp=new URLSearchParams(location.search).get('quest');
+      if(qp){
+        var msg={discord_ok:'Discord verified! GRIT added.',discord_notmember:'Join the Discord server first, then reconnect.',discord_taken:'That Discord is already linked to another account.',discord_expired:'That link expired, tap Connect again.',discord_err:'Discord connect failed, try again.'}[qp];
+        history.replaceState(null,'',location.pathname);
+        setTimeout(function(){ if(window.bqGo) window.bqGo('view-quests'); if(window.bqToast&&msg) window.bqToast(msg); if(window.bqRenderQuests) window.bqRenderQuests(); if(qp==='discord_ok') refreshGrit(); }, 700);
+      } else if(sessionStorage.getItem('bq_view')==='view-quests'){ setTimeout(window.bqRenderQuests,500); }
+    }catch(e){}
   })();
 
   /* ---------- floating social rail (follows every screen) ---------- */
