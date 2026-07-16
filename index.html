@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784245397";try{console.log("BullQuest build 1784245397");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784246127";try{console.log("BullQuest build 1784246127");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -7097,21 +7097,34 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
           }).catch(function(){ if(window.bqToast) window.bqToast('Network error, try again'); });
       });
     };
-    function ensureTgScript(){ if(!document.getElementById('bqTgJs')){ var sc=document.createElement('script'); sc.id='bqTgJs'; sc.async=true; sc.src='https://telegram.org/js/telegram-widget.js?22'; document.head.appendChild(sc); } }
-    function doTelegram(){
-      ensureTgScript();
-      function auth(id){
-        if(window.Telegram&&window.Telegram.Login&&window.Telegram.Login.auth){ window.Telegram.Login.auth({bot_id:String(id),request_access:'write'}, function(user){ if(user) window.bqTgAuth(user); }); }
-        else if(window.bqToast){ window.bqToast('Telegram is loading, tap again in a second'); }
-      }
-      if(tgBotId){ auth(tgBotId); return; }
-      fetch(FN+'/telegram-verify?action=botinfo').then(function(r){return r.json();}).then(function(d){ tgBotId=d&&d.id; if(tgBotId) auth(tgBotId); else if(window.bqToast) window.bqToast('Telegram unavailable, try again'); }).catch(function(){ if(window.bqToast) window.bqToast('Telegram unavailable, try again'); });
+    var tgPoll=null;
+    function pollTg(){
+      var tries=0; if(tgPoll) clearInterval(tgPoll);
+      tgPoll=setInterval(function(){
+        tries++;
+        if(sb) sb.rpc('quests_state').then(function(r){
+          var st=r&&r.data;
+          if(st && (st.claimed||[]).indexOf('telegram_join')>=0){ clearInterval(tgPoll); tgPoll=null; if(window.bqToast) window.bqToast('Telegram verified! GRIT added.'); render(st); refreshGrit(); }
+        }).catch(function(){});
+        if(tries>=40){ clearInterval(tgPoll); tgPoll=null; }
+      }, 3000);
+    }
+    function doTelegram(btn){
+      if(!sb) return;
+      if(btn){ btn.disabled=true; btn.textContent='Waiting…'; }
+      sb.rpc('tg_start_verify').then(function(r){
+        var d=r&&r.data; var link=d&&d.deeplink;
+        if(!link){ if(window.bqToast) window.bqToast('Sign in first'); if(btn){ btn.disabled=false; btn.textContent='Verify'; } return; }
+        window.open(link,'_blank','noopener');
+        if(window.bqToast) window.bqToast('Tap Start in the bot, then come back here');
+        pollTg();
+        setTimeout(function(){ if(btn){ btn.disabled=false; btn.textContent='Verify'; } }, 4000);
+      }).catch(function(){ if(btn){ btn.disabled=false; btn.textContent='Verify'; } });
     }
     function mountTelegram(container){
       if(!container) return;
-      ensureTgScript();
-      container.innerHTML='<button type="button" class="qbtn telegram">Log in</button>';
-      container.querySelector('button').addEventListener('click', doTelegram);
+      container.innerHTML='<button type="button" class="qbtn telegram">Verify</button>';
+      var b=container.querySelector('button'); b.addEventListener('click', function(){ doTelegram(b); });
     }
     window.bqRenderQuests=function(){
       if(!sb){ setTimeout(window.bqRenderQuests,200); return; }
