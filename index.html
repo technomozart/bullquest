@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"></head><body><script>window.BQ_BUILD="1784237535";try{console.log("BullQuest build 1784237535");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp"></head><body><script>window.BQ_BUILD="1784237937";try{console.log("BullQuest build 1784237937");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -5235,7 +5235,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var u=res.data&&res.data.user; if(!u) throw new Error('no-session');
       window.bqLoggedIn = true;
       var wal=u.user_metadata&&u.user_metadata.wallet;
-      acctLabel = wal ? (wal.slice(0,4)+'…'+wal.slice(-4)) : (u.email?u.email.split('@')[0]:'');
+      acctLabel = wal ? (wal.slice(0,4)+'…'+wal.slice(-4)) : (function(e){ if(!e) return ''; var s=(e.split('@')[0].split(/[._+-]/)[0])||e.split('@')[0]; return (s.charAt(0).toUpperCase()+s.slice(1)).slice(0,14); })(u.email);
       return fetchBull(u, 4).then(function(ub){
         if(!ub) throw new Error('no-bull');
         curBull = ub;
@@ -5259,14 +5259,17 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       if(!document.getElementById('bq-acct-css')){
         var st=document.createElement('style'); st.id='bq-acct-css';
         st.textContent=
-          '.bq-acct{position:fixed;top:12px;right:14px;z-index:60;display:flex;align-items:center;gap:2px;background:#fff;border:1px solid rgba(20,16,40,.07);border-radius:999px;padding:4px 5px;box-shadow:0 10px 26px rgba(20,16,40,.16);font-family:inherit}'+
-          '.bq-acct .chip{display:flex;align-items:center;gap:7px;padding:2px 8px 2px 3px}'+
-          '.bq-acct .av{width:24px;height:24px;border-radius:50%;flex:none;background:linear-gradient(135deg,#7C5CE6,#4DA6F5);display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800;box-shadow:0 2px 7px rgba(124,92,230,.4)}'+
-          '.bq-acct .lbl{font-size:12px;font-weight:800;color:#20143A;letter-spacing:.2px;font-variant-numeric:tabular-nums;white-space:nowrap}'+
-          '.bq-acct .div{width:1px;height:18px;background:rgba(20,16,40,.10);margin:0 3px 0 1px}'+
-          '.bq-acct .ab{border:0;background:transparent;width:30px;height:30px;border-radius:50%;cursor:pointer;display:grid;place-items:center;color:#6B31E6;transition:background .15s ease,color .15s ease}'+
-          '.bq-acct .ab:hover{background:#F3ECFB}.bq-acct .ab:active{transform:scale(.92)}'+
-          '.bq-acct .ab.out{color:#9AA0AE}.bq-acct .ab.out:hover{background:#FDEBEC;color:#E5484D}';
+          '.bq-acct{position:fixed;top:12px;right:14px;z-index:60;display:flex;align-items:center;gap:0;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border:1px solid rgba(20,16,40,.05);border-radius:999px;padding:3px;box-shadow:0 8px 22px rgba(20,16,40,.2);font-family:inherit}'+
+          '.bq-acct .chip{display:flex;align-items:center;gap:7px;padding:1px 8px 1px 2px}'+
+          '.bq-acct .av{width:27px;height:27px;border-radius:50%;flex:none;background:linear-gradient(135deg,#8B5CF6,#EC4899);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;box-shadow:0 2px 8px rgba(139,92,246,.5)}'+
+          '.bq-acct .lbl{font-size:12.5px;font-weight:800;color:#20143A;letter-spacing:.1px;white-space:nowrap;max-width:90px;overflow:hidden;text-overflow:ellipsis}'+
+          '.bq-acct .div{width:1px;height:17px;background:rgba(20,16,40,.09);margin:0 2px}'+
+          '.bq-acct .ab{border:0;background:transparent;width:29px;height:29px;border-radius:50%;cursor:pointer;display:grid;place-items:center;color:#6B31E6;transition:background .15s ease,transform .1s ease}'+
+          '.bq-acct .ab:hover{background:#F1ECFC}.bq-acct .ab:active{transform:scale(.9)}'+
+          '.bq-acct .ab[data-a="wallet"]{color:#2E8BEA}.bq-acct .ab[data-a="wallet"]:hover{background:#E7F1FD}'+
+          '.bq-acct .ab[data-a="airdrop"]{color:#E6A400}.bq-acct .ab[data-a="airdrop"]:hover{background:#FFF3D2}'+
+          '.bq-acct .ab[data-a="set"]{color:#78808F}.bq-acct .ab[data-a="set"]:hover{background:#EDEFF3}'+
+          '.bq-acct .ab.out{color:#DF5560}.bq-acct .ab.out:hover{background:#FDEBEC;color:#E5484D}';
         document.head.appendChild(st);
       }
       box=document.createElement('div'); box.className='bq-acct';
