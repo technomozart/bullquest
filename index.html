@@ -5101,22 +5101,34 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   function injectSignout(){
     var box=document.querySelector('.bq-acct');
     if(!box){
+      if(!document.getElementById('bq-acct-css')){
+        var st=document.createElement('style'); st.id='bq-acct-css';
+        st.textContent=
+          '.bq-acct{position:fixed;top:12px;right:14px;z-index:60;display:flex;align-items:center;gap:2px;background:#fff;border:1px solid rgba(20,16,40,.07);border-radius:999px;padding:4px 5px;box-shadow:0 10px 26px rgba(20,16,40,.16);font-family:inherit}'+
+          '.bq-acct .chip{display:flex;align-items:center;gap:7px;padding:2px 8px 2px 3px}'+
+          '.bq-acct .av{width:24px;height:24px;border-radius:50%;flex:none;background:linear-gradient(135deg,#7C5CE6,#4DA6F5);display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800;box-shadow:0 2px 7px rgba(124,92,230,.4)}'+
+          '.bq-acct .lbl{font-size:12px;font-weight:800;color:#20143A;letter-spacing:.2px;font-variant-numeric:tabular-nums;white-space:nowrap}'+
+          '.bq-acct .div{width:1px;height:18px;background:rgba(20,16,40,.10);margin:0 3px 0 1px}'+
+          '.bq-acct .ab{border:0;background:transparent;width:30px;height:30px;border-radius:50%;cursor:pointer;display:grid;place-items:center;color:#6B31E6;transition:background .15s ease,color .15s ease}'+
+          '.bq-acct .ab:hover{background:#F3ECFB}.bq-acct .ab:active{transform:scale(.92)}'+
+          '.bq-acct .ab.out{color:#9AA0AE}.bq-acct .ab.out:hover{background:#FDEBEC;color:#E5484D}';
+        document.head.appendChild(st);
+      }
       box=document.createElement('div'); box.className='bq-acct';
-      box.style.cssText='position:fixed;top:10px;right:12px;z-index:60;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.92);padding:5px 6px 5px 11px;border-radius:20px;box-shadow:0 2px 8px rgba(20,16,40,.14);font-family:inherit';
-      var lbl=document.createElement('span'); lbl.className='lbl'; lbl.style.cssText='font-size:11.5px;font-weight:800;color:#4B3B7A;letter-spacing:.2px;font-variant-numeric:tabular-nums';
-      var btn=document.createElement('button'); btn.textContent='Sign out'; btn.style.cssText='border:0;background:#EEE9FB;color:#6B31E6;font-size:11px;font-weight:800;padding:5px 9px;border-radius:14px;cursor:pointer;font-family:inherit';
-      btn.addEventListener('click', function(){ sb.auth.signOut().then(function(){ location.reload(); }); });
-      var site=document.createElement('button'); site.title='Back to website'; site.setAttribute('aria-label','Back to website');
-      site.style.cssText='border:0;background:#EEE9FB;color:#6B31E6;font-size:11px;font-weight:800;padding:5px 10px;border-radius:14px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px';
-      site.innerHTML='<i class="pico" style="--m:url(assets/icons/nav_home.png);width:13px;height:13px;background:#6B31E6"></i>Site';
-      site.addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-landing'); });
-      var setg=document.createElement('button'); setg.setAttribute('aria-label','Settings'); setg.title='Settings';
-      setg.style.cssText='border:0;background:#EEE9FB;width:26px;height:26px;border-radius:13px;cursor:pointer;display:grid;place-items:center;font-family:inherit';
-      setg.innerHTML='<i class="pico" style="--m:url(assets/icons/ui_settings.png);width:15px;height:15px;background:#6B31E6"></i>';
-      setg.addEventListener('click', function(){ showSetName(); });
-      box.appendChild(lbl); box.appendChild(site); box.appendChild(setg); box.appendChild(btn); document.body.appendChild(box);
+      box.innerHTML=
+        '<span class="chip"><span class="av"></span><span class="lbl"></span></span>'+
+        '<span class="div"></span>'+
+        '<button class="ab" data-a="site" title="Back to the website" aria-label="Back to the website"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.6 12 3l9 7.6"/><path d="M5.5 9.4V20h13V9.4"/><path d="M10 20v-5.5h4V20"/></svg></button>'+
+        '<button class="ab" data-a="set" title="Settings" aria-label="Settings"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg></button>'+
+        '<button class="ab out" data-a="out" title="Sign out" aria-label="Sign out"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9"/><path d="M18 16l4-4-4-4"/><path d="M22 12H10"/></svg></button>';
+      document.body.appendChild(box);
+      box.querySelector('[data-a="site"]').addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-landing'); });
+      box.querySelector('[data-a="set"]').addEventListener('click', function(){ showSetName(); });
+      box.querySelector('[data-a="out"]').addEventListener('click', function(){ sb.auth.signOut().then(function(){ try{ sessionStorage.removeItem('bq_view'); }catch(e){} location.reload(); }); });
     }
-    var l=box.querySelector('.lbl'); l.textContent=acctLabel||''; l.style.display=acctLabel?'':'none';
+    var l=box.querySelector('.lbl'); l.textContent=acctLabel||'';
+    var init=(acctLabel||'').replace(/[^A-Za-z0-9]/g,'').charAt(0); var av=box.querySelector('.av'); if(av) av.textContent=(init||'B').toUpperCase();
+    var show=!!acctLabel; box.querySelector('.chip').style.display=show?'flex':'none'; box.querySelector('.div').style.display=show?'block':'none';
   }
   // Set a display name (shown on the leaderboard + in duels). Server-validated via set_username.
   function showSetName(){
