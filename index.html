@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784312132";try{console.log("BullQuest build 1784312132");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784313116";try{console.log("BullQuest build 1784313116");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -4258,7 +4258,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       setEnergy(s.bull.energy, s.bull.energy_max);
       var f=root.querySelector('.fighter.you'), b=window.bqGame.bull();
       if(f){
-        var bname=(b&&b.bulls&&b.bulls.name)||('Bull #'+s.bull.id);
+        var bname=(b&&b.bulls&&b.bulls.id===s.bull.id&&b.bulls.name)||('Bull #'+s.bull.id);
         var nm=f.querySelector('.fname'); if(nm) nm.textContent=bname;
         var lv=f.querySelector('.hexbadge span'); if(lv) lv.textContent=s.bull.level;
         var t=(b&&b.bulls)?window.bqGame.tier(b.bulls.rarity_rank):null;
@@ -4268,9 +4268,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         var dv={pow:s.bull.power,spd:s.bull.speed,sta:s.bull.stamina}, dl={pow:'Power',spd:'Speed',sta:'Stamina'};
         var dchips=root.querySelectorAll('.disciplines .chip');
         for(var di=0;di<dchips.length;di++){ var dc=dchips[di], dst=dc.getAttribute('data-stat'), dcs=dc.querySelector('.cstat'); if(dcs&&dv[dst]!=null) dcs.innerHTML=dl[dst]+' <b style="color:var(--ink)">'+dv[dst]+'</b>'; }
-        var mw=f.querySelector('.mascot-wrap'), url=b&&b.bulls&&b.bulls.image_url;
+        var mw=f.querySelector('.mascot-wrap');
+        var url=(b&&b.bulls&&b.bulls.id===s.bull.id&&b.bulls.image_url) || (URL_+'/storage/v1/object/public/bulls/nft_'+s.bull.id+'.webp');
         var mwImg=mw&&mw.querySelector('img.bull');
-        if(mwImg && url){ mwImg.alt=bname; bqBindImg(mwImg, url); }
+        if(mwImg){ mwImg.alt=bname; bqBindImg(mwImg, url); }
       }
       var ovs=root.querySelectorAll('.fighter.opp .statrow .val'); for(var oi=0;oi<ovs.length;oi++) ovs[oi].textContent='?';
       var opn=root.querySelector('.fighter.opp .fname'); if(opn) opn.textContent='Challenger';
@@ -5262,7 +5263,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       if(el=card.querySelector('.hexbadge')) el.style.setProperty('--hc', t.c);
       if(el=card.querySelector('.bull')) el.setAttribute('aria-label','Your active bull, '+bname);
       if(el=card.querySelector('.rarity')) el.innerHTML='<span class="dot" style="background:'+t.c+'"></span>'+t.l;
-      if(el=card.querySelector('.energy')) el.innerHTML=BOLT+' '+ub.energy+'/'+ub.energy_max+' Energy';
+      if(el=card.querySelector('.energy')) el.innerHTML=BOLT+' '+liveEnergy(ub)+'/'+ub.energy_max+' Energy';
       if(el=card.querySelector('.stat.pow .sv b')) el.textContent=ub.power;
       if(el=card.querySelector('.stat.spd .sv b')) el.textContent=ub.speed;
       if(el=card.querySelector('.stat.sta .sv b')) el.textContent=ub.stamina;
@@ -5289,13 +5290,21 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     imgEl.src=base;
   }
   function fetchBull(u, tries){
-    return sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).limit(1).then(function(r){
-      if(r.error) throw r.error;
-      if(!r.data||!r.data.length){
-        if(tries>0) return new Promise(function(res){ setTimeout(res,700); }).then(function(){ return fetchBull(u, tries-1); });
-        return null;
-      }
-      return r.data[0];
+    // curBull MUST be the user's ACTIVE bull (else the arena/home show one bull's image with another's stats).
+    return sb.from('profiles').select('active_bull_id').eq('id',u.id).maybeSingle().then(function(p){
+      var activeId = p && p.data && p.data.active_bull_id;
+      var q = sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id);
+      q = activeId ? q.eq('bull_id', activeId) : q.order('acquired_at',{ascending:true});
+      return q.limit(1).then(function(r){
+        if(r.error) throw r.error;
+        if(r.data && r.data.length) return r.data[0];
+        // active id set but that row is missing (rare), or none yet: fall back to the earliest owned bull
+        return sb.from('user_bulls').select('*, bulls(*)').eq('user_id',u.id).order('acquired_at',{ascending:true}).limit(1).then(function(r2){
+          if(r2.data && r2.data.length) return r2.data[0];
+          if(tries>0) return new Promise(function(res){ setTimeout(res,700); }).then(function(){ return fetchBull(u, tries-1); });
+          return null;
+        });
+      });
     });
   }
   function showClaim(ub){
@@ -5366,6 +5375,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   function statTile(l,v,c,icon){ return '<div style="background:#F5F5FA;border-radius:12px;padding:10px 4px">'+(icon?'<i class="pico" style="--m:url(assets/icons/'+icon+'.png);width:16px;height:16px;background:'+c+';display:block;margin:0 auto 3px"></i>':'')+'<div style="font-size:19px;font-weight:800;color:'+c+'">'+(v==null?'-':v)+'</div><div style="font-size:11px;color:#6B7280;font-weight:700">'+l+'</div></div>'; }
   function bullCardImg(b){ return b.image_url || (URL_+'/storage/v1/object/public/bulls/nft_'+b.id+'.webp'); }
+  // Bull cards show raw stored energy; apply the same 15-min-per-point regen the server uses so a rested bull
+  // reads its true current energy (not the value from its last duel). Guards future timestamps (the UTC+4 bug).
+  function liveEnergy(ub){
+    var max=ub&&ub.energy_max, en=ub&&ub.energy;
+    if(max==null||en==null) return en;
+    var upd=ub.energy_updated_at?Date.parse(ub.energy_updated_at):NaN;
+    if(!isFinite(upd)) return Math.max(0,Math.min(max,en));
+    var regen=Math.max(0,Math.floor((Date.now()-Math.min(upd,Date.now()))/900000));
+    return Math.max(0,Math.min(max,en+regen));
+  }
   function bullCard(ub, isActive, listing){
     var b=ub.bulls||{}, t=tier(b.rarity_rank);
     var badge = isActive ? '<span class="bqbc-badge">Active</span>' : '';
@@ -5379,7 +5398,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         '<div class="bqbc-info">'+
           '<div class="bqbc-name">'+(b.name||('Bull #'+b.id))+badge+'<button type="button" class="bqbc-rn" data-rename="'+b.id+'" data-rn="'+((b.name||'').replace(/"/g,'&quot;'))+'" aria-label="Rename this bull" title="Rename (0.05 SOL)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div>'+
           '<div class="bqbc-sub"><span style="width:9px;height:9px;border-radius:50%;background:'+t.c+'"></span>'+t.l+' &middot; #'+b.rarity_rank+' &middot; Lv '+ub.level+'</div>'+
-          '<div class="bqbc-rec">'+ub.wins+'W '+ub.losses+'L &middot; Energy '+ub.energy+'/'+ub.energy_max+'</div>'+
+          '<div class="bqbc-rec">'+ub.wins+'W '+ub.losses+'L &middot; Energy '+liveEnergy(ub)+'/'+ub.energy_max+'</div>'+
         '</div>'+
       '</div>'+
       '<div class="bqbc-stats">'+statTile('Power',ub.power,'#43C06A','stat_power')+statTile('Speed',ub.speed,'#7C5CE6','stat_speed')+statTile('Stam',ub.stamina,'#EE5B62','stat_stamina')+statTile('Temper',ub.temper,'#E6961B','stat_temper')+'</div>'+
@@ -6427,7 +6446,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         html+='<div class="bqsw-row'+(on?' on':'')+'" data-bull="'+b.id+'">'+
           '<span class="bqsw-thumb"><img data-src="'+bullCardImg(b)+'" alt=""></span>'+
           '<span class="bqsw-info"><span class="bqsw-name">'+(b.name||('Bull #'+b.id))+'</span>'+
-          '<span class="bqsw-sub"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+' &middot; Lv '+ub.level+' &middot; '+ub.energy+'/'+ub.energy_max+' NRG</span></span>'+
+          '<span class="bqsw-sub"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+' &middot; Lv '+ub.level+' &middot; '+liveEnergy(ub)+'/'+ub.energy_max+' NRG</span></span>'+
           (on?'<span class="bqsw-badge">Active</span>':'<span class="bqsw-go">Set active</span>')+
         '</div>';
       });
