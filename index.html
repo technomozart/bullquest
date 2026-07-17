@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784306621";try{console.log("BullQuest build 1784306621");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784307233";try{console.log("BullQuest build 1784307233");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -526,20 +526,24 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* wallet card */
   .bq-home .wallet {
     position: relative; overflow: hidden; padding: 18px;
-    background: linear-gradient(150deg, var(--gem-a), var(--gem-b));
+    background:
+      radial-gradient(135px 135px at 90% 10%, rgba(255,255,255,.22), rgba(255,255,255,0) 70%),
+      radial-gradient(180px 180px at 116% 82%, rgba(255,255,255,.14), rgba(255,255,255,0) 70%),
+      linear-gradient(150deg, var(--gem-a), var(--gem-b));
     box-shadow: 0 14px 30px rgba(76,134,236,.34);
   }
-  .bq-home .wallet .wm { position: absolute; right: -18px; top: 8px; opacity: .16; pointer-events: none; }
   .bq-home .wallet-head { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
   .bq-home .wallet-head .lbl { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.86); font-size: 13px; font-weight: 700; }
   .bq-home .wallet-head .buy {
     appearance: none; border: none; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 13px 0 10px;
-    border-radius: 999px; background: rgba(255,255,255,.22); color: #fff; font-size: 13px; font-weight: 800;
-    transition: background .15s ease, transform .1s ease;
+    display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0 15px 0 12px;
+    border-radius: 999px; background: linear-gradient(180deg, #FFD87A, #F2B231); color: #5A3D00;
+    font-size: 13px; font-weight: 800; letter-spacing: .1px;
+    box-shadow: 0 5px 14px rgba(176,120,12,.45);
+    transition: filter .15s ease, transform .1s ease;
   }
-  .bq-home .wallet-head .buy:hover { background: rgba(255,255,255,.32); }
-  .bq-home .wallet-head .buy:active { transform: scale(.95); }
+  .bq-home .wallet-head .buy:hover { filter: brightness(1.05); }
+  .bq-home .wallet-head .buy:active { transform: scale(.96); }
   .bq-home .wallet .bal { position: relative; z-index: 1; margin-top: 12px; display: flex; align-items: baseline; gap: 8px; }
   .bq-home .wallet .bal b { color: #fff; font-size: 34px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
   .bq-home .wallet .bal span { color: rgba(255,255,255,.82); font-size: 15px; font-weight: 800; }
@@ -3114,7 +3118,6 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
     <div class="seclabel"><h3><i class="pico" style="--m:url('assets/icons/ui_wallet.png')"></i>Your Wallet</h3><a class="link" href="#" data-bqtoast="Wallet lands soon">Wallet <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     <div class="card wallet">
-      <svg class="wm" width="150" height="150" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 1 32 9.5v15L17 33 2 24.5v-15Z" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M17 7 27 12.7v11.6L17 30 7 24.3V12.7Z" fill="none" stroke="#fff" stroke-width="1.2"/></svg>
       <div class="wallet-head">
         <span class="lbl">
           <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7Z" fill="#fff" opacity=".9"/><path d="M8 12h8M8 9h8M8 15h5" stroke="#4C86EC" stroke-width="1.6" stroke-linecap="round"/></svg>
