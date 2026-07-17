@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784253348";try{console.log("BullQuest build 1784253348");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784263686";try{console.log("BullQuest build 1784263686");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -2241,6 +2241,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   .bq-onboard .reassure p { margin: 0; font-size: 12.5px; font-weight: 700; color: #1f6b3a; line-height: 1.35; }
   .bq-onboard .reassure p span { color: #2f7d4a; font-weight: 600; }
+  .bq-onboard .wallet-safe { margin: 10px 2px 0; font-size: 11px; color: var(--faint); text-align: center; line-height: 1.45; }
 
   /* legal */
   .bq-onboard .legal {
@@ -2646,7 +2647,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
             <span class="delta" style="background:#FDE9EA;color:#D8434B">+1</span>
           </div>
 
-          <img class="bq-hero-bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1715.webp" alt="A BullQuest Genesis bull" style="height:auto;display:block">
+          <img class="bq-hero-bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1715.webp" alt="A BullQuest Genesis bull" width="440" height="440" fetchpriority="high" style="height:auto;display:block">
 
         </div>
       </div>
@@ -2673,7 +2674,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         <div class="icosq" style="background:#E4EEF3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v4l-4 5 4 5v4H6v-4l4-5-4-5V3z" fill="#4DA6F5"/></svg></div>
         <div class="num">STEP 02</div>
         <h3>Train &amp; quest</h3>
-        <p>Earn GRIT from daily quests and the spin, then level up your bull in the Arena to raise POWER, SPEED and STAMINA.</p>
+        <p>Earn GRIT (your in-game coins) from daily quests and the spin, then level up your bull in the Arena to raise POWER, SPEED and STAMINA.</p>
       </div>
       <div class="bq-card">
         <div class="icosq" style="background:#F3ECFB"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#7C5CE6"/></svg></div>
@@ -2753,7 +2754,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#EFE7DA">
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2935.webp" alt="Hadrian the Invincible, a BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2935.webp" alt="Hadrian the Invincible, a BullQuest bull" style="width:100%;height:100%;object-fit:contain">
         <span class="lvl-hex" style="--hc:#9AA7B4"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#9AA7B4"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 10 of 10"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>10/10</span>
       </div>
@@ -2774,7 +2775,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#E4EEF3">
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_908.webp" alt="Ivar the Undefeated, a BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_908.webp" alt="Ivar the Undefeated, a BullQuest bull" style="width:100%;height:100%;object-fit:contain">
         <span class="lvl-hex" style="--hc:#4DA6F5"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#4DA6F5"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 12 of 12"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>12/12</span>
       </div>
@@ -2795,7 +2796,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#F3ECFB">
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1044.webp" alt="Navarro the Vengeful, a BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1044.webp" alt="Navarro the Vengeful, a BullQuest bull" style="width:100%;height:100%;object-fit:contain">
         <span class="lvl-hex" style="--hc:#7C5CE6"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#7C5CE6"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 14 of 14"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>14/14</span>
       </div>
@@ -2816,7 +2817,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
     <article class="bull-card" role="listitem">
       <div class="bull-thumb" style="background:#FBF1DC">
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="Behemoth, the rank 1 BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="Behemoth, the rank 1 BullQuest bull" style="width:100%;height:100%;object-fit:contain">
         <span class="lvl-hex" style="--hc:#F0B429"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 1 L38 11 V33 L20 43 L2 33 V11 Z" fill="#F0B429"/></svg><span class="lab">LVL</span><b>1</b></span>
         <span class="energy-pill" aria-label="Energy 16 of 16"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#fff"/></svg>16/16</span>
       </div>
@@ -2954,16 +2955,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   <span class="confetti f" style="left:6%;bottom:26%;--r:8deg;animation-delay:1.4s" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="#F0B429"/><circle cx="15" cy="15" r="8" fill="#F6C74A"/></svg></span>
   <div class="wrap">
     <div class="herd" aria-hidden="true">
-      <div class="b b1"><img src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="" style="width:100%;height:auto;display:block"></div>
-      <div class="b b2"><img src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_878.webp" alt="" style="width:100%;height:auto;display:block"></div>
-      <div class="b b3"><img src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1715.webp" alt="" style="width:100%;height:auto;display:block"></div>
+      <div class="b b1"><img loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="" style="width:100%;height:auto;display:block"></div>
+      <div class="b b2"><img loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_878.webp" alt="" style="width:100%;height:auto;display:block"></div>
+      <div class="b b3"><img loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1715.webp" alt="" style="width:100%;height:auto;display:block"></div>
     </div>
     <h2>Join the herd</h2>
-    <p>Raise your own bull, gather GRIT toward the airdrop, and charge into the Arena. Grab yours free, or leave your email for launch updates.</p>
+    <p>Raise your own bull, gather GRIT toward the airdrop, and charge into the Arena. It is live and free to play right now.</p>
     <a class="pill pill-cta" href="#play" data-bqgo="view-onboard" style="font-size:17px;padding:16px 36px">Get your first Bull</a>
     <div style="max-width:430px;margin:18px auto 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-      <input id="bqLandEmail" type="email" placeholder="Email for launch updates" style="flex:1;min-width:200px;padding:13px 15px;border:0;border-radius:12px;font-size:15px;font-family:inherit">
-      <button type="button" id="bqLandGo" style="border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;font-family:inherit;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)">Notify me</button>
+      <input id="bqLandEmail" type="email" placeholder="Email for news and airdrop alerts" style="flex:1;min-width:200px;padding:13px 15px;border:0;border-radius:12px;font-size:15px;font-family:inherit">
+      <button type="button" id="bqLandGo" style="border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;font-family:inherit;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)">Keep me posted</button>
     </div>
     <p id="bqLandMsg" style="font-size:13.5px;color:rgba(255,255,255,.9);margin-top:10px;min-height:18px"></p>
     <div class="soc-row">
@@ -3135,7 +3136,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     <div class="card featured">
       <div class="feat-top">
         <div class="feat-bull">
-          <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_12.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+          <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_12.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
         </div>
         <div class="feat-meta">
           <div class="row1">
@@ -3412,7 +3413,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       </div>
       <div class="mascot-wrap">
         <div class="pedestal"></div>
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2048.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2048.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
       </div>
     </div>
 
@@ -3431,7 +3432,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       </div>
       <div class="mascot-wrap">
         <div class="pedestal"></div>
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2560.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2560.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
       </div>
     </div>
   </div>
@@ -3739,7 +3740,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       <div class="pedestal" aria-hidden="true"></div>
       <svg class="spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#FFE7A6"/><path d="M19.2 3.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#FFE7A6" opacity=".85"/></svg>
       <svg class="spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.4C12.8 8.2 15.8 11.2 22.6 12 15.8 12.8 12.8 15.8 12 22.6 11.2 15.8 8.2 12.8 1.4 12 8.2 11.2 11.2 8.2 12 1.4Z" fill="#BFE0FA"/><path d="M4.6 16.1c.2 1.6.8 2.2 2.4 2.4-1.6.2-2.2.8-2.4 2.4-.2-1.6-.8-2.2-2.4-2.4 1.6-.2 2.2-.8 2.4-2.4Z" fill="#BFE0FA" opacity=".85"/></svg>
-      <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="Your first BullQuest bull" style="width:100%;height:auto;display:block">
+      <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="Your first BullQuest bull" style="width:100%;height:auto;display:block">
     </div>
 
     <h1 class="headline">Welcome to the herd</h1>
@@ -3775,9 +3776,24 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     <div class="grab" aria-hidden="true"></div>
 
     <div class="card">
-      <button type="button" class="cta" data-wallet="auto" aria-label="Connect a Solana wallet">
-        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a3 3 0 0 1 3-3h11a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="13" r="1.6" fill="#fff"/></svg>
-        Connect Wallet
+      <div id="bqGoogleEntry" style="display:none;justify-content:center;margin-bottom:10px"></div>
+
+      <button type="button" class="cta" data-entry="email" aria-label="Get your free bull with email, no wallet needed">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="#fff" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Get my free bull
+      </button>
+
+      <div class="guest-wrap">
+        <button type="button" class="guest" data-entry="login">
+          Already have an account? <b>Log in</b>
+        </button>
+      </div>
+
+      <div class="or">or use a wallet</div>
+
+      <button type="button" class="secondary" data-wallet="auto" aria-label="Connect a Solana wallet">
+        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a3 3 0 0 1 3-3h11a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="13" r="1.6" fill="currentColor"/></svg>
+        Connect a wallet
       </button>
 
       <div class="wallets" aria-label="Supported wallets: Phantom, Solflare, Backpack">
@@ -3786,20 +3802,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         <button type="button" class="wchip" data-wallet="backpack" aria-label="Connect with Backpack"><span class="wd" style="background:#EE5B62"></span>Backpack</button>
       </div>
 
-      <div class="or">or</div>
-
-      <div id="bqGoogleEntry" style="display:none;justify-content:center;margin-bottom:6px"></div>
-
-      <button type="button" class="secondary" data-entry="email" aria-label="Continue with email, no wallet needed">
-        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Continue with email
-      </button>
-
-      <div class="guest-wrap">
-        <button type="button" class="guest" data-entry="login">
-          Already have an account? <b>Log in</b>
-        </button>
-      </div>
+      <p class="wallet-safe">Optional, for crypto users. We never ask for your seed phrase and can't move your funds.</p>
     </div>
 
     <div class="reassure">
@@ -3901,11 +3904,11 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     <!-- ===== wheel stage ===== -->
     <div class="stage">
       <div class="peek left" aria-hidden="true">
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1499.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1499.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
         <div class="rcard"><svg width="20" height="20" viewBox="0 0 24 24"><use href="#spGem"/></svg><b>100 GRIT</b><small>Jackpot</small></div>
       </div>
       <div class="peek right" aria-hidden="true">
-        <img class="bull" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2777.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
+        <img class="bull" loading="lazy" src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2777.webp" alt="BullQuest bull" style="width:100%;height:100%;object-fit:contain">
         <div class="rcard"><svg width="20" height="20" viewBox="0 0 24 24"><use href="#spGem"/></svg><b>50</b><small>Free GRIT</small></div>
       </div>
 
@@ -5204,12 +5207,14 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
           '<div class="bqrev-stat"><b style="color:#7C5CE6">'+ub.speed+'</b><span>Speed</span></div>'+
           '<div class="bqrev-stat"><b style="color:#EE5B62">'+ub.stamina+'</b><span>Stamina</span></div>'+
         '</div>'+
-        '<button class="bqrev-go">Enter BullQuest</button>'+
-        '<p class="bqrev-note">This bull is yours. Welcome to the herd.</p>'+
+        '<button class="bqrev-share" style="width:100%;margin-top:15px;padding:15px;border:0;border-radius:15px;background:'+t.c+';color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 10px 22px '+t.c+'55"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Show off my bull</button>'+
+        '<button class="bqrev-go" style="margin-top:10px;background:#F1EEFA;color:#6B31E6;box-shadow:none">Enter BullQuest</button>'+
+        '<p class="bqrev-note">Post it and tag a friend. You both earn GRIT.</p>'+
       '</div>';
     document.body.appendChild(el);
     var rimg=el.querySelector('#bqRevImg'), rfb=el.querySelector('.bqrev-fb');
     bqBindImg(rimg, b.image_url, function(){ if(rfb) rfb.style.opacity=0; }, function(){ if(rimg) rimg.style.display='none'; });
+    var rsh=el.querySelector('.bqrev-share'); if(rsh) rsh.addEventListener('click', function(){ try{ window.bqShareBull&&window.bqShareBull(); }catch(e){} });
     el.querySelector('.bqrev-go').addEventListener('click', function(){ el.remove(); });
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
   }
@@ -5671,7 +5676,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   window.bqConnectWallet = bqConnectWallet;
   function walletLogin(kind){
     var prov=getProvider(kind);
-    if(!prov){ var nm=kind==='auto'?'A Solana wallet':(kind.charAt(0).toUpperCase()+kind.slice(1)); walletMsg(nm+' was not found. Install it, or use email below.'); return; }
+    if(!prov){ walletMsg('No wallet detected. Continuing with email instead...'); setTimeout(function(){ try{ openModal('signup'); }catch(e){} }, 400); return; }
     walletMsg('Check your wallet to approve...');
     Promise.resolve(prov.connect()).then(function(res){
       var pk=(prov.publicKey||(res&&res.publicKey)).toString();
@@ -5850,11 +5855,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
   // ---- Growth: shareable bull image card ----
   function rrect(x,rx,ry,w,h,r){ x.beginPath(); x.moveTo(rx+r,ry); x.arcTo(rx+w,ry,rx+w,ry+h,r); x.arcTo(rx+w,ry+h,rx,ry+h,r); x.arcTo(rx,ry+h,rx,ry,r); x.arcTo(rx,ry,rx+w,ry,r); x.closePath(); }
-  function shareOrDownload(blob, filename){
+  function shareOrDownload(blob, filename, shareUrl){
     if(!blob){ if(window.showToast) showToast('Could not build the card'); return; }
+    var url=shareUrl||'https://bullquest.fun/';
     var file=null; try{ file=new File([blob],filename,{type:'image/png'}); }catch(e){}
     if(file && navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
-      navigator.share({ files:[file], text:'My BullQuest bull. Claim a free one and gather GRIT for the $BULL airdrop.' }).catch(function(){ dl(); });
+      navigator.share({ files:[file], text:'My BullQuest bull. Grab your own free one with my link and we both get a bonus:', url:url }).catch(function(){ dl(); });
     } else dl();
     function dl(){ var u=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=u; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); },2000); if(window.showToast) showToast('Card saved - share it anywhere'); }
   }
@@ -5863,8 +5869,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     if(!curBull){ if(window.showToast) showToast('Loading your bull...'); return; }
     if(window.showToast) showToast('Building your share card...');
     var b=curBull.bulls||{}, ub=curBull, t=tier(b.rarity_rank);
-    sb.rpc('leaderboard').then(function(r){ var d=(r&&r.data)||{}; draw(d.yourGrit, d.yourRank); }).catch(function(){ draw(null,null); });
-    function draw(grit, rank){
+    Promise.all([ sb.rpc('leaderboard'), sb.rpc('get_state') ]).then(function(rr){
+      var d=(rr[0]&&rr[0].data)||{}; var st=(rr[1]&&rr[1].data)||{}; var code=(st.ref&&st.ref.code)||'';
+      draw(d.yourGrit, d.yourRank, code);
+    }).catch(function(){ draw(null,null,''); });
+    function draw(grit, rank, code){
+      var refUrl = code ? ('https://bullquest.fun/?ref='+code) : 'https://bullquest.fun/';
       var W=1080,H=1080, c=document.createElement('canvas'); c.width=W;c.height=H; var x=c.getContext('2d');
       var g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,'#6E35E9'); g.addColorStop(1,'#4A22C6'); x.fillStyle=g; x.fillRect(0,0,W,H);
       x.globalAlpha=.10; x.fillStyle='#fff'; x.beginPath(); x.arc(170,170,230,0,7); x.fill(); x.beginPath(); x.arc(950,910,270,0,7); x.fill(); x.globalAlpha=1;
@@ -5885,7 +5895,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         var foot = (grit!=null) ? (grit.toLocaleString()+' GRIT gathered'+(rank?'   ·   Rank #'+rank:'')) : 'Gathering GRIT for the $BULL airdrop';
         ct(foot, W/2, 1032, '800 30px -apple-system,Segoe UI,Roboto,sans-serif', '#FFE7A6');
         ct('Claim a free bull at bullquest.fun', W/2, 1066, '600 24px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.9)');
-        try{ c.toBlob(function(blob){ shareOrDownload(blob, 'bullquest-'+(b.id||'bull')+'.png'); }, 'image/png'); }
+        try{ c.toBlob(function(blob){ shareOrDownload(blob, 'bullquest-'+(b.id||'bull')+'.png', refUrl); }, 'image/png'); }
         catch(e){ if(window.showToast) showToast('Could not export the card'); }
       }
     }
@@ -5901,7 +5911,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     if(!sb){ if(msg) msg.textContent='Loading, try again in a second.'; return; }
     b.disabled=true; var ol=b.textContent; b.textContent='...';
     sb.rpc('join_waitlist',{p_email:em,p_source:'landing'}).then(function(r){
-      if(r&&r.data&&r.data.ok){ if(inp) inp.value=''; if(msg) msg.textContent='You are on the list. We will email you at launch.'; }
+      if(r&&r.data&&r.data.ok){ if(inp) inp.value=''; if(msg) msg.textContent='You are on the list. We will send news and airdrop alerts.'; }
       else if(msg){ msg.textContent='Could not join, please try again.'; }
       b.disabled=false; b.textContent=ol;
     }).catch(function(){ b.disabled=false; b.textContent=ol; if(msg) msg.textContent='Could not join, please try again.'; });
@@ -5951,7 +5961,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var me=lb.me||{invites:(ref.count||0), grit_earned:(ref.count||0)*100, rank:null};
       var top=lb.top||[];
       var link='https://bullquest.fun/?ref='+code;
-      var shareText='Playing BullQuest: claim a FREE bull and gather GRIT for the $BULL airdrop. Skill wins, not your wallet. Grab a 50 GRIT head start with my link:';
+      var shareText='I am playing BullQuest and got a free bull. Grab your own free one with my link and we both get a bonus. Skill wins, not your wallet:';
       var xUrl='https://twitter.com/intent/tweet?text='+encodeURIComponent(shareText)+'&url='+encodeURIComponent(link)+'&via=BullQuestSol';
       var tgUrl='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(shareText);
       var waUrl='https://wa.me/?text='+encodeURIComponent(shareText+' '+link);
@@ -5971,7 +5981,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         '<p class="sub" style="margin:0 0 14px">Earn <b style="color:#20143A">100 GRIT</b> for every friend who joins and plays to level 2 (up to 50), and they get <b style="color:#20143A">50 GRIT</b> too.</p></div>'+
         '<div style="display:flex;gap:8px;margin-bottom:14px">'+stat(me.invites||0,'Invited')+stat(me.grit_earned||0,'GRIT earned','#6B31E6')+stat(me.rank?('#'+me.rank):'—','Rank')+'</div>'+
         '<div style="display:flex;gap:8px;margin-bottom:10px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" style="flex:none;padding:12px 16px;border:0;border-radius:12px;background:#20143A;color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit">Copy</button></div>'+
-        '<button type="button" id="bqShX" style="width:100%;padding:12px;border:0;border-radius:12px;background:#111;color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;margin-bottom:16px;display:inline-flex;align-items:center;justify-content:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.6-6-5.3 6H3l7-8L2.5 3h6l4.1 5.5zm-1 16h1.7L8 4.8H6.2z"/></svg>Share on X</button>'+
+        (navigator.share?'<button type="button" id="bqShNative" style="width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-weight:800;font-size:14.5px;cursor:pointer;font-family:inherit;margin-bottom:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 18px rgba(107,49,230,.3)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share my link</button>':'')+
+        '<div style="display:flex;gap:8px;margin-bottom:16px">'+
+          '<button type="button" id="bqShWA" style="flex:1;padding:11px 4px;border:0;border-radius:12px;background:#25D366;color:#fff;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.8-1.5A10 10 0 1012 2zm5.8 14.1c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.13.07-1.82-.11-.42-.14-.96-.32-1.66-.62-2.92-1.26-4.83-4.2-4.98-4.4-.14-.2-1.18-1.57-1.18-3s.75-2.12 1.02-2.4c.26-.3.57-.37.76-.37h.55c.18 0 .42-.07.65.5.24.58.8 2 .87 2.15.07.14.12.31.02.5-.09.2-.14.32-.28.5-.14.16-.3.37-.42.5-.14.14-.29.29-.12.57.16.28.73 1.2 1.56 1.95 1.07.95 1.97 1.25 2.25 1.4.28.14.44.11.6-.07.19-.2.7-.8.88-1.08.19-.28.37-.23.63-.14.26.1 1.64.78 1.92.92.28.14.47.2.54.32.07.11.07.66-.17 1.34z"/></svg>WhatsApp</button>'+
+          '<button type="button" id="bqShTG" style="flex:1;padding:11px 4px;border:0;border-radius:12px;background:#29A9EB;color:#fff;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3l-3.2 15.1c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L6.3 13.1l-4.8-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg>Telegram</button>'+
+          '<button type="button" id="bqShX" style="flex:1;padding:11px 4px;border:0;border-radius:12px;background:#111;color:#fff;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.6-6-5.3 6H3l7-8L2.5 3h6l4.1 5.5zm-1 16h1.7L8 4.8H6.2z"/></svg>X</button>'+
+        '</div>'+
         '<div style="border:1px solid #EFECFA;border-radius:14px;padding:4px 12px 8px;margin-bottom:14px">'+
           '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 6px;border-bottom:1px solid #F0EDF8;margin-bottom:2px"><b style="font-size:12px;font-weight:800;color:#6B31E6;letter-spacing:.4px;text-transform:uppercase">Top inviters</b><span style="font-size:11px;color:#9AA6B2;font-weight:700">Invites</span></div>'+lbHtml+
         '</div>'+
@@ -5983,6 +5998,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       function copy(){ var i=el.querySelector('#bqRefLink'); try{ i.select(); }catch(e){} var ok=function(){ if(window.showToast) showToast('Link copied'); }; if(navigator.clipboard){ navigator.clipboard.writeText(link).then(ok,function(){}); } else { try{ document.execCommand('copy'); ok(); }catch(e){} } }
       el.querySelector('#bqRefCopy').addEventListener('click', copy);
       el.querySelector('#bqShX').addEventListener('click', function(){ window.open(xUrl,'_blank','noopener'); });
+      var _wa=el.querySelector('#bqShWA'); if(_wa) _wa.addEventListener('click', function(){ window.open(waUrl,'_blank','noopener'); });
+      var _tg=el.querySelector('#bqShTG'); if(_tg) _tg.addEventListener('click', function(){ window.open(tgUrl,'_blank','noopener'); });
+      var _nat=el.querySelector('#bqShNative'); if(_nat) _nat.addEventListener('click', function(){ if(navigator.share) navigator.share({text:shareText, url:link}).catch(function(){}); });
     }).catch(function(){ if(window.showToast) showToast('Could not load your invite link'); });
   }
   window.bqInvite = showInvite;
