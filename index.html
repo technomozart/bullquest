@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784311663";try{console.log("BullQuest build 1784311663");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784312132";try{console.log("BullQuest build 1784312132");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -4343,7 +4343,35 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     if(!ov){
       ov=document.createElement('div'); ov.className='bq-duel-ov';
       ov.style.cssText='position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(20,16,40,.6);backdrop-filter:blur(3px);padding:20px';
-      ov.innerHTML='<div style="width:100%;max-width:340px;background:#fff;border-radius:22px;padding:24px;text-align:center;font-family:inherit;box-shadow:0 24px 60px rgba(20,16,40,.4)"><div class="e" style="font-size:42px"></div><h2 class="t" style="margin:6px 0 2px;font-size:26px"></h2><p class="s" style="margin:0 0 14px;font-size:13.5px;color:#6B7280"></p><div class="rows" style="text-align:left;font-size:13px;color:#374151;background:#F5F5FA;border-radius:14px;padding:12px 14px;margin-bottom:16px;line-height:1.7"></div><button class="go" style="width:100%;padding:14px;border:0;border-radius:13px;background:linear-gradient(180deg,#4DA6F5,#3F98ED);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit">Continue</button></div>';
+      if(!document.getElementById('bq-duel-css')){
+        var _dst=document.createElement('style'); _dst.id='bq-duel-css'; _dst.textContent=
+          '.bq-duel-ov .rcard{width:100%;max-width:352px;background:#fff;border-radius:26px;overflow:hidden;font-family:inherit;box-shadow:0 30px 80px rgba(20,16,40,.5);animation:rcardPop .45s cubic-bezier(.2,1.2,.3,1) both}'+
+          '@keyframes rcardPop{0%{transform:scale(.85) translateY(16px);opacity:0}100%{transform:none;opacity:1}}'+
+          '.bq-duel-ov .rhead{position:relative;padding:22px 22px 20px;text-align:center;color:#fff;overflow:hidden}'+
+          '.bq-duel-ov .rglow{position:absolute;top:-48%;left:50%;transform:translateX(-50%);width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.55),rgba(255,255,255,0) 70%);pointer-events:none}'+
+          '.bq-duel-ov .re{position:relative;font-size:52px;line-height:1;filter:drop-shadow(0 7px 12px rgba(0,0,0,.24));animation:rEmoji .55s cubic-bezier(.2,1.5,.3,1) both}'+
+          '@keyframes rEmoji{0%{transform:scale(0) rotate(-18deg);opacity:0}100%{transform:none;opacity:1}}'+
+          '.bq-duel-ov .rt{position:relative;margin:7px 0 3px;font-size:27px;font-weight:900;letter-spacing:.2px;text-shadow:0 2px 6px rgba(0,0,0,.2)}'+
+          '.bq-duel-ov .rs{position:relative;margin:0;font-size:12.5px;font-weight:600;opacity:.95}'+
+          '.bq-duel-ov .rbody{padding:16px 18px 18px}'+
+          '.bq-duel-ov .rreward{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:13px;flex-wrap:wrap}'+
+          '.bq-duel-ov .rgrit{display:inline-flex;align-items:center;gap:7px;font-size:26px;font-weight:900;font-variant-numeric:tabular-nums}'+
+          '.bq-duel-ov .rgrit img{width:27px;height:27px}'+
+          '.bq-duel-ov .rxp{font-size:12px;font-weight:800;color:#7A6FA0;background:#F1EFF7;border-radius:999px;padding:6px 12px}'+
+          '.bq-duel-ov .rlvl{font-size:11px;font-weight:900;color:#fff;background:linear-gradient(180deg,#8B5CF6,#6B31E6);border-radius:999px;padding:6px 11px;letter-spacing:.3px;box-shadow:0 5px 12px rgba(107,49,230,.4)}'+
+          '.bq-duel-ov .rscore{display:flex;align-items:center;justify-content:center;gap:8px;background:#F6F6FB;border-radius:16px;padding:11px 10px;margin-bottom:12px}'+
+          '.bq-duel-ov .rscore .sp{text-align:center;flex:1;min-width:0}'+
+          '.bq-duel-ov .rscore .sp b{display:block;font-size:23px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}'+
+          '.bq-duel-ov .rscore .sp span{display:block;font-size:10px;font-weight:700;color:#9AA6B2;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}'+
+          '.bq-duel-ov .rscore .vs{flex:none;font-size:10px;font-weight:900;color:#B4BAC6;background:#fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;box-shadow:0 2px 6px rgba(30,40,80,.14)}'+
+          '.bq-duel-ov .rdetails{font-size:11.5px;color:#8A93A0;line-height:1.75;text-align:center;margin-bottom:14px}'+
+          '.bq-duel-ov .rdetails b{color:#4B5563;font-weight:800}'+
+          '.bq-duel-ov .rdetails .edge{color:#7C5CE6;font-weight:800;margin-top:3px}'+
+          '.bq-duel-ov .go{width:100%;padding:15px;border:0;border-radius:15px;color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 12px 24px rgba(30,40,80,.22)}'+
+          '.bq-duel-ov .go:active{transform:translateY(1px)}';
+        document.head.appendChild(_dst);
+      }
+      ov.innerHTML='<div class="rcard"><div class="rhead"><div class="rglow"></div><div class="re"></div><h2 class="rt"></h2><p class="rs"></p></div><div class="rbody"><div class="rreward"></div><div class="rscore"></div><div class="rdetails"></div><button class="go">Continue</button></div></div>';
       document.body.appendChild(ov);
       var hideOpp=function(){ var op=document.querySelector('#view-arena .fighter.opp'); if(!op) return;
         op.querySelectorAll('.statrow .val').forEach(function(v){ v.textContent='?'; });
@@ -4357,21 +4385,32 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     var win=r.win;
     var streak=0; try{ streak=parseInt(localStorage.getItem('bq_ws')||'0',10)||0; }catch(e){}
     streak = win ? streak+1 : 0; try{ localStorage.setItem('bq_ws', String(streak)); }catch(e){}
-    ov.querySelector('.e').textContent = win ? (streak>=3?'🔥':'🏆') : '💥';
-    var t=ov.querySelector('.t'); t.textContent = win ? (streak>=2 ? streak+' in a row!' : 'Victory') : 'Defeat'; t.style.color = win?'#2FA657':'#D8434B';
-    ov.querySelector('.s').textContent = (r.crit?'Critical hit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance+' ('+r.stanceOutcome+' read)';
+    ov.querySelector('.rhead').style.background = win ? 'linear-gradient(160deg,#4ECB7B,#28A353)' : 'linear-gradient(160deg,#F5828C,#E14B57)';
+    ov.querySelector('.re').textContent = win ? (streak>=3?'🔥':'🏆') : '💥';
+    ov.querySelector('.rt').textContent = win ? (streak>=2 ? streak+' IN A ROW!' : 'VICTORY') : 'DEFEAT';
+    ov.querySelector('.rs').textContent = (r.crit?'Critical hit! ':'') + 'Your '+r.yourStance+' vs their '+r.oppStance;
     var o=r.opponent||{};
     var oName=(o.name?(window.bqEsc?window.bqEsc(String(o.name)):'Challenger'):'Challenger');
-    // scores are rounded to 1dp, so a genuine win can display as an equal tie; nudge the loser's shown
-    // number down 0.1 so the banner never looks self-contradictory (Victory with identical scores).
+    var gd=r.gritDelta;
+    ov.querySelector('.rreward').innerHTML =
+      '<span class="rgrit" style="color:'+(gd>=0?'#20A353':'#D8434B')+'"><img src="assets/icons/gem_grit.png" alt="">'+(gd>=0?'+':'')+gd+'</span>'+
+      '<span class="rxp">+'+r.xpGain+' XP</span>'+
+      (r.leveled?'<span class="rlvl">LEVEL UP</span>':'');
+    // scores are rounded to 1dp, so a genuine win can display as an equal tie; nudge the loser's shown number down 0.1.
     var ys=r.yourScore, os=r.oppScore;
     if(ys===os){ if(r.win){ os=Math.round((os-0.1)*10)/10; } else { ys=Math.round((ys-0.1)*10)/10; } }
-    ov.querySelector('.rows').innerHTML =
-      '<div>Your score <b>'+ys+'</b> &nbsp;vs&nbsp; '+oName+' <b>'+os+'</b></div>'+
-      '<div>'+oName+' was <b>'+(o.power!=null?o.power:'?')+'</b> Pow &middot; <b>'+(o.speed!=null?o.speed:'?')+'</b> Spd &middot; <b>'+(o.stamina!=null?o.stamina:'?')+'</b> Sta</div>'+
-      '<div>GRIT <b style="color:'+(r.gritDelta>=0?'#2FA657':'#D8434B')+'">'+(r.gritDelta>=0?'+':'')+r.gritDelta+'</b> &nbsp; XP <b>+'+r.xpGain+'</b>'+(r.leveled?' &nbsp; <b style="color:#7C5CE6">LEVEL UP!</b>':'')+'</div>'+
-      '<div>Balance <b>'+r.state.grit+' GRIT</b> &nbsp; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &nbsp; '+r.state.wins+'W '+r.state.losses+'L</div>'+
-      ((r.edge && r.edge>0) ? '<div style="color:#7C5CE6;font-weight:700;margin-top:2px">Rarity + level edge &middot; +'+r.edge+'% win chance</div>' : '');
+    ov.querySelector('.rscore').innerHTML =
+      '<div class="sp"><b style="color:'+(win?'#20A353':'#D8434B')+'">'+ys+'</b><span>You</span></div>'+
+      '<div class="vs">VS</div>'+
+      '<div class="sp"><b style="color:#3A424E">'+os+'</b><span>'+oName+'</span></div>';
+    ov.querySelector('.rdetails').innerHTML =
+      oName+' had <b>'+(o.power!=null?o.power:'?')+'</b> Pow &middot; <b>'+(o.speed!=null?o.speed:'?')+'</b> Spd &middot; <b>'+(o.stamina!=null?o.stamina:'?')+'</b> Sta<br>'+
+      'Balance <b>'+r.state.grit+' GRIT</b> &middot; Energy <b>'+r.state.energy+'/'+r.state.energy_max+'</b> &middot; <b>'+r.state.wins+'W '+r.state.losses+'L</b>'+
+      ((r.edge && r.edge>0) ? '<div class="edge">Rarity + level edge &middot; +'+r.edge+'% win chance</div>' : '');
+    ov.querySelector('.go').style.background = win ? 'linear-gradient(180deg,#4ECB7B,#28A353)' : 'linear-gradient(180deg,#F5828C,#E14B57)';
+    var _rc=ov.querySelector('.rcard'), _re=ov.querySelector('.re');
+    _rc.style.animation='none'; void _rc.offsetWidth; _rc.style.animation='';
+    _re.style.animation='none'; void _re.offsetWidth; _re.style.animation='';
     try{ revealOpponent(o); }catch(e){}
     var sn=document.getElementById('seed'); if(sn&&r.seed) sn.textContent=r.seed;
     ov.style.display='flex';
