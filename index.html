@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784317938";try{console.log("BullQuest build 1784317938");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784318797";try{console.log("BullQuest build 1784318797");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -493,13 +493,15 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-home .streak {
     display: flex; align-items: center; gap: 10px; margin-top: 13px;
     padding-top: 13px; border-top: 1px solid rgba(255,255,255,.14);
+    cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: 0 0 10px 10px;
   }
+  .bq-home .streak:active { opacity: .82; }
   .bq-home .streak .pips { display: flex; gap: 5px; flex: 1; }
   .bq-home .streak .pip {
     width: 30px; height: 34px; border-radius: 11px; display: grid; place-items: center;
-    background: rgba(255,255,255,.12); position: relative;
+    background: rgba(255,255,255,.12); position: relative; color: rgba(255,255,255,.42);
   }
-  .bq-home .streak .pip.on { background: linear-gradient(180deg, #FFC24B, #F5A623); box-shadow: 0 4px 10px rgba(245,166,35,.4); }
+  .bq-home .streak .pip.on { background: linear-gradient(180deg, #FFC24B, #F5A623); box-shadow: 0 4px 10px rgba(245,166,35,.4); color: #7a5104; }
   .bq-home .streak .pip.today { outline: 2px solid #fff; outline-offset: 2px; }
   .bq-home .streak .pip small { position: absolute; bottom: 3px; font-size: 8px; font-weight: 800; }
   .bq-home .streak .pip.on small { color: #7a5104; }
@@ -3106,13 +3108,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         </div>
       </div>
 
-      <div class="streak" aria-label="Login streak">
-        <div class="pips" aria-hidden="true">
-          <span class="pip on"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>1</small></span>
-          <span class="pip on"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>2</small></span>
-          <span class="pip on"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>3</small></span>
-          <span class="pip on"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>4</small></span>
-          <span class="pip on today"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="#7a5104"/></svg><small>5</small></span>
+      <div class="streak" id="bqStreakStrip" role="button" tabindex="0" aria-label="Login streak, tap to see reward ladder">
+        <div class="pips" id="bqStreakPips" aria-hidden="true">
+          <span class="pip on today"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="currentColor"/></svg><small>1</small></span>
+          <span class="pip"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="currentColor"/></svg><small class="d">2</small></span>
+          <span class="pip"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="currentColor"/></svg><small class="d">3</small></span>
+          <span class="pip"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="currentColor"/></svg><small class="d">4</small></span>
+          <span class="pip"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="currentColor"/></svg><small class="d">5</small></span>
         </div>
         <div class="lab"><i class="pico" style="--m:url('assets/icons/ui_streak.png');width:15px;height:15px;background:#fff;vertical-align:middle;margin-right:4px;opacity:.9"></i><b id="bqStreakLab" style="display:inline-block">1-day</b><span>streak</span></div>
       </div>
@@ -5482,6 +5484,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         return sb.from('profiles').select('username').eq('id',u.id).maybeSingle().then(function(p){
           populate((p&&p.data&&p.data.username)||'', ub);
           sb.rpc('get_state').then(function(r){ applyLiveState(r&&r.data); }).catch(function(){});
+          try{ bqClaimDailyLogin(); }catch(e){}   // daily login streak reward (once per session; server-authoritative)
           sb.rpc('ping_active').then(function(){}, function(){});   // analytics: record "active today" (once/user/day) - fire-and-forget (rpc builder has no .catch)
           if(window.bqArenaRefresh) window.bqArenaRefresh();
           renderBulls();
@@ -5627,16 +5630,113 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       var el=document.querySelector(sel); if(el) el.textContent=txt;
     });
   }
-  function bqStreak(){
-    var n=1;
-    try{
-      var last=localStorage.getItem('bq_last_day'), s=parseInt(localStorage.getItem('bq_streak')||'1',10);
-      var t=new Date(); t.setHours(0,0,0,0); var td=t.getTime();
-      if(last){ var diff=Math.round((td-parseInt(last,10))/86400000); n = diff===0 ? s : (diff===1 ? s+1 : 1); }
-      localStorage.setItem('bq_last_day', String(td)); localStorage.setItem('bq_streak', String(n));
-    }catch(e){}
-    return n;
+  // ---- Daily login streak (server-authoritative via claim_daily_login) ----
+  var bqLoginStreak = null, bqLoginClaimTried = false;
+  var STREAK_FLAME = '<svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2c3 4 6 6 6 11a6 6 0 0 1-12 0c0-2 1-3 1-3 0 2 2 3 3 2-2-3 0-7 2-9z" fill="currentColor"/></svg>';
+  function renderStreak(n){
+    n = Math.max(1, n||1);
+    var lab=document.getElementById('bqStreakLab'); if(lab) lab.textContent = n+'-day';
+    var wrap=document.getElementById('bqStreakPips'); if(!wrap) return;
+    var count=5, start=(n<count)?1:(n-count+1), html='';
+    for(var i=0;i<count;i++){ var day=start+i, on=day<=n, today=day===n;
+      html+='<span class="pip'+(on?' on':'')+(today?' today':'')+'">'+STREAK_FLAME+'<small'+(on?'':' class="d"')+'>'+day+'</small></span>'; }
+    wrap.innerHTML=html;
   }
+  function ensureStreakCss(){
+    if(document.getElementById('bq-streak-css')) return;
+    var st=document.createElement('style'); st.id='bq-streak-css';
+    st.textContent=
+      '.bqsr{background:#fff;border-radius:24px;padding:26px 24px 22px;max-width:318px;width:88vw;text-align:center;box-shadow:0 24px 60px rgba(20,16,40,.34);animation:bqsrIn .32s cubic-bezier(.2,.9,.3,1.25) both;position:relative;overflow:hidden}'+
+      '.bqsr.mile{background:linear-gradient(180deg,#FFF6E1,#FFFFFF)}'+
+      '.bqsr-flame{font-size:52px;line-height:1;display:inline-block;animation:bqsrFlame 1.5s ease-in-out infinite;filter:drop-shadow(0 6px 14px rgba(245,140,20,.4))}'+
+      '.bqsr-badge{display:inline-block;margin:10px 0 0;padding:5px 13px;border-radius:999px;background:linear-gradient(90deg,#F5A623,#FF7A00);color:#fff;font-size:11px;font-weight:900;letter-spacing:1.2px;box-shadow:0 4px 12px rgba(245,120,0,.4)}'+
+      '.bqsr-reward{display:flex;align-items:center;justify-content:center;gap:7px;font-size:42px;font-weight:900;color:#20143A;margin-top:12px;line-height:1;animation:bqsrPop .5s .12s both}'+
+      '.bqsr-reward img{width:34px;height:34px;object-fit:contain}'+
+      '.bqsr-grit{font-size:12px;font-weight:800;color:#B0A0D8;letter-spacing:3px;margin-top:3px}'+
+      '.bqsr-title{margin:13px 0 2px;font-size:20px;color:#20143A;font-weight:800}'+
+      '.bqsr-sub{margin:0;font-size:13px;color:#6B7280;font-weight:600}'+
+      '.bqsr-go{margin-top:18px;width:100%;padding:13px;border:0;border-radius:14px;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}'+
+      '@keyframes bqsrIn{from{opacity:0;transform:translateY(18px) scale(.9)}to{opacity:1;transform:none}}'+
+      '@keyframes bqsrPop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}'+
+      '@keyframes bqsrFlame{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.14) rotate(4deg)}}'+
+      '.bqsl-list{display:flex;flex-direction:column;gap:7px;margin:14px 0 2px;max-height:44vh;overflow:auto}'+
+      '.bqsl-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#F6F5FB;border:1.5px solid transparent}'+
+      '.bqsl-row.done{opacity:.5}'+
+      '.bqsl-row.today{background:#F1ECFC;border-color:#7C5CE6}'+
+      '.bqsl-day{font-size:13px;font-weight:800;color:#20143A;flex:none;width:52px}'+
+      '.bqsl-rw{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:900;color:#6B31E6}'+
+      '.bqsl-rw img{width:16px;height:16px;object-fit:contain}'+
+      '.bqsl-tag{margin-left:auto;font-size:10px;font-weight:800;padding:3px 9px;border-radius:999px;background:linear-gradient(90deg,#F5A623,#FF7A00);color:#fff;letter-spacing:.4px}'+
+      '.bqsl-tag.mo{background:linear-gradient(90deg,#7C5CE6,#6B31E6)}'+
+      '.bqsl-chk{margin-left:auto;font-size:12px;font-weight:900;color:#2FBF71}'+
+      '.bqsl-chk.now{color:#6B31E6}'+
+      '.bqsl-note{font-size:12px;color:#9AA6B2;font-weight:600;text-align:center;margin:10px 4px 0;line-height:1.5}';
+    document.head.appendChild(st);
+  }
+  function showStreakReward(res){
+    ensureStreakCss();
+    var mile = !!(res.week || res.month);
+    var badge = res.month ? '30-DAY MILESTONE' : (res.week ? 'WEEKLY BONUS' : '');
+    var sub = res.month ? 'Monthly loyalty bonus unlocked. Legendary dedication.'
+            : (res.week ? 'One full week. Keep the fire going for even more.'
+            : 'Come back tomorrow for an even bigger reward.');
+    var c = bqCard('<div class="bqsr'+(mile?' mile':'')+'">'+
+        '<div class="bqsr-flame">🔥</div>'+
+        (badge?'<div class="bqsr-badge">'+badge+'</div>':'')+
+        '<div class="bqsr-reward"><img src="assets/icons/gem_grit.png" alt="">+'+res.reward+'</div>'+
+        '<div class="bqsr-grit">GRIT</div>'+
+        '<h3 class="bqsr-title">'+res.streak+'-day streak!</h3>'+
+        '<p class="bqsr-sub">'+sub+'</p>'+
+        '<button type="button" class="bqsr-go">'+(mile?'Amazing!':'Keep it up')+'</button>'+
+      '</div>', 10050);
+    c.el.querySelector('.bqsr-go').addEventListener('click', c.close);
+    setTimeout(function(){ try{ c.close(); }catch(e){} }, mile?6000:3800);
+  }
+  function showLoginLadder(){
+    ensureStreakCss();
+    var n = bqLoginStreak||1;
+    if(!sb) return;
+    sb.rpc('login_reward_ladder').then(function(r){
+      var rows=(r&&r.data)||[];
+      var list=rows.map(function(x){
+        var cls = x.day<n?'done':(x.day===n?'today':'');
+        var right;
+        if(x.day%7===0) right='<span class="bqsl-tag">+100 WEEKLY</span>';
+        else if(x.day<n) right='<span class="bqsl-chk">✓</span>';
+        else if(x.day===n) right='<span class="bqsl-chk now">TODAY</span>';
+        else right='';
+        return '<div class="bqsl-row '+cls+'"><span class="bqsl-day">Day '+x.day+'</span>'+
+          '<span class="bqsl-rw"><img src="assets/icons/gem_grit.png" alt="">+'+x.reward+'</span>'+right+'</div>';
+      }).join('');
+      var c=bqCard('<div class="bqfb" style="max-width:404px;text-align:left">'+
+        '<div style="text-align:center;margin-bottom:2px"><div style="font-size:40px;line-height:1">🔥</div>'+
+        '<h3 style="margin:6px 0 2px">'+n+'-day streak</h3>'+
+        '<p class="sub" style="margin:0">Log in every day to keep it alive. The longer your streak, the more GRIT you earn.</p></div>'+
+        '<div class="bqsl-list">'+list+'</div>'+
+        '<p class="bqsl-note">Hit day 30 for a +400 GRIT bonus. Miss a day and the streak resets to day 1.</p>'+
+        '<button type="button" class="send" style="width:100%;margin-top:14px">Got it</button>'+
+      '</div>');
+      c.el.querySelector('.send').addEventListener('click', c.close);
+    }, function(){});
+  }
+  function bqClaimDailyLogin(){
+    if(bqLoginClaimTried || !sb) return; bqLoginClaimTried=true;
+    sb.rpc('claim_daily_login').then(function(r){
+      var res=r&&r.data; if(!res||res.error) return;
+      if(typeof res.streak==='number'){ bqLoginStreak=res.streak; renderStreak(res.streak); }
+      if(res.claimed && res.reward>0){
+        if(typeof res.grit==='number') setGrit(res.grit);
+        if(res.week || res.month){ try{ showStreakReward(res); }catch(e){ if(typeof showToast==='function') showToast('🔥 '+res.streak+'-day streak, +'+res.reward+' GRIT'); } }
+        else if(typeof showToast==='function') showToast('🔥 '+res.streak+'-day streak, +'+res.reward+' GRIT');
+      }
+    }, function(){});
+  }
+  window.bqShowLoginLadder = showLoginLadder;
+  // make the home streak strip tappable -> reward ladder
+  (function(){ var s=document.getElementById('bqStreakStrip'); if(!s) return;
+    s.addEventListener('click', function(){ showLoginLadder(); });
+    s.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); showLoginLadder(); } });
+  })();
   function applyLiveState(s){
     if(!s||s.error) return;
     setGrit(s.grit);
@@ -5650,11 +5750,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       }
       var hr=document.querySelector('#view-home .rankhex span'); if(hr) hr.textContent=s.bull.level;
     }
-    // real login streak (client-side, honest)
-    var n=bqStreak();
-    var sl=document.getElementById('bqStreakLab'); if(sl) sl.textContent=n+(n===1?'-day':'-day');
-    var pips=document.querySelectorAll('#view-home .streak .pip');
-    for(var i=0;i<pips.length;i++){ pips[i].classList.toggle('on', i < Math.min(n,pips.length)); pips[i].classList.toggle('today', i === Math.min(n,pips.length)-1); }
+    // login streak is server-authoritative now (claim_daily_login); rendered by bqClaimDailyLogin/renderStreak on load.
+    if(bqLoginStreak!=null) renderStreak(bqLoginStreak);
     var ss=document.getElementById('spinState'), sn=document.getElementById('spinSub');
     if(ss) ss.textContent = s.spun_today ? 'Come back tomorrow' : 'Free spin ready';
     if(sn) sn.textContent = s.spun_today ? 'Your next free spin unlocks tomorrow.' : 'Win 10 to 100 GRIT, once a day.';
@@ -6148,7 +6245,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         '<div style="text-align:center"><div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#7C5CE6">INVITE &amp; EARN</div>'+
         '<h3 style="margin:2px 0 4px;font-size:22px">Grow the herd</h3>'+
         '<p class="sub" style="margin:0 0 14px">Earn <b style="color:#20143A">100 GRIT</b> for every friend who joins and plays to level 2 (up to 50), and they get <b style="color:#20143A">50 GRIT</b> too.</p></div>'+
-        '<div style="display:flex;gap:8px;margin-bottom:14px">'+stat(me.invites||0,'Invited')+stat(me.grit_earned||0,'GRIT earned','#6B31E6')+stat(me.rank?('#'+me.rank):'—','Rank')+'</div>'+
+        '<div style="display:flex;gap:8px;margin-bottom:14px">'+stat(me.invites||0,'Invited')+stat(me.grit_earned||0,'GRIT earned','#6B31E6')+stat(me.rank?('#'+me.rank):'-','Rank')+'</div>'+
         '<div style="display:flex;gap:8px;margin-bottom:10px"><input id="bqRefLink" readonly value="'+link+'" style="flex:1;min-width:0;padding:12px 13px;border:1.5px solid #E6E8EF;border-radius:12px;font-size:13px;font-family:inherit;color:#4B3B7A"><button type="button" id="bqRefCopy" style="flex:none;padding:12px 16px;border:0;border-radius:12px;background:#20143A;color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit">Copy</button></div>'+
         (navigator.share?'<button type="button" id="bqShNative" style="width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-weight:800;font-size:14.5px;cursor:pointer;font-family:inherit;margin-bottom:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 18px rgba(107,49,230,.3)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share my link</button>':'')+
         '<div style="display:flex;gap:8px;margin-bottom:16px">'+
