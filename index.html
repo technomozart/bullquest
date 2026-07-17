@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784247404";try{console.log("BullQuest build 1784247404");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784250085";try{console.log("BullQuest build 1784250085");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -57,6 +57,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* comfortable finger-sized tap targets for the small controls */
   .fchip,.wchip,.bqmkt-chip,.bqmkt-sort,.extraspin{min-height:40px}
 }
+/* keyboard focus rings for body-injected chrome + modals (these live outside the scoped focus rules) */
+.bq-acct .ab, #bqFbBtn, #bqHelpBtn, #bqAiBtn, #bqSocial a,
+#view-airdrop button, #view-airdrop a, #view-airdrop input,
+#view-quests button, #view-quests a,
+.swsheet button, .bqfb-actions button, .bqfb-seg button, .bqls-go, .bqls-cancel{outline:none}
+.bq-acct .ab:focus-visible, #bqFbBtn:focus-visible, #bqHelpBtn:focus-visible, #bqAiBtn:focus-visible, #bqSocial a:focus-visible,
+#view-airdrop button:focus-visible, #view-airdrop a:focus-visible, #view-airdrop input:focus-visible,
+#view-quests button:focus-visible, #view-quests a:focus-visible,
+.swsheet button:focus-visible, .bqfb-actions button:focus-visible, .bqfb-seg button:focus-visible,
+.bqls-go:focus-visible, .bqls-cancel:focus-visible{outline:3px solid var(--cta,#4DA6F5);outline-offset:2px}
 
 /* ===== coming-soon toast (lives inside the sticky bottom nav; stays out of fixed layout) ===== */
 .bq-toast{position:absolute;left:12px;right:12px;bottom:calc(100% + 12px);z-index:30;display:flex;align-items:center;gap:10px;background:#1C1F24;color:#fff;border-radius:14px;padding:12px 12px 12px 16px;box-shadow:0 14px 32px rgba(20,10,50,.4);opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease;font-family:system-ui,"Segoe UI",Roboto,sans-serif;pointer-events:none}
@@ -3076,9 +3086,11 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
             Airdrop unlocks at $BULL launch
           </div>
           <button type="button" data-bqgo="view-airdrop" style="margin-top:12px;width:100%;border:0;background:linear-gradient(180deg,#FFD976,#F0B429);color:#5a3d00;font-weight:800;font-size:13.5px;padding:11px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">&#129747; Claim your $BULL airdrop &rsaquo;</button>
-          <button type="button" id="bqLbBtn" style="margin-top:11px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:14px;height:14px;background:#fff"></i>Airdrop leaderboard &rsaquo;</button>
-          <button type="button" id="bqInviteBtn" style="margin-top:11px;margin-left:8px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_share.png');width:14px;height:14px;background:#fff"></i>Bring the herd</button>
-          <button type="button" data-bqgo="view-quests" style="margin-top:11px;margin-left:8px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:8px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_quests.png');width:14px;height:14px;background:#fff"></i>Earn GRIT &middot; Quests</button>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:11px">
+            <button type="button" id="bqLbBtn" style="border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:14px;height:14px;background:#fff"></i>Leaderboard</button>
+            <button type="button" id="bqInviteBtn" style="border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_share.png');width:14px;height:14px;background:#fff"></i>Bring the herd</button>
+            <button type="button" data-bqgo="view-quests" style="border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_quests.png');width:14px;height:14px;background:#fff"></i>Quests</button>
+          </div>
         </div>
       </div>
 
@@ -4006,7 +4018,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 <!-- ================= VIEW: AIRDROP ================= -->
 <div class="bq-view" id="view-airdrop" hidden>
 <style id="bq-air-css">
-#view-airdrop{--v:#6B31E6;--ink:#20143A;--gold:#F0B429;--faint:#8A8FA3;font-family:inherit;color:var(--ink);background:#F4F5F8;min-height:100vh}
+#view-airdrop{--v:#6B31E6;--ink:#1C1F24;--gold:#F0B429;--faint:#7A8794;font-family:inherit;color:var(--ink);background:#F6F8FB;min-height:100vh}
 #view-airdrop *{box-sizing:border-box}
 #view-airdrop .bqair{max-width:520px;margin:0 auto;padding:0 0 96px}
 #view-airdrop .bqair-hero{background:linear-gradient(160deg,#7A3BF0,#6B31E6 60%,#5B27D6);color:#fff;padding:18px 20px 26px;border-radius:0 0 26px 26px;position:relative}
@@ -4100,7 +4112,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 <!-- ================= VIEW: QUESTS ================= -->
 <div class="bq-view" id="view-quests" hidden>
 <style id="bq-qst-css">
-#view-quests{--v:#6B31E6;--ink:#20143A;--faint:#8A8FA3;font-family:inherit;color:var(--ink);background:#F4F5F8;min-height:100vh}
+#view-quests{--v:#6B31E6;--ink:#1C1F24;--faint:#7A8794;font-family:inherit;color:var(--ink);background:#F6F8FB;min-height:100vh}
 #view-quests *{box-sizing:border-box}
 #view-quests .qst{max-width:520px;margin:0 auto;padding:0 0 96px}
 #view-quests .qst-hero{background:linear-gradient(160deg,#7A3BF0,#6B31E6 60%,#5B27D6);color:#fff;padding:18px 20px 24px;border-radius:0 0 26px 26px;position:relative}
