@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784250232";try{console.log("BullQuest build 1784250232");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784250623";try{console.log("BullQuest build 1784250623");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -892,9 +892,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
   .bq-arena .disciplines { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
   .bq-arena .chip {
-    appearance: none; border: 2px solid transparent; background: #fff; border-radius: 16px;
+    appearance: none; border: 2px solid var(--hairline); background: #fff; border-radius: 16px;
     padding: 8px 6px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px;
-    cursor: pointer; min-height: 56px; box-shadow: 0 4px 14px rgba(30,40,80,.06);
+    cursor: pointer; min-height: 56px; box-shadow: none;
     transition: transform .1s ease, border-color .15s ease, box-shadow .15s ease; text-align: center;
   }
   .bq-arena .chip:hover { transform: translateY(-2px); }
@@ -923,7 +923,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   .bq-arena .stance .stname { font-size: 13px; font-weight: 800; color: var(--ink); line-height: 1; }
   .bq-arena .stance .sttip { font-size: 10px; font-weight: 700; color: var(--faint); }
-  .bq-arena .stance[aria-pressed="true"] { border-color: var(--speed); background: #F3EEFE; box-shadow: 0 8px 20px rgba(124,92,230,.18); }
+  .bq-arena .stance[aria-pressed="true"] { border-color: var(--speed); background: #F3EEFE; box-shadow: 0 8px 20px rgba(124,92,230,.20); }
   .bq-arena .stance[aria-pressed="true"] .sicon { background: #E6DBFB; }
   .bq-arena .rps-note { text-align: center; font-size: 11px; color: var(--faint); font-weight: 600; margin: 8px 4px 16px; }
   .bq-arena .rps-note b { color: var(--speed); }
@@ -989,8 +989,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
   .bq-arena .cta {
     appearance: none; border: none; width: 100%; height: 54px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 17px; font-weight: 800;
-    letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 24px rgba(77,166,245,.42);
+    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77,166,245,.42);
     display: flex; align-items: center; justify-content: center; gap: 9px;
     transition: transform .1s ease, background .15s ease;
   }
@@ -1641,8 +1641,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* primary CTA */
   .bq-sectors .cta {
     appearance: none; border: none; width: 100%; height: 56px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 17px; font-weight: 800;
-    letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 24px rgba(77,166,245,.42);
+    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77,166,245,.42);
     display: flex; align-items: center; justify-content: center; gap: 9px; margin-bottom: 4px;
     transition: transform .1s ease, background .15s ease;
   }
@@ -2428,9 +2428,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* ---------- spin controls ---------- */
   .bq-spin .controls { position: relative; z-index: 3; margin: 20px 6px 2px; }
   .bq-spin .spinbtn {
-    appearance: none; border: none; width: 100%; height: 58px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 19px; font-weight: 900;
-    letter-spacing: .6px; cursor: pointer; box-shadow: 0 12px 26px rgba(77, 166, 245, .5);
+    appearance: none; border: none; width: 100%; height: 54px; border-radius: 999px;
+    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77, 166, 245, .42);
     display: flex; align-items: center; justify-content: center; gap: 10px;
     transition: transform .1s ease, background .15s ease, box-shadow .15s ease;
   }
@@ -2489,7 +2489,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-spin .rc-title { font-size: 24px; font-weight: 900; letter-spacing: -.5px; color: var(--ink); margin: 6px 0 2px; line-height: 1.05; }
   .bq-spin .rc-sub { font-size: 13px; font-weight: 600; color: var(--body); margin: 0 0 18px; }
   .bq-spin .rc-collect {
-    appearance: none; border: none; width: 100%; height: 52px; border-radius: 999px;
+    appearance: none; border: none; width: 100%; height: 54px; border-radius: 999px;
     background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
     cursor: pointer; box-shadow: 0 10px 22px rgba(77, 166, 245, .42);
     display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -2499,9 +2499,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-spin .rc-collect:active { transform: scale(.98); }
   .bq-spin .rc-dismiss {
     appearance: none; border: none; background: transparent; cursor: pointer;
-    margin-top: 10px; color: var(--faint); font-size: 12.5px; font-weight: 700;
+    margin-top: 10px; color: var(--body); font-size: 12.5px; font-weight: 700;
   }
-  .bq-spin .rc-dismiss:hover { color: var(--body); }
+  .bq-spin .rc-dismiss:hover { color: var(--ink); }
 
   /* ---------- content sheet ---------- */
   .bq-spin .sheet {
