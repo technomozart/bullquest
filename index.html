@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784390102";try{console.log("BullQuest build 1784390102");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784393743";try{console.log("BullQuest build 1784393743");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -4329,7 +4329,19 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
   var DISC = { pow:'clash', spd:'chase', sta:'standoff' };
   var energyEl = root.querySelector('.energy');
-  var busy = false;
+  var busy = false, fighting = false;
+  // once a fight is revealed we LOCK the opponent until the result is dismissed, so nothing (nav refresh, init,
+  // post-result reset, a stray state fetch) can swap the opponent's name/bull mid-fight.
+  function bqWait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  function bqPreloadBull(bid){ return new Promise(function(res){ if(!bid){ res(); return; } var im=new Image(), done=false, fin=function(){ if(done) return; done=true; res(); }; im.onload=fin; im.onerror=fin; im.src='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+bid+'.webp'; setTimeout(fin, 1200); }); }
+  // pre-fight the opponent is an unknown "?" (never a stale bull left over from the last fight)
+  function setOppMystery(on){
+    var mw=document.querySelector('#view-arena .fighter.opp .mascot-wrap'); if(!mw) return;
+    mw.style.position='relative';
+    var q=mw.querySelector('.oppq'), img=mw.querySelector('img.bull');
+    if(on){ if(!q){ q=document.createElement('div'); q.className='oppq'; q.textContent='?'; q.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:58px;font-weight:900;color:rgba(154,166,178,.45);pointer-events:none;z-index:2'; mw.appendChild(q); } q.style.display='flex'; if(img) img.style.opacity='0'; }
+    else { if(q) q.style.display='none'; if(img) img.style.opacity='1'; }
+  }
   function setEnergy(e, mx){ if(energyEl){ energyEl.innerHTML = energyEl.innerHTML.replace(/\d+\s*\/\s*\d+/, e+'/'+mx); energyEl.setAttribute('aria-label','Energy: '+e+' of '+mx); var rf=energyEl.querySelector('.erf'); if(rf) rf.style.display=(e<mx)?'':'none'; } }
   // Tap the energy pill to buy a full refill with SOL (also auto-offered when a duel runs out of energy).
   if(energyEl){
@@ -4339,8 +4351,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   }
 
   function refreshFromServer(){
-    if(!(window.bqGame && window.bqGame.ready())) return;
+    if(fighting || !(window.bqGame && window.bqGame.ready())) return;
     window.bqGame.getState().then(function(s){
+      if(fighting) return;   // a fight started while this state fetch was in flight; do not touch the locked opponent
       if(!s || s.error || !s.bull) return;
       baseOdds = (typeof s.bull.win_odds === 'number') ? s.bull.win_odds : 50;
       you = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
@@ -4368,6 +4381,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var opl=root.querySelector('.fighter.opp .hexbadge span'); if(opl) opl.textContent='?';
       var oph=root.querySelector('.fighter.opp .hexbadge'); if(oph) oph.style.setProperty('--hc','#9AA6B2');
       var opr=root.querySelector('.fighter.opp .rarity'); if(opr) opr.innerHTML='<span class="dot" style="background:#9AA6B2"></span>Near your level';
+      setOppMystery(true);
       recalc();
     }).catch(function(){});
   }
@@ -4400,7 +4414,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var otier=(window.bqGame&&o.rarity_rank!=null)?window.bqGame.tier(o.rarity_rank):null;
       var orh=oppF.querySelector('.hexbadge'); if(orh&&otier) orh.style.setProperty('--hc', otier.c);
       var orr=oppF.querySelector('.rarity'); if(orr&&otier) orr.innerHTML='<span class="dot" style="background:'+otier.c+'"></span>'+otier.l;
-      var oimg=oppF.querySelector('.mascot-wrap img.bull'); if(oimg&&o.bull_id){ oimg.alt=String(o.name); oimg.src='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+o.bull_id+'.webp'; }
+      var oimg=oppF.querySelector('.mascot-wrap img.bull'); if(oimg&&o.bull_id){ var newSrc='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+o.bull_id+'.webp'; oimg.alt=String(o.name); if(oimg.getAttribute('src')!==newSrc) oimg.src=newSrc; if(oimg.complete&&oimg.naturalWidth>0){ oimg.style.opacity='1'; setOppMystery(false); } else { oimg.style.opacity='0'; oimg.onload=function(){ oimg.style.opacity='1'; setOppMystery(false); }; oimg.onerror=function(){ oimg.style.opacity='1'; setOppMystery(false); }; } }
     }
   }
   // short clash animation: the two bulls lunge at each other with impact flashes (~1.7s) before the result
@@ -4469,9 +4483,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         var _f=op.querySelector('.fname'); if(_f) _f.textContent='Challenger';
         var _l=op.querySelector('.hexbadge span'); if(_l) _l.textContent='?';
         var _h=op.querySelector('.hexbadge'); if(_h) _h.style.setProperty('--hc','#9AA6B2');
-        var _r=op.querySelector('.rarity'); if(_r) _r.innerHTML='<span class="dot" style="background:#9AA6B2"></span>Near your level'; };
-      ov.querySelector('.go').addEventListener('click', function(){ ov.style.display='none'; hideOpp(); setTimeout(refreshFromServer, 20); });
-      ov.addEventListener('click', function(e){ if(e.target===ov){ ov.style.display='none'; hideOpp(); setTimeout(refreshFromServer, 20); } });
+        var _r=op.querySelector('.rarity'); if(_r) _r.innerHTML='<span class="dot" style="background:#9AA6B2"></span>Near your level';
+        setOppMystery(true); };
+      var dismiss=function(){ ov.style.display='none'; fighting=false; hideOpp(); setTimeout(refreshFromServer, 20); };  // unlock + reset only now
+      ov.querySelector('.go').addEventListener('click', dismiss);
+      ov.addEventListener('click', function(e){ if(e.target===ov){ dismiss(); } });
     }
     var win=r.win;
     var streak=0; try{ streak=parseInt(localStorage.getItem('bq_ws')||'0',10)||0; }catch(e){}
@@ -4512,15 +4528,22 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
   chargeBtn.addEventListener('click', function () {
     chargeBtn.classList.remove('pop'); void chargeBtn.offsetWidth; chargeBtn.classList.add('pop');
-    if(busy) return;
+    if(busy || fighting) return;
     if(!(window.bqGame && window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
     busy=true;
     window.bqGame.session().then(function(has){
       if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
       return window.bqGame.resolve(DISC[state.stat], state.stance, 20)
-        .then(function(r){ if(r&&r.opponent) revealOpponent(r.opponent); return playFightAnim().then(function(){ showResult(r); }); })
-        .then(function(){ setTimeout(refreshFromServer, 60); })  // reset the next setup: hide the opponent again, apply level-ups/stat changes
+        .then(function(r){
+          fighting = true;                                             // LOCK the opponent for the whole sequence
+          if(r&&r.opponent) revealOpponent(r.opponent);
+          return bqPreloadBull(r&&r.opponent&&r.opponent.bull_id)      // load the opponent's bull first, no mid-fight image swap
+            .then(function(){ return bqWait(850); })                   // hold on the revealed challenger so you clearly see who you fight
+            .then(function(){ return playFightAnim(); })
+            .then(function(){ showResult(r); });                       // opponent stays put: reveal -> clash -> result; only reset on Continue
+        })
         .catch(function(e){
+          fighting = false;
           if(e && e.code === 'not enough energy'){ if(window.bqToast) window.bqToast('Out of energy. It refills on its own, 1 point every 15 minutes.'); }
           else if(window.bqToast) window.bqToast((e&&e.message)||"Duel didn't land, try again.");
         });
@@ -4529,7 +4552,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
   recalc();
   window.bqArenaRefresh = refreshFromServer;
-  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-arena"]')){ setTimeout(refreshFromServer, 80); setTimeout(maybeArenaGuide, 420); } });
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-arena"]')){ fighting=false; setTimeout(refreshFromServer, 80); setTimeout(maybeArenaGuide, 420); } });
   (function waitGame(n){ if(window.bqGame && window.bqGame.ready()){ refreshFromServer(); } else if((n||0)<80){ setTimeout(function(){ waitGame((n||0)+1); }, 80); } })(0);
 })();
 
