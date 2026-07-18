@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784322956";try{console.log("BullQuest build 1784322956");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card.png"></head><body><script>window.BQ_BUILD="1784336542";try{console.log("BullQuest build 1784336542");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -201,6 +201,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .bq-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
 #view-landing .icosq{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
 #view-landing .icosq svg{width:30px;height:30px}
+#view-landing .icosq img{width:48px;height:48px;object-fit:contain;display:block}
 #view-landing .bq-steps .num{font-size:12px;font-weight:800;color:var(--faint);letter-spacing:1px;margin-bottom:6px}
 #view-landing .bq-card h3{font-size:19px;margin-bottom:8px;color:var(--ink)}
 #view-landing .bq-card p{color:var(--body);font-size:14.5px}
@@ -2677,25 +2678,25 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     </div>
     <div class="bq-steps">
       <div class="bq-card">
-        <div class="icosq" style="background:#EAF3E6"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 6.6H21l-5.3 3.9 2 6.5L12 16.3 6.3 20l2-6.5L3 9.6h6.6z" fill="#43C06A"/></svg></div>
+        <div class="icosq" style="background:#EAF3E6"><img src="assets/icons/step_free.png" alt="" width="48" height="48" loading="lazy" decoding="async"></div>
         <div class="num">STEP 01</div>
         <h3>Get your free Bull</h3>
         <p>Sign up with your email and we hand you a free Genesis bull on the spot - no wallet, no purchase. Yours from the very first click.</p>
       </div>
       <div class="bq-card">
-        <div class="icosq" style="background:#E4EEF3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v4l-4 5 4 5v4H6v-4l4-5-4-5V3z" fill="#4DA6F5"/></svg></div>
+        <div class="icosq" style="background:#E4EEF3"><img src="assets/icons/step_train.png" alt="" width="48" height="48" loading="lazy" decoding="async"></div>
         <div class="num">STEP 02</div>
         <h3>Train &amp; quest</h3>
         <p>Earn GRIT (your in-game coins) from daily quests and the spin, then level up your bull in the Arena to raise POWER, SPEED and STAMINA.</p>
       </div>
       <div class="bq-card">
-        <div class="icosq" style="background:#F3ECFB"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z" fill="#7C5CE6"/></svg></div>
+        <div class="icosq" style="background:#F3ECFB"><img src="assets/icons/step_arena.png" alt="" width="48" height="48" loading="lazy" decoding="async"></div>
         <div class="num">STEP 03</div>
         <h3>Charge into the Arena</h3>
         <p>Pick your discipline and stance, then charge into fast Arena duels.</p>
       </div>
       <div class="bq-card">
-        <div class="icosq" style="background:#FDF0DA"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 5v10l-8 5-8-5V7z" fill="#F5A623"/><path d="M12 6.5l4.6 2.8v6.4L12 17.5 7.4 15V9.3z" fill="#FDE3B4"/></svg></div>
+        <div class="icosq" style="background:#FDF0DA"><img src="assets/icons/step_trade.png" alt="" width="48" height="48" loading="lazy" decoding="async"></div>
         <div class="num">STEP 04</div>
         <h3>Own &amp; trade</h3>
         <p>Every stat and win your bull earns stays locked to your account. On-chain ownership and open trading are on the roadmap.</p>
