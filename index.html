@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784419515";try{console.log("BullQuest build 1784419515");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784422767";try{console.log("BullQuest build 1784422767");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -7310,6 +7310,60 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         }).catch(function(){});
     }catch(e){}
   })();
+  // ===== Telegram Mini App integration (only ever runs INSIDE Telegram; the plain web load is untouched) =====
+  function bqIsTelegram(){
+    try{
+      if(window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initData) return true;
+      if(/tgWebApp/i.test(location.hash)) return true;
+      if(window.TelegramWebviewProxy) return true;
+    }catch(e){}
+    return false;
+  }
+  function bqLoadTgSdk(){ return new Promise(function(res){
+    if(window.Telegram&&window.Telegram.WebApp) return res(window.Telegram.WebApp);
+    var s=document.createElement('script'); s.src='https://telegram.org/js/telegram-web-app.js';
+    s.onload=function(){ res((window.Telegram&&window.Telegram.WebApp)||null); };
+    s.onerror=function(){ res(null); };
+    document.head.appendChild(s);
+    setTimeout(function(){ res((window.Telegram&&window.Telegram.WebApp)||null); }, 4000);
+  }); }
+  function bqApplyTgLayout(WA){
+    try{
+      document.documentElement.classList.add('in-telegram');
+      var top=0, bot=0;
+      try{ var c=WA.contentSafeAreaInset||{}; top=+c.top||0; bot=+c.bottom||0; }catch(e){}
+      try{ var s2=WA.safeAreaInset||{}; top=Math.max(top,+s2.top||0); bot=Math.max(bot,+s2.bottom||0); }catch(e){}
+      var st=document.getElementById('bq-tg-css'); if(!st){ st=document.createElement('style'); st.id='bq-tg-css'; document.head.appendChild(st); }
+      st.textContent='html.in-telegram #view-home,html.in-telegram #view-arena,html.in-telegram #view-airdrop,html.in-telegram #view-quests{min-height:var(--tg-viewport-stable-height,100dvh)}'
+        +'html.in-telegram .nav{padding-bottom:calc('+bot+'px + env(safe-area-inset-bottom,0px))}'
+        +(top>0?'html.in-telegram body{padding-top:'+top+'px}':'');
+    }catch(e){}
+  }
+  function bqTelegramBoot(client){ return new Promise(function(resolve){
+    if(!bqIsTelegram()) return resolve();
+    bqLoadTgSdk().then(function(WA){
+      window.bqInTelegram=true;
+      if(!WA){ return resolve(); }
+      window.bqTgWebApp=WA;
+      try{ WA.ready(); }catch(e){}
+      try{ WA.expand(); }catch(e){}
+      try{ WA.disableVerticalSwipes&&WA.disableVerticalSwipes(); }catch(e){}
+      try{ WA.enableClosingConfirmation&&WA.enableClosingConfirmation(); }catch(e){}
+      bqApplyTgLayout(WA);
+      try{ ['safeAreaChanged','contentSafeAreaChanged','viewportChanged','themeChanged'].forEach(function(ev){ WA.onEvent&&WA.onEvent(ev, function(){ bqApplyTgLayout(WA); }); }); }catch(e){}
+      if(!WA.initData){ return resolve(); }   // in Telegram but no signed data -> fall through to normal flow
+      client.auth.getSession().then(function(s){
+        if(s&&s.data&&s.data.session) return resolve();   // already signed in this session
+        var body={ init_data: WA.initData };
+        try{ var sp=WA.initDataUnsafe&&WA.initDataUnsafe.start_param; if(sp) body.link_code=sp; }catch(e){}
+        fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify(body)})
+          .then(function(r){ return r.json(); })
+          .then(function(j){ if(j&&j.session){ return client.auth.setSession(j.session).then(function(){ resolve(); }, function(){ resolve(); }); } resolve(); })
+          .catch(function(){ resolve(); });
+      }, function(){ resolve(); });
+    });
+  }); }
+
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
     sb=window.supabase.createClient(URL_,KEY_);
@@ -7331,13 +7385,17 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     })();
     // On load, restore the view the user was last on (sessionStorage) instead of always jumping into the game.
     // A fresh visit or a refresh on the landing keeps them on the landing; a refresh mid-game restores that view.
+    bqTelegramBoot(sb).then(function(){
     sb.auth.getSession().then(function(s){
       if(s.data.session){
         loadAndShow(false).then(function(){
           var last; try{ last=sessionStorage.getItem('bq_view'); }catch(e){}
-          if(last && last!=='view-landing' && document.getElementById(last) && window.bqGo) window.bqGo(last);
+          // inside Telegram, land straight in the game (skip restoring the marketing landing)
+          if(window.bqInTelegram){ if(window.bqGo) window.bqGo((last&&last!=='view-landing'&&document.getElementById(last))?last:'view-home'); }
+          else if(last && last!=='view-landing' && document.getElementById(last) && window.bqGo) window.bqGo(last);
         }).catch(logErr);
       } else { try{ maybeShowRefBanner(); }catch(e){} }
+    });
     });
   })();
 
