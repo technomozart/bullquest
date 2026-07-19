@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784426845";try{console.log("BullQuest build 1784426845");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784430596";try{console.log("BullQuest build 1784430596");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -5739,41 +5739,59 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     }, function(){});
   }
   checkGoogleEnabled();
-  // ---- Telegram website login (official Login Widget) -> tg-auth. Passwordless; same synced account as the
-  //      Mini App and the web. If the caller is already signed in, it LINKS Telegram to that account (no dup). ----
+  // ---- Telegram passwordless login / link via the BOT (no phone number ever). "Continue with Telegram" opens the
+  //      bot; the bot DMs the user a one-tap login link (bullquest.fun/?tgl=...) that tg-auth exchanges for a session
+  //      on ONE synced account (Mini App + web). Already signed in -> ?start=link_<code> so the bot binds Telegram to
+  //      the current account. We never ask for a phone or password because the user is already logged into Telegram. --
   var BQ_TG_BOT='BullQuestSol_bot';
-  window.bqTgWidgetAuth=function(user){
-    if(!sb||!user||!user.id) return;
-    sb.auth.getSession().then(function(s){
-      var tok=(s&&s.data&&s.data.session)?s.data.session.access_token:null;
-      var body={widget:user}; if(tok) body.access_token=tok;
-      return fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify(body)}).then(function(r){return r.json();});
-    }).then(function(j){
-      if(j&&j.linked){ if(window.bqToast) window.bqToast('Telegram linked to your account.'); var pp=document.getElementById('bqTgLinkPop'); if(pp) pp.remove(); return; }
-      if(j&&j.session){ return sb.auth.setSession(j.session).then(function(){ try{ if(modal) modal.hidden=true; }catch(e){} return loadAndShow(true, true); }); }
-      var mp={'tg-linked-elsewhere':'That Telegram is already linked to another account.'};
-      if(window.bqToast) window.bqToast((j&&mp[j.error])||'Telegram sign-in failed. Please try again.');
-    }).catch(function(){ if(window.bqToast) window.bqToast('Telegram sign-in failed. Please try again.'); });
-  };
-  function renderTgWidget(el){
-    if(!el||el.getAttribute('data-tg-done')) return; el.setAttribute('data-tg-done','1'); el.innerHTML='';
-    var s=document.createElement('script'); s.async=true; s.src='https://telegram.org/js/telegram-widget.js?22';
-    s.setAttribute('data-telegram-login',BQ_TG_BOT); s.setAttribute('data-size','large'); s.setAttribute('data-radius','12');
-    s.setAttribute('data-onauth','bqTgWidgetAuth(user)'); s.setAttribute('data-request-access','write');
-    el.appendChild(s);
+  (function(){ if(document.getElementById('bq-tgbtn-css')) return; var st=document.createElement('style'); st.id='bq-tgbtn-css';
+    st.textContent='.bq-tgbtn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:#29A9EB;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(41,169,235,.35);transition:filter .15s ease,transform .05s ease;font-family:inherit;line-height:1}.bq-tgbtn:hover{filter:brightness(1.06)}.bq-tgbtn:active{transform:translateY(1px)}.bq-tgbtn:disabled{opacity:.6;cursor:default}.bq-tgbtn svg{flex:0 0 auto}.bq-tghint{font-size:12px;color:var(--muted,#8a94a6);margin-top:9px;text-align:center;max-width:290px;line-height:1.45}';
+    document.head.appendChild(st);
+  })();
+  function bqOpenTg(startParam){
+    var url='https://t.me/'+BQ_TG_BOT+'?start='+startParam;
+    try{ if(window.bqInTelegram&&window.bqTgWebApp&&window.bqTgWebApp.openTelegramLink){ window.bqTgWebApp.openTelegramLink(url); return; } }catch(e){}
+    window.open(url,'_blank','noopener');
   }
-  window.bqRenderTgWidget=renderTgWidget;
-  // logged-in users: open a small popup with the Telegram button to LINK their Telegram to this account.
+  function tgBtnMarkup(label){
+    return '<button type="button" class="bq-tgbtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M21.9 4.3l-3.2 15.1c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L6.3 13.1l-4.8-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg><span>'+label+'</span></button>';
+  }
+  // Login button (logged-out onboarding + signup modal). Opens the bot; the DM'd link finishes the sign-in.
+  function renderTgButton(el){
+    if(!el||el.getAttribute('data-tg-done')) return; el.setAttribute('data-tg-done','1');
+    el.style.display='flex'; el.style.flexDirection='column'; el.style.alignItems='center';
+    el.innerHTML=tgBtnMarkup('Continue with Telegram')+'<div class="bq-tghint" style="display:none"></div>';
+    var hint=el.querySelector('.bq-tghint');
+    el.querySelector('.bq-tgbtn').addEventListener('click',function(){
+      bqOpenTg('weblogin');
+      hint.textContent='We opened Telegram. Tap "Log in to BullQuest" in the chat with our bot, and you will be signed in.';
+      hint.style.display='block';
+    });
+  }
+  window.bqRenderTgWidget=renderTgButton;   // keep the name the signup modal calls
+  // Signed-in users: LINK Telegram to this account. The bot binds it (no phone/password), same synced account.
   window.bqLinkTelegram=function(){
     if(document.getElementById('bqTgLinkPop')) return;
     var ov=document.createElement('div'); ov.id='bqTgLinkPop'; ov.className='bqfb-ov'; ov.style.zIndex='10040';
-    ov.innerHTML='<div class="bqfb" style="max-width:340px;text-align:center"><h3 style="margin:0 0 6px">Link your Telegram</h3><p class="sub" style="margin:0 0 14px">Connect Telegram so you can play in the Telegram app on this same account.</p><div id="bqTgLinkBtn" style="display:flex;justify-content:center;min-height:48px"></div><div class="bqfb-actions" style="margin-top:14px;justify-content:center"><button type="button" class="cancel" id="bqTgLinkX">Close</button></div></div>';
+    ov.innerHTML='<div class="bqfb" style="max-width:360px;text-align:center"><h3 style="margin:0 0 6px">Link your Telegram</h3><p class="sub" style="margin:0 0 14px">Connect Telegram so you can play in the Telegram app on this same account. No password, no phone number.</p><div id="bqTgLinkBtn" style="display:flex;flex-direction:column;align-items:center;min-height:48px"></div><div class="bqfb-actions" style="margin-top:14px;justify-content:center"><button type="button" class="cancel" id="bqTgLinkX">Close</button></div></div>';
     document.body.appendChild(ov);
     ov.addEventListener('click', function(e){ if(e.target===ov) ov.remove(); });
     ov.querySelector('#bqTgLinkX').addEventListener('click', function(){ ov.remove(); });
-    renderTgWidget(ov.querySelector('#bqTgLinkBtn'));
+    var slot=ov.querySelector('#bqTgLinkBtn'); slot.innerHTML=tgBtnMarkup('Link Telegram')+'<div class="bq-tghint"></div>';
+    var hint=slot.querySelector('.bq-tghint');
+    slot.querySelector('.bq-tgbtn').addEventListener('click',function(){
+      var b=this; if(!sb){ hint.textContent='Please sign in first.'; return; }
+      b.disabled=true; hint.textContent='Opening Telegram...';
+      sb.rpc('create_tg_link_code').then(function(res){
+        var code=res&&res.data;
+        if(!code){ hint.textContent='Could not start linking. Please try again.'; b.disabled=false; return; }
+        bqOpenTg('link_'+code);
+        hint.textContent='We opened Telegram. Tap "Start" in the chat with our bot to connect this account, then you can close this.';
+        b.disabled=false;
+      }, function(){ hint.textContent='Could not start linking. Please try again.'; b.disabled=false; });
+    });
   };
-  (function(){ function r(){ var a=document.getElementById('bqTgEntry'); if(a) renderTgWidget(a); }
+  (function(){ function r(){ var a=document.getElementById('bqTgEntry'); if(a) renderTgButton(a); }
     r(); document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('[data-bqgo="view-onboard"]')) setTimeout(r,150); });
   })();
 
@@ -7406,6 +7424,21 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     });
   }); }
 
+  // Bot-login link handoff: our Telegram bot DMs the user bullquest.fun/?tgl=<token>. Exchange it for a synced
+  // session, land them in the game, and strip the token from the URL so it is never left in history or shared.
+  function bqConsumeTgl(){ return new Promise(function(resolve){
+    var tgl; try{ tgl=new URLSearchParams(location.search).get('tgl'); }catch(e){}
+    if(!tgl){ return resolve(); }
+    try{ var qp=new URLSearchParams(location.search); qp.delete('tgl'); var clean=location.pathname+(qp.toString()?('?'+qp.toString()):'')+location.hash; history.replaceState(null,'',clean); }catch(e){}
+    fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({login_token:tgl})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j&&j.session){ return sb.auth.setSession(j.session).then(function(){ try{ sessionStorage.setItem('bq_view','view-home'); }catch(e){} resolve(); }, function(){ resolve(); }); }
+        if(window.bqToast) window.bqToast((j&&j.error)||'That Telegram login link expired. Tap Continue with Telegram again.');
+        resolve();
+      }).catch(function(){ if(window.bqToast) window.bqToast('Telegram login failed. Please try again.'); resolve(); });
+  }); }
+
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
     sb=window.supabase.createClient(URL_,KEY_);
@@ -7427,7 +7460,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     })();
     // On load, restore the view the user was last on (sessionStorage) instead of always jumping into the game.
     // A fresh visit or a refresh on the landing keeps them on the landing; a refresh mid-game restores that view.
-    bqTelegramBoot(sb).then(function(){
+    bqTelegramBoot(sb).then(bqConsumeTgl).then(function(){
     sb.auth.getSession().then(function(s){
       if(s.data.session){
         loadAndShow(false).then(function(){
