@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784458304";try{console.log("BullQuest build 1784458304");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784460177";try{console.log("BullQuest build 1784460177");}catch(e){}</script><style>
 /* Global lively buttons: .send (primary, e.g. "Got it"/"Save") and .cancel (dismiss, e.g. "Close"/"Cancel") now look
    good AND animate on hover EVERYWHERE, not only inside .bqfb-actions. Fixes bare buttons that fell back to the plain
    browser default. (More-specific .bqfb-actions rules still win where they exist; the :hover life applies to all.) */
@@ -5009,6 +5009,40 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   wrap.addEventListener('click', function (e) { if (e.target === wrap) closeResult(); });
   root.querySelector('.go-home').addEventListener('click', function () { closeResult(); });
 
+  // ---------- Browser-only guard for wallet + SOL actions ----------
+  // Telegram (and, later, the iOS app) forbid in-app crypto: the webview injects no wallet (no window.solana), so a
+  // connect/pay attempt used to fail with a misleading "install Phantom" error. Instead we stop up front and tell the
+  // user to open BullQuest in a real browser (same synced account). Pasting an airdrop payout address is NOT gated
+  // (that is receive-only text, it works anywhere). Returns true when the action is blocked (caller must bail).
+  function bqPaymentsBlockedHere(){ return !!(window.bqInTelegram || window.bqIsNativeApp); }
+  window.bqPaymentsBlockedHere = bqPaymentsBlockedHere;
+  function bqShowBrowserOnlyModal(feature){
+    if(document.getElementById('bqBrowOv')) return;
+    var url='https://bullquest.fun/?from=tg';
+    var ov=document.createElement('div'); ov.id='bqBrowOv';
+    ov.style.cssText='position:fixed;inset:0;z-index:100001;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(16,10,32,.74);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)';
+    ov.innerHTML='<div style="max-width:360px;width:100%;background:linear-gradient(180deg,#2A1B4E,#20143A);border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:24px 22px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5)">'
+      +'<div style="font-size:38px;line-height:1;margin-bottom:10px">🌐</div>'
+      +'<h3 style="margin:0 0 10px;font-size:19px;font-weight:800;color:#fff">Open in your browser</h3>'
+      +'<p style="margin:0 0 8px;font-size:14px;line-height:1.55;color:#CFC0EC">'+(feature||'This')+' happens in your web browser. Telegram does not allow crypto payments inside the app.</p>'
+      +'<p style="margin:0 0 18px;font-size:14px;line-height:1.55;color:#CFC0EC">Tap below to open BullQuest in Chrome or Safari. It is the same account, so your bulls and GRIT come with you.</p>'
+      +'<button type="button" class="send" id="bqBrowGo" style="width:100%;margin:0 0 8px">Open in browser</button>'
+      +'<button type="button" class="cancel" id="bqBrowClose" style="width:100%">Keep playing in Telegram</button>'
+      +'<div style="margin-top:13px;font-size:12px;line-height:1.5;color:#9C86C9">Setting your airdrop payout address works right here in Telegram.</div>'
+      +'</div>';
+    document.body.appendChild(ov);
+    function close(){ try{ ov.remove(); }catch(e){} }
+    ov.addEventListener('click', function(e){ if(e.target===ov) close(); });
+    ov.querySelector('#bqBrowClose').addEventListener('click', close);
+    ov.querySelector('#bqBrowGo').addEventListener('click', function(){
+      try{ if(window.bqTgWebApp&&window.bqTgWebApp.openLink){ window.bqTgWebApp.openLink(url); } else { window.open(url,'_blank'); } }
+      catch(e){ try{ window.open(url,'_blank'); }catch(_){} }
+      close();
+    });
+  }
+  // Call at the TOP of any wallet-connect or SOL-payment action. If blocked, shows the modal and returns true.
+  window.bqBrowserOnly = function(feature){ if(!bqPaymentsBlockedHere()) return false; try{ bqShowBrowserOnlyModal(feature); }catch(e){} return true; };
+
   // ---------- Paid extra spin (respin): pay SOL to the treasury, then spin again ----------
   var web3Loading = null, bufferLoading = null;
   // web3.js's transaction encoder references a global `Buffer` that browsers don't provide; without it,
@@ -5081,6 +5115,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   var respinBusy = false;
   function respinPaid(){
     if (spinning || respinBusy) return;
+    if (window.bqBrowserOnly && window.bqBrowserOnly('Buying an extra spin')) return;
     if (!(window.bqGame && window.bqGame.ready())) { if (window.bqOpenAuth) window.bqOpenAuth(); return; }
     respinBusy = true; extraBtn.disabled = true;
     var quote, provider, web3, fromStr;
@@ -5172,6 +5207,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   var energyBusy = false;
   function energyPaid(){
     if (energyBusy) return;
+    if (window.bqBrowserOnly && window.bqBrowserOnly('Refilling energy')) return;
     if (!(window.bqGame && window.bqGame.ready())) { if (window.bqOpenAuth) window.bqOpenAuth(); return; }
     energyBusy = true;
     var quote, provider, web3, fromStr;
@@ -5267,6 +5303,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   }
   function doRename(bullId, rawName, ov, go, hint){
     if (renameBusy) return;
+    if (window.bqBrowserOnly && window.bqBrowserOnly('Renaming your bull')) return;
     var newName = (rawName || '').trim();
     if (!rnValid(newName)) { if (hint) { hint.textContent = 'Please use 2 to 20 valid characters.'; hint.style.color = '#EE5B62'; } return; }
     renameBusy = true; go.disabled = true; var goLabel = go.textContent; go.textContent = 'Preparing...';
@@ -6309,6 +6346,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   window.bqGetProvider = getProvider;
   // Link a Solana wallet to the CURRENT account (e.g. a Gmail user) so they can buy/sell.
   function bqConnectWallet(){
+    if(window.bqBrowserOnly && window.bqBrowserOnly('Connecting a wallet')) return Promise.reject(new Error('__tg_browser__'));
     if(!sb) return Promise.reject(new Error('no-sb'));
     return sb.auth.getSession().then(function(s){
       if(!(s&&s.data&&s.data.session)){ if(window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
@@ -6333,6 +6371,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   }
   window.bqConnectWallet = bqConnectWallet;
   function walletLogin(kind){
+    if(window.bqBrowserOnly && window.bqBrowserOnly('Signing in with a wallet')) return;
     var prov=getProvider(kind);
     if(!prov){ walletMsg('No wallet detected. Continuing with email instead...'); setTimeout(function(){ try{ openModal('signup'); }catch(e){} }, 400); return; }
     walletMsg('Check your wallet to approve...');
@@ -6716,6 +6755,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   }
   // build + sign + send a payment tx with the given transfers [{to,lamports}] plus a memo; resolves to the signature
   function mktPay(transfers, memo){
+    if(window.bqBrowserOnly && window.bqBrowserOnly('Buying a bull')) return Promise.reject(new Error('__tg_browser__'));
     var provider=window.bqGetProvider?window.bqGetProvider('auto'):(window.solana||null), web3, fromStr;
     if(!provider) return Promise.reject(new Error('no-wallet'));
     if(!window.bqLoadWeb3) return Promise.reject(new Error('web3-load'));
@@ -6744,6 +6784,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     sb.rpc('get_state').then(function(r){ try{ applyLiveState(r&&r.data); }catch(e){} }, function(){});
   }
   function buyPrimary(bullId, _retried){
+    if(window.bqBrowserOnly && window.bqBrowserOnly('Buying a bull')) return;
     if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
     if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
     mktBusy=true;
@@ -6759,11 +6800,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id||bullId, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
-    }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__') return;
+    }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__'||m==='__tg_browser__') return;
       if(m==='no-wallet' && !_retried && window.bqConnectWallet){ window.bqConnectWallet().then(function(){ buyPrimary(bullId, true); }).catch(function(){}); return; }
       try{console.error('[buyPrimary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
   function buySecondary(listingId, _retried){
+    if(window.bqBrowserOnly && window.bqBrowserOnly('Buying a bull')) return;
     if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
     if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
     mktBusy=true;
@@ -6779,7 +6821,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming - your bull will appear shortly.'); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
-    }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__') return;
+    }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__'||m==='__tg_browser__') return;
       if(m==='no-wallet' && !_retried && window.bqConnectWallet){ window.bqConnectWallet().then(function(){ buySecondary(listingId, true); }).catch(function(){}); return; }
       try{console.error('[buySecondary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
@@ -7103,6 +7145,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     el.querySelector('.bqls-x').addEventListener('click', close);
     el.querySelector('#bqLX2').addEventListener('click', close);
     go.addEventListener('click', function(){ var v=parseFloat(price.value); if(!(v>=0.005)) return;
+      if(window.bqBrowserOnly && window.bqBrowserOnly('Listing a bull for sale')) return;
       go.disabled=true; go.textContent='Listing...';
       window.bqGame.createListing(bullId, Math.round(v*1e9)).then(function(r){
         if(r&&r.ok){ close(); if(window.bqToast) window.bqToast('Listed for '+v+' SOL. Buyers can find it in the Player market.'); try{ renderBulls(); }catch(e){} if(window.bqAfterListed){ window.bqAfterListed(); } else { renderForSale(); } }
@@ -7615,6 +7658,22 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         +(top>0?'html.in-telegram body{padding-top:'+top+'px}':'');
     }catch(e){}
   }
+  // Inside Telegram, drop a slim persistent notice on the surfaces where a user reaches for a wallet (the Market),
+  // so they learn the browser-only rule BEFORE hitting the friction modal. Idempotent; the topbar markup is static.
+  function bqTgNotices(){
+    if(!(window.bqInTelegram || window.bqIsNativeApp)) return;
+    if(!document.getElementById('bq-tgnote-css')){ var st=document.createElement('style'); st.id='bq-tgnote-css';
+      st.textContent='.bq-tgnote{display:flex;gap:9px;align-items:flex-start;margin:12px 16px 2px;padding:11px 13px;background:rgba(124,92,230,.12);border:1px solid rgba(124,92,230,.30);border-radius:14px;font-size:12.5px;line-height:1.45;color:#4A3A72}'
+        +'.bq-tgnote .ic{flex:0 0 auto;font-size:15px;line-height:1.2}'
+        +'.bq-tgnote a{color:#6B31E6;font-weight:800;text-decoration:none;white-space:nowrap}';
+      document.head.appendChild(st); }
+    function note(){ var d=document.createElement('div'); d.className='bq-tgnote';
+      d.innerHTML='<span class="ic">🌐</span><span>To connect a wallet or pay with SOL, open BullQuest in your browser (same account). Your airdrop payout address works right here. <a href="#" data-bqbrow>Open browser</a></span>';
+      d.querySelector('[data-bqbrow]').addEventListener('click',function(e){ e.preventDefault(); try{ if(window.bqTgWebApp&&window.bqTgWebApp.openLink){ window.bqTgWebApp.openLink('https://bullquest.fun/?from=tg'); } else { window.open('https://bullquest.fun/?from=tg','_blank'); } }catch(_){} });
+      return d; }
+    try{ var sheet=document.getElementById('bqMktSheet'); if(sheet && sheet.parentNode && !sheet.parentNode.querySelector('.bq-tgnote')) sheet.parentNode.insertBefore(note(), sheet); }catch(e){}
+  }
+  window.bqTgNotices=bqTgNotices;
   // Report a boot breadcrumb to client_errors so we can see, from a REAL session, whether Telegram was detected and
   // whether the initData auto-login fired (queryable on the client_errors table).
   function bqTgDiag(client, s){ try{ client&&client.rpc&&client.rpc('log_client_error',{p_msg:'TGDIAG '+s, p_page:'tgboot@'+(window.BQ_BUILD||''), p_agent:(navigator.userAgent||'').slice(0,180)}).then(function(){},function(){}); }catch(e){} }
@@ -7644,7 +7703,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       document.head.appendChild(st); }
     if(!card.querySelector('#bqTgEnterWrap')){
       var wrap=document.createElement('div'); wrap.id='bqTgEnterWrap'; wrap.style.cssText='flex-direction:column;align-items:center;gap:8px';
-      wrap.innerHTML='<button type="button" id="bqTgEnterBtn" class="cta" style="width:100%">Enter BullQuest</button><div class="bq-tghint" style="display:block">Signing you in with Telegram. No password, no wallet needed.</div>';
+      wrap.innerHTML='<button type="button" id="bqTgEnterBtn" class="cta" style="width:100%">Enter BullQuest</button><div class="bq-tghint" style="display:block">Signing you in with Telegram. No password, no wallet needed.</div><div class="bq-tghint" style="display:block;margin-top:6px;opacity:.85">Play and earn GRIT here. To connect a wallet or pay with SOL, open BullQuest in your browser. It is the same account.</div>';
       card.insertBefore(wrap, card.firstChild);
       wrap.querySelector('#bqTgEnterBtn').addEventListener('click', function(){ bqTgInAppLogin(this); });
     }
@@ -7672,6 +7731,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       try{ WA.disableVerticalSwipes&&WA.disableVerticalSwipes(); }catch(e){}
       try{ WA.enableClosingConfirmation&&WA.enableClosingConfirmation(); }catch(e){}
       bqApplyTgLayout(WA);
+      try{ bqTgNotices(); }catch(e){}
       try{ ['safeAreaChanged','contentSafeAreaChanged','viewportChanged','themeChanged'].forEach(function(ev){ WA.onEvent&&WA.onEvent(ev, function(){ bqApplyTgLayout(WA); }); }); }catch(e){}
       try{ bqShowTgOnboard(); }catch(e){}   // prep the signup screen for Telegram in case auto-login somehow fails
       client.auth.getSession().then(function(s){
@@ -7802,6 +7862,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
     function wireReg(){
       var ph=document.getElementById('airPhantom');
+      // Inside Telegram (and the iOS app) there is no injected wallet, so the "Phantom" autofill can't work.
+      // Hide it and lean on the paste field, which works anywhere (a payout address is receive-only text).
+      if(ph && window.bqPaymentsBlockedHere && window.bqPaymentsBlockedHere()){ ph.style.display='none'; ph=null; }
       if(ph) ph.addEventListener('click',function(){
         try{
           var p=window.bqGetProvider?window.bqGetProvider('auto'):(window.solana||null);
