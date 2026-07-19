@@ -144,8 +144,38 @@
     return head+rows+'</div>';
   }
 
+  function notifyPanel(){
+    var inp='padding:9px 11px;border:1px solid rgba(120,120,140,.35);border-radius:9px;font:inherit;font-size:14px;background:#fff;color:#20143A;width:100%;box-sizing:border-box';
+    return '<div class="panel"><h3>Send a notification</h3><p class="hint">Broadcast news to everyone, or message one player. It shows in their in-app notification bell.</p>'
+      +'<div style="display:flex;flex-direction:column;gap:9px">'
+      +'<input id="nfTitle" maxlength="140" placeholder="Title, e.g. New season is live" style="'+inp+'">'
+      +'<textarea id="nfBody" maxlength="2000" rows="3" placeholder="Your message to players..." style="'+inp+';resize:vertical"></textarea>'
+      +'<div style="display:flex;gap:9px;flex-wrap:wrap">'
+      +'<select id="nfKind" style="'+inp+';width:auto"><option value="news">News</option><option value="update">Update</option><option value="personal">Personal</option></select>'
+      +'<input id="nfTo" placeholder="To: leave blank for everyone, or a player email / id" style="'+inp+';flex:1;min-width:200px;width:auto">'
+      +'</div>'
+      +'<div style="display:flex;align-items:center;gap:12px"><button id="nfSend" class="refresh" style="cursor:pointer">Send</button><span id="nfMsg" style="font-size:13px;font-weight:600"></span></div>'
+      +'</div></div>';
+  }
+  function wireNotify(){
+    var b=document.getElementById('nfSend'); if(!b) return;
+    b.addEventListener('click', function(){
+      var t=(document.getElementById('nfTitle').value||''), body=(document.getElementById('nfBody').value||''),
+          k=document.getElementById('nfKind').value, to=(document.getElementById('nfTo').value||'');
+      var m=document.getElementById('nfMsg');
+      if(!t.trim()||!body.trim()){ m.style.color='#E5484D'; m.textContent='Title and message are required.'; return; }
+      b.setAttribute('disabled',''); m.style.color='#78808F'; m.textContent='Sending...';
+      sb.rpc('admin_send_notice',{p_title:t,p_body:body,p_kind:k,p_to:to.trim()||null}).then(function(r){
+        b.removeAttribute('disabled'); var d=r&&r.data;
+        if(r.error||(d&&d.error)){ m.style.color='#E5484D'; m.textContent=(r.error&&r.error.message)||(d&&d.error)||'Failed to send.'; return; }
+        m.style.color='#12B76A'; m.textContent='Sent to '+((d&&d.audience)||'everyone')+'.';
+        document.getElementById('nfTitle').value=''; document.getElementById('nfBody').value=''; document.getElementById('nfTo').value='';
+      }, function(){ b.removeAttribute('disabled'); m.style.color='#E5484D'; m.textContent='Failed to send.'; });
+    });
+  }
   function render(d){
     var html='';
+    html+=notifyPanel();   // admin: send news / personal notifications to players
     // KPIs
     html+='<div class="grid">'+
       kpi('Total users', d.users_total)+
@@ -176,6 +206,7 @@
     html+='<div class="panel"><h3>Last 14 days</h3><p class="hint">Daily signups vs unique active users.</p><div class="chart">'+chart(d.series)+'</div></div>';
 
     root.innerHTML=html;
+    wireNotify();
     var g=d.generated_at?new Date(d.generated_at):null;
     stamp.textContent = g ? ('Updated '+g.toLocaleString()) : '';
   }
