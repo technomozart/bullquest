@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784422767";try{console.log("BullQuest build 1784422767");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784426845";try{console.log("BullQuest build 1784426845");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -3879,6 +3879,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
     <div class="card">
       <div id="bqGoogleEntry" style="display:none;justify-content:center;margin-bottom:10px"></div>
+      <div id="bqTgEntry" style="display:flex;justify-content:center;margin-bottom:12px"></div>
 
       <button type="button" class="cta" data-entry="email" aria-label="Get your free bull with email, no wallet needed">
         <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="#fff" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -5295,6 +5296,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       +'<p id="bqBullsLeft" style="margin:-4px 0 10px;font-size:12px;font-weight:800;color:#43C06A;text-align:center;display:none"></p>'
       +'<p id="bqRefBonus" style="margin:-2px 0 11px;font-size:12.5px;font-weight:800;color:#6B31E6;background:#F3EFFE;border-radius:11px;padding:9px 11px;text-align:center;line-height:1.4;display:none"></p>'
       +'<div id="bqGoogleModalBtn" style="display:none;justify-content:center;margin-bottom:10px"></div>'
+      +'<div id="bqTgModalBtn" style="display:flex;justify-content:center;margin-bottom:10px"></div>'
       +'<div id="bqGoogleOr" style="display:none;align-items:center;gap:10px;color:#9A96A8;font-size:12px;font-weight:700;margin:0 0 12px"><span style="flex:1;height:1px;background:#EAE8F0"></span>or<span style="flex:1;height:1px;background:#EAE8F0"></span></div>'
       +'<input id="bqEmail" type="email" placeholder="you@email.com" autocomplete="email">'
       +'<input id="bqPass" type="password" placeholder="Password (6+ characters)" autocomplete="current-password">'
@@ -5323,6 +5325,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? (window.bqRefName+' invited you - reach level 2 and you both get bonus GRIT.') : 'You were invited - reach level 2 and you and your friend both get bonus GRIT.'); rb.style.display=''; }
       else { rb.style.display='none'; } }
     if(window.bqGoogleOn){ var gmb=modal.querySelector('#bqGoogleModalBtn'), gmo=modal.querySelector('#bqGoogleOr'); if(gmb) renderGoogleBtn(gmb); if(gmo) gmo.style.display='flex'; }
+    try{ var tgm=modal.querySelector('#bqTgModalBtn'); if(tgm&&window.bqRenderTgWidget) window.bqRenderTgWidget(tgm); }catch(e){}
     renderTurnstile(); if(mode==='signup'){ updateBullsLeft(); }
     errmsg('');
   }
@@ -5634,12 +5637,14 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         '<span class="div"></span>'+
         '<button class="ab" data-a="site" title="Back to the website" aria-label="Back to the website"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.6 12 3l9 7.6"/><path d="M5.5 9.4V20h13V9.4"/><path d="M10 20v-5.5h4V20"/></svg></button>'+
         '<button class="ab" data-a="wallet" title="Connect a wallet" aria-label="Connect a wallet" style="display:none"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><circle cx="17" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg></button>'+
+        '<button class="ab" data-a="tg" title="Link Telegram" aria-label="Link Telegram" style="color:#28A8E9"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.2 15.1c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L6.3 13.1l-4.8-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg></button>'+
         '<button class="ab" data-a="airdrop" title="Airdrop" aria-label="Airdrop" style="color:#E0A100"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/><path d="M12 8S9.5 4.5 7.5 5.5 8 8 12 8zM12 8s2.5-3.5 4.5-2.5S16 8 12 8z"/></svg></button>'+
         '<button class="ab" data-a="set" title="Settings" aria-label="Settings"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg></button>'+
         '<button class="ab out" data-a="out" title="Sign out" aria-label="Sign out"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9"/><path d="M18 16l4-4-4-4"/><path d="M22 12H10"/></svg></button>';
       document.body.appendChild(box);
       box.querySelector('[data-a="site"]').addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-landing'); });
       box.querySelector('[data-a="wallet"]').addEventListener('click', function(){ if(window.bqConnectWallet) window.bqConnectWallet().then(function(){ var wb=box.querySelector('[data-a="wallet"]'); if(wb) wb.style.display='none'; }).catch(function(){}); });
+      try{ var tgb=box.querySelector('[data-a="tg"]'); if(tgb) tgb.addEventListener('click', function(){ if(window.bqLinkTelegram) window.bqLinkTelegram(); }); }catch(e){}
       // show the "connect a wallet" button only for accounts that do not have one yet (e.g. Gmail signups)
       try{ sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return; sb.from('wallets').select('pubkey',{count:'exact',head:true}).eq('user_id',u.id).then(function(r){ if(!(r&&r.count>0)){ var wb=box.querySelector('[data-a="wallet"]'); if(wb) wb.style.display=''; } }, function(){}); }); }catch(e){}
       box.querySelector('[data-a="airdrop"]').addEventListener('click', function(){ if(window.bqGo){ window.bqGo('view-airdrop'); if(window.bqRenderAirdrop) setTimeout(window.bqRenderAirdrop,60); } });
@@ -5734,6 +5739,43 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     }, function(){});
   }
   checkGoogleEnabled();
+  // ---- Telegram website login (official Login Widget) -> tg-auth. Passwordless; same synced account as the
+  //      Mini App and the web. If the caller is already signed in, it LINKS Telegram to that account (no dup). ----
+  var BQ_TG_BOT='BullQuestSol_bot';
+  window.bqTgWidgetAuth=function(user){
+    if(!sb||!user||!user.id) return;
+    sb.auth.getSession().then(function(s){
+      var tok=(s&&s.data&&s.data.session)?s.data.session.access_token:null;
+      var body={widget:user}; if(tok) body.access_token=tok;
+      return fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify(body)}).then(function(r){return r.json();});
+    }).then(function(j){
+      if(j&&j.linked){ if(window.bqToast) window.bqToast('Telegram linked to your account.'); var pp=document.getElementById('bqTgLinkPop'); if(pp) pp.remove(); return; }
+      if(j&&j.session){ return sb.auth.setSession(j.session).then(function(){ try{ if(modal) modal.hidden=true; }catch(e){} return loadAndShow(true, true); }); }
+      var mp={'tg-linked-elsewhere':'That Telegram is already linked to another account.'};
+      if(window.bqToast) window.bqToast((j&&mp[j.error])||'Telegram sign-in failed. Please try again.');
+    }).catch(function(){ if(window.bqToast) window.bqToast('Telegram sign-in failed. Please try again.'); });
+  };
+  function renderTgWidget(el){
+    if(!el||el.getAttribute('data-tg-done')) return; el.setAttribute('data-tg-done','1'); el.innerHTML='';
+    var s=document.createElement('script'); s.async=true; s.src='https://telegram.org/js/telegram-widget.js?22';
+    s.setAttribute('data-telegram-login',BQ_TG_BOT); s.setAttribute('data-size','large'); s.setAttribute('data-radius','12');
+    s.setAttribute('data-onauth','bqTgWidgetAuth(user)'); s.setAttribute('data-request-access','write');
+    el.appendChild(s);
+  }
+  window.bqRenderTgWidget=renderTgWidget;
+  // logged-in users: open a small popup with the Telegram button to LINK their Telegram to this account.
+  window.bqLinkTelegram=function(){
+    if(document.getElementById('bqTgLinkPop')) return;
+    var ov=document.createElement('div'); ov.id='bqTgLinkPop'; ov.className='bqfb-ov'; ov.style.zIndex='10040';
+    ov.innerHTML='<div class="bqfb" style="max-width:340px;text-align:center"><h3 style="margin:0 0 6px">Link your Telegram</h3><p class="sub" style="margin:0 0 14px">Connect Telegram so you can play in the Telegram app on this same account.</p><div id="bqTgLinkBtn" style="display:flex;justify-content:center;min-height:48px"></div><div class="bqfb-actions" style="margin-top:14px;justify-content:center"><button type="button" class="cancel" id="bqTgLinkX">Close</button></div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click', function(e){ if(e.target===ov) ov.remove(); });
+    ov.querySelector('#bqTgLinkX').addEventListener('click', function(){ ov.remove(); });
+    renderTgWidget(ov.querySelector('#bqTgLinkBtn'));
+  };
+  (function(){ function r(){ var a=document.getElementById('bqTgEntry'); if(a) renderTgWidget(a); }
+    r(); document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('[data-bqgo="view-onboard"]')) setTimeout(r,150); });
+  })();
 
   // ---- live game state helpers + public game API (used by the Arena) ----
   function setGrit(g){
