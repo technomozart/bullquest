@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784441824";try{console.log("BullQuest build 1784441824");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest - collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest - a free-to-play bull game. Claim a free Genesis bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest - collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest - own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest - collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784448475";try{console.log("BullQuest build 1784448475");}catch(e){}</script><style>
 /* ===================================================================
    BULLQUEST - combined single-file app (landing + home + arena)
    One style block. Landing scoped under #view-landing; home under
@@ -5629,6 +5629,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           '.bq-acct .ab[data-a="airdrop"]{color:#E6A400}.bq-acct .ab[data-a="airdrop"]:hover{background:#FFF3D2}'+
           '.bq-acct .ab[data-a="set"]{color:#78808F}.bq-acct .ab[data-a="set"]:hover{background:#EDEFF3}'+
           '.bq-acct .ab.out{color:#DF5560}.bq-acct .ab.out:hover{background:#FDEBEC;color:#E5484D}'+
+          '.bq-acct .ab.bell{position:relative;color:#6B31E6}.bq-acct .nbadge{position:absolute;top:-1px;right:-1px;min-width:15px;height:15px;background:#E5484D;color:#fff;font-size:9px;font-weight:800;line-height:15px;border-radius:8px;text-align:center;padding:0 3px;box-shadow:0 0 0 2px #fff}'+
           // On a narrow viewport (mobile web + the Telegram Mini App frame) a long name widened the pill until it
           // overlapped the "Play now" nav. Drop the name there (avatar + icons remain); cap width as a safety net.
           '@media (max-width:600px){.bq-acct{max-width:calc(100vw - 16px)}.bq-acct .lbl{display:none}.bq-acct .chip{padding:1px 2px}.bq-acct .div{display:none!important}}'+
@@ -5639,6 +5640,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       }
       box=document.createElement('div'); box.className='bq-acct';
       box.innerHTML=
+        '<button class="ab bell" data-a="bell" title="Notifications" aria-label="Notifications"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="nbadge" style="display:none">0</span></button>'+
         '<span class="chip"><span class="av"></span><span class="lbl"></span></span>'+
         '<span class="div"></span>'+
         '<button class="ab" data-a="site" title="Back to the website" aria-label="Back to the website"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.6 12 3l9 7.6"/><path d="M5.5 9.4V20h13V9.4"/><path d="M10 20v-5.5h4V20"/></svg></button>'+
@@ -5656,12 +5658,41 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       box.querySelector('[data-a="airdrop"]').addEventListener('click', function(){ if(window.bqGo){ window.bqGo('view-airdrop'); if(window.bqRenderAirdrop) setTimeout(window.bqRenderAirdrop,60); } });
       box.querySelector('[data-a="set"]').addEventListener('click', function(){ showSetName(); });
       box.querySelector('[data-a="out"]').addEventListener('click', function(){ sb.auth.signOut().then(function(){ try{ sessionStorage.removeItem('bq_view'); }catch(e){} location.reload(); }); });
+      try{ box.querySelector('[data-a="bell"]').addEventListener('click', function(){ if(window.bqOpenNotifs) window.bqOpenNotifs(); }); }catch(e){}
     }
     var l=box.querySelector('.lbl'); l.textContent=acctLabel||'';
     var init=(acctLabel||'').replace(/[^A-Za-z0-9]/g,'').charAt(0); var av=box.querySelector('.av'); if(av) av.textContent=(init||'B').toUpperCase();
     var show=!!acctLabel; box.querySelector('.chip').style.display=show?'flex':'none'; box.querySelector('.div').style.display=show?'block':'none';
     try{ document.documentElement.classList.toggle('bq-authed', show); }catch(e){}
+    if(show){ try{ if(window.bqUpdateNotifBadge) window.bqUpdateNotifBadge(); }catch(e){} }
   }
+  // ---- Player notifications: unread badge on the bell + a panel of news / updates / personal messages ----
+  function bqNotifEsc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function bqSetNotifBadge(n){ var b=document.querySelector('.bq-acct .nbadge'); if(!b) return; if(n>0){ b.textContent=n>9?'9+':String(n); b.style.display='grid'; } else { b.style.display='none'; } }
+  window.bqUpdateNotifBadge=function(){ if(!sb) return; sb.rpc('notifications_unread').then(function(r){ if(r&&typeof r.data==='number') bqSetNotifBadge(r.data); }, function(){}); };
+  function bqNotifTimeAgo(iso){ try{ var s=Math.max(0,(Date.now()-new Date(iso).getTime())/1000); if(s<60) return 'just now'; if(s<3600) return Math.floor(s/60)+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; if(s<604800) return Math.floor(s/86400)+'d ago'; return new Date(iso).toLocaleDateString(); }catch(e){ return ''; } }
+  window.bqOpenNotifs=function(){
+    if(!sb||document.getElementById('bqNotifPop')) return;
+    var ov=document.createElement('div'); ov.id='bqNotifPop'; ov.className='bqfb-ov'; ov.style.zIndex='10045';
+    ov.innerHTML='<div class="bqfb" style="max-width:420px;width:92%;max-height:76vh;display:flex;flex-direction:column;padding:0;overflow:hidden">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid rgba(20,16,40,.08)"><h3 style="margin:0;font-size:16px">Notifications</h3><button type="button" id="bqNotifX" class="cancel" style="margin:0;padding:5px 10px">Close</button></div>'
+      +'<div id="bqNotifList" style="overflow-y:auto;padding:4px 0"><div style="padding:22px;text-align:center;color:#8a94a6;font-size:13px">Loading...</div></div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click', function(e){ if(e.target===ov) ov.remove(); });
+    ov.querySelector('#bqNotifX').addEventListener('click', function(){ ov.remove(); });
+    sb.rpc('get_notifications',{p_limit:40}).then(function(r){
+      var list=ov.querySelector('#bqNotifList'); var rows=(r&&r.data)||[];
+      if(!rows.length){ list.innerHTML='<div style="padding:26px;text-align:center;color:#8a94a6;font-size:13px">No notifications yet.</div>'; return; }
+      var kc={news:'#6B31E6',update:'#2E8BEA',personal:'#E0A100',system:'#12B76A'};
+      list.innerHTML=rows.map(function(n){ var c=kc[n.kind]||'#6B31E6';
+        return '<div style="padding:12px 18px;border-bottom:1px solid rgba(20,16,40,.05);'+(n.is_read?'':'background:rgba(107,49,230,.05)')+'">'
+          +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">'+(n.is_read?'':'<span style="width:7px;height:7px;border-radius:50%;background:'+c+';flex:none"></span>')
+          +'<b style="font-size:13.5px;color:#20143A">'+bqNotifEsc(n.title)+'</b><span style="margin-left:auto;font-size:11px;color:#9aa2b1;white-space:nowrap">'+bqNotifTimeAgo(n.created_at)+'</span></div>'
+          +'<div style="font-size:12.5px;color:#5a6273;line-height:1.5">'+bqNotifEsc(n.body)+'</div></div>';
+      }).join('');
+      sb.rpc('mark_notifications_read',{p_ids:null}).then(function(){ bqSetNotifBadge(0); }, function(){});
+    }, function(){ var list=ov.querySelector('#bqNotifList'); if(list) list.innerHTML='<div style="padding:22px;text-align:center;color:#E5484D;font-size:13px">Could not load notifications.</div>'; });
+  };
   // Set a display name (shown on the leaderboard + in duels). Server-validated via set_username.
   function showSetName(){
     if(!sb){ if(window.showToast) showToast('Still loading, try again'); return; }
