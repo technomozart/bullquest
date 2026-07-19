@@ -173,6 +173,47 @@
       }, function(){ b.removeAttribute('disabled'); m.style.color='#E5484D'; m.textContent='Failed to send.'; });
     });
   }
+  function acctInp(){ return 'padding:9px 11px;border:1px solid rgba(120,120,140,.35);border-radius:9px;font:inherit;font-size:14px;background:#fff;color:#20143A;min-width:190px'; }
+  function loadAccounts(){
+    var el=document.getElementById('acctPanel'); if(!el) return;
+    el.innerHTML='<div class="panel"><h3>Players &amp; accounts</h3><p class="hint">Loading…</p></div>';
+    sb.rpc('admin_accounts').then(function(r){
+      if(r.error){ el.innerHTML='<div class="panel"><h3>Players &amp; accounts</h3><p class="hint" style="color:#E5484D">'+esc(r.error.message||'error')+'</p></div>'; return; }
+      var rows=r.data||[];
+      var trs=rows.map(function(a){
+        return '<tr style="border-top:1px solid rgba(120,120,140,.15)"><td style="font-family:monospace;font-size:11px;padding:6px 8px">'+esc(String(a.id).slice(0,8))+'</td>'
+          +'<td style="padding:6px 8px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(a.email)+'">'+esc(a.email)+'</td>'
+          +'<td style="padding:6px 8px">'+esc(a.signup)+'</td><td style="padding:6px 8px">'+(a.grit||0)+'</td><td style="padding:6px 8px">'+(a.bulls||0)+'</td>'
+          +'<td style="padding:6px 8px">'+esc(a.wallet||'—')+'</td><td style="padding:6px 8px">'+esc(a.telegram||'—')+'</td><td style="padding:6px 8px">'+esc(a.last_active||'—')+'</td></tr>';
+      }).join('');
+      el.innerHTML='<div class="panel"><h3>Players &amp; accounts ('+rows.length+')</h3>'
+        +'<p class="hint">Every account with its login methods + assets. If two rows are the same person, merge them below.</p>'
+        +'<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px"><thead><tr style="text-align:left;color:#9AA0AE;font-size:11px"><th style="padding:4px 8px">ID</th><th style="padding:4px 8px">Email</th><th style="padding:4px 8px">Via</th><th style="padding:4px 8px">GRIT</th><th style="padding:4px 8px">Bulls</th><th style="padding:4px 8px">Wallet</th><th style="padding:4px 8px">TG</th><th style="padding:4px 8px">Last seen</th></tr></thead><tbody>'+trs+'</tbody></table></div>'
+        +'<div style="margin-top:14px;border-top:1px solid rgba(120,120,140,.2);padding-top:12px"><h3 style="margin:0 0 6px">Merge duplicates</h3>'
+        +'<p class="hint">Fold a duplicate into the account you keep. The duplicate is deleted; its bulls, GRIT and logins move to the keeper, and extra free bulls return to the pool.</p>'
+        +'<div style="display:flex;gap:9px;flex-wrap:wrap;align-items:center">'
+        +'<input id="mgKeep" placeholder="Keep this one (email or id)" style="'+acctInp()+'">'
+        +'<input id="mgDrop" placeholder="Delete/merge in (email or id)" style="'+acctInp()+'">'
+        +'<button id="mgBtn" class="refresh" style="cursor:pointer">Merge</button><span id="mgMsg" style="font-size:13px;font-weight:600"></span></div></div></div>';
+      wireMerge();
+    }, function(){ el.innerHTML='<div class="panel"><h3>Players &amp; accounts</h3><p class="hint" style="color:#E5484D">Failed to load.</p></div>'; });
+  }
+  function wireMerge(){
+    var b=document.getElementById('mgBtn'); if(!b) return;
+    b.addEventListener('click', function(){
+      var keep=(document.getElementById('mgKeep').value||'').trim(), drop=(document.getElementById('mgDrop').value||'').trim(), m=document.getElementById('mgMsg');
+      if(!keep||!drop){ m.style.color='#E5484D'; m.textContent='Enter both accounts.'; return; }
+      if(!confirm('Merge "'+drop+'" INTO "'+keep+'"?\n\nThe first account is permanently DELETED; its bulls, GRIT and logins move to the keeper. This cannot be undone.')) return;
+      b.setAttribute('disabled',''); m.style.color='#78808F'; m.textContent='Merging…';
+      sb.rpc('admin_merge',{p_keep:keep,p_drop:drop}).then(function(r){
+        b.removeAttribute('disabled'); var d=r&&r.data;
+        if(r.error||(d&&d.error)){ m.style.color='#E5484D'; m.textContent=(r.error&&r.error.message)||(d&&d.error)||'Merge failed.'; return; }
+        m.style.color='#12B76A'; m.textContent='Merged. Keeper now has '+((d&&d.keep_bulls)!=null?d.keep_bulls:'?')+' bulls; '+((d&&d.free_bulls_returned)||0)+' free bull(s) returned to the pool.';
+        document.getElementById('mgKeep').value=''; document.getElementById('mgDrop').value='';
+        setTimeout(loadAccounts, 700);
+      }, function(){ b.removeAttribute('disabled'); m.style.color='#E5484D'; m.textContent='Merge failed.'; });
+    });
+  }
   function render(d){
     var html='';
     html+=notifyPanel();   // admin: send news / personal notifications to players
@@ -205,8 +246,10 @@
     // Chart
     html+='<div class="panel"><h3>Last 14 days</h3><p class="hint">Daily signups vs unique active users.</p><div class="chart">'+chart(d.series)+'</div></div>';
 
+    html+='<div id="acctPanel"></div>';
     root.innerHTML=html;
     wireNotify();
+    loadAccounts();
     var g=d.generated_at?new Date(d.generated_at):null;
     stamp.textContent = g ? ('Updated '+g.toLocaleString()) : '';
   }
