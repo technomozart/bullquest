@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784514316";try{console.log("BullQuest build 1784514316");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784522335";try{console.log("BullQuest build 1784522335");}catch(e){}</script><style>
 /* Global lively buttons: .send (primary, e.g. "Got it"/"Save") and .cancel (dismiss, e.g. "Close"/"Cancel") now look
    good AND animate on hover EVERYWHERE, not only inside .bqfb-actions. Fixes bare buttons that fell back to the plain
    browser default. (More-specific .bqfb-actions rules still win where they exist; the :hover life applies to all.) */
@@ -5071,11 +5071,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(!document.getElementById('bq-ios-hide')){
       var st=document.createElement('style'); st.id='bq-ios-hide';
       st.textContent=
-        '#view-market,#view-airdrop,#view-quests,'+
+        '#view-landing,#view-market,#view-airdrop,#view-quests,'+
         '[data-bqgo="view-market"],[data-bqgo="view-airdrop"],[data-bqgo="view-quests"],'+
         '#extraBtn,.extraspin,[data-wallet],[data-bqinvite],#bqInviteBtn,#bqAiBtn,.bqbc-rn,'+
-        '.bq-acctmenu [data-a="wallet"],.bq-acctmenu [data-a="airdrop"],'+
-        '#bqGoogleEntry,#bqTgEntry,#view-onboard .or,#view-onboard .wallets,'+
+        '.bq-acct [data-a="site"],.bq-acctmenu [data-a="wallet"],.bq-acctmenu [data-a="airdrop"],.bq-acctmenu [data-a="tg"],'+
+        '#bqGoogleEntry,#bqTgEntry,#view-onboard .or,#view-onboard .wallets,#view-onboard .hero .back,#view-onboard .wallet-safe,'+
         '#view-home .band .togo,#view-home .band .ends,'+
         '#view-home header .purses .pill[aria-label*="airdrop"]'+
         '{display:none!important}'+
@@ -5085,7 +5085,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     try{ var sk=document.querySelector('#view-home .band .season-k'); if(sk && /airdrop/i.test(sk.textContent)) sk.innerHTML=sk.innerHTML.replace(/GRIT Airdrop/i,'Your GRIT'); }catch(e){}
     // block navigation to any stripped/hidden crypto view -> send to home
     try{ if(window.bqGo && !window.bqGo._iosWrapped){ var _go=window.bqGo;
-      window.bqGo=function(v){ if(v==='view-market'||v==='view-airdrop'||v==='view-quests') v='view-home'; return _go.apply(this,[v].concat([].slice.call(arguments,1))); };
+      window.bqGo=function(v){ if(v==='view-market'||v==='view-airdrop'||v==='view-quests') v='view-home'; if(v==='view-landing') v='view-onboard'; return _go.apply(this,[v].concat([].slice.call(arguments,1))); };
       window.bqGo._iosWrapped=true; } }catch(e){}
   }
   window.bqApplyIosGate = bqApplyIosGate;
@@ -7969,11 +7969,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(s.data.session){
         loadAndShow(false).then(function(){
           var last; try{ last=sessionStorage.getItem('bq_view'); }catch(e){}
-          // inside Telegram, land straight in the game (skip restoring the marketing landing)
-          if(window.bqInTelegram){ if(window.bqGo) window.bqGo((last&&last!=='view-landing'&&document.getElementById(last))?last:'view-home'); }
+          // inside Telegram or the iOS app, land straight in the game (skip restoring the marketing landing)
+          if(window.bqInTelegram||window.BQ_IOS){ if(window.bqGo) window.bqGo((last&&last!=='view-landing'&&document.getElementById(last))?last:'view-home'); }
           else if(last && last!=='view-landing' && document.getElementById(last) && window.bqGo) window.bqGo(last);
         }).catch(logErr);
-      } else { try{ maybeShowRefBanner(); }catch(e){} }
+      } else { try{ maybeShowRefBanner(); }catch(e){} if(window.BQ_IOS && window.bqGo){ window.bqGo('view-onboard'); } }
     });
     });
   })();
