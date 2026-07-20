@@ -108,7 +108,7 @@
   }
 
   function retCard(lab,ret,elig,windowTxt){
-    if(elig<=0) return '<div class="ret dim"><div class="rlab">'+lab+'</div><div class="rpct">—</div><div class="rsub">collecting data</div></div>';
+    if(elig<=0) return '<div class="ret dim"><div class="rlab">'+lab+'</div><div class="rpct">-</div><div class="rsub">collecting data</div></div>';
     return '<div class="ret"><div class="rlab">'+lab+'</div><div class="rpct">'+pct(ret,elig)+'%</div><div class="rsub">'+ret+' of '+elig+' '+windowTxt+'</div></div>';
   }
 
@@ -184,7 +184,7 @@
         return '<tr style="border-top:1px solid rgba(120,120,140,.15)"><td style="font-family:monospace;font-size:11px;padding:6px 8px">'+esc(String(a.id).slice(0,8))+'</td>'
           +'<td style="padding:6px 8px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(a.email)+'">'+esc(a.email)+'</td>'
           +'<td style="padding:6px 8px">'+esc(a.signup)+'</td><td style="padding:6px 8px">'+(a.grit||0)+'</td><td style="padding:6px 8px">'+(a.bulls||0)+'</td>'
-          +'<td style="padding:6px 8px">'+esc(a.wallet||'—')+'</td><td style="padding:6px 8px">'+esc(a.telegram||'—')+'</td><td style="padding:6px 8px">'+esc(a.last_active||'—')+'</td></tr>';
+          +'<td style="padding:6px 8px">'+esc(a.wallet||'-')+'</td><td style="padding:6px 8px">'+esc(a.telegram||'-')+'</td><td style="padding:6px 8px">'+esc(a.last_active||'-')+'</td></tr>';
       }).join('');
       el.innerHTML='<div class="panel"><h3>Players &amp; accounts ('+rows.length+')</h3>'
         +'<p class="hint">Every account with its login methods + assets. If two rows are the same person, merge them below.</p>'
