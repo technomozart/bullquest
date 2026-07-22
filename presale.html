@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>$BULL Presale - BullQuest</title>
+<meta name="theme-color" content="#6B31E6">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://bullquest.fun/presale">
+<link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="$BULL Presale - BullQuest">
+<meta property="og:description" content="Join the $BULL presale. Send only from a wallet you control. Your tokens and airdrop land in the wallet you send from.">
+<meta property="og:url" content="https://bullquest.fun/presale">
+<meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png">
+<style>
+  :root{--v:#6B31E6;--v2:#8A63F0;--gold:#F0B429;--ink:#1c1230;--muted:#a9a2c4;--line:#2a2044;--bg:#140c26;--card:#1b1236;--ok:#43C06A;--warn:#F5A623;--bad:#ff5c6c}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#efe9ff;background:radial-gradient(1200px 600px at 50% -100px,#2a1a55 0%,var(--bg) 60%);line-height:1.6;min-height:100vh}
+  .wrap{max-width:720px;margin:0 auto;padding:22px 18px 90px}
+  header{display:flex;align-items:center;gap:11px;padding:4px 0 20px}
+  header img{width:34px;height:34px}
+  header b{font-size:17px;letter-spacing:.2px}
+  header a.back{margin-left:auto;font-size:13px;font-weight:700;color:#cdbcff;text-decoration:none;border:1px solid var(--line);padding:7px 12px;border-radius:10px}
+  .hero{text-align:center;padding:14px 0 6px}
+  .pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;padding:6px 13px;border-radius:999px;background:rgba(245,166,35,.12);color:var(--warn);border:1px solid rgba(245,166,35,.3);margin-bottom:14px}
+  .pill.open{background:rgba(67,192,106,.12);color:var(--ok);border-color:rgba(67,192,106,.35)}
+  .dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+  h1{font-size:34px;margin:6px 0 8px;letter-spacing:-.5px;background:linear-gradient(180deg,#fff,#d9c7ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 span{background:linear-gradient(180deg,var(--gold),#d68f10);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:#cbbff0;font-size:16px;margin:0 auto 8px;max-width:520px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px;margin:16px 0}
+  h2{font-size:18px;margin:26px 4px 8px}
+  p,li{font-size:15px;color:#ddd4f5}
+  ul{padding-left:20px}
+  li{margin:7px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:540px){.grid{grid-template-columns:1fr}}
+  .stat{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .stat .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+  .stat .val{font-size:18px;font-weight:800;margin-top:2px}
+  .warn-card{background:linear-gradient(180deg,rgba(255,92,108,.09),rgba(255,92,108,.04));border:1px solid rgba(255,92,108,.35)}
+  .warn-card h2{margin-top:2px;color:#ffb3ba}
+  .rule{display:flex;gap:11px;align-items:flex-start;margin:12px 0}
+  .rule .ic{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:15px;font-weight:900}
+  .rule.no .ic{background:rgba(255,92,108,.16);color:#ff8b96}
+  .rule.yes .ic{background:rgba(67,192,106,.16);color:#77e39a}
+  .rule b{color:#fff}
+  .addr{display:flex;align-items:center;gap:10px;background:#0f0920;border:1px dashed var(--line);border-radius:12px;padding:13px 14px;margin-top:10px;word-break:break-all;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+  .addr.set{border-style:solid;border-color:rgba(240,180,41,.5)}
+  .copy{flex:none;border:0;background:var(--gold);color:#3a2600;font-weight:800;font-size:13px;padding:9px 13px;border-radius:9px;cursor:pointer}
+  .copy:disabled{opacity:.4;cursor:not-allowed}
+  label{display:block;font-size:13px;font-weight:700;color:#cbbff0;margin:12px 0 5px}
+  label .req{color:var(--gold)}
+  input{width:100%;background:#0f0920;border:1px solid var(--line);border-radius:11px;padding:12px 13px;color:#fff;font-size:15px;font-family:inherit}
+  input:focus{outline:none;border-color:var(--v2)}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .submit{width:100%;margin-top:16px;border:0;background:linear-gradient(180deg,var(--v2),var(--v));color:#fff;font-weight:800;font-size:16px;padding:14px;border-radius:13px;cursor:pointer;box-shadow:0 8px 22px rgba(107,49,230,.4)}
+  .submit:disabled{opacity:.6;cursor:default}
+  .msg{margin-top:12px;font-size:14px;font-weight:700;padding:11px 13px;border-radius:11px;display:none}
+  .msg.ok{display:block;background:rgba(67,192,106,.12);color:#8ef0af;border:1px solid rgba(67,192,106,.3)}
+  .msg.err{display:block;background:rgba(255,92,108,.12);color:#ffb3ba;border:1px solid rgba(255,92,108,.3)}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px}
+  .chips a{font-size:13.5px;font-weight:700;color:#cdbcff;text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.03);padding:9px 13px;border-radius:10px}
+  footer{margin-top:30px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+  a{color:#cdbcff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="assets/icons/logo.png" alt=""><b>BullQuest</b>
+    <a class="back" href="https://bullquest.fun/">Back to app</a>
+  </header>
+
+  <div class="hero">
+    <span class="pill" id="statusPill"><span class="dot"></span><span id="statusText">Presale opening soon</span></span>
+    <h1>The <span>$BULL</span> Presale</h1>
+    <p class="sub">Get in early on BullQuest, the skill based bull game on Solana. Read the rules below carefully, then register your wallet.</p>
+  </div>
+
+  <div class="card" id="termsCard">
+    <div class="grid">
+      <div class="stat"><div class="k">Token</div><div class="val">$BULL</div></div>
+      <div class="stat"><div class="k">Chain</div><div class="val">Solana</div></div>
+      <div class="stat"><div class="k">Presale share</div><div class="val" id="tAlloc">7% of supply</div></div>
+      <div class="stat"><div class="k">Accepted</div><div class="val">SOL only</div></div>
+      <div class="stat"><div class="k">Min / Max</div><div class="val" id="tMinMax">TBA</div></div>
+      <div class="stat"><div class="k">Closes</div><div class="val" id="tClose">TBA</div></div>
+    </div>
+  </div>
+
+  <div class="card warn-card">
+    <h2>Read this before you send anything</h2>
+    <div class="rule yes"><span class="ic">✓</span><p><b>Send only from a wallet you control.</b> Use a personal Solana wallet like Phantom, Solflare, or Backpack. The wallet you send from is the wallet your $BULL and your airdrop will be delivered to.</p></div>
+    <div class="rule no"><span class="ic">✕</span><p><b>Never send from a centralized exchange.</b> Do not send from Binance, Coinbase, Bybit, OKX, Kraken, or any exchange account. Those wallets are not yours, they cannot receive your tokens back, and your contribution can be lost for good.</p></div>
+    <div class="rule yes"><span class="ic">✓</span><p><b>Send SOL only, on the Solana network.</b> Do not send any other coin or use any other chain.</p></div>
+    <div class="rule yes"><span class="ic">✓</span><p><b>Verify the address.</b> Only ever trust the address shown on this page and posted in our official channels below. We will never DM you an address first.</p></div>
+  </div>
+
+  <h2>The deposit address</h2>
+  <div class="card" id="walletCard">
+    <p id="walletNote">The official presale address is not live yet. It will appear here and be announced in our official channels when the presale opens. Do not send funds until then.</p>
+    <div class="addr" id="addrRow" style="display:none">
+      <span id="addrText"></span>
+      <button class="copy" id="copyBtn" type="button">Copy</button>
+    </div>
+  </div>
+
+  <h2>Register your wallet</h2>
+  <div class="card">
+    <p style="margin-top:0">Register the wallet you will send from so we can confirm your contribution and reach you. You can register now even before the presale opens to secure your spot.</p>
+    <form id="regForm" autocomplete="off">
+      <label>Your Solana wallet <span class="req">(required, the one you will send from)</span></label>
+      <input id="fWallet" type="text" spellcheck="false" placeholder="Your Phantom or Solflare address" required>
+      <div class="hint">This is where your $BULL and airdrop will be sent. Do not use an exchange address.</div>
+
+      <div class="grid">
+        <div><label>Discord</label><input id="fDiscord" type="text" placeholder="username"></div>
+        <div><label>Telegram</label><input id="fTelegram" type="text" placeholder="@handle"></div>
+        <div><label>X (Twitter)</label><input id="fX" type="text" placeholder="@handle"></div>
+        <div><label>Amount you plan to send (SOL)</label><input id="fAmount" type="text" inputmode="decimal" placeholder="optional"></div>
+      </div>
+      <label>Email <span style="color:var(--muted);font-weight:600">(optional)</span></label>
+      <input id="fEmail" type="email" placeholder="optional, for updates">
+
+      <button class="submit" id="submitBtn" type="submit">Register for the presale</button>
+      <div class="msg" id="formMsg"></div>
+    </form>
+  </div>
+
+  <h2>Verify us here, and only here</h2>
+  <p>Scammers will copy this page. These are our only official channels. If an address or message does not come from one of these, it is fake.</p>
+  <div class="chips">
+    <a href="https://x.com/BullQuestSol" target="_blank" rel="noopener">X: @BullQuestSol</a>
+    <a href="https://discord.gg/fFcCQWKHxr" target="_blank" rel="noopener">Discord</a>
+    <a href="https://t.me/BullQuest" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://bullquest.fun/" target="_blank" rel="noopener">bullquest.fun</a>
+  </div>
+
+  <footer>
+    Only send funds from a personal wallet you control, never from an exchange. Contributing to a presale carries risk, and tokens may lose value. This page is not financial advice, and nothing here is an offer in any jurisdiction where a presale would be unlawful. By taking part you confirm you are allowed to do so where you live. &copy; 2026 BullQuest.
+  </footer>
+</div>
+
+<script>
+/* =========================================================================
+   FOUNDER: edit this one block, then redeploy. Nothing else needs changing.
+   - Paste your real presale wallet into `wallet`.
+   - Set `open: true` when you are ready to accept SOL.
+   - Fill min / max / close if you want them shown (leave "" for TBA).
+   ========================================================================= */
+var CFG = {
+  wallet: "",          // e.g. "7xKX...Yz9" - your Solana presale deposit address
+  open:   false,       // set true to switch the page to "live" and show the address
+  allocationPct: "7% of supply",
+  minSol: "",          // e.g. "0.5"
+  maxSol: "",          // e.g. "25"
+  closeText: ""        // e.g. "August 1, 2026" or "when the cap is reached"
+};
+
+var SUPA_URL = "https://cewumdioknvjtsiolxce.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNld3VtZGlva252anRzaW9seGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2OTI3NzUsImV4cCI6MjA5OTI2ODc3NX0.n_r2gixZZTuTyJOiUhCZMpPKp5mUYtdM9bShs-nWkWk";
+
+(function(){
+  var isLive = !!(CFG.open && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test((CFG.wallet||"").trim()));
+  // terms
+  var e;
+  if(e=document.getElementById('tAlloc')) e.textContent = CFG.allocationPct || "7% of supply";
+  if(e=document.getElementById('tMinMax')) e.textContent = (CFG.minSol||CFG.maxSol) ? ((CFG.minSol||"0")+" to "+(CFG.maxSol||"no cap")+" SOL") : "TBA";
+  if(e=document.getElementById('tClose')) e.textContent = CFG.closeText || "TBA";
+  // status
+  if(isLive){
+    var p=document.getElementById('statusPill'); p.className='pill open';
+    document.getElementById('statusText').textContent='Presale is LIVE';
+    document.getElementById('walletNote').textContent='Send SOL only, from a wallet you control, to the address below. Double check every character.';
+    var row=document.getElementById('addrRow'); row.style.display='flex'; row.classList.add('set');
+    document.getElementById('addrText').textContent=CFG.wallet.trim();
+    var addrEl=document.querySelector('.addr'); addrEl.classList.add('set');
+    var cb=document.getElementById('copyBtn');
+    cb.addEventListener('click', function(){ try{ navigator.clipboard.writeText(CFG.wallet.trim()); cb.textContent='Copied'; setTimeout(function(){cb.textContent='Copy';},1400); }catch(_){} });
+  }
+
+  // form submit
+  var form=document.getElementById('regForm');
+  var btn=document.getElementById('submitBtn');
+  var msg=document.getElementById('formMsg');
+  function show(kind, text){ msg.className='msg '+kind; msg.textContent=text; }
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var w=(document.getElementById('fWallet').value||'').trim();
+    if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(w)){ show('err','Please enter a valid Solana wallet address (the one you will send from).'); return; }
+    var amtRaw=(document.getElementById('fAmount').value||'').replace(/[^0-9.]/g,'');
+    var amt=amtRaw?parseFloat(amtRaw):null;
+    btn.disabled=true; btn.textContent='Registering...';
+    fetch(SUPA_URL+'/rest/v1/rpc/presale_register', {
+      method:'POST',
+      headers:{ 'apikey':SUPA_KEY, 'Authorization':'Bearer '+SUPA_KEY, 'Content-Type':'application/json' },
+      body: JSON.stringify({
+        p_wallet: w,
+        p_discord: (document.getElementById('fDiscord').value||'').trim() || null,
+        p_telegram: (document.getElementById('fTelegram').value||'').trim() || null,
+        p_x: (document.getElementById('fX').value||'').trim() || null,
+        p_email: (document.getElementById('fEmail').value||'').trim() || null,
+        p_amount: (amt && isFinite(amt)) ? amt : null,
+        p_note: null
+      })
+    }).then(function(r){ return r.json(); }).then(function(j){
+      btn.disabled=false; btn.textContent='Register for the presale';
+      if(j && j.ok){ show('ok', isLive ? 'You are registered. You can now send SOL to the address above, from this wallet only.' : 'You are on the list. We will announce the address in our official channels when the presale opens.'); form.reset(); }
+      else { show('err', (j && j.error) || 'Something went wrong. Please try again.'); }
+    }).catch(function(){ btn.disabled=false; btn.textContent='Register for the presale'; show('err','Network error. Please try again in a moment.'); });
+  });
+})();
+</script>
+</body>
+</html>
