@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784525502";try{console.log("BullQuest build 1784525502");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784760847";try{console.log("BullQuest build 1784760847");}catch(e){}</script><style>
 /* Global lively buttons: .send (primary, e.g. "Got it"/"Save") and .cancel (dismiss, e.g. "Close"/"Cancel") now look
    good AND animate on hover EVERYWHERE, not only inside .bqfb-actions. Fixes bare buttons that fell back to the plain
    browser default. (More-specific .bqfb-actions rules still win where they exist; the :hover life applies to all.) */
@@ -826,13 +826,22 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-arena .iconbtn:active { transform: scale(.94); }
   .bq-arena .title { color: #fff; font-size: 21px; font-weight: 800; letter-spacing: -.4px; line-height: 1; }
   .bq-arena .subtitle { color: rgba(255,255,255,.72); font-size: 12px; font-weight: 600; margin-top: 3px; letter-spacing: .2px; }
+  /* Pinned so it stays visible while the duel controls scroll, and sits clear of the fixed
+     account bar (which was covering it top-right). Shows a live "refilling" hint when below max. */
   .bq-arena .energy {
+    position: fixed; top: 60px; right: 14px; z-index: 50;
     display: inline-flex; align-items: center; gap: 6px;
-    height: 44px; padding: 0 7px 0 13px; border-radius: 999px;
+    height: 38px; padding: 0 11px; border-radius: 999px; cursor: pointer;
     background: linear-gradient(180deg, #FFC24B, #F5A623);
     color: #6b4a05; font-weight: 800; font-size: 14px;
-    box-shadow: 0 6px 16px rgba(245, 166, 35, .4);
+    box-shadow: 0 6px 16px rgba(245, 166, 35, .45);
   }
+  .bq-arena .energy .erf {
+    font-size: 10px; font-weight: 800; color: #6b4a05; letter-spacing: .2px;
+    background: rgba(255,255,255,.55); padding: 2px 6px; border-radius: 999px; margin-left: 1px;
+    animation: bqNrgPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes bqNrgPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
 
   /* ---------- stage ---------- */
   .bq-arena .stage {
@@ -3613,9 +3622,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         <div class="subtitle">Fight one on one, win GRIT</div>
       </div>
     </div>
-    <div class="energy" aria-label="Energy: 7 of 10">
+    <div class="energy" aria-label="Energy: 7 of 10" title="Your bull's energy. Each duel costs 2. It refills on its own, 1 every 15 minutes.">
       <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>
-      7/10
+      7/10<span class="erf" style="display:none">refilling</span>
     </div>
   </header>
 
