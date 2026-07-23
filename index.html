@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784761973";try{console.log("BullQuest build 1784761973");}catch(e){}</script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784770040";try{console.log("BullQuest build 1784770040");}catch(e){}</script><style>
 /* Global lively buttons: .send (primary, e.g. "Got it"/"Save") and .cancel (dismiss, e.g. "Close"/"Cancel") now look
    good AND animate on hover EVERYWHERE, not only inside .bqfb-actions. Fixes bare buttons that fell back to the plain
    browser default. (More-specific .bqfb-actions rules still win where they exist; the :hover life applies to all.) */
@@ -847,7 +847,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     background: rgba(255,255,255,.55); padding: 2px 6px; border-radius: 999px; margin-left: 1px;
     animation: bqNrgPulse 1.5s ease-in-out infinite;
   }
-  @keyframes bqNrgPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+  @keyframes bqNrgPulse { 0%,100%{opacity:.78} 50%{opacity:1} }
+  .bq-arena .energy .erf { font-variant-numeric: tabular-nums; }
 
   /* ---------- stage ---------- */
   .bq-arena .stage {
@@ -4479,7 +4480,41 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(on){ if(!q){ q=document.createElement('div'); q.className='oppq'; q.textContent='?'; q.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:58px;font-weight:900;color:rgba(154,166,178,.45);pointer-events:none;z-index:2'; mw.appendChild(q); } q.style.display='flex'; if(img) img.style.opacity='0'; }
     else { if(q) q.style.display='none'; if(img) img.style.opacity='1'; }
   }
-  function setEnergy(e, mx){ if(energyEl){ energyEl.innerHTML = energyEl.innerHTML.replace(/\d+\s*\/\s*\d+/, e+'/'+mx); energyEl.setAttribute('aria-label','Energy: '+e+' of '+mx); var rf=energyEl.querySelector('.erf'); if(rf) rf.style.display=(e<mx)?'':'none'; } }
+  // Energy + a LIVE refill countdown on the pinned arena chip. A player (esp. a new one) reported you
+  // could not tell how much energy was left or when it comes back while in the arena, only a "done" notice.
+  // The chip now shows "7/10" plus a ticking "+1 m:ss" until the next point (fed by energy_next_at from the
+  // server), and auto-pulls the fresh state the moment a point lands.
+  var nrgE = 0, nrgMx = 0, nrgNextAt = null, nrgFullAt = null, nrgTick = null, nrgPending = false;
+  function nrgFmt(sec){ sec = Math.max(0, Math.round(sec)); var m = Math.floor(sec/60), s = sec % 60; return m + ':' + (s<10?'0':'') + s; }
+  function renderNrg(){
+    if(!energyEl) return; var rf = energyEl.querySelector('.erf'); if(!rf) return;
+    if(!(nrgE < nrgMx) || !nrgNextAt){ rf.style.display='none'; energyEl.setAttribute('title', "Your bull's energy. Each duel costs 2. Tap to refill instantly with SOL."); return; }
+    rf.style.display='';
+    var remain = (nrgNextAt - Date.now())/1000;
+    if(remain <= 0){
+      rf.textContent = '+1 0:00';
+      if(!nrgPending && !fighting && window.bqGame && window.bqGame.ready()){ nrgPending = true; refreshFromServer(); }
+      return;
+    }
+    rf.textContent = '+1 ' + nrgFmt(remain);
+    var full = nrgFullAt ? (' Full in ' + nrgFmt((nrgFullAt - Date.now())/1000) + '.') : '';
+    energyEl.setAttribute('title', 'Energy '+nrgE+'/'+nrgMx+'. Next +1 in '+nrgFmt(remain)+'.'+full+' Refills 1 every 15 min. Tap to refill instantly with SOL.');
+  }
+  function setNrgTiming(nextAt, fullAt){
+    nrgNextAt = nextAt ? new Date(nextAt).getTime() : null;
+    nrgFullAt = fullAt ? new Date(fullAt).getTime() : null;
+    nrgPending = false; renderNrg();
+    if(!nrgTick) nrgTick = setInterval(renderNrg, 1000);
+  }
+  function setEnergy(e, mx){
+    nrgE = e; nrgMx = mx;
+    if(energyEl){
+      energyEl.innerHTML = energyEl.innerHTML.replace(/\d+\s*\/\s*\d+/, e+'/'+mx);
+      energyEl.setAttribute('aria-label','Energy: '+e+' of '+mx);
+      var rf=energyEl.querySelector('.erf'); if(rf) rf.style.display=(e<mx)?'':'none';
+    }
+    renderNrg();
+  }
   // Tap the energy pill to buy a full refill with SOL (also auto-offered when a duel runs out of energy).
   if(energyEl){
     energyEl.style.cursor='pointer'; energyEl.setAttribute('role','button'); energyEl.setAttribute('title','Refill energy with SOL');
@@ -4496,6 +4531,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       you = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
       opp = { pow:s.bull.power, spd:s.bull.speed, sta:s.bull.stamina };
       setEnergy(s.bull.energy, s.bull.energy_max);
+      setNrgTiming(s.bull.energy_next_at, s.bull.energy_full_at);
       var f=root.querySelector('.fighter.you'), b=window.bqGame.bull();
       if(f){
         var bname=(b&&b.bulls&&b.bulls.id===s.bull.id&&b.bulls.name)||('Bull #'+s.bull.id);
@@ -4671,6 +4707,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     ov.style.display='flex';
     if(win) duelConfetti(ov);
     setEnergy(r.state.energy, r.state.energy_max);
+    setNrgTiming(r.state.energy_next_at, r.state.energy_full_at);
     if(window.bqSetGrit) window.bqSetGrit(r.state.grit);
   }
 
