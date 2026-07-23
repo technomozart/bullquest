@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784813359";try{console.log("BullQuest build 1784813359");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1784821801";try{console.log("BullQuest build 1784821801");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -81,6 +81,9 @@ button.cancel:active{transform:translateY(0) scale(.97)}
    injected at runtime with literal white/violet-tint values). Higher specificity so they win. */
 /* #view-airdrop and #view-quests carry their own --v brand violet, used only as TEXT. On the dark
    surface #6B31E6 sits at 2.25:1, so lift it there. Filled violet buttons are unaffected. */
+/* Epic rarity violet reads at 3.55:1 on the dark card; lift it there only. */
+:root[data-theme="dark"] .bq-market,
+:root[data-theme="dark"] .bq-bulls{ --r-epic:#a58cf0; }
 :root[data-theme="dark"] #view-airdrop,
 :root[data-theme="dark"] #view-quests{ --v:#a88be4; }
 :root[data-theme="dark"] .bq-home .spin .sbtn,
@@ -89,9 +92,9 @@ button.cancel:active{transform:translateY(0) scale(.97)}
 :root[data-theme="dark"] .bq-market .fchip{ --violet:#b9a2f5; --violet-deep:#ad93f3; --speed:#ad93f3; }
 :root[data-theme="dark"] .bq-arena .rarity{ background:rgba(43,38,57,.92)!important; color:var(--ink)!important; }
 :root[data-theme="dark"] .bq-signout{ background:rgba(43,38,57,.85)!important; }
-:root[data-theme="dark"] .bq-acct{ background:rgba(23,27,35,.965)!important; border-color:rgba(255,255,255,.07)!important; }
+:root[data-theme="dark"] .bq-acct{ background:rgba(23,27,35,.965)!important; border-color:rgba(255,255,255,.90)!important; }
 :root[data-theme="dark"] .bq-acct .ab:hover{ background:rgba(139,92,246,.20)!important; }
-:root[data-theme="dark"] .bq-acctmenu{ border-color:rgba(255,255,255,.09)!important; box-shadow:0 16px 44px rgba(0,0,0,.55)!important; }
+:root[data-theme="dark"] .bq-acctmenu{ border-color:rgba(255,255,255,.90)!important; box-shadow:0 16px 44px rgba(0,0,0,.55)!important; }
 :root[data-theme="dark"] .bq-acctmenu .sep{ background:rgba(255,255,255,.09)!important; }
 :root[data-theme="dark"] .bq-acctmenu .mi:hover{ background:rgba(139,92,246,.15)!important; }
 /* Chips now resolve through the tint scale, so they darken AND keep their hue. The old blanket
@@ -191,7 +194,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing *,#view-landing *::before,#view-landing *::after{box-sizing:border-box}
 #view-landing{
   --violet:#6B31E6; --violet-deep:#5A22D6; --violet-tint:#7C46EE; --violet-glow:#8A5CF2;
-  --cta:#4DA6F5; --cta-hover:#3C93E8;
+  --cta:#0B70C9; --cta-hover:#0A66B6;
   --gem-a:#5CB2F6; --gem-b:#4C86EC;
   --white:#fff; --app-bg:#F6F8FB; --cloud:#EEF3F8; --card-alt:#F4F6F9;
   --ink:#1C1F24; --body:#7A8794; --faint:#AEB8C2; --hairline:#EDEFF3;
@@ -418,7 +421,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .road-dot svg{width:30px;height:30px}
 #view-landing .road-step .phase{font-size:12px;font-weight:800;color:#D9C7FB;letter-spacing:1px;margin-bottom:6px}
 #view-landing .road-step h3{font-size:18px;color:#fff;margin-bottom:6px}
-#view-landing .road-step p{font-size:13.5px;color:rgba(255,255,255,.85)}
+#view-landing .road-step p{font-size:13.5px;color:rgba(255,255,255,.90)}
 #view-landing .road-step .badge{display:inline-block;margin-top:8px;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:999px}
 #view-landing .road-step.done .road-dot{background:var(--violet)}
 #view-landing .road-step.done .badge{background:var(--green);color:#fff}
@@ -476,8 +479,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #4DA6F5;
-    --cta-hover: #3C93E8;
+    --cta: #0B70C9;
+    --cta-hover: #0A66B6;
     --gem-a: #5CB2F6;
     --gem-b: #4C86EC;
     --app-bg: #F6F8FB;
@@ -550,7 +553,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     position: absolute; color: #fff; font-size: 10px; font-weight: 800; line-height: 1;
   }
   .bq-home .hi { min-width: 0; }
-  .bq-home .hi .k { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,.72); font-size: 12px; font-weight: 700; letter-spacing: .2px; }
+  .bq-home .hi .k { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,.90); font-size: 12px; font-weight: 700; letter-spacing: .2px; }
   .bq-home .hi .n {
     color: #fff; font-size: 19px; font-weight: 800; letter-spacing: -.4px; line-height: 1.1; margin-top: 2px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -585,16 +588,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   .bq-home .ring .center { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
   .bq-home .ring .center b { font-size: 22px; font-weight: 900; color: #fff; line-height: 1; }
-  .bq-home .ring .center small { font-size: 8.5px; font-weight: 800; color: rgba(255,255,255,.7); letter-spacing: .5px; text-transform: uppercase; margin-top: 2px; }
+  .bq-home .ring .center small { font-size: 8.5px; font-weight: 800; color: rgba(255,255,255,.90); letter-spacing: .5px; text-transform: uppercase; margin-top: 2px; }
   .bq-home .band-info { flex: 1; min-width: 0; }
-  .bq-home .band-info .season-k { font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: rgba(255,255,255,.66); }
+  .bq-home .band-info .season-k { font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: rgba(255,255,255,.90); }
   .bq-home .band-info .tier { display: flex; align-items: center; gap: 8px; margin: 3px 0 5px; }
   .bq-home .band-info .tier b { color: #fff; font-size: 21px; font-weight: 800; letter-spacing: -.3px; line-height: 1; }
   .bq-home .tierhex { position: relative; width: 24px; height: 24px; display: grid; place-items: center; flex: none; }
   .bq-home .tierhex svg:last-child { position: absolute; }
-  .bq-home .band-info .togo { font-size: 12px; color: rgba(255,255,255,.82); font-weight: 600; }
+  .bq-home .band-info .togo { font-size: 12px; color: rgba(255,255,255,.90); font-weight: 600; }
   .bq-home .band-info .togo b { color: #fff; font-weight: 800; }
-  .bq-home .band-info .ends { display: inline-flex; align-items: center; gap: 5px; margin-top: 7px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.72); }
+  .bq-home .band-info .ends { display: inline-flex; align-items: center; gap: 5px; margin-top: 7px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.90); }
 
   /* streak strip */
   .bq-home .streak {
@@ -606,16 +609,16 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-home .streak .pips { display: flex; gap: 5px; flex: 1; }
   .bq-home .streak .pip {
     width: 30px; height: 34px; border-radius: 11px; display: grid; place-items: center;
-    background: rgba(255,255,255,.12); position: relative; color: rgba(255,255,255,.42);
+    background: rgba(255,255,255,.12); position: relative; color: rgba(255,255,255,.90);
   }
   .bq-home .streak .pip.on { background: linear-gradient(180deg, #FFC24B, #F5A623); box-shadow: 0 4px 10px rgba(245,166,35,.4); color: #7a5104; }
   .bq-home .streak .pip.today { outline: 2px solid #fff; outline-offset: 2px; }
   .bq-home .streak .pip small { position: absolute; bottom: 3px; font-size: 8px; font-weight: 800; }
   .bq-home .streak .pip.on small { color: #7a5104; }
-  .bq-home .streak .pip small.d { color: rgba(255,255,255,.55); }
+  .bq-home .streak .pip small.d { color: rgba(255,255,255,.90); }
   .bq-home .streak .lab { text-align: right; flex: none; }
   .bq-home .streak .lab b { display: block; color: #fff; font-size: 16px; font-weight: 800; line-height: 1; }
-  .bq-home .streak .lab span { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.66); }
+  .bq-home .streak .lab span { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.90); }
 
   /* ---------- content sheet ---------- */
   .bq-home .sheet {
@@ -644,7 +647,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     box-shadow: 0 14px 30px rgba(76,134,236,.34);
   }
   .bq-home .wallet-head { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
-  .bq-home .wallet-head .lbl { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.86); font-size: 13px; font-weight: 700; }
+  .bq-home .wallet-head .lbl { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.90); font-size: 13px; font-weight: 700; }
   .bq-home .wallet-head .buy {
     appearance: none; border: none; cursor: pointer;
     display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0 15px 0 12px;
@@ -657,13 +660,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-home .wallet-head .buy:active { transform: scale(.96); }
   .bq-home .wallet .bal { position: relative; z-index: 1; margin-top: 12px; display: flex; align-items: baseline; gap: 8px; }
   .bq-home .wallet .bal b { color: #fff; font-size: 34px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
-  .bq-home .wallet .bal span { color: rgba(255,255,255,.82); font-size: 15px; font-weight: 800; }
+  .bq-home .wallet .bal span { color: rgba(255,255,255,.90); font-size: 15px; font-weight: 800; }
   .bq-home .wallet .sub {
     position: relative; z-index: 1; margin-top: 12px; display: inline-flex; align-items: center; gap: 7px;
     background: rgba(255,255,255,.16); border-radius: 12px; padding: 7px 12px 7px 8px;
   }
   .bq-home .wallet .sub span { color: #fff; font-size: 14px; font-weight: 800; }
-  .bq-home .wallet .sub small { color: rgba(255,255,255,.72); font-size: 11px; font-weight: 700; }
+  .bq-home .wallet .sub small { color: rgba(255,255,255,.90); font-size: 11px; font-weight: 700; }
 
   /* featured bull */
   .bq-home .featured { padding: 0; overflow: hidden; }
@@ -713,12 +716,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
   .bq-home .cta {
     appearance: none; border: none; width: 100%; height: 54px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
     letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77,166,245,.42);
     display: flex; align-items: center; justify-content: center; gap: 9px;
     transition: transform .1s ease, background .15s ease;
   }
-  .bq-home .cta:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-home .cta:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-home .cta:active { transform: scale(.98); }
 
   /* daily quests */
@@ -785,7 +788,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-home .spin .stext { flex: 1; min-width: 0; position: relative; z-index: 1; }
   .bq-home .spin .stag { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase; color: #FFE7A6; }
   .bq-home .spin .stext b { display: block; color: #fff; font-size: 19px; font-weight: 800; letter-spacing: -.3px; margin: 4px 0 2px; }
-  .bq-home .spin .stext p { margin: 0; color: rgba(255,255,255,.78); font-size: 12.5px; font-weight: 600; }
+  .bq-home .spin .stext p { margin: 0; color: rgba(255,255,255,.90); font-size: 12.5px; font-weight: 600; }
   .bq-home .spin .sbtn {
     appearance: none; border: none; cursor: pointer; margin-top: 12px;
     min-height: 44px; padding: 0 20px; border-radius: 999px;
@@ -819,7 +822,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-home .nav a.center { position: relative; }
   .bq-home .nav a.center .knob {
     width: 52px; height: 52px; border-radius: 50%; margin-top: -22px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff;
     display: grid; place-items: center; box-shadow: 0 8px 18px rgba(77,166,245,.5);
     border: 4px solid #fff;
   }
@@ -851,8 +854,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #4DA6F5;
-    --cta-hover: #3C93E8;
+    --cta: #0B70C9;
+    --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
@@ -921,7 +924,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-arena .iconbtn:hover { background: rgba(255,255,255,.26); }
   .bq-arena .iconbtn:active { transform: scale(.94); }
   .bq-arena .title { color: #fff; font-size: 21px; font-weight: 800; letter-spacing: -.4px; line-height: 1; }
-  .bq-arena .subtitle { color: rgba(255,255,255,.72); font-size: 12px; font-weight: 600; margin-top: 3px; letter-spacing: .2px; }
+  .bq-arena .subtitle { color: rgba(255,255,255,.90); font-size: 12px; font-weight: 600; margin-top: 3px; letter-spacing: .2px; }
   /* Pinned so it stays visible while the duel controls scroll, and sits clear of the fixed
      account bar (which was covering it top-right). Shows a live "refilling" hint when below max. */
   .bq-arena .energy {
@@ -1122,12 +1125,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
   .bq-arena .cta {
     appearance: none; border: none; width: 100%; height: 54px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
     letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77,166,245,.42);
     display: flex; align-items: center; justify-content: center; gap: 9px;
     transition: transform .1s ease, background .15s ease;
   }
-  .bq-arena .cta:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-arena .cta:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-arena .cta:active { transform: scale(.98); }
   .bq-arena .cta.pop { animation: bqPop .4s ease; }
   @keyframes bqPop { 40% { transform: scale(1.03); } }
@@ -1156,8 +1159,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #4DA6F5;
-    --cta-hover: #3C93E8;
+    --cta: #0B70C9;
+    --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
@@ -1219,14 +1222,14 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-bulls .head-l { min-width: 0; }
   .bq-bulls .head-l .k {
     display: inline-flex; align-items: center; gap: 6px;
-    color: rgba(255,255,255,.7); font-size: 11.5px; font-weight: 800;
+    color: rgba(255,255,255,.90); font-size: 11.5px; font-weight: 800;
     letter-spacing: .5px; text-transform: uppercase;
   }
   .bq-bulls .head-l .n {
     color: #fff; font-size: 24px; font-weight: 900; letter-spacing: -.6px; line-height: 1.05; margin-top: 3px;
   }
   .bq-bulls .head-l .n small {
-    font-size: 13px; font-weight: 800; color: rgba(255,255,255,.72); margin-left: 8px; letter-spacing: -.2px;
+    font-size: 13px; font-weight: 800; color: rgba(255,255,255,.90); margin-left: 8px; letter-spacing: -.2px;
   }
   .bq-bulls .iconbtn {
     width: 44px; height: 44px; border: none; border-radius: 14px; flex: none;
@@ -1464,13 +1467,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-bulls .cta {
     appearance: none; border: none; cursor: pointer; flex: 1.4;
     height: 52px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff;
     font-size: 15px; font-weight: 800; letter-spacing: .2px;
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     box-shadow: 0 10px 22px rgba(77,166,245,.42);
     transition: transform .1s ease, background .15s ease;
   }
-  .bq-bulls .cta:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-bulls .cta:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-bulls .cta:active { transform: scale(.98); }
 
   /* ---------- bottom nav ---------- */
@@ -1492,7 +1495,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-bulls .nav a.center { position: relative; }
   .bq-bulls .nav a.center .knob {
     width: 52px; height: 52px; border-radius: 50%; margin-top: -22px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff;
     display: grid; place-items: center; box-shadow: 0 8px 18px rgba(77,166,245,.5);
     border: 4px solid #fff;
   }
@@ -1526,8 +1529,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #4DA6F5;
-    --cta-hover: #3C93E8;
+    --cta: #0B70C9;
+    --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
@@ -1592,7 +1595,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-sectors .iconbtn:active { transform: scale(.94); }
   .bq-sectors .htitle { min-width: 0; }
   .bq-sectors .htitle h1 { margin: 0; color: #fff; font-size: 21px; font-weight: 800; letter-spacing: -.4px; line-height: 1; }
-  .bq-sectors .htitle p { margin: 4px 0 0; color: rgba(255,255,255,.74); font-size: 12px; font-weight: 600; letter-spacing: .1px; }
+  .bq-sectors .htitle p { margin: 4px 0 0; color: rgba(255,255,255,.90); font-size: 12px; font-weight: 600; letter-spacing: .1px; }
   .bq-sectors .cycle {
     display: inline-flex; align-items: center; gap: 6px; flex: none;
     height: 34px; padding: 0 12px 0 9px; border-radius: 999px;
@@ -1618,13 +1621,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     background: linear-gradient(180deg, var(--tint-violet1), var(--tint-violet2)); display: grid; place-items: center;
   }
   .bq-sectors .band-info { flex: 1; min-width: 0; }
-  .bq-sectors .band-info .k { font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: rgba(255,255,255,.66); }
+  .bq-sectors .band-info .k { font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: rgba(255,255,255,.90); }
   .bq-sectors .band-info .n { color: #fff; font-size: 17px; font-weight: 800; letter-spacing: -.3px; line-height: 1.1; margin: 3px 0 4px; }
-  .bq-sectors .band-info .sub { font-size: 12px; color: rgba(255,255,255,.82); font-weight: 600; }
+  .bq-sectors .band-info .sub { font-size: 12px; color: rgba(255,255,255,.90); font-weight: 600; }
   .bq-sectors .band-info .sub b { color: #fff; font-weight: 800; }
   .bq-sectors .band-stat { text-align: right; flex: none; }
   .bq-sectors .band-stat b { display: block; color: #fff; font-size: 22px; font-weight: 900; line-height: 1; letter-spacing: -.5px; }
-  .bq-sectors .band-stat span { font-size: 10px; font-weight: 800; color: rgba(255,255,255,.66); text-transform: uppercase; letter-spacing: .4px; }
+  .bq-sectors .band-stat span { font-size: 10px; font-weight: 800; color: rgba(255,255,255,.90); text-transform: uppercase; letter-spacing: .4px; }
 
   /* ---------- content sheet ---------- */
   .bq-sectors .sheet {
@@ -1774,12 +1777,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* primary CTA */
   .bq-sectors .cta {
     appearance: none; border: none; width: 100%; height: 56px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
     letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77,166,245,.42);
     display: flex; align-items: center; justify-content: center; gap: 9px; margin-bottom: 4px;
     transition: transform .1s ease, background .15s ease;
   }
-  .bq-sectors .cta:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-sectors .cta:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-sectors .cta:active { transform: scale(.98); }
   .bq-sectors .cta.pop { animation: bqPopSectors .4s ease; }
   @keyframes bqPopSectors { 40% { transform: scale(1.02); } }
@@ -1803,7 +1806,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-sectors .nav a.center { position: relative; }
   .bq-sectors .nav a.center .knob {
     width: 52px; height: 52px; border-radius: 50%; margin-top: -22px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff;
     display: grid; place-items: center; box-shadow: 0 8px 18px rgba(77,166,245,.5);
     border: 4px solid #fff;
   }
@@ -1835,8 +1838,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #4DA6F5;
-    --cta-hover: #3C93E8;
+    --cta: #0B70C9;
+    --cta-hover: #0A66B6;
     --gem-a: #5CB2F6;
     --gem-b: #4C86EC;
     --app-bg: #F6F8FB;
@@ -1895,7 +1898,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-market .titlewrap { min-width: 0; }
   .bq-market .titlewrap .k {
     display: inline-flex; align-items: center; gap: 6px;
-    color: rgba(255,255,255,.72); font-size: 12px; font-weight: 700; letter-spacing: .2px;
+    color: rgba(255,255,255,.90); font-size: 12px; font-weight: 700; letter-spacing: .2px;
   }
   .bq-market .titlewrap h1 {
     margin: 3px 0 0; color: #fff; font-size: 24px; font-weight: 900; letter-spacing: -.6px; line-height: 1;
@@ -1916,7 +1919,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-market .tab {
     appearance: none; border: none; cursor: pointer; flex: 1;
     height: 40px; border-radius: 12px; background: transparent;
-    color: rgba(255,255,255,.82); font-size: 13.5px; font-weight: 800; letter-spacing: .2px;
+    color: rgba(255,255,255,.90); font-size: 13.5px; font-weight: 800; letter-spacing: .2px;
     display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     transition: background .15s ease, color .15s ease, transform .1s ease;
   }
@@ -1980,8 +1983,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-market .hot .price { line-height: 1.05; }
   .bq-market .hot .price .amt { display: flex; align-items: center; gap: 6px; }
   .bq-market .hot .price .amt b { color: #fff; font-size: 20px; font-weight: 900; letter-spacing: -.4px; }
-  .bq-market .hot .price .amt span { color: rgba(255,255,255,.8); font-size: 12px; font-weight: 800; }
-  .bq-market .hot .price .sol { color: rgba(255,255,255,.66); font-size: 11px; font-weight: 700; margin-top: 2px; }
+  .bq-market .hot .price .amt span { color: rgba(255,255,255,.90); font-size: 12px; font-weight: 800; }
+  .bq-market .hot .price .sol { color: rgba(255,255,255,.90); font-size: 11px; font-weight: 700; margin-top: 2px; }
   .bq-market .hot .buy {
     appearance: none; border: none; cursor: pointer; flex: none;
     height: 42px; padding: 0 22px; border-radius: 999px;
@@ -2072,13 +2075,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-market .listing .buy {
     appearance: none; border: none; cursor: pointer; width: 100%; margin-top: 10px;
     height: 40px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff;
     font-size: 13.5px; font-weight: 800; letter-spacing: .2px;
     display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     box-shadow: 0 8px 18px rgba(77,166,245,.36);
     transition: transform .1s ease, background .15s ease;
   }
-  .bq-market .listing .buy:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-market .listing .buy:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-market .listing .buy:active { transform: scale(.97); }
 
   /* sell affordance */
@@ -2116,7 +2119,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-market .nav a.center { position: relative; }
   .bq-market .nav a.center .knob {
     width: 52px; height: 52px; border-radius: 50%; margin-top: -22px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff;
     display: grid; place-items: center; box-shadow: 0 8px 18px rgba(77,166,245,.5);
     border: 4px solid #fff;
   }
@@ -2150,8 +2153,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #4DA6F5;
-    --cta-hover: #3C93E8;
+    --cta: #0B70C9;
+    --cta-hover: #0A66B6;
     --gem-a: #5CB2F6;
     --gem-b: #4C86EC;
     --app-bg: #F6F8FB;
@@ -2276,7 +2279,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     letter-spacing: -.6px; line-height: 1.08; margin: 8px 0 0;
   }
   .bq-onboard .subhead {
-    position: relative; z-index: 2; color: rgba(255,255,255,.82); font-size: 14px; font-weight: 600;
+    position: relative; z-index: 2; color: rgba(255,255,255,.90); font-size: 14px; font-weight: 600;
     line-height: 1.45; margin: 9px auto 0; max-width: 300px;
   }
 
@@ -2292,7 +2295,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.14);
   }
   .bq-onboard .step .sl { color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .1px; }
-  .bq-onboard .step-arrow { display: grid; place-items: center; height: 46px; color: rgba(255,255,255,.5); flex: none; }
+  .bq-onboard .step-arrow { display: grid; place-items: center; height: 46px; color: rgba(255,255,255,.90); flex: none; }
 
   /* ---------- entry sheet ---------- */
   .bq-onboard .sheet {
@@ -2310,12 +2313,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   /* primary connect wallet */
   .bq-onboard .cta {
     appearance: none; border: none; width: 100%; min-height: 54px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
     letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77,166,245,.42);
     display: flex; align-items: center; justify-content: center; gap: 9px;
     transition: transform .1s ease, background .15s ease;
   }
-  .bq-onboard .cta:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-onboard .cta:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-onboard .cta:active { transform: scale(.98); }
 
   /* wallet chips under primary */
@@ -2409,8 +2412,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #4DA6F5;
-    --cta-hover: #3C93E8;
+    --cta: #0B70C9;
+    --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
@@ -2491,7 +2494,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-spin .title { color: #fff; font-size: 21px; font-weight: 800; letter-spacing: -.4px; line-height: 1; }
   .bq-spin .subtitle {
     display: inline-flex; align-items: center; gap: 5px;
-    color: rgba(255,255,255,.78); font-size: 12px; font-weight: 700; margin-top: 4px; letter-spacing: .2px;
+    color: rgba(255,255,255,.90); font-size: 12px; font-weight: 700; margin-top: 4px; letter-spacing: .2px;
   }
   .bq-spin .subtitle .rdy { width: 7px; height: 7px; border-radius: 50%; background: #6EEFA0; box-shadow: 0 0 0 3px rgba(110,239,160,.28); }
   .bq-spin .hay-pill {
@@ -2512,7 +2515,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   .bq-spin .ranknote .rhex { position: relative; width: 26px; height: 26px; display: grid; place-items: center; flex: none; }
   .bq-spin .ranknote .rhex span { position: absolute; color: #fff; font-size: 10px; font-weight: 800; line-height: 1; }
-  .bq-spin .ranknote p { margin: 0; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.82); line-height: 1.25; }
+  .bq-spin .ranknote p { margin: 0; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.90); line-height: 1.25; }
   .bq-spin .ranknote p b { color: #fff; font-weight: 800; }
 
   /* ---------- wheel stage ---------- */
@@ -2563,12 +2566,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-spin .controls { position: relative; z-index: 3; margin: 20px 6px 2px; }
   .bq-spin .spinbtn {
     appearance: none; border: none; width: 100%; height: 54px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
     letter-spacing: .2px; cursor: pointer; box-shadow: 0 10px 22px rgba(77, 166, 245, .42);
     display: flex; align-items: center; justify-content: center; gap: 10px;
     transition: transform .1s ease, background .15s ease, box-shadow .15s ease;
   }
-  .bq-spin .spinbtn:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-spin .spinbtn:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-spin .spinbtn:active { transform: scale(.98); }
   .bq-spin .spinbtn[disabled] { cursor: default; opacity: .7; box-shadow: 0 6px 14px rgba(77, 166, 245, .3); }
   .bq-spin .spinbtn .dots { display: inline-flex; gap: 4px; }
@@ -2579,7 +2582,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-spin .extraspin {
     appearance: none; border: none; background: transparent; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%;
-    margin-top: 12px; color: rgba(255,255,255,.86); font-size: 13px; font-weight: 800;
+    margin-top: 12px; color: rgba(255,255,255,.90); font-size: 13px; font-weight: 800;
     transition: color .15s ease;
   }
   .bq-spin .extraspin:hover { color: #fff; }
@@ -2624,12 +2627,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-spin .rc-sub { font-size: 13px; font-weight: 600; color: var(--body); margin: 0 0 18px; }
   .bq-spin .rc-collect {
     appearance: none; border: none; width: 100%; height: 54px; border-radius: 999px;
-    background: linear-gradient(180deg, #5FB2F8, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
+    background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff; font-size: 16px; font-weight: 800;
     cursor: pointer; box-shadow: 0 10px 22px rgba(77, 166, 245, .42);
     display: flex; align-items: center; justify-content: center; gap: 8px;
     transition: transform .1s ease, background .15s ease;
   }
-  .bq-spin .rc-collect:hover { background: linear-gradient(180deg, #4EA6F2, var(--cta-hover)); }
+  .bq-spin .rc-collect:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-spin .rc-collect:active { transform: scale(.98); }
   .bq-spin .rc-dismiss {
     appearance: none; border: none; background: transparent; cursor: pointer;
@@ -3877,7 +3880,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       #view-sectors .band#swStatus{display:block}
       #view-sectors .sw-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
       #view-sectors .sw-status .cd{font-size:22px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
-      #view-sectors .sw-status .lab{font-size:11px;font-weight:700;letter-spacing:.6px;color:rgba(255,255,255,.75);text-transform:uppercase}
+      #view-sectors .sw-status .lab{font-size:11px;font-weight:700;letter-spacing:.6px;color:rgba(255,255,255,.90);text-transform:uppercase}
       #view-sectors .sw-status .pill{margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;color:#fff}
       #view-sectors .sw-status .pill.closed{background:rgba(255,120,120,.22);border-color:rgba(255,150,150,.4)}
       #view-sectors .sw-tile{cursor:pointer;text-align:left;border:0;font-family:inherit;width:100%}
@@ -3889,11 +3892,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       #view-sectors .sw-crown{color:#E0A100}
       #view-sectors .swme{background:linear-gradient(160deg,#7A3BF0,#6B31E6);color:#fff;border-radius:18px;padding:16px 18px;margin-bottom:4px}
       #view-sectors .swme h4{margin:0 0 3px;font-size:16px;font-weight:800}
-      #view-sectors .swme p{margin:0;font-size:12.5px;color:rgba(255,255,255,.85);line-height:1.5}
+      #view-sectors .swme p{margin:0;font-size:12.5px;color:rgba(255,255,255,.90);line-height:1.5}
       #view-sectors .swme .row{display:flex;gap:10px;margin-top:12px}
       #view-sectors .swme .st{flex:1;background:rgba(255,255,255,.13);border-radius:12px;padding:9px 10px;text-align:center}
       #view-sectors .swme .st b{display:block;font-size:17px;font-weight:800;font-variant-numeric:tabular-nums}
-      #view-sectors .swme .st span{font-size:10px;color:rgba(255,255,255,.8)}
+      #view-sectors .swme .st span{font-size:10px;color:rgba(255,255,255,.90)}
       #view-sectors .swme .cta2{width:100%;margin-top:12px;border:0;border-radius:12px;padding:12px;font-weight:800;font-size:14px;background:var(--surface);color:#6B31E6;cursor:pointer}
       #view-sectors .swme.enlist{background:var(--surface);color:var(--title);border:1px solid #EEE9FA}
       #view-sectors .swme.enlist h4{color:var(--title)}
@@ -4348,7 +4351,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 #view-airdrop .bqair-poolrow{display:flex;gap:10px}
 #view-airdrop .bqair-poolrow>div{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px 10px;text-align:center}
 #view-airdrop .bqair-poolrow b{display:block;font-size:17px;font-weight:800;color:#fff}
-#view-airdrop .bqair-poolrow span{font-size:10.5px;color:rgba(255,255,255,.82);line-height:1.3;display:block;margin-top:2px}
+#view-airdrop .bqair-poolrow span{font-size:10.5px;color:rgba(255,255,255,.90);line-height:1.3;display:block;margin-top:2px}
 #view-airdrop .bqair-card{background:var(--surface);border-radius:20px;box-shadow:0 8px 24px rgba(20,16,40,.07);padding:20px;margin:16px 16px 0}
 #view-airdrop .bqair-card h3{margin:0;font-size:17px;font-weight:800}
 #view-airdrop .bqair-p{margin:6px 0 14px;font-size:13.5px;color:var(--faint);line-height:1.5}
@@ -4368,7 +4371,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 #view-airdrop .bqair-stat b{display:block;font-size:18px;font-weight:800;color:var(--v);font-variant-numeric:tabular-nums}
 #view-airdrop .bqair-stat span{font-size:10.5px;color:var(--faint);margin-top:3px;display:block;line-height:1.25}
 #view-airdrop .bqair-next{font-size:12.5px;color:var(--faint);line-height:1.5;margin-bottom:12px}
-#view-airdrop .bqair-claim{text-align:center;font-weight:800;font-size:13px;color:#8a6d00;background:linear-gradient(180deg,#FFE9AE,#FFD976);border-radius:12px;padding:11px}
+#view-airdrop .bqair-claim{text-align:center;font-weight:800;font-size:13px;color:#6E5700;background:linear-gradient(180deg,#FFE9AE,#FFD976);border-radius:12px;padding:11px}
 #view-airdrop .bqair-cta{text-align:center;padding:6px 4px}
 #view-airdrop .bqair-cta h3{font-size:19px}
 #view-airdrop .bqair-steps{list-style:none;counter-reset:s;margin:12px 0 0;padding:0}
@@ -5972,7 +5975,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         '.bqbc-chip.lv{color:var(--ot-6b31e6,#6B31E6);background:var(--tint-violet1)}'+
         '.bqbc-chip.rank{color:var(--ot-8a8fa3,#8A8FA3);background:var(--tint-neutral1)}'+
         '.bqbc-status{margin-top:8px;display:flex;align-items:center;gap:13px;font-size:12.5px;font-weight:800;flex-wrap:wrap}'+
-        '.bqbc-wl{display:inline-flex;gap:7px}.bqbc-wl .w{color:#20A353}.bqbc-wl .l{color:#D8434B}'+
+        '.bqbc-wl{display:inline-flex;gap:7px}.bqbc-wl .w{color:#20A353}.bqbc-wl .l{color:var(--ot-d8434b,#D8434B)}'+
         '.bqbc-nrg{display:inline-flex;align-items:center;gap:6px;color:var(--ot-3a424e,#3A424E)}'+
         '.bqbc-nrgbar{width:46px;height:6px;border-radius:999px;background:var(--tint-neutral1);overflow:hidden}'+
         '.bqbc-nrgbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#F6C24A,#E6961B)}'+
@@ -7054,7 +7057,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       bar.style.cssText='display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;background:linear-gradient(90deg,#6E35E9,#8B5CF6);color:#fff;padding:11px 34px 11px 16px;font-family:inherit;font-weight:700;font-size:13.5px;text-align:center;position:relative;z-index:60';
       bar.innerHTML='<span><img src="assets/icons/logo.png" alt="" style="width:16px;height:16px;object-fit:contain;vertical-align:-3px;margin-right:3px"><b>'+safe+'</b> invited you. Claim your free bull, and you both earn bonus GRIT as you play.</span>'+
         '<button type="button" id="bqRefBarGo" style="border:0;background:var(--surface);color:#6B31E6;font-weight:800;font-size:13px;padding:8px 15px;border-radius:10px;cursor:pointer;font-family:inherit;white-space:nowrap">Claim free bull</button>'+
-        '<button type="button" id="bqRefBarX" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:rgba(255,255,255,.85);font-size:19px;line-height:1;cursor:pointer;padding:4px 8px">&times;</button>';
+        '<button type="button" id="bqRefBarX" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:rgba(255,255,255,.90);font-size:19px;line-height:1;cursor:pointer;padding:4px 8px">&times;</button>';
       host.insertBefore(bar, host.firstChild);
       var g=bar.querySelector('#bqRefBarGo'); if(g) g.addEventListener('click', function(){ if(window.bqOpenAuth) window.bqOpenAuth(); });
       var x=bar.querySelector('#bqRefBarX'); if(x) x.addEventListener('click', function(){ bar.remove(); });
