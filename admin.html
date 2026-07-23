@@ -214,9 +214,45 @@
       }, function(){ b.removeAttribute('disabled'); m.style.color='#E5484D'; m.textContent='Merge failed.'; });
     });
   }
+  function loadSubmissions(){
+    var el=document.getElementById('subsPanel'); if(!el) return;
+    el.innerHTML='<div class="panel"><h3>Tweet submissions</h3><p class="hint">Loading…</p></div>';
+    sb.rpc('admin_quest_submissions').then(function(r){
+      if(r.error){ el.innerHTML='<div class="panel"><h3>Tweet submissions</h3><p class="hint" style="color:#E5484D">'+esc(r.error.message||'error')+'</p></div>'; return; }
+      var rows=r.data||[];
+      if(!rows.length){ el.innerHTML='<div class="panel"><h3>Tweet submissions</h3><p class="hint">No submissions waiting for review.</p></div>'; return; }
+      var cards=rows.map(function(s){
+        return '<div class="subrow" style="border-top:1px solid rgba(120,120,140,.15);padding:11px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap">'
+          +'<div style="flex:1;min-width:210px">'
+          +'<a href="'+esc(s.url)+'" target="_blank" rel="noopener" style="color:#4DA6F5;font-weight:700;word-break:break-all">'+esc(s.url)+'</a>'
+          +'<div class="hint" style="margin-top:3px">'+esc(s.email||String(s.user_id).slice(0,8))+' &middot; '+esc(s.quest_slug)+' &middot; '+esc(fmtTime(s.created_at))+'</div></div>'
+          +'<button class="subApprove refresh" data-id="'+esc(s.id)+'" style="cursor:pointer;background:#12B76A">Approve</button>'
+          +'<button class="subReject" data-id="'+esc(s.id)+'" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font:inherit">Reject</button>'
+          +'</div>';
+      }).join('');
+      el.innerHTML='<div class="panel"><h3>Tweet submissions ('+rows.length+')</h3>'
+        +'<p class="hint">Open each tweet and check it explains why they like BullQuest, tags 3 friends, and includes #BullQuest #Solana #PumpFun + @BullQuestSol. Approve pays the player the quest reward; Reject lets them try again.</p>'
+        +cards+'<div id="subMsg" style="font-size:13px;font-weight:600;margin-top:10px"></div></div>';
+      wireSubmissions();
+    }, function(){ el.innerHTML='<div class="panel"><h3>Tweet submissions</h3><p class="hint" style="color:#E5484D">Failed to load.</p></div>'; });
+  }
+  function wireSubmissions(){
+    function review(id, approve, btn){
+      var m=document.getElementById('subMsg'); btn.setAttribute('disabled','');
+      sb.rpc('admin_review_submission',{p_id:id,p_approve:approve}).then(function(r){
+        var d=r&&r.data;
+        if(r.error||(d&&d.error)){ if(m){ m.style.color='#E5484D'; m.textContent=(r.error&&r.error.message)||(d&&d.error)||'Failed.'; } btn.removeAttribute('disabled'); return; }
+        if(m){ m.style.color='#12B76A'; m.textContent=approve?('Approved, paid '+((d&&d.reward)||'')+' GRIT.'):'Rejected.'; }
+        var row=btn.closest('.subrow'); if(row) row.remove();
+      }, function(){ if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } btn.removeAttribute('disabled'); });
+    }
+    [].forEach.call(document.querySelectorAll('.subApprove'), function(b){ b.addEventListener('click', function(){ review(b.getAttribute('data-id'), true, b); }); });
+    [].forEach.call(document.querySelectorAll('.subReject'), function(b){ b.addEventListener('click', function(){ if(confirm('Reject this submission? The player can submit a new tweet.')) review(b.getAttribute('data-id'), false, b); }); });
+  }
   function render(d){
     var html='';
     html+=notifyPanel();   // admin: send news / personal notifications to players
+    html+='<div id="subsPanel"></div>';   // manual review of tweet submissions
     // KPIs
     html+='<div class="grid">'+
       kpi('Total users', d.users_total)+
@@ -249,6 +285,7 @@
     html+='<div id="acctPanel"></div>';
     root.innerHTML=html;
     wireNotify();
+    loadSubmissions();
     loadAccounts();
     var g=d.generated_at?new Date(d.generated_at):null;
     stamp.textContent = g ? ('Updated '+g.toLocaleString()) : '';
