@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["4WGQ4TT24J.com.bullquest.game"],
+        "components": [
+          { "/": "/auth/telegram", "comment": "Telegram native login return" }
+        ]
+      }
+    ]
+  }
+}
