@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://challenges.cloudflare.com 'unsafe-inline'; frame-src https://challenges.cloudflare.com; style-src 'unsafe-inline'; connect-src https://challenges.cloudflare.com; base-uri 'none'">
+<title>Verification</title>
+<style>
+  html,body{margin:0;padding:0;background:transparent}
+  body{display:flex;align-items:center;justify-content:center;min-height:72px;font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+  #w{display:flex;align-items:center;justify-content:center}
+</style>
+</head><body>
+<div id="w"></div>
+<script>
+/* BullQuest static Turnstile challenge document.
+   Same security model as the (now superseded) Supabase captcha edge function, but served from
+   bullquest.fun where GitHub Pages returns real text/html (the *.supabase.co functions domain
+   forces text/plain + a sandbox CSP, which stops the widget rendering). The token is postMessaged
+   ONLY to an allowlisted parent origin (exact match, never '*'), never placed in a URL or logged. */
+(function(){
+  var SITEKEY='0x4AAAAAAD1Air3ZqokI6e_a';                    // public Turnstile sitekey (widget must allow bullquest.fun)
+  var ALLOW=['capacitor://localhost','https://bullquest.fun','https://technomozart.github.io'];
+  var INIT_TIMEOUT=10000, settled=false, initTimer=null;
+  function qp(k){ try{ return new URLSearchParams(location.search).get(k)||''; }catch(e){ return ''; } }
+  var NONCE=(qp('nonce')||'').replace(/[^A-Za-z0-9._-]/g,'').slice(0,64);
+  var reqOrigin=qp('origin');
+  var TARGET=ALLOW.indexOf(reqOrigin)>=0 ? reqOrigin : '';    // '' when the parent origin is not allowlisted
+
+  function send(msg){ if(!TARGET) return; msg.source='bq-captcha'; msg.nonce=NONCE; try{ parent.postMessage(msg, TARGET); }catch(e){} }
+  function clearInit(){ if(initTimer!==null){ try{ clearTimeout(initTimer); }catch(e){} initTimer=null; } }
+  function fail(){ if(settled) return; settled=true; clearInit(); send({type:'error'}); }
+  if(!TARGET){ return; }                                       // nothing legitimate to talk to: render nothing, say nothing
+  initTimer=setTimeout(fail, INIT_TIMEOUT);
+
+  function render(){
+    if(settled) return;
+    if(!(window.turnstile && window.turnstile.render)){ fail(); return; }
+    try{
+      window.turnstile.render('#w', {
+        sitekey: SITEKEY,
+        callback: function(token){ if(settled) return; settled=true; clearInit(); send({type:'token', token:token}); },
+        'expired-callback': function(){ send({type:'expired'}); },
+        'error-callback': function(){ fail(); return true; },
+        'timeout-callback': function(){ fail(); },
+        'unsupported-callback': function(){ fail(); }
+      });
+      if(!settled){ clearInit(); send({type:'ready'}); }
+    }catch(e){ fail(); }
+  }
+  var s=document.createElement('script');
+  s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  s.async=true; s.defer=true; s.onload=render; s.onerror=fail;
+  document.head.appendChild(s);
+})();
+</script>
+</body></html>
