@@ -18,12 +18,13 @@
    forces text/plain + a sandbox CSP, which stops the widget rendering). The token is postMessaged
    ONLY to an allowlisted parent origin (exact match, never '*'), never placed in a URL or logged. */
 (function(){
-  var SITEKEY='0x4AAAAAAD1Air3ZqokI6e_a';                    // public Turnstile sitekey (widget must allow bullquest.fun)
   var ALLOW=['capacitor://localhost','https://bullquest.fun','https://technomozart.github.io'];
   var INIT_TIMEOUT=10000, settled=false, initTimer=null;
   function qp(k){ try{ return new URLSearchParams(location.search).get(k)||''; }catch(e){ return ''; } }
   var NONCE=(qp('nonce')||'').replace(/[^A-Za-z0-9._-]/g,'').slice(0,64);
   var reqOrigin=qp('origin');
+  // The app passes its sitekey in the URL; use it, falling back to the known public BullQuest key.
+  var SITEKEY=((qp('sitekey')||'').replace(/[^A-Za-z0-9_]/g,'').slice(0,64))||'0x4AAAAAAD1Air3ZqokI6e_a';
   var TARGET=ALLOW.indexOf(reqOrigin)>=0 ? reqOrigin : '';    // '' when the parent origin is not allowlisted
 
   function send(msg){ if(!TARGET) return; msg.source='bq-captcha'; msg.nonce=NONCE; try{ parent.postMessage(msg, TARGET); }catch(e){} }
