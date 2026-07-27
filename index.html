@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785102081";try{console.log("BullQuest build 1785102081");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785157869";try{console.log("BullQuest build 1785157869");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -5418,6 +5418,35 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     web3Loading.catch(function () { web3Loading = null; }); // allow a retry after any load failure
     return web3Loading;
   }
+  // Normalise whatever a wallet hands back from signAndSendTransaction into a base58 signature string.
+  // Wallets are inconsistent: some return "<base58>", some {signature:"<base58>"}, and some (common on
+  // mobile) return the raw 64 bytes as a Uint8Array/array/{data:[...]}. Calling toString() on bytes
+  // yields "12,255,3,..." which the server rejects as bad-signature AFTER the SOL has already left the
+  // wallet, so the payment is taken and nothing is granted. Encode bytes properly instead.
+  var B58_ALPH = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  function bqB58(bytes){
+    var digits = [0], i, j, carry;
+    for (i = 0; i < bytes.length; i++) {
+      carry = bytes[i] & 0xff;
+      for (j = 0; j < digits.length; j++) { carry += digits[j] << 8; digits[j] = carry % 58; carry = (carry / 58) | 0; }
+      while (carry > 0) { digits.push(carry % 58); carry = (carry / 58) | 0; }
+    }
+    var out = '';
+    for (i = 0; i < bytes.length && bytes[i] === 0; i++) out += '1';
+    for (j = digits.length - 1; j >= 0; j--) out += B58_ALPH.charAt(digits[j]);
+    return out;
+  }
+  function bqSigStr(sent){
+    var s = sent;
+    if (s && typeof s === 'object' && s.signature != null) s = s.signature;
+    if (typeof s === 'string') return s.trim();
+    if (s && (s instanceof Uint8Array || Array.isArray(s))) { try { return bqB58(Array.prototype.slice.call(s)); } catch (e) {} }
+    if (s && typeof s === 'object' && s.data && (s.data.length != null)) { try { return bqB58(Array.prototype.slice.call(s.data)); } catch (e) {} }
+    if (s && typeof s === 'object' && s.length != null) { try { return bqB58(Array.prototype.slice.call(s)); } catch (e) {} }
+    if (s && s.toString) { var t = String(s.toString()).trim(); if (t && t.indexOf('[object') !== 0 && t.indexOf(',') < 0) return t; }
+    return '';
+  }
+  window.bqSigStr = bqSigStr;
   function friendlyRespin(j){
     var map = {
       'underpaid': 'The price just went up. Open Extra spin again for the new price.',
@@ -5489,8 +5518,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if (!provider.signAndSendTransaction) throw new Error('no-send');
       return provider.signAndSendTransaction(tx);
     }).then(function (sent) {
-      var sig = (sent && sent.signature) ? sent.signature : sent;
-      if (sig && sig.toString) sig = sig.toString();
+      var sig = bqSigStr(sent);
       if (!sig) throw new Error('no-signature');
       if (window.bqToast) window.bqToast('Payment sent, verifying on-chain...');
       return callGrant(sig, 4);
@@ -5582,8 +5610,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if (!provider.signAndSendTransaction) throw new Error('no-send');
       return provider.signAndSendTransaction(tx);
     }).then(function (sent) {
-      var sig = (sent && sent.signature) ? sent.signature : sent;
-      if (sig && sig.toString) sig = sig.toString();
+      var sig = bqSigStr(sent);
       if (!sig) throw new Error('no-signature');
       if (window.bqToast) window.bqToast('Payment sent, verifying on-chain...');
       return callEnergyGrant(sig, 4);
@@ -5675,7 +5702,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       go.textContent = 'Confirming...';
       return provider.signAndSendTransaction(tx);
     }).then(function(sent){
-      var sig = (sent && sent.signature) ? sent.signature : sent; if (sig && sig.toString) sig = sig.toString();
+      var sig = bqSigStr(sent);
       if (!sig) throw new Error('no-signature');
       if (window.bqToast) window.bqToast('Payment sent, verifying on-chain...');
       return renameGrantRetry(sig, bullId, newName, 5);
@@ -7238,6 +7265,30 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       'not-authenticated':'Please sign in again.' };
     return m[code]||'That did not go through. Please try again.';
   }
+  // Shown ONLY after the SOL has already left the wallet but the purchase could not be completed.
+  // Never tell the player to "try again" here: the money is gone and retrying would charge them twice.
+  // The payment carries a memo that binds it to this account, so it can always be settled server-side.
+  function bqStuckPay(sig){
+    ensureMktCss();
+    var el=document.createElement('div'); el.className='bqsw';
+    var shortSig=sig?(String(sig).slice(0,8)+'...'+String(sig).slice(-8)):'';
+    el.innerHTML='<div class="bqsw-sheet"><div class="bqsw-grab"></div>'+
+      '<div class="bqsw-head"><h3>We received your payment</h3><button type="button" class="bqsw-x" aria-label="Close">&times;</button></div>'+
+      '<div style="padding:2px 2px 8px">'+
+      '<p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:var(--body2,#5a6273)">Your payment went through, but we could not finish handing over the bull just yet. <b style="color:var(--title)">Please do not pay again.</b></p>'+
+      '<p style="margin:0 0 12px;font-size:14px;line-height:1.6;color:var(--body2,#5a6273)">Your payment is recorded on Solana and tied to your account. It will be completed automatically, usually within a few minutes.</p>'+
+      (shortSig?'<div style="background:var(--tint-violet1,#F1ECFD);border-radius:12px;padding:10px 12px;margin-bottom:12px"><div style="font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--ot-6b31e6,#6B31E6)">Your reference</div><div style="font-size:12.5px;font-weight:700;color:var(--title);word-break:break-all;margin-top:3px">'+shortSig+'</div></div>':'')+
+      '<button type="button" class="bqsw-more" id="bqStuckCopy">Copy full reference</button>'+
+      '</div></div>';
+    document.body.appendChild(el);
+    function close(){ el.classList.add('out'); setTimeout(function(){ if(el.parentNode) el.remove(); },200); }
+    el.addEventListener('click', function(e){ if(e.target===el) close(); });
+    el.querySelector('.bqsw-x').addEventListener('click', close);
+    var cp=el.querySelector('#bqStuckCopy');
+    if(cp) cp.addEventListener('click', function(){
+      try{ navigator.clipboard.writeText(String(sig||'')); cp.textContent='Copied'; setTimeout(function(){ cp.textContent='Copy full reference'; },1600); }catch(e){}
+    });
+  }
   function mktPayErr(m){
     var t={ 'no-wallet':'Connect a Phantom wallet (or Solflare/Backpack) to buy or sell.',
       'web3-load':"Couldn't load the payment library. Check your connection and retry.",
@@ -7262,7 +7313,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         if(window.bqToast) window.bqToast('Approve the payment in your wallet...');
         if(!provider.signAndSendTransaction) throw new Error('no-send');
         return provider.signAndSendTransaction(tx); })
-      .then(function(sent){ var sig=(sent&&sent.signature)?sent.signature:sent; if(sig&&sig.toString) sig=sig.toString(); if(!sig) throw new Error('no-signature'); return sig; });
+      .then(function(sent){ var sig=bqSigStr(sent); if(!sig) throw new Error('no-signature'); return sig; });
   }
   function mktRetry(fn, sig, tries){
     return fn(sig).then(function(resp){ var j=(resp&&resp.body)||{};
@@ -7281,42 +7332,52 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
     if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
     mktBusy=true;
+    var paidSig=null;
     window.bqGame.session().then(function(has){ if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
       return window.bqGame.reservePrimary(bullId);
     }).then(function(q){ if(!q||q.error) throw new Error((q&&q.error)||'error');
       if(!window.confirm('Buy this '+q.rarity+' bull for '+q.price_sol+' SOL?\nPay from your Solana wallet.')) throw new Error('__silent__');
       return mktPay([{to:q.treasury, lamports:q.price_lamports}], q.memo).then(function(sig){
+        paidSig=sig;
         if(window.bqToast) window.bqToast('Payment sent, verifying on-chain...'); bqMktLoading(true, 'Confirming your purchase', 'Verifying your payment on Solana. This can take up to a minute, please keep this open.');
         return mktRetry(function(s){ return window.bqGame.mktMint(bullId, s); }, sig, 8);
       });
     }).then(function(resp){ mktBusy=false; bqMktLoading(false); var j=(resp&&resp.body)||{};
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id||bullId, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming, your bull will appear shortly.'); }
+      else if(paidSig){ bqStuckPay(paidSig); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
     }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__'||m==='__tg_browser__') return;
       if(m==='no-wallet' && !_retried && window.bqConnectWallet){ window.bqConnectWallet().then(function(){ buyPrimary(bullId, true); }).catch(function(){}); return; }
-      try{console.error('[buyPrimary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
+      try{console.error('[buyPrimary]',e);}catch(_){}
+      if(paidSig){ bqStuckPay(paidSig); return; }
+      if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
   function buySecondary(listingId, _retried){
     if(window.bqBrowserOnly && window.bqBrowserOnly('Buying a bull')) return;
     if(mktBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
     if(!(window.bqGame&&window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
     mktBusy=true;
+    var paidSig=null;
     window.bqGame.session().then(function(has){ if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
       return window.bqGame.reserveListing(listingId);
     }).then(function(q){ if(!q||q.error) throw new Error((q&&q.error)||'error');
       if(!window.confirm('Buy this bull for '+lamToSol(q.price_lamports)+' SOL?\nThe seller receives '+lamToSol(q.seller_lamports)+' SOL, and '+lamToSol(q.fee_lamports)+' SOL is the market fee.')) throw new Error('__silent__');
       return mktPay([{to:q.seller_pubkey, lamports:q.seller_lamports},{to:q.treasury, lamports:q.fee_lamports}], q.memo).then(function(sig){
+        paidSig=sig;
         if(window.bqToast) window.bqToast('Payment sent, verifying on-chain...'); bqMktLoading(true, 'Confirming your purchase', 'Verifying your payment on Solana. This can take up to a minute, please keep this open.');
         return mktRetry(function(s){ return window.bqGame.mktBuy(listingId, s); }, sig, 8);
       });
     }).then(function(resp){ mktBusy=false; bqMktLoading(false); var j=(resp&&resp.body)||{};
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming, your bull will appear shortly.'); }
+      else if(paidSig){ bqStuckPay(paidSig); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
     }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__'||m==='__tg_browser__') return;
       if(m==='no-wallet' && !_retried && window.bqConnectWallet){ window.bqConnectWallet().then(function(){ buySecondary(listingId, true); }).catch(function(){}); return; }
-      try{console.error('[buySecondary]',e);}catch(_){} if(window.bqToast) window.bqToast(mktPayErr(m)); });
+      try{console.error('[buySecondary]',e);}catch(_){}
+      if(paidSig){ bqStuckPay(paidSig); return; }
+      if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
   // shared styles for the celebration, list sheet, and bull switcher (injected once)
   function ensureMktCss(){
