@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785157869";try{console.log("BullQuest build 1785157869");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785158175";try{console.log("BullQuest build 1785158175");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4951,6 +4951,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch(e) { window.scrollTo(0, 0); }
     try { sessionStorage.setItem('bq_view', id); } catch(e){} // remember the view so a refresh restores it instead of jumping into the game
     try { if (window.bqMaybeRenderGoogle) window.bqMaybeRenderGoogle(); } catch(e){}
+    // opening the market is the natural moment to finish any purchase that was paid for but never delivered
+    if (id === 'view-market') { try { if (window.bqSweepPayments) window.bqSweepPayments(); } catch(e){} }
   }
   window.bqGo = bqGo;
   // a link/image drag on the bottom nav was cancelling taps; block dragging there (covers non-webkit too)
@@ -6842,7 +6844,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     // ----- Marketplace edge function (on-chain verified settlement) -----
     mktBlockhash:   function(){ return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_},body:JSON.stringify({action:'blockhash'})}).then(function(r){ return r.json(); }); },
     mktMint:        function(bullId,signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'mint',bull_id:bullId,signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
-    mktBuy:         function(listingId,signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'buy',listing_id:listingId,signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); }
+    mktBuy:         function(listingId,signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'buy',listing_id:listingId,signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
+    // asks the server to find and settle any payment this player already made on-chain that never
+    // completed (browser closed, connection dropped, unreadable wallet signature). Safe to call anytime.
+    mktReconcile:   function(){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/marketplace',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'reconcile'})}).then(function(r){ return r.json(); }); }); }
   };
   window.bqRenderBulls = renderBulls;
   document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-bulls"]')) setTimeout(renderBulls, 50); }, false);
@@ -7265,6 +7270,23 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       'not-authenticated':'Please sign in again.' };
     return m[code]||'That did not go through. Please try again.';
   }
+  // The SOL has already left the wallet but the purchase did not complete. The payment carries a memo
+  // binding it to this account, so ask the server to find it on-chain and settle it. A tx needs roughly
+  // half a minute to finalise, so retry a few times before giving up and showing the reassurance sheet.
+  function bqRecoverPay(sig, tries){
+    tries = (tries == null) ? 4 : tries;
+    if(!(window.bqGame && window.bqGame.mktReconcile)){ bqStuckPay(sig); return; }
+    bqMktLoading(true, 'Finishing your purchase', 'Your payment went through. Completing it now, please keep this open.');
+    (function attempt(n){
+      window.bqGame.mktReconcile().then(function(r){
+        var got=(r&&r.settled&&r.settled.length)?r.settled[0]:null;
+        if(got){ bqMktLoading(false); mktRefreshOwned(); try{ renderForSale(); }catch(e){}
+          celebrateBull(got.bull_id, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); return; }
+        if(n>0){ setTimeout(function(){ attempt(n-1); }, 9000); return; }
+        bqMktLoading(false); bqStuckPay(sig);
+      }, function(){ if(n>0){ setTimeout(function(){ attempt(n-1); }, 9000); return; } bqMktLoading(false); bqStuckPay(sig); });
+    })(tries);
+  }
   // Shown ONLY after the SOL has already left the wallet but the purchase could not be completed.
   // Never tell the player to "try again" here: the money is gone and retrying would charge them twice.
   // The payment carries a memo that binds it to this account, so it can always be settled server-side.
@@ -7345,12 +7367,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     }).then(function(resp){ mktBusy=false; bqMktLoading(false); var j=(resp&&resp.body)||{};
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id||bullId, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming, your bull will appear shortly.'); }
-      else if(paidSig){ bqStuckPay(paidSig); }
+      else if(paidSig){ bqRecoverPay(paidSig); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
     }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__'||m==='__tg_browser__') return;
       if(m==='no-wallet' && !_retried && window.bqConnectWallet){ window.bqConnectWallet().then(function(){ buyPrimary(bullId, true); }).catch(function(){}); return; }
       try{console.error('[buyPrimary]',e);}catch(_){}
-      if(paidSig){ bqStuckPay(paidSig); return; }
+      if(paidSig){ bqRecoverPay(paidSig); return; }
       if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
   function buySecondary(listingId, _retried){
@@ -7371,12 +7393,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     }).then(function(resp){ mktBusy=false; bqMktLoading(false); var j=(resp&&resp.body)||{};
       if(j&&j.ok){ mktRefreshOwned(); renderForSale(); if(j.already){ if(window.bqToast) window.bqToast('This bull is already yours.'); } else { celebrateBull(j.bull_id, {eyebrow:'NEW BULL', title:"It's yours!", setActive:true}); } }
       else if(j&&j.retry){ if(window.bqToast) window.bqToast('Still confirming, your bull will appear shortly.'); }
-      else if(paidSig){ bqStuckPay(paidSig); }
+      else if(paidSig){ bqRecoverPay(paidSig); }
       else { if(window.bqToast) window.bqToast(friendlyMkt(j.error)); }
     }).catch(function(e){ mktBusy=false; bqMktLoading(false); var m=(e&&e.message)||''; if(m==='__silent__'||m==='__tg_browser__') return;
       if(m==='no-wallet' && !_retried && window.bqConnectWallet){ window.bqConnectWallet().then(function(){ buySecondary(listingId, true); }).catch(function(){}); return; }
       try{console.error('[buySecondary]',e);}catch(_){}
-      if(paidSig){ bqStuckPay(paidSig); return; }
+      if(paidSig){ bqRecoverPay(paidSig); return; }
       if(window.bqToast) window.bqToast(mktPayErr(m)); });
   }
   // shared styles for the celebration, list sheet, and bull switcher (injected once)
@@ -7907,6 +7929,20 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   }
   function renderForSale(){ return renderPlayers(); }   // old callers (buy/list/cancel refresh) keep working
   window.bqRenderForSale = renderForSale;
+  // Once per session, when a player opens the market, ask the server to settle any purchase they paid
+  // for but never received (e.g. they closed the tab mid-confirmation). Silent: if nothing is pending
+  // this does nothing, and if something settles the roster refresh below surfaces it.
+  var bqSweptPayments = false;
+  window.bqSweepPayments = function(){
+    if(bqSweptPayments) return; bqSweptPayments = true;
+    if(!(window.bqGame && window.bqGame.ready && window.bqGame.ready() && window.bqGame.mktReconcile)) return;
+    window.bqGame.mktReconcile().then(function(r){
+      if(r && r.settled && r.settled.length){
+        try{ mktRefreshOwned(); renderForSale(); }catch(e){}
+        if(window.bqToast) window.bqToast('We finished an earlier purchase. Your bull is in your roster.');
+      }
+    }, function(){});
+  };
   window.bqRenderPlayers = renderPlayers;
   // after a successful new listing, jump to the Player market tab, reset to page 1 / Recent, so the seller sees it on top
   window.bqAfterListed = function(){ pmSort='recent'; pmFilter='all'; pmSearchId=null; pmPage=1; pmTotal=null;
