@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785237254";try{console.log("BullQuest build 1785237254");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785271860";try{console.log("BullQuest build 1785271860");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4729,11 +4729,15 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     }
     renderNrg();
   }
-  // Tap the energy pill to buy a full refill with SOL (also auto-offered when a duel runs out of energy).
+  // Tap the energy pill to open the energy shop: an instant refill, or a pass that makes energy
+  // come back faster for a day or a week.
   if(energyEl){
     energyEl.style.cursor='pointer'; energyEl.setAttribute('role','button'); energyEl.setAttribute('title','Refill energy with SOL');
     if(!energyEl.querySelector('.erf')){ var _rf=document.createElement('span'); _rf.className='erf'; _rf.setAttribute('aria-hidden','true'); _rf.innerHTML='<svg width="20" height="20" viewBox="0 0 20 20" style="display:block" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#fff"/><rect x="8.7" y="4.4" width="2.6" height="11.2" rx="1.3" fill="#BE7A0C"/><rect x="4.4" y="8.7" width="11.2" height="2.6" rx="1.3" fill="#BE7A0C"/></svg>'; _rf.style.cssText='display:flex;flex:none;margin-left:2px;filter:drop-shadow(0 0 1.5px rgba(90,60,0,.3))'; energyEl.appendChild(_rf); }
-    energyEl.addEventListener('click', function(){ if(window.bqBuyEnergy) window.bqBuyEnergy(); });
+    energyEl.addEventListener('click', function(){
+      if(window.bqOpenEnergyShop) window.bqOpenEnergyShop();
+      else if(window.bqBuyEnergy) window.bqBuyEnergy();
+    });
   }
 
   function refreshFromServer(){
@@ -5657,6 +5661,172 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     });
   }
   window.bqBuyEnergy = energyPaid;
+
+  // ---------- Paid energy boosts: pay SOL to regenerate energy faster for a fixed window ----------
+  // Speed only. It never raises energy_max, so this buys the chance to play more often, not a
+  // bankable reserve. The multiplier is enforced server-side in energy_regen_minutes(), which every
+  // regen site (duel, state, refill quote) calls, so the client cannot fake it.
+  var boostBusy = false;
+  function ensureBoostCss(){
+    if(document.getElementById('bqBoostCss')) return;
+    var st=document.createElement('style'); st.id='bqBoostCss';
+    st.textContent =
+      '.bqes{position:fixed;inset:0;z-index:10001;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,16,40,.5);backdrop-filter:blur(3px);animation:bqesIn .2s ease both}'+
+      '@keyframes bqesIn{from{opacity:0}to{opacity:1}}.bqes.out{animation:bqesIn .2s ease reverse forwards;pointer-events:none}'+
+      '.bqes-sheet{width:100%;max-width:440px;background:var(--surface);border-radius:26px 26px 0 0;padding:10px 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -20px 60px rgba(18,9,46,.3);max-height:86vh;overflow-y:auto;animation:bqesUp .34s cubic-bezier(.2,1,.3,1) both}'+
+      '@keyframes bqesUp{from{transform:translateY(24px)}to{transform:translateY(0)}}'+
+      '.bqes-grab{width:40px;height:4px;border-radius:99px;background:var(--tint-violet2);margin:2px auto 10px}'+
+      '.bqes-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}'+
+      '.bqes-head h3{margin:0;font-size:18px;font-weight:800;color:var(--title)}'+
+      '.bqes-x{border:0;background:none;font-size:26px;line-height:1;color:#B8BEC8;cursor:pointer;font-family:inherit}'+
+      '.bqes-sub{font-size:12.5px;color:var(--body2);margin:0 0 12px;line-height:1.5}'+
+      '.bqes-live{display:flex;align-items:center;gap:9px;background:linear-gradient(180deg,#FFF4D8,#FFE9B4);border-radius:14px;padding:11px 13px;margin-bottom:12px}'+
+      '.bqes-live b{font-size:13.5px;color:#6b4a05;display:block}.bqes-live small{font-size:11.5px;color:#8a6a1a;font-weight:700}'+
+      '.bqes-row{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line,#EEEDF4);border-radius:16px;padding:12px;margin-bottom:10px}'+
+      '.bqes-row.best{border-color:#C9BCF3;background:var(--tint-violet1)}'+
+      '.bqes-ic{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;font-size:19px;background:var(--tint-gold1,#FFF3D6)}'+
+      '.bqes-t{flex:1;min-width:0}.bqes-t b{display:block;font-size:14.5px;font-weight:800;color:var(--title)}'+
+      '.bqes-t small{display:block;font-size:11.5px;color:var(--body2);font-weight:600;line-height:1.45;margin-top:2px}'+
+      '.bqes-buy{flex:none;border:0;border-radius:12px;background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;font-weight:800;font-size:12.5px;padding:10px 13px;cursor:pointer;font-family:inherit;min-width:86px;text-align:center;box-shadow:0 6px 14px rgba(107,49,230,.28)}'+
+      '.bqes-buy:disabled{background:var(--tint-violet2);color:var(--ot-a9a2be,#A9A2BE);box-shadow:none;cursor:default}'+
+      '.bqes-buy small{display:block;font-size:10px;font-weight:700;opacity:.9;margin-top:1px}'+
+      '.bqes-note{font-size:11px;color:var(--faint,#9AA6B2);text-align:center;line-height:1.5;margin:10px 4px 2px}';
+    document.head.appendChild(st);
+  }
+  function bqesWhen(iso){
+    try{ var s=(new Date(iso).getTime()-Date.now())/1000; if(s<=0) return 'expired';
+      if(s<3600) return Math.round(s/60)+' min left';
+      if(s<86400) return Math.round(s/3600)+'h left';
+      return Math.round(s/86400)+'d left'; }catch(e){ return ''; }
+  }
+  function openEnergyShop(){
+    if(window.bqBrowserOnly && window.bqBrowserOnly('Buying energy')) return;
+    if(!(window.bqGame && window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    ensureBoostCss();
+    var el=document.createElement('div'); el.className='bqes';
+    el.innerHTML='<div class="bqes-sheet"><div class="bqes-grab"></div>'+
+      '<div class="bqes-head"><h3>Energy</h3><button type="button" class="bqes-x" aria-label="Close">&times;</button></div>'+
+      '<div id="bqesBody"><p class="bqes-sub">Loading...</p></div></div>';
+    document.body.appendChild(el);
+    function close(){ el.classList.add('out'); setTimeout(function(){ if(el.parentNode) el.remove(); },200); }
+    el.addEventListener('click', function(e){ if(e.target===el) close(); });
+    el.querySelector('.bqes-x').addEventListener('click', close);
+    var body=el.querySelector('#bqesBody');
+
+    Promise.all([
+      window.bqGame.energyQuote().catch(function(){ return null; }),
+      window.bqGame.boostQuote().catch(function(){ return null; })
+    ]).then(function(a){
+      var eq=a[0]||{}, bq=a[1]||{};
+      var html='<p class="bqes-sub">Every duel costs 2 energy. It refills on its own, and a pass makes it refill faster for a while.</p>';
+      if(bq.active){
+        html+='<div class="bqes-live"><span style="font-size:22px">&#9889;</span><div><b>'+bq.active.multiplier+'x refill speed active</b>'+
+              '<small>'+bqesWhen(bq.active.expires_at)+' &middot; a point every '+Math.round(bq.regen_minutes)+' min instead of 15</small></div></div>';
+      }
+      if(eq.enabled !== false && eq.price_sol != null){
+        html+='<div class="bqes-row"><span class="bqes-ic">&#128267;</span><div class="bqes-t"><b>Fill up now</b>'+
+              '<small>Instantly back to full'+(eq.energy!=null?(' &middot; you have '+eq.energy+'/'+eq.energy_max):'')+'</small></div>'+
+              '<button type="button" class="bqes-buy" data-refill'+(eq.full?' disabled':'')+'>'+(eq.full?'Full':(eq.price_sol+' SOL'))+'</button></div>';
+      }
+      (bq.offers||[]).forEach(function(o,i){
+        var perDay=(o.price_sol/(o.duration_hours/24));
+        html+='<div class="bqes-row'+(i===((bq.offers||[]).length-1)?' best':'')+'"><span class="bqes-ic">&#9889;</span>'+
+              '<div class="bqes-t"><b>'+o.label+'</b><small>'+o.multiplier+'x faster refill for '+
+              (o.duration_hours>=24?(o.duration_hours/24+(o.duration_hours===24?' day':' days')):(o.duration_hours+'h'))+
+              ' &middot; a point every '+Math.round(15/o.multiplier)+' min</small></div>'+
+              '<button type="button" class="bqes-buy" data-kind="'+o.kind+'">'+o.price_sol+' SOL<small>'+perDay.toFixed(3)+'/day</small></button></div>';
+      });
+      html+='<p class="bqes-note">A pass speeds up how fast energy comes back. It does not raise your maximum, and it never changes your odds of winning a duel.</p>';
+      body.innerHTML=html;
+
+      body.addEventListener('click', function(e){
+        var r=e.target.closest('[data-refill]'); var b=e.target.closest('[data-kind]');
+        if(r){ close(); if(window.bqBuyEnergy) window.bqBuyEnergy(); return; }
+        if(b){ var k=b.getAttribute('data-kind'); close(); boostPaid(k); }
+      });
+    }, function(){ body.innerHTML='<p class="bqes-sub">Could not load the energy shop. Please try again.</p>'; });
+  }
+  window.bqOpenEnergyShop = openEnergyShop;
+
+  function callBoostGrant(kind, sig, tries){
+    return window.bqGame.boostGrant(kind, sig).then(function(resp){
+      var j=(resp&&resp.body)||{};
+      if(resp && resp.status===202 && j.retry && tries>0){
+        return new Promise(function(r){ setTimeout(r,3500); }).then(function(){ return callBoostGrant(kind, sig, tries-1); });
+      }
+      return resp;
+    });
+  }
+  function boostPaid(kind){
+    if(window.bqBrowserOnly && window.bqBrowserOnly('Buying an energy pass')) return;
+    if(boostBusy){ if(window.bqToast) window.bqToast('Hang on, finishing your last action...'); return; }
+    if(!(window.bqGame && window.bqGame.ready())){ if(window.bqOpenAuth) window.bqOpenAuth(); return; }
+    boostBusy = true;
+    var quote, offer, provider, web3, fromStr, paidSig=null;
+    window.bqGame.session().then(function(has){
+      if(!has){ if(window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
+      return window.bqGame.boostQuote();
+    }).then(function(q){
+      if(!q || q.error) throw new Error((q&&q.error)||'error');
+      quote=q;
+      (q.offers||[]).forEach(function(o){ if(o.kind===kind) offer=o; });
+      if(!offer) throw new Error('bad-kind');
+      if(!window.confirm('Buy the '+offer.label+' for '+offer.price_sol+' SOL?\n'+offer.multiplier+'x faster energy refill for '+
+                         (offer.duration_hours>=24?(offer.duration_hours/24+' day(s)'):(offer.duration_hours+' hours'))+'.')) throw new Error('__silent__');
+      provider = window.bqGetProvider ? window.bqGetProvider('auto') : (window.solana||null);
+      if(!provider) throw new Error('no-wallet');
+      if(!window.bqLoadWeb3) throw new Error('web3-load');
+      return window.bqLoadWeb3();
+    }).then(function(w3){ web3=w3; return Promise.resolve(provider.connect()); })
+    .then(function(res){
+      var pk = provider.publicKey || (res && res.publicKey);
+      if(!pk) throw new Error('no-wallet');
+      fromStr = pk.toString();
+      if(window.bqToast) window.bqToast('Preparing your payment...');
+      return window.bqGame.respinBlockhash();
+    }).then(function(bh){
+      if(!bh || !bh.blockhash) throw new Error('blockhash');
+      var fromPk = new web3.PublicKey(fromStr);
+      var tx = new web3.Transaction({ recentBlockhash: bh.blockhash, feePayer: fromPk });
+      tx.add(web3.SystemProgram.transfer({ fromPubkey: fromPk, toPubkey: new web3.PublicKey(quote.treasury), lamports: Number(offer.lamports) }));
+      // memo binds the payment to this buyer AND this tier, so it cannot be replayed or downgraded
+      tx.add(new web3.TransactionInstruction({ keys: [], programId: new web3.PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr'),
+             data: new TextEncoder().encode('bqboost:' + kind + ':' + quote.user) }));
+      if(window.bqToast) window.bqToast('Approve the ' + offer.price_sol + ' SOL payment in your wallet...');
+      if(!provider.signAndSendTransaction) throw new Error('no-send');
+      return provider.signAndSendTransaction(tx);
+    }).then(function(sent){
+      var sig = bqSigStr(sent);
+      if(!sig) throw new Error('no-signature');
+      paidSig = sig;
+      if(window.bqToast) window.bqToast('Payment sent, verifying on-chain...');
+      return callBoostGrant(kind, sig, 4);
+    }).then(function(resp){
+      boostBusy=false;
+      var j=(resp&&resp.body)||{};
+      if(j && j.ok){
+        if(window.bqToast) window.bqToast(offer.label+' active. Energy now refills every '+Math.round(j.regen_minutes)+' min.');
+        try{ if(window.bqArenaRefresh) window.bqArenaRefresh(); }catch(e){}
+        try{ if(window.bqGame && window.bqApplyLiveState) window.bqGame.getState().then(function(s){ window.bqApplyLiveState(s); }).catch(function(){}); }catch(e){}
+      } else if(j && j.retry){ if(window.bqToast) window.bqToast('Still confirming, your pass will start shortly.'); }
+      else if(paidSig){ if(window.bqToast) window.bqToast('Payment received. Do not pay again, we are finishing it now.'); }
+      else { if(window.bqToast) window.bqToast('That did not go through.'); }
+    }).catch(function(e){
+      boostBusy=false;
+      var m=(e&&e.message)||'';
+      if(m==='__silent__' || m==='__tg_browser__') return;
+      try{ console.error('[boost] failed:', e); }catch(_){}
+      if(paidSig){ if(window.bqToast) window.bqToast('Payment received. Do not pay again, we are finishing it now.'); return; }
+      var t={ 'no-wallet':'Connect a Solana wallet (Phantom, Solflare, Backpack) to buy a pass.',
+              'web3-load':"Couldn't load the payment library. Check your connection and retry.",
+              'blockhash':"Couldn't reach Solana just now. Please try again.",
+              'no-send':'That wallet cannot send in-app. Try Phantom or Solflare.',
+              'bad-kind':'That pass is not available right now.',
+              'no-signature':'Payment cancelled.' };
+      if(window.bqToast) window.bqToast(t[m] || 'The purchase was cancelled or failed.');
+    });
+  }
+  window.bqBuyBoost = boostPaid;
 
   // ---------- Paid bull rename: pay 0.05 SOL to the treasury, on-chain verified, then rename your bull ----------
   var renameBusy = false;
@@ -6844,6 +7014,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     respinBlockhash: function(){ return fetch(URL_+'/functions/v1/respin',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_},body:JSON.stringify({action:'blockhash'})}).then(function(r){ return r.json(); }); },
     respinGrant: function(signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/respin',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
     energyQuote: function(){ return sb.rpc('energy_quote').then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    boostQuote: function(){ return sb.rpc('boost_quote').then(function(r){ if(r.error) throw r.error; return r.data; }); },
+    boostGrant: function(kind, signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/boost',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({kind:kind,signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
     energyGrant: function(signature){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/energy',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({signature:signature})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
     // ----- Paid bull rename (0.05 SOL, on-chain verified) -----
     renameQuote:    function(){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/rename-bull',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'quote'})}).then(function(r){ return r.json(); }); }); },
