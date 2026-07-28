@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785275932";try{console.log("BullQuest build 1785275932");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785277799";try{console.log("BullQuest build 1785277799");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -193,6 +193,12 @@ button.cancel:active{transform:translateY(0) scale(.97)}
 .nav a.center .knob .nico{width:24px;height:24px;background:var(--surface)}
 /* the bottom nav is position:fixed (always visible on tall pages), so reserve space so content never hides behind it */
 .bq-home,.bq-bulls,.bq-market,.bq-sectors{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+/* the same floating-button band also overlapped the last line of these scrolling views */
+.bq-onboard,.bq-spin,#view-airdrop,#view-quests{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+/* The account pill is position:fixed at top-right and paints over these topbars, hiding the Bulls
+   sort control, the sectors cycle chip, the market count and the spin HAY pill. Three players
+   reported it as "can't see what is written at the right top". Reserve its footprint. */
+.bq-bulls .topbar,.bq-sectors .topbar,.bq-market .topbar,.bq-spin .topbar{padding-right:132px}
 /* removed the floating decorative particles across the app (founder to replace later).
    The ambient floaters are .confetti sparkle sets inside arena/spin/onboard/landing, plus .hero-ghost and .spark.
    NB: this does NOT touch the purchase-celebration confetti (.bqcel-cf) or the claim reveal (.bqrev), which are body-level. */
@@ -983,7 +989,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
 
   /* arena fits one phone screen: trimmed top/bottom padding (overrides the shared #view-home,#view-arena rule by source order) */
-  #view-arena { padding-top: 12px; padding-bottom: 12px; }
+  /* The floating AI / feedback / help buttons occupy roughly the bottom 80-134px. The Fight button
+     sat inside that band, so taps on its right end hit the assistant instead of starting the duel.
+     Reserve the band here rather than moving the button. */
+  #view-arena { padding-top: 12px; padding-bottom: calc(150px + env(safe-area-inset-bottom,0px)); }
 
   /* ---------- top bar ---------- */
   .bq-arena .topbar {
@@ -4502,8 +4511,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <h3>How the airdrop works</h3>
       <ol class="bqair-steps">
         <li><b>Register your wallet</b><span>Paste your Solana address or connect Phantom. Receive-only, no signing, no risk to your funds.</span></li>
-        <li><b>Earn GRIT by playing</b><span>Spins, quests and duel wins all add to your GRIT. Your GRIT balance is your weight in every round.</span></li>
-        <li><b>Every ~9 days, 1% unlocks</b><span>That 1% of $BULL is split across everyone by their share of GRIT held at that snapshot.</span></li>
+        <li><b>Earn GRIT by playing</b><span>Spins, quests and duel wins all add to your GRIT. Each round counts what you <b>earned since the last one</b>, so spending GRIT at the Gym never costs you a thing.</span></li>
+        <li><b>Every ~9 days, 1% unlocks</b><span>That 1% of $BULL is shared out by how much GRIT each player earned during that window.</span></li>
         <li><b>Claim at launch</b><span>Each round locks in your allocation. When $BULL goes live, you claim it all to your wallet.</span></li>
       </ol>
     </section>
@@ -5804,7 +5813,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       (q.offers||[]).forEach(function(o){ if(o.kind===kind) offer=o; });
       if(!offer) throw new Error('bad-kind');
       if(!window.confirm('Buy the '+offer.label+' for '+offer.price_sol+' SOL?\n'+offer.multiplier+'x faster energy refill for '+
-                         (offer.duration_hours>=24?(offer.duration_hours/24+' day(s)'):(offer.duration_hours+' hours'))+'.')) throw new Error('__silent__');
+                         (offer.duration_hours>=24?((offer.duration_hours/24)+((offer.duration_hours===24)?' day':' days')):(offer.duration_hours+' hours'))+'.')) throw new Error('__silent__');
       provider = window.bqGetProvider ? window.bqGetProvider('auto') : (window.solana||null);
       if(!provider) throw new Error('no-wallet');
       if(!window.bqLoadWeb3) throw new Error('web3-load');
@@ -6074,7 +6083,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var bl=modal.querySelector('#bqBullsLeft'); if(bl) bl.style.display='none';
     var rb=modal.querySelector('#bqRefBonus');
     if(rb){ var hr; try{ hr=localStorage.getItem('bq_ref'); }catch(e){}
-      if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? (window.bqRefName+' invited you. Reach level 2 and you both get bonus GRIT.') : 'You were invited. Reach level 2 and you and your friend both get bonus GRIT.'); rb.style.display=''; }
+      if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? (window.bqRefName+' invited you. Reach level 2 and play on two different days, and you both get bonus GRIT.') : 'You were invited. Reach level 2 and play on two different days, and you and your friend both get bonus GRIT.'); rb.style.display=''; }
       else { rb.style.display='none'; } }
     if(window.bqGoogleOn){ var gmb=modal.querySelector('#bqGoogleModalBtn'), gmo=modal.querySelector('#bqGoogleOr'); if(gmb) renderGoogleBtn(gmb); if(gmo) gmo.style.display='flex'; }
     try{ var tgm=modal.querySelector('#bqTgModalBtn'); if(tgm&&window.bqRenderTgWidget) window.bqRenderTgWidget(tgm); }catch(e){}
@@ -7311,8 +7320,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         sb.rpc('submit_feedback', { p_kind:kind, p_message:msg, p_page:ctx.page, p_url:ctx.url, p_user_agent:ctx.ua, p_screen:ctx.scr, p_image_url:imgUrl||null, p_wallet:wallet||null })
           .then(function(r){
             if(r&&r.data&&r.data.ok){ card.innerHTML='<div class="bqfb-done"><div style="font-size:44px">&#127881;</div><h3>Thank you</h3><p class="sub">We got your '+(kind==='bug'?'bug report':'suggestion')+'. It helps a lot.</p><div class="bqfb-actions"><button type="button" class="send" id="bqfbClose">Done</button></div></div>'; card.querySelector('#bqfbClose').addEventListener('click', closeFb); }
-            else { send.disabled=false; send.textContent='Send feedback'; if(window.showToast) showToast('Could not send, please try again'); }
-          }).catch(function(){ send.disabled=false; send.textContent='Send feedback'; if(window.showToast) showToast('Could not send, please try again'); });
+            else { send.disabled=false; send.textContent='Send it'; if(window.showToast) showToast('Could not send, please try again'); }
+          }).catch(function(){ send.disabled=false; send.textContent='Send it'; if(window.showToast) showToast('Could not send, please try again'); });
       }
       if(file){
         var ext=((file.name||'png').split('.').pop()||'png').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5)||'png';
@@ -8829,11 +8838,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       el.innerHTML=
         '<div class="bqair-mehead"><h3>Your allocation</h3><button type="button" class="bqair-change" id="airChange">'+shortAddr(m.payout_pubkey)+' · change</button></div>'+
         '<div class="bqair-stats">'+
-          '<div class="bqair-stat"><b>'+fmt(m.grit_balance)+'</b><span>Your GRIT</span></div>'+
+          // what this round actually counts, so the player can see the number their share is built from
+          '<div class="bqair-stat"><b>'+fmt(m.grit_this_round!=null?m.grit_this_round:m.grit_balance)+'</b><span>GRIT this round</span></div>'+
           '<div class="bqair-stat"><b>'+pctStr(m.est_round_pct_of_supply)+'</b><span>est. this round</span></div>'+
           '<div class="bqair-stat"><b>'+pctStr(m.total_pct_of_supply)+'</b><span>secured so far</span></div>'+
         '</div>'+
-        '<div class="bqair-next">Next round <b>'+dstr(m.next_round_at)+'</b>. Your share = your GRIT balance divided by everyone’s, times 1% of supply.</div>'+
+        '<div class="bqair-next">Next round <b>'+dstr(m.next_round_at)+'</b>. Your share comes from the GRIT you <b>earn between rounds</b>, so spending it never shrinks your share. Big earners are scaled down a little so one player cannot take everything.</div>'+
         '<div class="bqair-claim">🔒 Claim opens at $BULL launch</div>'+
         '<button type="button" class="bqair-btn" data-bqinvite style="margin-top:12px;background:linear-gradient(180deg,#7C5CE6,#6B31E6)">Invite friends, grow your share</button>';
       var ch=document.getElementById('airChange'); if(ch) ch.addEventListener('click',function(){ changeWallet(m.payout_pubkey); });
