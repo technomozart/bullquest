@@ -305,6 +305,53 @@
       }, function(){ el.innerHTML='<div class="panel"><h3>Purchases</h3><p class="hint">Could not load purchases.</p></div>'; });
   }
 
+  // ---- Duplicate accounts: auto-flagged, appealable, reviewed here ----
+  function loadDupes(){
+    var el=document.getElementById('dupPanel'); if(!el) return;
+    sb.rpc('admin_duplicates',{p_limit:100}).then(function(r){
+      var d=r&&r.data; if(!d || d.error){ el.innerHTML=''; return; }
+      var c=d.counts||{}, f=d.flags||[];
+      if(!f.length){ el.innerHTML='<div class="panel"><h3>Duplicate accounts</h3><p class="hint">Nothing flagged. Referral rewards are paying normally.</p></div>'; return; }
+      var h='<div class="panel"><h3>Duplicate accounts</h3>'+
+            '<p class="hint">Auto-flagged when a newer account signs in from the same browser, or the same IP <em>and</em> device, as an older one. Only the newer account is flagged, and it can still play. Clearing one lets its referral pay on the next refresh.</p>'+
+            '<div class="grid">'+kpi('Awaiting review', c.open||0)+kpi('Appealed', c.appealed||0, 'player replied')+
+            kpi('Cleared', c.cleared||0)+kpi('Confirmed', c.confirmed||0)+'</div>';
+      f.forEach(function(x){
+        var appealed = x.status==='appealed';
+        h+='<div class="duprow" style="border-top:1px solid rgba(20,16,40,.08);padding:11px 2px">'+
+           '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">'+
+             '<b style="font-size:13.5px">'+esc(x.who||'')+'</b>'+
+             '<span style="font-size:11.5px;opacity:.7">'+esc(x.email||'')+'</span>'+
+             '<span style="font-size:11px;padding:3px 8px;border-radius:999px;background:'+
+               (appealed?'#FFF3D6;color:#6b4a05':(x.status==='cleared'?'#E7F7EE;color:#1E9E52':(x.status==='confirmed'?'#FDEDEE;color:#B42318':'#EEF1F6;color:#5a6273')))+'">'+esc(x.status)+'</span>'+
+             '<span style="font-size:11.5px;opacity:.7">'+esc(x.reason)+' as <b>'+esc(x.matched_who||'?')+'</b></span>'+
+             '<span style="font-size:11.5px;opacity:.7">'+(x.referral_count||0)+' referrals &middot; '+(x.grit||0)+' GRIT</span>'+
+           '</div>';
+        if(x.appeal_text){
+          h+='<div style="margin-top:7px;padding:9px 11px;background:rgba(20,16,40,.04);border-radius:10px;font-size:12.5px;line-height:1.5">'+
+             '<span style="opacity:.6;font-size:11px;display:block;margin-bottom:2px">Their explanation</span>'+esc(x.appeal_text)+'</div>';
+        }
+        if(x.status==='auto' || appealed){
+          h+='<div style="display:flex;gap:8px;margin-top:8px">'+
+             '<button class="dupClear refresh" data-u="'+esc(x.user_id)+'" style="cursor:pointer;background:#12B76A">Clear, pay them</button>'+
+             '<button class="dupBan" data-u="'+esc(x.user_id)+'" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font:inherit">Confirm duplicate</button></div>';
+        }
+        h+='</div>';
+      });
+      el.innerHTML=h+'<div id="dupMsg" style="font-size:13px;font-weight:600;margin-top:10px"></div></div>';
+      function act(u, clear, btn){
+        btn.setAttribute('disabled','');
+        sb.rpc('admin_review_duplicate',{p_user:u,p_clear:clear}).then(function(rr){
+          var m=document.getElementById('dupMsg');
+          if(rr&&rr.data&&rr.data.ok){ if(m){ m.style.color='#12B76A'; m.textContent = clear?'Cleared. Their referral pays on their next refresh.':'Marked as a duplicate.'; } loadDupes(); }
+          else { if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } btn.removeAttribute('disabled'); }
+        }, function(){ btn.removeAttribute('disabled'); });
+      }
+      [].forEach.call(el.querySelectorAll('.dupClear'), function(b){ b.addEventListener('click', function(){ act(b.getAttribute('data-u'), true, b); }); });
+      [].forEach.call(el.querySelectorAll('.dupBan'), function(b){ b.addEventListener('click', function(){ if(confirm('Confirm this is a duplicate? Their invite rewards stay off.')) act(b.getAttribute('data-u'), false, b); }); });
+    }, function(){});
+  }
+
   function render(d){
     var html='';
     html+=notifyPanel();   // admin: send news / personal notifications to players
@@ -322,6 +369,7 @@
     html+=errPanel(d.recent_errors);
 
     html+='<div id="buyPanel"></div>';   // what players actually paid for
+    html+='<div id="dupPanel"></div>';   // auto-flagged duplicate accounts + appeals
 
     // Funnel
     var su=d.funnel_signed_up||0;
@@ -344,6 +392,7 @@
     root.innerHTML=html;
     wireNotify();
     loadPurchases();
+    loadDupes();
     loadSubmissions();
     loadAccounts();
     var g=d.generated_at?new Date(d.generated_at):null;
