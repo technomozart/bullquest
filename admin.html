@@ -249,6 +249,62 @@
     [].forEach.call(document.querySelectorAll('.subApprove'), function(b){ b.addEventListener('click', function(){ review(b.getAttribute('data-id'), true, b); }); });
     [].forEach.call(document.querySelectorAll('.subReject'), function(b){ b.addEventListener('click', function(){ if(confirm('Reject this submission? The player can submit a new tweet.')) review(b.getAttribute('data-id'), false, b); }); });
   }
+  // ---- Purchases: every SOL a player has spent, and how much of it reached the treasury ----
+  // Gross and treasury differ on player-to-player bull sales: 85% goes to the seller, we keep the
+  // 15% fee. Showing both so the revenue number is the real one.
+  function loadPurchases(){
+    var el=document.getElementById('buyPanel'); if(!el) return;
+    el.innerHTML='<div class="panel"><h3>Purchases</h3><p class="hint">Loading…</p></div>';
+    var solUsd=null;
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd')
+      .then(function(r){ return r.json(); })
+      .then(function(j){ solUsd=(j&&j.solana&&j.solana.usd)||null; })
+      .catch(function(){})
+      .then(function(){ return sb.rpc('admin_purchases',{p_limit:100}); })
+      .then(function(r){
+        var d=r&&r.data;
+        if(!d || d.error){ el.innerHTML='<div class="panel"><h3>Purchases</h3><p class="hint">'+esc((d&&d.error)||'Could not load')+'</p></div>'; return; }
+        var t=d.totals||{};
+        function usd(sol){ return (solUsd!=null) ? (' <span style="opacity:.6">($'+(sol*solUsd).toFixed(2)+')</span>') : ''; }
+        var h='<div class="panel"><h3>Purchases</h3><p class="hint">Everything players have paid SOL for'+
+              (solUsd!=null?(' &middot; SOL at $'+solUsd.toFixed(2)+' live'):'')+'.</p>';
+        h+='<div class="grid">'+
+             kpi('Treasury earned', (t.treasury_sol||0)+' SOL', solUsd!=null?('$'+((t.treasury_sol||0)*solUsd).toFixed(2)):'')+
+             kpi('Last 7 days', (t.last_7d_sol||0)+' SOL', solUsd!=null?('$'+((t.last_7d_sol||0)*solUsd).toFixed(2)):'')+
+             kpi('Orders', t.orders||0)+
+             kpi('Paying players', t.buyers||0)+
+           '</div>';
+        var bk=d.by_kind||[];
+        if(bk.length){
+          h+='<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:13px">'+
+             '<tr style="text-align:left;opacity:.65"><th style="padding:6px 4px">Product</th><th>Orders</th><th>Treasury</th></tr>';
+          bk.forEach(function(k){
+            h+='<tr style="border-top:1px solid rgba(20,16,40,.08)"><td style="padding:7px 4px;font-weight:700">'+esc(k.kind)+'</td>'+
+               '<td>'+k.orders+'</td><td style="font-weight:700">'+k.treasury_sol+' SOL'+usd(k.treasury_sol)+'</td></tr>';
+          });
+          h+='</table>';
+        }
+        var rec=d.recent||[];
+        h+='<h3 style="margin-top:18px">Recent orders</h3>';
+        if(!rec.length){ h+='<p class="hint">No purchases yet.</p>'; }
+        else{
+          h+='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px;white-space:nowrap">'+
+             '<tr style="text-align:left;opacity:.65"><th style="padding:6px 4px">When</th><th>Player</th><th>Bought</th><th>Paid</th><th>Tx</th></tr>';
+          rec.forEach(function(x){
+            var when=x.at?new Date(x.at).toLocaleString():'';
+            h+='<tr style="border-top:1px solid rgba(20,16,40,.08)">'+
+               '<td style="padding:7px 4px">'+esc(when)+'</td>'+
+               '<td title="'+esc(x.email||'')+'">'+esc(x.who||'')+'</td>'+
+               '<td>'+esc(x.kind)+(x.detail?(' <span style="opacity:.6">'+esc(x.detail)+'</span>'):'')+'</td>'+
+               '<td style="font-weight:700">'+x.sol+' SOL'+usd(x.sol)+'</td>'+
+               '<td><a href="https://solscan.io/tx/'+esc(x.signature)+'" target="_blank" rel="noopener noreferrer">view</a></td></tr>';
+          });
+          h+='</table></div>';
+        }
+        el.innerHTML=h+'</div>';
+      }, function(){ el.innerHTML='<div class="panel"><h3>Purchases</h3><p class="hint">Could not load purchases.</p></div>'; });
+  }
+
   function render(d){
     var html='';
     html+=notifyPanel();   // admin: send news / personal notifications to players
@@ -264,6 +320,8 @@
 
     // Errors (prominent - if something's broken you see it right away)
     html+=errPanel(d.recent_errors);
+
+    html+='<div id="buyPanel"></div>';   // what players actually paid for
 
     // Funnel
     var su=d.funnel_signed_up||0;
@@ -285,6 +343,7 @@
     html+='<div id="acctPanel"></div>';
     root.innerHTML=html;
     wireNotify();
+    loadPurchases();
     loadSubmissions();
     loadAccounts();
     var g=d.generated_at?new Date(d.generated_at):null;

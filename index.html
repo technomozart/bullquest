@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785273383";try{console.log("BullQuest build 1785273383");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785274479";try{console.log("BullQuest build 1785274479");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -1009,14 +1009,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
      .sheet painted straight over it, so players could not see their energy in the arena at all.
      In flow it cannot collide with the nameplates and cannot be buried. Shows a live refill countdown. */
   .bq-arena .energy {
-    /* flex, not inline-flex: an inline-level box ignores margin auto and would sit left of the
-       full-width Fight button instead of centred above it */
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    height: 34px; padding: 0 13px; border-radius: 999px; cursor: pointer;
-    margin: 0 auto 10px; width: fit-content;
+    /* now a chip inside the reward card, aligned with the payout text above it */
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 30px; padding: 0 12px; border-radius: 999px; cursor: pointer;
+    margin: 9px 0 0; width: fit-content;
     background: linear-gradient(180deg, #FFC24B, #F5A623);
-    color: #6b4a05; font-weight: 800; font-size: 13.5px;
-    box-shadow: 0 5px 14px rgba(245, 166, 35, .40);
+    color: #6b4a05; font-weight: 800; font-size: 13px;
+    box-shadow: 0 4px 11px rgba(245, 166, 35, .38);
   }
   .bq-arena .energy .erf {
     font-size: 10px; font-weight: 800; color: #6b4a05; letter-spacing: .2px;
@@ -3909,16 +3908,17 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           </div>
         </div>
         <div class="stake-note">A loss costs no GRIT</div>
+        <!-- Energy sits INSIDE the reward card, so the card reads as one thing: what this fight costs
+             and what it pays. Floating loose above the button it looked like a stray chip. Same markup
+             shape the arena JS already drives (a "N/M" text node plus the .erf countdown span), so
+             setEnergy()/renderNrg() need no changes. -->
+        <div class="energy" aria-label="Energy: 7 of 10" title="Your bull's energy. Each duel costs 2. It refills on its own, 1 every 15 minutes.">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>
+          7/10<span class="erf" style="display:none">refilling</span>
+        </div>
       </div>
     </div>
 
-    <!-- Energy lives here, right above Fight!, so a player sees what a duel costs and when it refills
-         at the moment they spend it. Same markup shape the arena JS already drives (a "N/M" text node
-         plus the .erf countdown span), so setEnergy()/renderNrg() need no changes. -->
-    <div class="energy" aria-label="Energy: 7 of 10" title="Your bull's energy. Each duel costs 2. It refills on its own, 1 every 15 minutes.">
-      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#6b4a05"/></svg>
-      7/10<span class="erf" style="display:none">refilling</span>
-    </div>
     <button type="button" class="cta" id="chargeBtn">
       <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#fff"/></svg>
       Fight!
@@ -6420,6 +6420,19 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           '.bq-acct .ab:hover{background:var(--tint-violet1)}.bq-acct .ab:active{transform:scale(.92)}'+
           '.bq-acct .av{width:31px;height:31px;border-radius:50%;flex:none;border:0;padding:0;background:linear-gradient(135deg,#8B5CF6,#EC4899);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(139,92,246,.45)}'+
           '.bq-acct .av:active{transform:scale(.92)}'+
+          // Players were not clicking the avatar because nothing said it opens anything. A caret
+          // badge is the universal "this is a dropdown" cue. Done as ::after so it survives the
+          // avatar image being written into the button later.
+          '.bq-acct .av{position:relative}'+
+          '.bq-acct .av::after{content:"";position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;background:#fff center/7px 7px no-repeat url("data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 12%22><path d=%22M2.5 4.5 6 8l3.5-3.5%22 fill=%22none%22 stroke=%22%236B31E6%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>");box-shadow:0 1px 4px rgba(20,16,40,.3);pointer-events:none}'+
+          ':root[data-theme="dark"] .bq-acct .av::after{background-color:#171B23;box-shadow:0 1px 4px rgba(0,0,0,.6)}'+
+          // one-time coach mark: most people never discovered the menu at all
+          '.bq-mhint{position:fixed;top:56px;right:14px;z-index:62;max-width:min(250px,calc(100vw - 28px));background:var(--surface,#fff);border:1px solid rgba(20,16,40,.08);border-radius:14px;box-shadow:0 16px 40px rgba(20,16,40,.26);padding:11px 12px;font-family:inherit;animation:bqmh .22s ease-out both}'+
+          '@keyframes bqmh{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}'+
+          '.bq-mhint:before{content:"";position:absolute;top:-6px;right:16px;width:11px;height:11px;background:var(--surface,#fff);border-left:1px solid rgba(20,16,40,.08);border-top:1px solid rgba(20,16,40,.08);transform:rotate(45deg)}'+
+          '.bq-mhint b{display:block;font-size:13px;color:var(--title,#1a1630);margin-bottom:2px}'+
+          '.bq-mhint span{display:block;font-size:11.5px;color:var(--body2,#5a6273);line-height:1.45}'+
+          '.bq-mhint button{margin-top:8px;border:0;background:var(--tint-violet1,#F1ECFD);color:var(--ot-6b31e6,#6B31E6);font-weight:800;font-size:12px;padding:7px 12px;border-radius:9px;cursor:pointer;font-family:inherit;width:100%}'+
           '.bq-acct .av img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}'+
           '.bq-acct .nbadge{position:absolute;top:-2px;right:-2px;min-width:15px;height:15px;background:#E5484D;color:#fff;font-size:9px;font-weight:800;line-height:15px;border-radius:8px;text-align:center;padding:0 3px;box-shadow:0 0 0 2px #fff}'+
           '.bq-acctmenu{position:fixed;top:54px;right:14px;z-index:61;width:min(240px,calc(100vw - 28px));background:var(--surface);border:1px solid rgba(20,16,40,.08);border-radius:16px;box-shadow:0 16px 44px rgba(20,16,40,.24);padding:6px;font-family:inherit;display:none;transform-origin:top right}'+
@@ -6471,7 +6484,27 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       document.body.appendChild(menu); box._menu=menu;
       var avBtn=box.querySelector('.av');
       function closeMenu(){ menu.classList.remove('on'); }
-      avBtn.addEventListener('click', function(e){ e.stopPropagation(); menu.classList.toggle('on'); });
+      avBtn.addEventListener('click', function(e){ e.stopPropagation(); menu.classList.toggle('on'); dismissHint(); });
+
+      // Show the coach mark once per browser, a moment after load so it does not fight the boot.
+      // Anything that proves the player found the menu (opening it) retires it permanently.
+      function dismissHint(){
+        try{ localStorage.setItem('bq_menu_hint','1'); }catch(e){}
+        var h=document.querySelector('.bq-mhint'); if(h) h.remove();
+      }
+      (function(){
+        var seen=false; try{ seen = localStorage.getItem('bq_menu_hint')==='1'; }catch(e){ seen=true; }
+        if(seen) return;
+        setTimeout(function(){
+          if(document.querySelector('.bq-mhint')) return;
+          try{ if(localStorage.getItem('bq_menu_hint')==='1') return; }catch(e){}
+          var h=document.createElement('div'); h.className='bq-mhint';
+          h.innerHTML='<b>Your account lives here</b><span>Tap your picture for your wallet, airdrop, name and settings.</span><button type="button">Got it</button>';
+          document.body.appendChild(h);
+          h.querySelector('button').addEventListener('click', function(ev){ ev.stopPropagation(); dismissHint(); });
+          setTimeout(function(){ var el=document.querySelector('.bq-mhint'); if(el) el.remove(); }, 12000);
+        }, 2500);
+      })();
       document.addEventListener('click', function(e){ if(menu.classList.contains('on') && !menu.contains(e.target) && !avBtn.contains(e.target)) closeMenu(); });
       box.querySelector('[data-a="bell"]').addEventListener('click', function(){ if(window.bqOpenNotifs) window.bqOpenNotifs(); });
       box.querySelector('[data-a="site"]').addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-landing'); });
