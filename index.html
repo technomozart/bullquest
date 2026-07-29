@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785324517";try{console.log("BullQuest build 1785324517");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785337034";try{console.log("BullQuest build 1785337034");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -497,9 +497,24 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 @media(max-width:820px){#view-landing .bq-econ{grid-template-columns:1fr}#view-landing .econ-tiles{grid-template-columns:1fr}}
 @keyframes ringfill{from{stroke-dashoffset:var(--circ)}to{stroke-dashoffset:var(--off)}}
 
-#view-landing .bq-road{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-#view-landing .bq-road::before{content:"";position:absolute;left:6%;right:6%;top:28.5px;height:3px;background:rgba(255,255,255,.28);border-radius:2px;z-index:0}
-#view-landing .road-step{position:relative;z-index:1;text-align:center}
+/* Horizontal rail: the roadmap outgrew a 4-up grid, so it scrolls sideways with snap. The track line
+   lives on .road-rail (the scrolling CONTENT), not .bq-road (the viewport), so it spans every card
+   instead of stopping at the visible edge. */
+#view-landing .bq-road{position:relative;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.45) transparent;padding-bottom:14px;margin:0 -4px}
+#view-landing .bq-road::-webkit-scrollbar{height:6px}
+#view-landing .bq-road::-webkit-scrollbar-track{background:rgba(255,255,255,.12);border-radius:99px}
+#view-landing .bq-road::-webkit-scrollbar-thumb{background:rgba(255,255,255,.45);border-radius:99px}
+#view-landing .bq-road::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.7)}
+#view-landing .road-rail{position:relative;display:flex;gap:20px;padding:0 4px;width:max-content}
+#view-landing .road-rail::before{content:"";position:absolute;left:34px;right:34px;top:28.5px;height:3px;background:rgba(255,255,255,.28);border-radius:2px;z-index:0}
+#view-landing .road-step{position:relative;z-index:1;text-align:center;flex:0 0 232px;scroll-snap-align:start}
+/* fades at both ends so it reads as scrollable rather than clipped */
+#view-landing .road-wrap{position:relative}
+#view-landing .road-wrap::after{content:"";position:absolute;top:0;bottom:14px;right:-4px;width:56px;pointer-events:none;background:linear-gradient(90deg,rgba(107,49,230,0),rgba(107,49,230,.85))}
+#view-landing .road-hint{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:2px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.82)}
+#view-landing .road-hint svg{animation:bqRoadNudge 1.9s ease-in-out infinite}
+@keyframes bqRoadNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+@media(prefers-reduced-motion:reduce){#view-landing .road-hint svg{animation:none}}
 #view-landing .road-dot{width:60px;height:60px;border-radius:50%;background:var(--surface);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(40,15,90,.25);font-size:24px;font-weight:800;color:#fff}
 #view-landing .road-dot svg{width:30px;height:30px}
 #view-landing .road-step .phase{font-size:12px;font-weight:800;color:#D9C7FB;letter-spacing:1px;margin-bottom:6px}
@@ -511,11 +526,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .road-step.active .road-dot{background:var(--surface);box-shadow:0 0 0 5px rgba(77,166,245,.18),0 10px 24px rgba(40,15,90,.30)}
 #view-landing .road-step.active .badge{background:var(--cta);color:#fff}
 #view-landing .road-step.upcoming .road-dot{background:#6B31E6;box-shadow:inset 0 0 0 3px rgba(255,255,255,.55)}
+#view-landing .road-step .badge.soon{background:rgba(255,255,255,.20);color:#fff}
 @media(max-width:820px){
-  #view-landing .bq-road{grid-template-columns:1fr;gap:0}
-  #view-landing .bq-road::before{left:29px;right:auto;top:0;bottom:0;width:3px;height:auto}
-  #view-landing .road-step{display:grid;grid-template-columns:60px 1fr;gap:16px;text-align:left;padding-bottom:26px}
-  #view-landing .road-dot{margin:0}
+  #view-landing .road-step{flex:0 0 min(74vw,240px)}
+  #view-landing .road-rail{gap:16px}
 }
 
 #view-landing .bq-community{text-align:center;padding:84px 0}
@@ -3156,24 +3170,53 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       <h2>Where the herd is headed</h2>
       <p>We ship the game first, then layer on the token and true ownership, in that order, on purpose.</p>
     </div>
-    <div class="bq-road">
-      <div class="road-step done">
-        <div class="road-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="phase">PHASE 1</div><h3>Play the game</h3><p>Arena duels, the daily spin, and quests. Free to jump in and fun from minute one.</p><span class="badge">Live</span></div>
-      </div>
-      <div class="road-step done">
-        <div class="road-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="phase">PHASE 2</div><h3>Sector Wars</h3><p>Back a crypto market sector, win duels for it, and split the pooled GRIT when your sector wins the cycle.</p><span class="badge">Live</span></div>
-      </div>
-      <div class="road-step active">
-        <div class="road-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 5v10l-8 5-8-5V7z" fill="#4DA6F5"/><path d="M12 6.2l4.9 3v6L12 18.2 7.1 15.2v-6z" fill="#BFE0FA"/></svg></div>
-        <div><div class="phase">PHASE 3</div><h3>$BULL token</h3><p>Launch the token, hand over governance, and let the herd steer the economy.</p><span class="badge">Planned</span></div>
-      </div>
-      <div class="road-step upcoming">
-        <div class="road-dot">4</div>
-        <div><div class="phase">PHASE 4</div><h3>NFT ownership</h3><p>Mint your bulls to Solana mainnet, and trade them on the open marketplace.</p></div>
+    <div class="road-wrap">
+      <div class="bq-road">
+        <div class="road-rail">
+        <div class="road-step done">
+          <div class="road-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="phase">PHASE 1</div><h3>Play the game</h3><p>Arena duels, the daily spin, quests and the Gym. Free to jump in and fun from minute one.</p><span class="badge">Live</span></div>
+        </div>
+        <div class="road-step done">
+          <div class="road-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="phase">PHASE 2</div><h3>Sector Wars</h3><p>Back a crypto market sector, win duels for it, and split the pooled GRIT when your sector wins the cycle.</p><span class="badge">Live</span></div>
+        </div>
+        <div class="road-step active">
+          <div class="road-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 5v10l-8 5-8-5V7z" fill="#4DA6F5"/><path d="M12 6.2l4.9 3v6L12 18.2 7.1 15.2v-6z" fill="#BFE0FA"/></svg></div>
+          <div><div class="phase">PHASE 3</div><h3>$BULL token</h3><p>Fair launch on Pump.fun. 80% straight to the open market, no presale and no private round.</p><span class="badge soon">Jul 31</span></div>
+        </div>
+        <div class="road-step upcoming">
+          <div class="road-dot">4</div>
+          <div><div class="phase">PHASE 4</div><h3>Airdrop round 1</h3><p>The first of 10 rounds begins. Every round is shared out by the GRIT you earned in that window.</p><span class="badge soon">Jul 31</span></div>
+        </div>
+        <div class="road-step upcoming">
+          <div class="road-dot">5</div>
+          <div><div class="phase">PHASE 5</div><h3>CoinGecko listing</h3><p>Get $BULL tracked with a real price, chart and supply data that anyone can look up.</p><span class="badge soon">~2 days after launch</span></div>
+        </div>
+        <div class="road-step upcoming">
+          <div class="road-dot">6</div>
+          <div><div class="phase">PHASE 6</div><h3>CoinMarketCap listing</h3><p>Apply to CMC once the token has a trading history behind it, so the numbers speak for themselves.</p><span class="badge soon">~3 to 4 days after launch</span></div>
+        </div>
+        <div class="road-step upcoming">
+          <div class="road-dot">7</div>
+          <div><div class="phase">PHASE 7</div><h3>NFT ownership</h3><p>Mint your bulls to Solana mainnet so they are genuinely yours, and trade them on the open market.</p><span class="badge soon">After launch</span></div>
+        </div>
+        <div class="road-step upcoming">
+          <div class="road-dot">8</div>
+          <div><div class="phase">PHASE 8</div><h3>Tournaments and seasons</h3><p>A ranked ladder with seasons, bracket tournaments and prize pools, so climbing actually pays.</p><span class="badge soon">Coming</span></div>
+        </div>
+        <div class="road-step upcoming">
+          <div class="road-dot">9</div>
+          <div><div class="phase">PHASE 9</div><h3>Breeding and gear</h3><p>HAY as a premium fuel, plus breeding and fusing bulls to grow your stable instead of just buying one.</p><span class="badge soon">Coming</span></div>
+        </div>
+        <div class="road-step upcoming">
+          <div class="road-dot">10</div>
+          <div><div class="phase">PHASE 10</div><h3>Mobile app</h3><p>BullQuest in your pocket on the App Store and Google Play, with the same account and the same bulls.</p><span class="badge soon">In review</span></div>
+        </div>
+        </div>
       </div>
     </div>
+    <div class="road-hint">Drag to see what is next<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
 </section>
 
