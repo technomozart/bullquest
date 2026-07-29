@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785348009";try{console.log("BullQuest build 1785348009");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785348129";try{console.log("BullQuest build 1785348129");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -44,7 +44,8 @@ button.cancel:active{transform:translateY(0) scale(.97)}
   --ot-2fa657:#1B7A3E; --ot-1f9b54:#1B7A3E; --ot-3aa85f:#1B7A3E; --ot-2d8548:#1B7A3E;
   --ot-12a150:#12813F; --ot-2f9752:#1B7A3E; --ot-d8434b:#B4262E; --ot-6b45d6:#5A34C4;
   --ot-c6474e:#B4262E; --ot-d23b43:#B4262E; --ot-b42318:#A32015; --ot-e0a100:#7A5B00;
-  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#667080; --faint:#616B78; --hairline:#EDEFF3;
+  --ot-7c5ce6:#5A34C4; --ot-8a8fa3:#5F6675;   /* violet and grey used as TEXT on pale tints */
+  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#5C6674; --faint:#616B78; --hairline:#EDEFF3;
   --white:#fff;
   /* TINT SCALE: the app had 95 near-identical pale background shades. Normalised onto these 10 tokens so
      every one has a real dark counterpart. Light values are each family's dominant shade. */
@@ -156,7 +157,7 @@ button.cancel:active{transform:translateY(0) scale(.97)}
 /* Keep the marketing landing + pre-login onboard light no matter the theme attribute. */
 #view-landing, #view-onboard{
   --surface:#fff; --surface-2:#F4F6F9; --title:#20143A; --body2:#6B7280; --line:#E6E8EF;
-  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#667080; --faint:#616B78; --hairline:#EDEFF3; --white:#fff;
+  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#5C6674; --faint:#616B78; --hairline:#EDEFF3; --white:#fff;
   --tint-violet1:#F3EEFE; --tint-violet2:#E4D8FB; --tint-neutral1:#ECF1F7; --tint-neutral2:#D8DEE7; --tint-green1:#E9F8EE; --tint-green2:#EAF3E6; --tint-gold1:#FFF9EC; --tint-gold2:#FFF6E0; --tint-coral1:#FDECED;
 }
 /* Dark overrides for shared chrome whose colours are hardcoded (the account bar + its menu are
@@ -296,10 +297,10 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
      Unset the layer here so every call site falls back to its light literal. */
   --ot-047857:initial; --ot-12a150:initial; --ot-1f9b54:initial; --ot-2aabee:initial; --ot-2d8548:initial; --ot-2f9752:initial; --ot-2fa657:initial; --ot-374151:initial; --ot-3a424e:initial; --ot-3aa85f:initial; --ot-4338ca:initial; --ot-4b3b7a:initial; --ot-4b4a63:initial; --ot-4da6f5:initial; --ot-5865f2:initial; --ot-5a3d00:initial; --ot-5a6273:initial; --ot-6b31e6:initial; --ot-6b45d6:initial; --ot-7a6fa0:initial; --ot-7c5ce6:initial; --ot-8a6d00:initial; --ot-8a85a0:initial; --ot-8a8fa3:initial; --ot-9a6a06:initial; --ot-9aa6b2:initial; --ot-a9a2be:initial; --ot-b42318:initial; --ot-c6474e:initial; --ot-d23b43:initial; --ot-d8434b:initial; --ot-d92d20:initial; --ot-e0a100:initial; --ot-f0b429:initial; --ot-goldtext:initial;
   --violet:#6B31E6; --violet-deep:#5A22D6; --violet-tint:#7C46EE; --violet-glow:#8A5CF2;
-  --cta:#0B70C9; --cta-hover:#0A66B6;
+  --cta:#0A66B6; --cta-hover:#0A66B6;
   --gem-a:#0F8DF2; --gem-b:#165AD0;
   --white:#fff; --app-bg:#F6F8FB; --cloud:#EEF3F8; --card-alt:#F4F6F9;
-  --ink:#1C1F24; --body:#667080; --faint:#616B78; --hairline:#EDEFF3;
+  --ink:#1C1F24; --body:#5C6674; --faint:#616B78; --hairline:#EDEFF3;
   --green:#43C06A; --green-text:#1B7A3E; --coral:#EE5B62; --statviolet:#7C5CE6; --amber:#F5B93C; --gold:#F0B429; --orange:#F5A623;
   /* The --ot-* layer remapped these greens for dark but light was left on the raw hex, which
      put green-on-pale-green text at 2.7 to 3.1:1. Defining the light side fixes every call
@@ -605,7 +606,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #0B70C9;
+    --cta: #0A66B6;
     --cta-hover: #0A66B6;
     --gem-a: #0F8DF2;
     --gem-b: #165AD0;
@@ -987,7 +988,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #0B70C9;
+    --cta: #0A66B6;
     --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
@@ -1300,7 +1301,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #0B70C9;
+    --cta: #0A66B6;
     --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
@@ -1670,7 +1671,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #0B70C9;
+    --cta: #0A66B6;
     --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
@@ -1979,7 +1980,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #0B70C9;
+    --cta: #0A66B6;
     --cta-hover: #0A66B6;
     --gem-a: #0F8DF2;
     --gem-b: #165AD0;
@@ -2294,7 +2295,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #0B70C9;
+    --cta: #0A66B6;
     --cta-hover: #0A66B6;
     --gem-a: #0F8DF2;
     --gem-b: #165AD0;
@@ -2553,7 +2554,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --violet: #6B31E6;
     --violet-deep: #5A22D6;
     --violet-tint: #7C46EE;
-    --cta: #0B70C9;
+    --cta: #0A66B6;
     --cta-hover: #0A66B6;
     --app-bg: #F6F8FB;
     --card-alt: #F4F6F9;
@@ -4193,7 +4194,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         </div>
       </div>
     </div>
-    <p style="font-size:12px;color:#8A8FA3;text-align:center;padding:10px 20px 0;line-height:1.5">Rewards come only from staked GRIT, never printed. You must win at least one duel for your sector to earn a share.</p>
+    <p style="font-size:12px;color:var(--ot-8a8fa3,#5F6675);text-align:center;padding:10px 20px 0;line-height:1.5">Rewards come only from staked GRIT, never printed. You must win at least one duel for your sector to earn a share.</p>
 
   </div>
 
