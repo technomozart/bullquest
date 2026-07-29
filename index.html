@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785341145";try{console.log("BullQuest build 1785341145");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785341308";try{console.log("BullQuest build 1785341308");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -3239,7 +3239,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
         next=wrap.querySelector('.road-nav.next'),
         card=wrap.querySelector('.road-step');
     if(!road||!prev||!next) return;
-    var EDGE=12, busy=false;   /* the rail rests a few px in, so ends need a tolerance */
+    var EDGE=12, running=false, target=null;   /* the rail rests a few px in, so ends need a tolerance */
     function maxX(){ return Math.max(0, road.scrollWidth-road.clientWidth); }
     function step(){                       /* real pitch: the gap is 20px wide, 16px on phones */
       var c=road.querySelectorAll('.road-step');
@@ -3253,30 +3253,40 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
       wrap.classList.toggle('scrolled', x>EDGE);
       wrap.classList.toggle('at-end', x>=max-EDGE);
     }
-    function glide(to){
-      if(busy) return; busy=true;
-      var from=road.scrollLeft, dist=to-from, t0=0, dur=340, done=false;
-      var snap=road.style.scrollSnapType; road.style.scrollSnapType='none';
-      function end(){ if(done) return; done=true; road.scrollLeft=to; road.style.scrollSnapType=snap; busy=false; sync(); }
+    function glide(){
+      if(running) return;
+      running=true;
+      var snapWas=road.style.scrollSnapType; road.style.scrollSnapType='none';
+      var from=road.scrollLeft, aim=target, t0=0, dur=340, done=false, timer;
+      function finish(){
+        if(done) return; done=true; clearTimeout(timer);
+        road.scrollLeft=target; road.style.scrollSnapType=snapWas;
+        running=false; target=null; sync();
+      }
       function frame(ts){
         if(done) return;
         if(!t0) t0=ts;
+        if(aim!==target){ from=road.scrollLeft; aim=target; t0=ts; }  /* a second tap re-aims mid flight */
         var p=Math.min(1,(ts-t0)/dur), e=1-Math.pow(1-p,3);
-        road.scrollLeft = from + dist*e;
-        if(p<1){ requestAnimationFrame(frame); } else { end(); }
+        road.scrollLeft = from + (aim-from)*e;
+        if(p<1){ requestAnimationFrame(frame); } else { finish(); }
       }
+      timer=setTimeout(finish, dur+260);  /* frames are throttled on a hidden tab, land it regardless */
       requestAnimationFrame(frame);
-      setTimeout(end, dur+220);   /* frames are throttled on a hidden tab, so land it regardless */
     }
-    function go(dir){ glide(Math.max(0, Math.min(maxX(), road.scrollLeft + dir*step()))); }
+    function go(dir){
+      var base = (target===null ? road.scrollLeft : target);
+      target = Math.max(0, Math.min(maxX(), base + dir*step()));
+      glide();
+    }
     prev.addEventListener('click', function(){ go(-1); });
     next.addEventListener('click', function(){ go(1); });
-    road.addEventListener('scroll', function(){ if(!busy) sync(); }, {passive:true});
+    road.addEventListener('scroll', function(){ if(!running) sync(); }, {passive:true});
     window.addEventListener('resize', sync);
     /* A logged-in player loads straight into the app, so the landing is display:none and the rail
        measures zero wide. Without this the arrows would latch disabled and never come back when
        they open the landing later. */
-    if (window.ResizeObserver) { new ResizeObserver(function(){ if(!busy) sync(); }).observe(road); }
+    if (window.ResizeObserver) { new ResizeObserver(function(){ if(!running) sync(); }).observe(road); }
     sync();
   })();
   </script>
