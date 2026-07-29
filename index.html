@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785349411";try{console.log("BullQuest build 1785349411");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785350201";try{console.log("BullQuest build 1785350201");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6100,6 +6100,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       +'<p class="bqauth-err" id="bqAuthErr"></p>'
       +'<div id="bqTurnstile" style="display:none;justify-content:center;margin:2px 0 8px"></div>'
       +'<button class="bqauth-go" id="bqAuthSubmit">Sign up &amp; claim</button>'
+      +'<button type="button" class="bqauth-toggle" id="bqCodeAsk" style="display:none">Email me a sign-in code instead</button>'
+      +'<div id="bqCodeWrap" style="display:none">'
+        +'<input id="bqCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" maxlength="8">'
+        +'<button class="bqauth-go" id="bqCodeGo">Sign in with code</button>'
+        +'<button type="button" class="bqauth-toggle" id="bqCodeBack">Use a password instead</button>'
+      +'</div>'
       +'<button class="bqauth-toggle" id="bqAuthToggle">Already have an account? Log in</button></div>';
     document.body.appendChild(modal);
     modal.querySelector('.bqauth-x').addEventListener('click', closeModal);
@@ -6107,6 +6113,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     modal.querySelector('#bqAuthToggle').addEventListener('click', toggleMode);
     modal.querySelector('#bqAuthSubmit').addEventListener('click', submit);
     modal.querySelector('#bqPass').addEventListener('keydown', function(e){ if(e.key==='Enter') submit(); });
+    modal.querySelector('#bqCodeAsk').addEventListener('click', sendCode);
+    modal.querySelector('#bqCodeGo').addEventListener('click', verifyCode);
+    modal.querySelector('#bqCodeBack').addEventListener('click', function(){ showCode(false); });
+    modal.querySelector('#bqCode').addEventListener('keydown', function(e){ if(e.key==='Enter') verifyCode(); });
   }
   function applyMode(){
     if(!modal) return;
@@ -6124,6 +6134,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(window.bqGoogleOn){ var gmb=modal.querySelector('#bqGoogleModalBtn'), gmo=modal.querySelector('#bqGoogleOr'); if(gmb) renderGoogleBtn(gmb); if(gmo) gmo.style.display='flex'; }
     try{ var tgm=modal.querySelector('#bqTgModalBtn'); if(tgm&&window.bqRenderTgWidget) window.bqRenderTgWidget(tgm); }catch(e){}
     renderTurnstile(); if(mode==='signup'){ updateBullsLeft(); }
+    showCode(false);   /* the code option only makes sense when logging in */
     errmsg('');
   }
   function openModal(intent){ loadTurnstile(); if(!modal) buildModal(); mode = intent==='login'?'login':'signup'; applyMode(); modal.hidden=false; modal.querySelector('#bqEmail').focus(); }
@@ -6139,6 +6150,57 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(/rate limit/i.test(m)) return 'Too many attempts. Wait a moment and retry.';
     if(/sold out|fully claimed/i.test(m)) return 'Every free bull is claimed right now. Check back soon.';
     return m||'Something snagged. Give it another go.';
+  }
+  /* Sign in with a one-time email code. This exists so an account created with Google (or any
+     account at all) can be reached with nothing but the email address, which matters on iOS where
+     the third-party login buttons are cut for App Store guideline 4.8. It is first-party, so it
+     does not re-trigger 4.8. */
+  function showCode(on){
+    modal.querySelector('#bqCodeWrap').style.display = on?'block':'none';
+    modal.querySelector('#bqPass').style.display = on?'none':'';
+    modal.querySelector('#bqAuthSubmit').style.display = on?'none':'';
+    modal.querySelector('#bqCodeAsk').style.display = (!on && mode!=='signup')?'block':'none';
+    modal.querySelector('#bqAuthToggle').style.display = on?'none':'';
+    if(on) setTimeout(function(){ try{ modal.querySelector('#bqCode').focus(); }catch(e){} }, 60);
+  }
+  window.bqShowCodeOption = function(){ if(modal) showCode(false); };
+  function sendCode(){
+    var email=modal.querySelector('#bqEmail').value.trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ errmsg('Enter your email address first.'); return; }
+    var b=modal.querySelector('#bqCodeAsk'), lbl=b.textContent;
+    b.disabled=true; b.textContent='Sending the code...'; errmsg('');
+    sb.auth.signInWithOtp({email:email, options:Object.assign({shouldCreateUser:false}, captchaToken?{captchaToken:captchaToken}:{})})
+      .then(function(r){
+        b.disabled=false; b.textContent=lbl;
+        if(r.error) throw r.error;
+        showCode(true);
+        errmsg('');
+        var m=modal.querySelector('#bqAuthErr');
+        m.style.color='var(--ot-1f9b54,#1B7A3E)';
+        m.textContent='Code sent to '+email+'. It can take a minute, and check spam.';
+      })
+      .catch(function(e){
+        b.disabled=false; b.textContent=lbl;
+        var msg=(e&&e.message)||'';
+        if(/not found|Signups not allowed|User not found/i.test(msg)) errmsg('No account with that email yet. Sign up first.');
+        else if(/rate|too many|seconds/i.test(msg)) errmsg('Too many requests. Wait a minute and try again.');
+        else errmsg('Could not send the code. Try again in a moment.');
+      });
+  }
+  function verifyCode(){
+    var email=modal.querySelector('#bqEmail').value.trim();
+    var token=(modal.querySelector('#bqCode').value||'').replace(/\s/g,'');
+    if(token.length<6){ errmsg('Enter the 6-digit code from the email.'); return; }
+    var b=modal.querySelector('#bqCodeGo'), lbl=b.textContent;
+    b.disabled=true; b.textContent='Signing you in...'; errmsg('');
+    sb.auth.verifyOtp({email:email, token:token, type:'email'})
+      .then(function(r){ if(r.error) throw r.error; return loadAndShow(true,false); })
+      .then(function(){ closeModal(); })
+      .catch(function(e){
+        b.disabled=false; b.textContent=lbl;
+        var msg=(e&&e.message)||'';
+        errmsg(/expired/i.test(msg) ? 'That code expired. Send a new one.' : 'That code did not match. Check it and try again.');
+      });
   }
   function submit(){
     var email=modal.querySelector('#bqEmail').value.trim();
