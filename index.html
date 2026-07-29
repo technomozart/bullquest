@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785344772";try{console.log("BullQuest build 1785344772");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785347783";try{console.log("BullQuest build 1785347783");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -39,7 +39,7 @@ button.cancel:active{transform:translateY(0) scale(.97)}
    landing and the pre-login onboard keep their light tokens so they always look as designed. */
 :root{
   --surface:#fff; --surface-2:#F4F6F9; --title:#20143A; --body2:#6B7280; --line:#E6E8EF;
-  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#667080; --faint:#6E7883; --hairline:#EDEFF3;
+  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#667080; --faint:#616B78; --hairline:#EDEFF3;
   --white:#fff;
   /* TINT SCALE: the app had 95 near-identical pale background shades. Normalised onto these 10 tokens so
      every one has a real dark counterpart. Light values are each family's dominant shade. */
@@ -50,6 +50,7 @@ button.cancel:active{transform:translateY(0) scale(.97)}
   /* Violet-leaning dark GREY, not neutral near-black: pure black beside #6B31E6 reads cold and cheap. */
   --surface:#1B1726; --surface-2:#272233; --title:#FBFAFF; --body2:#A89FBC; --line:#322C44;
   --app-bg:#100D18; --card-alt:#272233; --ink:#F1EEF7; --body:#B8B0C8; --faint:#968CAC; --hairline:#26212F;
+  --green-text:#7FE0A6;   /* dark had no green-text, so it inherited the light one at 3.8:1 */
   --white:#1B1726; --tint-violet1:#241E3A; --tint-violet2:#322A50; --tint-neutral1:#201B2B; --tint-neutral2:#2B2539; --tint-green1:#163026; --tint-green2:#1D3B30; --tint-gold1:#322A1A; --tint-gold2:#3A301E; --tint-coral1:#37222B;
   /* Accent TEXT on tinted chips: light mode falls back to the original literal (zero drift);
      dark mode lifts each accent so it stays readable on the darkened tint. */
@@ -144,7 +145,7 @@ button.cancel:active{transform:translateY(0) scale(.97)}
 /* Keep the marketing landing + pre-login onboard light no matter the theme attribute. */
 #view-landing, #view-onboard{
   --surface:#fff; --surface-2:#F4F6F9; --title:#20143A; --body2:#6B7280; --line:#E6E8EF;
-  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#667080; --faint:#6E7883; --hairline:#EDEFF3; --white:#fff;
+  --app-bg:#F6F8FB; --card-alt:#F4F6F9; --ink:#1C1F24; --body:#667080; --faint:#616B78; --hairline:#EDEFF3; --white:#fff;
   --tint-violet1:#F3EEFE; --tint-violet2:#E4D8FB; --tint-neutral1:#ECF1F7; --tint-neutral2:#D8DEE7; --tint-green1:#E9F8EE; --tint-green2:#EAF3E6; --tint-gold1:#FFF9EC; --tint-gold2:#FFF6E0; --tint-coral1:#FDECED;
 }
 /* Dark overrides for shared chrome whose colours are hardcoded (the account bar + its menu are
@@ -246,9 +247,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 @media(max-width:560px){
   /* 16px form fields so iOS Safari does not zoom the whole page on focus (override inline sizes) */
   input,textarea,select{font-size:16px !important}
-  /* comfortable finger-sized tap targets for the small controls */
-  .fchip,.wchip,.bqmkt-chip,.bqmkt-sort,.extraspin{min-height:40px}
 }
+/* Finger-sized tap targets. These used to live in the max-width:560px block above, but the app
+   shell is max-width:480px, so the frame is 480px wide on a 768px tablet and the minimums never
+   applied there. The frame width does not depend on the viewport, so neither should these. */
+.fchip,.wchip,.bqmkt-chip,.bqmkt-sort{min-height:40px}
+.extraspin{min-height:44px}
 /* keyboard focus rings for body-injected chrome + modals (these live outside the scoped focus rules) */
 .bq-acct .ab, #bqFbBtn, #bqHelpBtn, #bqAiBtn, #bqSocial a,
 #view-airdrop button, #view-airdrop a, #view-airdrop input,
@@ -268,7 +272,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 .bq-toast .bq-toast-msg{flex:1;font-size:13.5px;font-weight:700;letter-spacing:.1px}
 .bq-toast .bq-toast-x{appearance:none;border:0;cursor:pointer;flex:none;width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.16);color:#fff;font-size:18px;line-height:1;display:grid;place-items:center}
 .bq-toast .bq-toast-x:hover{background:rgba(255,255,255,.28)}
-.bq-toast .bq-toast-x:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.bq-toast .bq-toast-x:focus-visible{outline:3px solid #fff;box-shadow:0 0 0 6px rgba(11,112,201,.85);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){.bq-toast{transition:none}}
 
 /* ===================================================================
@@ -280,8 +284,14 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   --cta:#0B70C9; --cta-hover:#0A66B6;
   --gem-a:#0F8DF2; --gem-b:#165AD0;
   --white:#fff; --app-bg:#F6F8FB; --cloud:#EEF3F8; --card-alt:#F4F6F9;
-  --ink:#1C1F24; --body:#667080; --faint:#6E7883; --hairline:#EDEFF3;
-  --green:#43C06A; --green-text:#2D8548; --coral:#EE5B62; --statviolet:#7C5CE6; --amber:#F5B93C; --gold:#F0B429; --orange:#F5A623;
+  --ink:#1C1F24; --body:#667080; --faint:#616B78; --hairline:#EDEFF3;
+  --green:#43C06A; --green-text:#1B7A3E; --coral:#EE5B62; --statviolet:#7C5CE6; --amber:#F5B93C; --gold:#F0B429; --orange:#F5A623;
+  /* The --ot-* layer remapped these greens for dark but light was left on the raw hex, which
+     put green-on-pale-green text at 2.7 to 3.1:1. Defining the light side fixes every call
+     site at once, because each one is already written as var(--ot-xxxxxx, #xxxxxx). */
+  --ot-2fa657:#1B7A3E; --ot-1f9b54:#1B7A3E; --ot-3aa85f:#1B7A3E; --ot-2d8548:#1B7A3E;
+  --ot-12a150:#12813F; --ot-2f9752:#1B7A3E;
+  --green-strong:#2D8548;   /* the fill to use when white text sits on green */
   --mint:#8CF0B4;
   --pink:#FBE3E6; --sand:#EFE7DA; --sky:#E4EEF3; --mintbg:#EAF3E6;
   --rare:#4DA6F5; --epic:#7C5CE6; --legend:#F0B429; --common:#9AA7B4;
@@ -302,7 +312,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 
 #view-landing .bq .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:700;font-size:16px;cursor:pointer;border:0;min-height:44px;font-family:var(--font);transition:transform .12s ease,background .15s ease,box-shadow .15s ease}
 #view-landing .bq .pill:active{transform:scale(.97)}
-#view-landing .bq .pill:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#view-landing .bq .pill:focus-visible{outline:3px solid #fff;box-shadow:0 0 0 6px rgba(11,112,201,.85);outline-offset:3px}
 #view-landing .bq .pill-cta{background:var(--cta);color:#fff;font-weight:800;padding:15px 30px;min-height:52px;box-shadow:0 10px 22px rgba(77,166,245,.38)}
 #view-landing .bq .pill-cta:hover{background:var(--cta-hover);transform:translateY(-1px) scale(1.02);box-shadow:0 14px 28px rgba(77,166,245,.46)}
 #view-landing .bq .pill-ghost{background:rgba(255,255,255,.14);color:#fff;font-weight:800;min-height:52px;padding:15px 28px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
@@ -318,11 +328,11 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .bq-links a{color:rgba(255,255,255,.9);font-weight:600;font-size:15px;padding:10px 4px;min-height:44px;display:inline-flex;align-items:center}
 #view-landing .bq-links a:hover{color:#fff}
 #view-landing .bq-links a[data-bqgo="view-airdrop"]:hover{color:#FFE49A}
-#view-landing .bq-links a:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:6px}
+#view-landing .bq-links a:focus-visible{outline:3px solid #fff;box-shadow:0 0 0 6px rgba(11,112,201,.85);outline-offset:3px;border-radius:6px}
 #view-landing .bq-nav .pill-cta{margin-left:6px}
 #view-landing .bq-navtoggle{position:absolute;width:1px;height:1px;opacity:0;margin:0;pointer-events:none}
 #view-landing .bq-burger{display:none;background:rgba(255,255,255,.15);color:#fff;width:44px;height:44px;min-width:44px;border-radius:12px;cursor:pointer;font-size:20px;align-items:center;justify-content:center;user-select:none;flex:none}
-#view-landing .bq-navtoggle:focus-visible ~ .bq-burger{outline:3px solid #fff;outline-offset:2px}
+#view-landing .bq-navtoggle:focus-visible ~ .bq-burger{outline:3px solid #fff;box-shadow:0 0 0 6px rgba(11,112,201,.85);outline-offset:2px}
 @media(max-width:860px){
   #view-landing .bq-links{display:none;position:absolute;left:0;right:0;top:70px;flex-direction:column;gap:2px;align-items:stretch;margin:0;padding:12px 22px 18px;background:linear-gradient(180deg,#5F27DD,#5A22D6);box-shadow:0 18px 30px rgba(40,15,90,.35);border-top:1px solid rgba(255,255,255,.12)}
   #view-landing .bq-navtoggle:checked ~ .bq-links{display:flex}
@@ -368,7 +378,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .stat-card .ic{width:36px;height:36px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center}
 #view-landing .stat-card .ic svg{width:20px;height:20px}
 #view-landing .stat-card .meta{display:flex;flex-direction:column;line-height:1.12}
-#view-landing .stat-card .meta .l{font-size:9.5px;font-weight:800;color:var(--faint);letter-spacing:.6px;text-transform:uppercase}
+#view-landing .stat-card .meta .l{font-size:10.5px;font-weight:800;color:var(--faint);letter-spacing:.6px;text-transform:uppercase}
 #view-landing .stat-card .meta .v{font-size:17px;font-weight:800;color:var(--ink)}
 #view-landing .stat-card .delta{margin-left:2px;font-size:12px;font-weight:800;padding:3px 7px;border-radius:999px;align-self:center}
 @media(max-width:480px){
@@ -420,7 +430,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .bull-thumb svg.bull{width:150px;filter:drop-shadow(0 10px 16px rgba(40,15,90,.14))}
 #view-landing .lvl-hex{position:absolute;left:12px;top:12px;width:40px;height:44px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 5px 10px rgba(30,40,80,.22))}
 #view-landing .lvl-hex svg{position:absolute;inset:0;width:100%;height:100%}
-#view-landing .lvl-hex .lab{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:7.5px;font-weight:800;letter-spacing:.6px;color:#fff;background:rgba(28,31,36,.55);padding:2px 6px;border-radius:999px;white-space:nowrap}
+#view-landing .lvl-hex .lab{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:800;letter-spacing:.6px;color:#fff;background:rgba(28,31,36,.55);padding:2px 6px;border-radius:999px;white-space:nowrap}
 #view-landing .lvl-hex b{position:relative;z-index:1;color:#fff;font-weight:800;font-size:16px;line-height:1}
 
 /* ===== Level badge: premium gem emblem (shared by every .hexbadge + landing .lvl-hex) ===== */
@@ -444,7 +454,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .mini-stat{flex:1;background:var(--card-alt);border-radius:12px;padding:9px 6px;text-align:center}
 #view-landing .mini-stat .ch{width:28px;height:28px;border-radius:10px;margin:0 auto 5px;display:flex;align-items:center;justify-content:center}
 #view-landing .mini-stat .ch svg{width:15px;height:15px}
-#view-landing .mini-stat .lab{font-size:9.5px;font-weight:700;color:var(--faint);letter-spacing:.4px}
+#view-landing .mini-stat .lab{font-size:10.5px;font-weight:700;color:var(--faint);letter-spacing:.4px}
 #view-landing .mini-stat .val{font-size:15px;font-weight:800;color:var(--ink)}
 #view-landing .lvl-row{display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;color:var(--body);margin-bottom:6px}
 #view-landing .lvl-bar{height:8px;background:var(--tint-neutral2);border-radius:999px;overflow:hidden}
@@ -526,7 +536,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .road-step p{font-size:13.5px;color:rgba(255,255,255,.90)}
 #view-landing .road-step .badge{display:inline-block;margin-top:8px;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:999px}
 #view-landing .road-step.done .road-dot{background:var(--violet)}
-#view-landing .road-step.done .badge{background:var(--green);color:#fff}
+#view-landing .road-step.done .badge{background:var(--green-strong,#2D8548);color:#fff}
 #view-landing .road-step.active .road-dot{background:var(--surface);box-shadow:0 0 0 5px rgba(77,166,245,.18),0 10px 24px rgba(40,15,90,.30)}
 #view-landing .road-step.active .badge{background:var(--cta);color:#fff}
 #view-landing .road-step.upcoming .road-dot{background:#6B31E6;box-shadow:inset 0 0 0 3px rgba(255,255,255,.55)}
@@ -549,7 +559,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .soc-btn{width:54px;height:54px;border-radius:16px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);transition:background .15s,transform .15s}
 #view-landing .soc-btn:hover{background:rgba(255,255,255,.28);transform:translateY(-3px)}
 #view-landing .soc-btn svg{width:24px;height:24px}
-#view-landing .soc-btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#view-landing .soc-btn:focus-visible{outline:3px solid #fff;box-shadow:0 0 0 6px rgba(11,112,201,.85);outline-offset:3px}
 @media(max-width:480px){#view-landing .bq-community h2{font-size:30px}#view-landing .herd .b{width:96px}}
 
 #view-landing .bq-foot{background:var(--surface);padding:56px 0 34px;border-top:1px solid var(--hairline)}
@@ -588,9 +598,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
     --body: #667080;
-    --faint: #6E7883;
+    --faint: #616B78;
     --hairline: #EDEFF3;
-    --green: #43C06A; --green-text:#2D8548;
+    --green: #43C06A; --green-text:#1B7A3E;
     --coral: #EE5B62;
     --speed: #7C5CE6;
     --amber: #F5B93C;
@@ -692,7 +702,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   .bq-home .ring .center { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
   .bq-home .ring .center b { font-size: 22px; font-weight: 900; color: #fff; line-height: 1; }
-  .bq-home .ring .center small { font-size: 8.5px; font-weight: 800; color: rgba(255,255,255,.90); letter-spacing: .5px; text-transform: uppercase; margin-top: 2px; }
+  .bq-home .ring .center small { font-size: 10px; font-weight: 800; color: rgba(255,255,255,.90); letter-spacing: .5px; text-transform: uppercase; margin-top: 2px; }
   .bq-home .band-info { flex: 1; min-width: 0; }
   .bq-home .band-info .season-k { font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: rgba(255,255,255,.90); }
   .bq-home .band-info .tier { display: flex; align-items: center; gap: 8px; margin: 3px 0 5px; }
@@ -717,7 +727,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   .bq-home .streak .pip.on { background: linear-gradient(180deg, #FFC24B, #F5A623); box-shadow: 0 4px 10px rgba(245,166,35,.4); color: #7a5104; }
   .bq-home .streak .pip.today { outline: 2px solid #fff; outline-offset: 2px; }
-  .bq-home .streak .pip small { position: absolute; bottom: 3px; font-size: 8px; font-weight: 800; }
+  .bq-home .streak .pip small { position: absolute; bottom: 3px; font-size: 10px; font-weight: 800; }
   .bq-home .streak .pip.on small { color: #7a5104; }
   .bq-home .streak .pip small.d { color: rgba(255,255,255,.90); }
   .bq-home .streak .lab { text-align: right; flex: none; }
@@ -816,7 +826,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-home .stat .tile { width: 26px; height: 26px; border-radius: 9px; display: grid; place-items: center; flex: none; }
   .bq-home .stat .sv { line-height: 1.05; }
   .bq-home .stat .sv b { display: block; font-size: 14px; font-weight: 900; color: var(--ink); }
-  .bq-home .stat .sv span { font-size: 9.5px; font-weight: 700; color: var(--faint); text-transform: uppercase; letter-spacing: .3px; }
+  .bq-home .stat .sv span { font-size: 10.5px; font-weight: 700; color: var(--faint); text-transform: uppercase; letter-spacing: .3px; }
   .bq-home .stat.pow .tile { background: var(--green); }
   .bq-home .stat.spd .tile { background: var(--speed); }
   .bq-home .stat.sta .tile { background: var(--coral); }
@@ -968,9 +978,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
     --body: #667080;
-    --faint: #6E7883;
+    --faint: #616B78;
     --hairline: #EDEFF3;
-    --green: #43C06A; --green-text:#2D8548;
+    --green: #43C06A; --green-text:#1B7A3E;
     --coral: #EE5B62;
     --speed: #7C5CE6;
     --amber: #F5B93C;
@@ -1219,7 +1229,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-arena .ring .center { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
   .bq-arena .ring .center b { font-size: 18px; font-weight: 900; color: var(--ink); line-height: 1; }
   .bq-arena .ringcol { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: none; }
-  .bq-arena .ringlab { font-size: 9px; font-weight: 800; color: var(--faint); letter-spacing: .4px; text-transform: uppercase; line-height: 1; }
+  .bq-arena .ringlab { font-size: 10px; font-weight: 800; color: var(--faint); letter-spacing: .4px; text-transform: uppercase; line-height: 1; }
   .bq-arena .rw-body { flex: 1; min-width: 0; }
   .bq-arena .rw-body .rw-h { font-size: 12px; font-weight: 800; color: var(--body); text-transform: uppercase; letter-spacing: .3px; }
   .bq-arena .payouts { display: flex; gap: 8px; margin: 8px 0 6px; }
@@ -1231,12 +1241,12 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-arena .stake-note { font-size: 11px; color: var(--body); font-weight: 600; }
   .bq-arena .stake-note b { color: var(--ink); }
   .bq-arena .seed {
-    display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: var(--faint); font-weight: 600;
+    display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: var(--faint); font-weight: 600;
     margin: 0 4px 8px; justify-content: center;
   }
   .bq-arena .seed code {
     font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-    background: var(--tint-neutral1); border-radius: 6px; padding: 1px 5px; color: var(--body); font-size: 9px;
+    background: var(--tint-neutral1); border-radius: 6px; padding: 1px 5px; color: var(--body); font-size: 10px;
   }
 
   .bq-arena .cta {
@@ -1281,9 +1291,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
     --body: #667080;
-    --faint: #6E7883;
+    --faint: #616B78;
     --hairline: #EDEFF3;
-    --green: #43C06A; --green-text:#2D8548;
+    --green: #43C06A; --green-text:#1B7A3E;
     --coral: #EE5B62;
     --speed: #7C5CE6;
     --amber: #F5B93C;
@@ -1651,9 +1661,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
     --body: #667080;
-    --faint: #6E7883;
+    --faint: #616B78;
     --hairline: #EDEFF3;
-    --green: #43C06A; --green-text:#2D8548;
+    --green: #43C06A; --green-text:#1B7A3E;
     --coral: #EE5B62;
     --speed: #7C5CE6;
     --amber: #F5B93C;
@@ -1802,14 +1812,14 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-sectors .tile.mine { border-color: var(--violet); }
   .bq-sectors .tile.mine[aria-pressed="true"] { box-shadow: 0 10px 24px rgba(107,49,230,.24); }
   .bq-sectors .tile .yours {
-    position: absolute; top: 0; right: 0; font-size: 9px; font-weight: 800; letter-spacing: .4px;
+    position: absolute; top: 0; right: 0; font-size: 10px; font-weight: 800; letter-spacing: .4px;
     color: #fff; background: var(--violet); padding: 3px 9px; border-radius: 0 16px 0 12px; text-transform: uppercase;
   }
   .bq-sectors .tile .t-top { display: flex; align-items: center; gap: 8px; }
   .bq-sectors .tile .t-icon { width: 34px; height: 34px; border-radius: 11px; flex: none; display: grid; place-items: center; }
   .bq-sectors .tile .t-state {
     display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; margin-left: auto;
-    border-radius: 999px; font-size: 9.5px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase;
+    border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase;
   }
   .bq-sectors .tile .t-state.held { background: var(--tint-green1); color: var(--ot-2f9752,#2f9752); }
   .bq-sectors .tile .t-state.contested { background: var(--tint-coral1); color: var(--ot-d23b43,#d23b43); }
@@ -1873,7 +1883,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-sectors .lb-row.r3 .lb-rank { background: #D9A066; }
   .bq-sectors .lb-name { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bq-sectors .lb-name .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
-  .bq-sectors .lb-name .tag { font-size: 9px; font-weight: 800; color: var(--violet); background: var(--tint-violet1); border-radius: 999px; padding: 2px 7px; letter-spacing: .3px; }
+  .bq-sectors .lb-name .tag { font-size: 10px; font-weight: 800; color: var(--violet); background: var(--tint-violet1); border-radius: 999px; padding: 2px 7px; letter-spacing: .3px; }
   .bq-sectors .lb-pct { font-size: 13px; font-weight: 900; color: var(--ink); font-variant-numeric: tabular-nums; flex: none; }
 
   .bq-sectors .d-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px 16px 16px; }
@@ -1962,9 +1972,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
     --body: #667080;
-    --faint: #6E7883;
+    --faint: #616B78;
     --hairline: #EDEFF3;
-    --green: #43C06A; --green-text:#2D8548;
+    --green: #43C06A; --green-text:#1B7A3E;
     --coral: #EE5B62;
     --speed: #7C5CE6;
     --amber: #F5B93C;
@@ -2152,7 +2162,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     position: absolute; top: 7px; left: 7px; width: 26px; height: 26px;
     display: grid; place-items: center; filter: drop-shadow(0 2px 3px rgba(20,10,50,.3));
   }
-  .bq-market .stagebox .lvl span { position: absolute; color: #fff; font-weight: 800; font-size: 9.5px; line-height: 1; }
+  .bq-market .stagebox .lvl span { position: absolute; color: #fff; font-weight: 800; font-size: 10.5px; line-height: 1; }
   .bq-market .stagebox .energy {
     position: absolute; top: 8px; right: 8px;
     display: inline-flex; align-items: center; gap: 3px; height: 20px; padding: 0 8px 0 5px;
@@ -2277,9 +2287,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
     --body: #667080;
-    --faint: #6E7883;
+    --faint: #616B78;
     --hairline: #EDEFF3;
-    --green: #43C06A; --green-text:#2D8548;
+    --green: #43C06A; --green-text:#1B7A3E;
     --coral: #EE5B62;
     --speed: #7C5CE6;
     --amber: #F5B93C;
@@ -2534,9 +2544,9 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     --card-alt: #F4F6F9;
     --ink: #1C1F24;
     --body: #667080;
-    --faint: #6E7883;
+    --faint: #616B78;
     --hairline: #EDEFF3;
-    --green: #43C06A; --green-text:#2D8548;
+    --green: #43C06A; --green-text:#1B7A3E;
     --coral: #EE5B62;
     --speed: #7C5CE6;
     --amber: #F5B93C;
@@ -2676,7 +2686,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   .bq-spin .peek.left .rcard  { right: -30px; top: 6px; transform: rotate(7deg); }
   .bq-spin .peek.right .rcard { left: -30px; top: 2px; transform: rotate(-7deg); }
   .bq-spin .peek .rcard b { font-size: 12px; font-weight: 900; color: var(--ink); line-height: 1; }
-  .bq-spin .peek .rcard small { font-size: 7.5px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase; color: var(--faint); }
+  .bq-spin .peek .rcard small { font-size: 10px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase; color: var(--faint); }
 
   /* ---------- spin controls ---------- */
   .bq-spin .controls { position: relative; z-index: 3; margin: 20px 6px 2px; }
@@ -3338,7 +3348,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .tm-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:17px}
 #view-landing .tm-av{position:relative;flex:none;width:64px;height:64px;border-radius:16px;display:grid;place-items:center;color:#fff;font-size:26px;font-weight:800;background:linear-gradient(135deg,var(--a,#7C5CE6),var(--b,#4DA6F5));box-shadow:0 8px 18px rgba(90,60,220,.30);overflow:visible}
 #view-landing .tm-av img{width:100%;height:100%;border-radius:16px;object-fit:cover;display:block}
-#view-landing .tm-check{position:absolute;right:-3px;bottom:-3px;width:23px;height:23px;border-radius:50%;background:var(--green);border:2.5px solid #fff;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:900}
+#view-landing .tm-check{position:absolute;right:-3px;bottom:-3px;width:23px;height:23px;border-radius:50%;background:var(--green-strong,#2D8548);border:2.5px solid #fff;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:900}
 #view-landing .tm-id h3{font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.4px}
 #view-landing .tm-role{font-size:13.5px;color:var(--body);font-weight:600;margin-top:2px}
 #view-landing .tm-official{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:11px;font-weight:800;color:var(--ot-1f9b54,#1F9B54);background:var(--tint-green2);padding:3px 9px 3px 7px;border-radius:999px;letter-spacing:.2px}
@@ -4559,7 +4569,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 <!-- ================= VIEW: AIRDROP ================= -->
 <div class="bq-view" id="view-airdrop" hidden>
 <style id="bq-air-css">
-#view-airdrop{--v:#6B31E6;--ink:#1C1F24;--gold:#F0B429;--faint:#6E7883;font-family:inherit;color:var(--ink);background:var(--app-bg);min-height:100vh}
+#view-airdrop{--v:#6B31E6;--ink:#1C1F24;--gold:#F0B429;--faint:#616B78;font-family:inherit;color:var(--ink);background:var(--app-bg);min-height:100vh}
 #view-airdrop *{box-sizing:border-box}
 #view-airdrop .bqair{max-width:520px;margin:0 auto;padding:0 0 96px}
 #view-airdrop .bqair-hero{background:linear-gradient(160deg,#7A3BF0,#6B31E6 60%,#5B27D6);color:#fff;padding:18px 20px 26px;border-radius:0 0 26px 26px;position:relative}
@@ -4653,7 +4663,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 <!-- ================= VIEW: QUESTS ================= -->
 <div class="bq-view" id="view-quests" hidden>
 <style id="bq-qst-css">
-#view-quests{--v:#6B31E6;--ink:#1C1F24;--faint:#6E7883;font-family:inherit;color:var(--ink);background:var(--app-bg);min-height:100vh}
+#view-quests{--v:#6B31E6;--ink:#1C1F24;--faint:#616B78;font-family:inherit;color:var(--ink);background:var(--app-bg);min-height:100vh}
 #view-quests *{box-sizing:border-box}
 #view-quests .qst{max-width:520px;margin:0 auto;padding:0 0 96px}
 #view-quests .qst-hero{background:linear-gradient(160deg,#7A3BF0,#6B31E6 60%,#5B27D6);color:#fff;padding:18px 20px 24px;border-radius:0 0 26px 26px;position:relative}
@@ -6454,7 +6464,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           '.bq-mhint span{display:block;font-size:11.5px;color:var(--body2,#5a6273);line-height:1.45}'+
           '.bq-mhint button{margin-top:8px;border:0;background:var(--tint-violet1,#F1ECFD);color:var(--ot-6b31e6,#6B31E6);font-weight:800;font-size:12px;padding:7px 12px;border-radius:9px;cursor:pointer;font-family:inherit;width:100%}'+
           '.bq-acct .av img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}'+
-          '.bq-acct .nbadge{position:absolute;top:-2px;right:-2px;min-width:15px;height:15px;background:#E5484D;color:#fff;font-size:9px;font-weight:800;line-height:15px;border-radius:8px;text-align:center;padding:0 3px;box-shadow:0 0 0 2px #fff}'+
+          '.bq-acct .nbadge{position:absolute;top:-2px;right:-2px;min-width:15px;height:15px;background:#E5484D;color:#fff;font-size:10px;font-weight:800;line-height:15px;border-radius:8px;text-align:center;padding:0 3px;box-shadow:0 0 0 2px #fff}'+
           '.bq-acctmenu{position:fixed;top:54px;right:14px;z-index:61;width:min(240px,calc(100vw - 28px));background:var(--surface);border:1px solid rgba(20,16,40,.08);border-radius:16px;box-shadow:0 16px 44px rgba(20,16,40,.24);padding:6px;font-family:inherit;display:none;transform-origin:top right}'+
           '.bq-acctmenu.on{display:block;animation:bqacm .12s ease-out}@keyframes bqacm{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}'+
           '.bq-acctmenu .hd{display:flex;align-items:center;gap:9px;padding:8px 9px 9px;min-width:0}'+
@@ -7040,7 +7050,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         ? '<span style="flex:none;width:24px;height:24px;border-radius:50%;background:#43C06A;display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
         : '<span style="flex:none;width:24px;height:24px;border-radius:50%;border:2px solid #D6CEF0"></span>';
       var right;
-      if(x.claimable){ right='<button type="button" class="bqclaim" data-key="'+x.claimKey+'" style="margin-left:auto;flex:none;border:0;background:#43C06A;color:#fff;font-size:12px;font-weight:800;padding:7px 12px;border-radius:11px;cursor:pointer;font-family:inherit">Claim +'+x.reward+'</button>'; }
+      if(x.claimable){ right='<button type="button" class="bqclaim" data-key="'+x.claimKey+'" style="margin-left:auto;flex:none;border:0;background:#2D8548;color:#fff;font-size:12px;font-weight:800;padding:7px 12px;border-radius:11px;cursor:pointer;font-family:inherit">Claim +'+x.reward+'</button>'; }
       else if(x.claimed){ right='<span style="margin-left:auto;flex:none;font-size:11.5px;font-weight:800;color:#2FA657">Claimed</span>'; }
       else if(x.reward){ right='<span style="font-size:11.5px;font-weight:800;color:var(--ot-6b31e6,#6B31E6);background:var(--tint-violet1);padding:2px 8px;border-radius:9px;margin-left:auto;flex:none">+'+x.reward+' GRIT</span>'; }
       else { right=''; }
@@ -7084,7 +7094,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     el.innerHTML=list.map(function(x){
       var claimed=claims.indexOf(x.key)>=0, pct=Math.max(6,Math.round(x.cur/x.goal*100)), right, tag, attr;
       if(claimed){ right='<span class="reward" style="color:#2FA657;font-weight:800"><i class="pico" style="--m:url(assets/icons/ui_check.png);width:13px;height:13px;background:#2FA657;vertical-align:-2px"></i> Claimed</span>'; tag='div'; attr=''; }
-      else if(x.done){ right='<button type="button" class="bqclaim" data-key="'+x.key+'" style="border:0;background:#43C06A;color:#fff;font-size:12px;font-weight:800;padding:8px 13px;border-radius:12px;cursor:pointer;font-family:inherit">Claim +'+x.reward+'</button>'; tag='div'; attr=''; }
+      else if(x.done){ right='<button type="button" class="bqclaim" data-key="'+x.key+'" style="border:0;background:#2D8548;color:#fff;font-size:12px;font-weight:800;padding:8px 13px;border-radius:12px;cursor:pointer;font-family:inherit">Claim +'+x.reward+'</button>'; tag='div'; attr=''; }
       else { right='<span class="reward"><img src="assets/icons/gem_grit.png" width="15" height="15" alt="" style="vertical-align:middle">+'+x.reward+'</span>'; tag='a'; attr=' href="#" data-bqgo="'+x.go+'"'; }
       return '<'+tag+' class="quest"'+attr+' style="text-decoration:none;color:inherit">'+
         '<span class="qi" style="background:'+x.color+'" aria-hidden="true"><i class="pico" style="--m:url(assets/icons/'+x.icon+'.png);width:18px;height:18px;background:var(--surface)"></i></span>'+
@@ -8394,7 +8404,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       '.bqmkt-seg button.on .n{background:var(--surface);color:var(--title)}'+
       '.bqmkt-pm-sell{margin:0 0 12px;width:100%;border:1.5px solid #D5CCF2;background:var(--tint-violet1);color:var(--ot-6b31e6,#6B31E6);font-weight:800;font-size:13.5px;padding:12px;border-radius:13px;cursor:pointer;font-family:inherit}'+
       '.bqmkt-pm-sell:active{transform:scale(.98)}'+
-      '.bqmkt-you{position:absolute;top:8px;left:8px;background:#20143A;color:#fff;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;z-index:2;letter-spacing:.3px}'+
+      '.bqmkt-you{position:absolute;top:8px;left:8px;background:#20143A;color:#fff;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px;z-index:2;letter-spacing:.3px}'+
       '.bqmkt-pm-empty{background:var(--tint-violet1);border-radius:16px;padding:20px 16px;text-align:center;color:var(--body2);font-size:13px;font-weight:600;line-height:1.55}';
     document.head.appendChild(st);
     sheet.innerHTML=
@@ -8512,7 +8522,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       '#bqHelpBtn{position:fixed;left:14px;bottom:134px;z-index:9998;width:40px;height:40px;border-radius:50%;border:1px solid rgba(20,16,40,.08);background:var(--surface);color:var(--ot-6b31e6,#6B31E6);font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(20,16,40,.16);font-family:inherit;display:grid;place-items:center}',
       '#bqHelpBtn:hover{background:var(--tint-violet1);transform:translateY(-1px)}#bqHelpBtn:active{transform:translateY(0)}',
       '@media(max-width:520px){#bqHelpBtn{bottom:128px}}',
-      '.bqhelp{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:var(--tint-violet2);color:var(--ot-6b31e6,#6B31E6);font-size:11px;font-weight:800;cursor:pointer;vertical-align:middle;margin-left:6px;border:0;font-family:inherit;flex:none;line-height:1}'
+      '.bqhelp{position:relative;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--tint-violet2);color:var(--ot-6b31e6,#6B31E6);font-size:12px;font-weight:800;cursor:pointer;vertical-align:middle;margin-left:6px;border:0;font-family:inherit;flex:none;line-height:1}'+
+      /* the dot stays small so it does not shout, but the hit area is a proper 44px */
+      '.bqhelp::after{content:"";position:absolute;left:50%;top:50%;width:44px;height:44px;transform:translate(-50%,-50%)}'
     ].join(''); document.head.appendChild(st);
     var b=document.createElement('button'); b.id='bqHelpBtn'; b.type='button'; b.setAttribute('aria-label','How to play'); b.textContent='?';
     b.addEventListener('click', showHowTo); document.body.appendChild(b);
