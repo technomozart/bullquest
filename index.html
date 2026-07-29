@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785341802";try{console.log("BullQuest build 1785341802");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785343234";try{console.log("BullQuest build 1785343234");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4696,6 +4696,13 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
    with a link underline and (being inline) ignored the .qact>.qbtn width. Make it match the buttons. */
 #view-quests .qact > a.qbtn{display:block;text-align:center;text-decoration:none;box-sizing:border-box}
 #view-quests .qpend{display:inline-flex;align-items:center;justify-content:center;gap:5px;background:var(--surface-2);color:var(--body);font-weight:800;font-size:12.5px;padding:9px 13px;border-radius:11px}
+#view-quests .qsub-msg{display:block;font-size:12px;font-weight:700;line-height:1.45;margin-top:7px}
+#view-quests .qsub-msg.bad{color:var(--ot-d92d20,#D92D20)}
+#view-quests .qsub-msg.good{color:var(--ot-12a150,#12A150)}
+#view-quests .qsignin{margin:0 0 14px;padding:14px 16px;border-radius:14px;background:var(--tint-violet,rgba(107,49,230,.08));border:1.5px solid rgba(107,49,230,.22)}
+#view-quests .qsignin b{display:block;font-size:14.5px;margin-bottom:3px}
+#view-quests .qsignin span{display:block;font-size:12.5px;color:var(--body);line-height:1.5;margin-bottom:10px}
+#view-quests .qsignin button{border:0;border-radius:11px;background:#6B31E6;color:#fff;font-weight:800;font-size:13.5px;padding:11px 16px;cursor:pointer;width:100%}
 </style>
   <div class="qst">
     <header class="qst-hero">
@@ -9061,6 +9068,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var total=document.getElementById('qstTotal'); if(total) total.textContent=(Number(st.total_earned)||0).toLocaleString()+' GRIT earned';
       var list=document.getElementById('qstList'); if(!list) return;
       var claimed=st.claimed||[]; var subs=st.submissions||{}; list.innerHTML='';
+      /* quests_state answers for signed-out visitors too, so the list used to render with live
+         action buttons that could never credit anyone: players posted on X, pasted the link and got
+         a blank "could not submit" every time. Say so up front instead. */
+      var out=!!st.logged_out;
+      if(out){
+        var so=document.createElement('div'); so.className='qsignin';
+        so.innerHTML='<b>Sign in to earn from quests</b><span>These rewards attach to your account, so we need to know who to pay. It is free and takes a few seconds.</span><button type="button">Sign in and start earning</button>';
+        so.querySelector('button').addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-onboard'); });
+        list.appendChild(so);
+      }
       var DONE='<span class="qdone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4 10-11"/></svg>Done</span>';
       (st.quests||[]).forEach(function(q){
         var done=claimed.indexOf(q.slug)>=0;
@@ -9070,14 +9087,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         var isSubmit=(q.kind==='submit'); var sub=subs[q.slug];
         var HLBL={x_follow:'Follow',x_repost:'Repost',x_reply:'Reply',tg_boost:'Boost',discord_react:'React'};
         var actHtml, submitRow='';
-        if(done){ actHtml=DONE; }
+        if(out){ actHtml='<button type="button" class="qbtn x qsignin-go">Sign in</button>'; }
+        else if(done){ actHtml=DONE; }
         else if(isSubmit){
           actHtml = (sub==='pending')
             ? '<span class="qpend">In review</span>'
             : '<a class="qbtn x" href="'+esc(composeUrl())+'" target="_blank" rel="noopener noreferrer">Post</a>';
           if(sub!=='pending'){
             submitRow='<div class="qsubmit">'+(sub==='rejected'?'<span class="qsub-note">Not accepted last time. Follow the steps and submit again.</span>':'')+
-              '<div class="qsub-row"><input type="url" class="qsub-in" placeholder="Paste your tweet link"><button type="button" class="qbtn x qsub-go">Submit</button></div></div>';
+              '<div class="qsub-row"><input type="url" class="qsub-in" placeholder="Paste your tweet link"><button type="button" class="qbtn x qsub-go">Submit</button></div>'+
+              '<span class="qsub-msg" hidden></span></div>';
           }
         }
         else { actHtml = honor ? '<button type="button" class="qbtn '+esc(q.platform)+'" data-honor="1">'+esc(HLBL[q.slug]||'Open')+'</button>' : '<span id="'+actId+'"></span>'; }
@@ -9086,10 +9105,17 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           '<div class="qbody"><b>'+esc(q.title)+'</b><span>'+esc(q.description)+'</span><div class="qreward">+'+q.reward+' GRIT</div></div>'+
           '<div class="qact">'+actHtml+'</div>'+submitRow;
         list.appendChild(card);
-        if(!done){
+        if(out){
+          var sg=card.querySelector('.qsignin-go');
+          if(sg) sg.addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-onboard'); });
+        }
+        else if(!done){
           if(isSubmit){
-            var go=card.querySelector('.qsub-go'), inp=card.querySelector('.qsub-in');
-            if(go) go.addEventListener('click', function(){ submitQuest(q.slug, inp, go); });
+            var go=card.querySelector('.qsub-go'), inp=card.querySelector('.qsub-in'), msg=card.querySelector('.qsub-msg');
+            if(go){
+              go.addEventListener('click', function(){ submitQuest(q.slug, inp, go, msg); });
+              if(inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submitQuest(q.slug, inp, go, msg); } });
+            }
           }
           else if(honor){ var hb=card.querySelector('[data-honor]'); if(hb) hb.addEventListener('click', function(){ claimHonor(q.slug,q.url); }); }
           else if(q.platform==='discord'){ if(q.slug==='discord_react'){ mountDiscordReact(card.querySelector('#'+actId), q.url); } else { mountDiscord(card.querySelector('#'+actId)); } }
@@ -9101,16 +9127,48 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var t="I'm playing @BullQuestSol, the skill based bull battler on Solana. Free to play and you earn. Tag 3 friends and come battle. #BullQuest #Solana #PumpFun";
       return 'https://twitter.com/intent/tweet?text='+encodeURIComponent(t);
     }
-    function submitQuest(slug, inp, btn){
-      var url=(inp&&inp.value?inp.value:'').trim();
-      if(!/^https?:\/\/(www\.)?(x\.com|twitter\.com)\/[^\/]+\/status\/\d+/i.test(url)){ if(window.bqToast) window.bqToast('Paste the full tweet link (x.com/.../status/...)'); return; }
-      if(!sb) return;
+    /* The link shapes people actually paste: no scheme, mobile./m. subdomains, /i/web/status/,
+       mirrors like vxtwitter, tracking params, text around the link, and the invisible bidi
+       characters a phone adds when you copy. Every one of those is a real tweet link and the old
+       check refused all of them, which is why players kept "submitting" and nothing happened. */
+    function tweetUrl(raw){
+      var s=String(raw||'').replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g,'').replace(/\u00A0/g,' ').trim();
+      var m=/(?:https?:\/\/)?(?:[a-z0-9-]+\.)*(?:x|twitter|vxtwitter|fxtwitter|fixupx)\.com\/([^\/\s?#]+)(?:\/[^\/\s?#]+)*?\/status(?:es)?\/(\d+)/i.exec(s);
+      if(!m) return null;
+      var who=m[1].toLowerCase();
+      return (who==='i'||who==='web'||who==='intent') ? 'https://x.com/i/status/'+m[2] : 'https://x.com/'+m[1]+'/status/'+m[2];
+    }
+    function submitMsg(el, text, kind){
+      if(!el){ if(window.bqToast) window.bqToast(text); return; }
+      el.textContent=text; el.className='qsub-msg '+(kind||'bad'); el.hidden=false;
+    }
+    function submitQuest(slug, inp, btn, msg){
+      var raw=(inp&&inp.value?inp.value:'').trim();
+      if(!raw){ submitMsg(msg,'Paste the link to your post first.'); return; }
+      var url=tweetUrl(raw);
+      if(!url){
+        submitMsg(msg, /t\.co\//i.test(raw)
+          ? 'That is a shortened t.co link. Open your post on X, tap Share, then Copy link, and paste that.'
+          : 'That does not look like a post link. Open your post on X, tap Share, then Copy link. It should end in /status/ and a long number.');
+        return;
+      }
+      if(!sb){ submitMsg(msg,'Still loading, give it a second and try again.'); return; }
       if(btn){ btn.disabled=true; btn.textContent='Sending…'; }
+      function fail(text){ submitMsg(msg,text); if(btn){ btn.disabled=false; btn.textContent='Submit'; } }
       sb.rpc('quest_submit',{p_slug:slug,p_url:url}).then(function(r){
-        var d=r&&r.data;
-        if(d&&d.ok){ if(window.bqToast) window.bqToast(d.already?'Already approved':'Submitted, we will review it soon'); window.bqRenderQuests(); }
-        else { if(window.bqToast) window.bqToast(d&&d.error==='bad-link'?'That does not look like a tweet link':'Could not submit, try again'); if(btn){ btn.disabled=false; btn.textContent='Submit'; } }
-      }).catch(function(){ if(window.bqToast) window.bqToast('Network error, try again'); if(btn){ btn.disabled=false; btn.textContent='Submit'; } });
+        var d=r&&r.data, err=(r&&r.error)||null;
+        if(d&&d.ok){
+          submitMsg(msg, d.already?'Already approved.':'Got it. We will review it and the GRIT lands after that.', 'good');
+          if(window.bqToast) window.bqToast(d.already?'Already approved':'Submitted, we will review it soon');
+          window.bqRenderQuests();
+          return;
+        }
+        var e=(d&&d.error)||'';
+        if(e==='not signed in'){ fail('You are signed out, so we cannot credit anyone. Sign in, then paste the link again.'); return; }
+        if(e==='bad-link'){ fail('That does not look like a post link. Open your post on X, tap Share, then Copy link.'); return; }
+        if(e==='unknown quest'){ fail('This quest is closed right now.'); return; }
+        fail(err&&err.message ? ('Could not submit: '+err.message) : 'Could not submit, please try again.');
+      }).catch(function(){ fail('Network error, check your connection and try again.'); });
     }
     function startDiscord(btn){
       if(!sb){ return; }
