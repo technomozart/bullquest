@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785462855";try{console.log("BullQuest build 1785462855");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785463000";try{console.log("BullQuest build 1785463000");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -7239,13 +7239,35 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         right+'</'+tag+'>';
     }).join('');
   }
+  /* Repaint the day-scoped UI from the server. The goals, the streak and the free spin are all
+     keyed to the server's date, so an open tab drifts out of date at midnight UTC. */
+  function bqRefreshDay(){
+    if(!sb) return;
+    sb.rpc('get_state').then(function(g){ if(g&&g.data) applyLiveState(g.data); }).catch(function(){});
+  }
+  window.bqRefreshDay = bqRefreshDay;
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) bqRefreshDay(); });
+  (function scheduleMidnight(){
+    var now=new Date();
+    var next=Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+1, 0, 0, 20);
+    var ms=next-now.getTime();
+    if(ms>0 && ms<86400000) setTimeout(function(){ bqRefreshDay(); scheduleMidnight(); }, ms);
+  })();
   document.addEventListener('click', function(e){
     var b=e.target.closest&&e.target.closest('.bqclaim'); if(!b||!sb) return;
     e.preventDefault(); var key=b.getAttribute('data-key'); b.disabled=true; var old=b.textContent; b.textContent='...';
     sb.rpc('claim_quest',{p_key:key}).then(function(r){
       var d=r&&r.data;
-      if(d&&d.ok){ setGrit(d.grit); if(window.showToast) showToast('+'+d.reward+' GRIT claimed'); sb.rpc('get_state').then(function(g){ if(g&&g.data) applyLiveState(g.data); }); }
-      else { b.disabled=false; b.textContent=old; if(window.showToast) showToast(d&&d.error==='already-claimed'?'Already claimed':'Not ready yet'); }
+      if(d&&d.ok){ setGrit(d.grit); if(window.showToast) showToast('+'+d.reward+' GRIT claimed'); bqRefreshDay(); return; }
+      b.disabled=false; b.textContent=old;
+      var err=(d&&d.error)||'';
+      /* The daily goals are a snapshot taken when the page loaded. Leave the tab open across
+         midnight UTC and the server has rolled to a new day while the screen still shows
+         yesterday: the button says Ready and the claim is correctly refused. Say what actually
+         happened and repaint, instead of the meaningless "Not ready yet". */
+      if(err==='already-claimed'){ if(window.showToast) showToast('Already claimed'); bqRefreshDay(); }
+      else if(err==='not-complete'){ if(window.showToast) showToast('A new day just started, your goals have reset'); bqRefreshDay(); }
+      else if(window.showToast) showToast('Could not claim, give it another go');
     }).catch(function(){ b.disabled=false; b.textContent=old; });
   });
   renderQuests({});
