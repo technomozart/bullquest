@@ -346,6 +346,18 @@
              kpi('Orders', t.orders||0)+
              kpi('Paying players', t.buyers||0)+
            '</div>';
+        /* Comped grants are shown, never added in. Two founder comps were briefly counted as
+           0.3 SOL of income here, because granting one meant passing the full price in lamports. */
+        var cp=d.comped||{};
+        if(cp.count){
+          h+='<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(93,63,211,.06);'
+            +'border:1px solid rgba(93,63,211,.16);border-radius:11px;padding:10px 12px;margin:0 0 12px">'
+            +'<b style="font-size:13.5px">'+cp.count+' comped grant'+(cp.count>1?'s':'')+'</b>'
+            +'<span class="hint" style="margin:0">given free, '+(cp.list_value_sol||0)+' SOL at list price. Not in any figure above.</span>'
+            +'<span class="hint" style="margin:0 0 0 auto">'+(cp.rows||[]).map(function(r){
+                 return esc(String(r.who))+' ('+esc(String(r.kind))+')'; }).join(', ')+'</span>'
+          +'</div>';
+        }
         var bk=d.by_kind||[];
         if(bk.length){
           h+='<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:13px">'+
