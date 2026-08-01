@@ -231,10 +231,51 @@
           +'</div>';
       }).join('');
       el.innerHTML='<div class="panel"><h3>Tweet submissions ('+rows.length+')</h3>'
+        +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px">'
+          +'<button id="subCheckDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Check all (preview)</button>'
+          +'<button id="subCheckRun" style="cursor:pointer;background:#12B76A;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Check all and apply</button>'
+          +'<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700"><input type="checkbox" id="subFriends"> require 3 friends tagged</label>'
+        +'</div>'
+        +'<div id="subAuto" class="hint" style="margin-bottom:8px"></div>'
         +'<p class="hint">Open each tweet and check it explains why they like BullQuest, tags 3 friends, and includes #BullQuest #Solana #PumpFun + @BullQuestSol. Approve pays the player the quest reward; Reject lets them try again.</p>'
         +cards+'<div id="subMsg" style="font-size:13px;font-weight:600;margin-top:10px"></div></div>';
-      wireSubmissions();
+      wireSubmissions(); wireBulkCheck();
     }, function(){ el.innerHTML='<div class="panel"><h3>Tweet submissions</h3><p class="hint" style="color:#E5484D">Failed to load.</p></div>'; });
+  }
+  function wireBulkCheck(){
+    function run(dry){
+      var out=document.getElementById('subAuto');
+      var a=document.getElementById('subCheckDry'), b=document.getElementById('subCheckRun');
+      var friends=document.getElementById('subFriends');
+      if(a) a.setAttribute('disabled',''); if(b) b.setAttribute('disabled','');
+      if(out){ out.style.color=''; out.textContent = dry ? 'Checking every pending tweet, no changes yet...' : 'Checking and applying, this can take a minute...'; }
+      sb.auth.getSession().then(function(sess){
+        var tok=(sess&&sess.data&&sess.data.session&&sess.data.session.access_token)||'';
+        return fetch(URL_+'/functions/v1/verify-tweets',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},
+          body:JSON.stringify({dryRun:dry, requireFriends: !!(friends&&friends.checked)})
+        });
+      }).then(function(r){ return r.json(); }).then(function(j){
+        if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
+        if(!out) return;
+        if(j.error){ out.style.color='#E5484D'; out.textContent='Failed: '+(j.detail||j.error); return; }
+        var lines=Object.keys(j.breakdown||{}).map(function(k){ return j.breakdown[k]+' '+k; }).join(' | ');
+        out.style.color='#12B76A';
+        out.textContent=(j.dryRun?'PREVIEW, nothing changed. ':'Applied. ')+
+          'checked '+j.checked+', approve '+j.approved+', reject '+j.rejected+', left pending '+j.stillPending+
+          (lines?('  ('+lines+')'):'');
+        if(!j.dryRun) setTimeout(loadSubmissions, 1200);
+      }).catch(function(e){
+        if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
+        if(out){ out.style.color='#E5484D'; out.textContent='Failed: '+e.message; }
+      });
+    }
+    var d=document.getElementById('subCheckDry'), rn=document.getElementById('subCheckRun');
+    if(d) d.addEventListener('click', function(){ run(true); });
+    if(rn) rn.addEventListener('click', function(){
+      if(confirm('Approve and reject every pending submission automatically? Approved players get paid immediately.')) run(false);
+    });
   }
   function wireSubmissions(){
     function review(id, approve, btn){
