@@ -442,13 +442,43 @@
     html+=notifyPanel();   // admin: send news / personal notifications to players
     html+='<div id="subsPanel"></div>';   // manual review of tweet submissions
     // KPIs
+    /* Real first. The raw totals counted a bot farm as growth on 2026-08-01, so the honest number
+       has to be the one your eye lands on. */
     html+='<div class="grid">'+
-      kpi('Total users', d.users_total)+
+      kpi('Real users', d.real_users, 'excludes banned')+
+      kpi('Real signups today', d.real_signups_today)+
       kpi('Active today', d.dau_today, 'unique opens')+
+      kpi('Played today', d.played_today, 'actually earned GRIT')+
       kpi('Avg daily (7d)', d.dau_7d_avg)+
-      kpi('Signups today', d.signups_today)+
-      kpi('Signups (7d)', d.signups_7d)+
     '</div>';
+    html+='<div class="grid">'+
+      kpi('Banned total', d.banned_total, 'multi-account')+
+      kpi('Banned today', d.banned_today)+
+      kpi('Signed up, never played', d.never_played)+
+      kpi('Flags awaiting you', d.flags_awaiting, (d.flags_appealed||0)+' appealed')+
+      kpi('Tweets pending', d.submissions_pending)+
+    '</div>';
+    html+='<div class="grid">'+
+      kpi('Total incl. banned', d.users_total, 'raw signups')+
+      kpi('Signups today (raw)', d.signups_today)+
+      kpi('Signups 7d (raw)', d.signups_7d)+
+      kpi('Referral GRIT pending', d.referral_grit_pending, 'not yet paid')+
+      kpi('Bulls left in pool', d.bulls_free)+
+    '</div>';
+    if(d.top_referrers_24h && d.top_referrers_24h.length){
+      html+='<div class="panel"><h3>Top referrers, last 24h</h3>'+
+        '<p class="hint">A single link bringing in hundreds of accounts is the shape of a farm, not word of mouth. The banned column tells you which.</p>';
+      d.top_referrers_24h.forEach(function(r){
+        var bad = Number(r.banned_share)||0, n = Number(r.brought_in)||0;
+        var pct = n ? Math.round(bad*100/n) : 0;
+        html+='<div style="display:flex;gap:10px;align-items:center;border-top:1px solid rgba(20,16,40,.08);padding:9px 2px">'+
+          '<b style="flex:1">'+esc(String(r.who))+'</b>'+
+          '<span style="font-weight:800">'+n+' invited</span>'+
+          '<span style="font-weight:800;color:'+(pct>=50?'#E5484D':(pct>0?'#E0A100':'#12B76A'))+'">'+bad+' banned ('+pct+'%)</span>'+
+        '</div>';
+      });
+      html+='</div>';
+    }
 
     // Errors (prominent - if something's broken you see it right away)
     html+=errPanel(d.recent_errors);
