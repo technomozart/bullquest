@@ -347,29 +347,26 @@
   }
 
   function wireDupSweep(){
+    /* Calls the farm_ban RPC, not the edge function. The edge function read users and device
+       signals through PostgREST, which caps a response at 1000 rows, so it banned 649 while 1065
+       accounts sat on the very domains it was told to catch. SQL sees the whole table. */
     function run(dry){
       var out=document.getElementById('dupSweepOut');
       var a=document.getElementById('dupSweepDry'), b=document.getElementById('dupSweepRun');
-      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||6;
       if(a) a.setAttribute('disabled',''); if(b) b.setAttribute('disabled','');
-      if(out){ out.style.color=''; out.textContent = dry ? 'Re-checking every account, no changes yet...' : 'Sweeping and banning...'; }
-      sb.auth.getSession().then(function(sess){
-        var tok=(sess&&sess.data&&sess.data.session&&sess.data.session.access_token)||'';
-        return fetch(URL_+'/functions/v1/verify-duplicates',{
-          method:'POST',
-          headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},
-          body:JSON.stringify({dryRun:dry, hardMin:min})
-        });
-      }).then(function(r){ return r.json(); }).then(function(j){
+      if(out){ out.style.color=''; out.textContent = dry ? 'Scanning every account...' : 'Banning and clawing back...'; }
+      sb.rpc('farm_ban', { p_dry: !!dry }).then(function(r){
         if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
         if(!out) return;
-        if(j.error){ out.style.color='#E5484D'; out.textContent='Failed: '+(j.detail||j.error); return; }
-        var lines=Object.keys(j.breakdown||{}).map(function(k){ return j.breakdown[k]+' '+k; }).join(' | ');
+        var j = r && r.data;
+        if(r && r.error){ out.style.color='#E5484D'; out.textContent='Failed: '+r.error.message; return; }
+        if(!j || j.error){ out.style.color='#E5484D'; out.textContent='Failed: '+((j&&j.error)||'no result'); return; }
         out.style.color='#12B76A';
-        out.textContent=(j.dryRun?'PREVIEW, nothing changed. ':'Done. ')+
-          'would ban '+j.banned+', bulls back '+j.bullsReturned+', left for you '+j.leftForHumanReview+
-          ', appeals skipped '+j.appealsSkipped+(lines?('  ('+lines+')'):'');
-        if(!j.dryRun) setTimeout(loadDuplicates, 1200);
+        out.textContent=(j.dry_run?'PREVIEW, nothing changed. ':'Done. ')+
+          j.total_banned+' accounts ('+j.bots+' bots + '+j.bundlers+' bundlers), '+
+          j.bulls_returned+' bulls back, '+j.grit_removed+' GRIT removed, '+
+          'clawback '+j.clawback_grit+' GRIT from '+j.clawback_accounts+' referrers.';
+        if(!j.dry_run) setTimeout(function(){ loadDuplicates(); load(); }, 1500);
       }).catch(function(e){
         if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
         if(out){ out.style.color='#E5484D'; out.textContent='Failed: '+e.message; }
@@ -378,8 +375,9 @@
     var d=document.getElementById('dupSweepDry'), rn=document.getElementById('dupSweepRun');
     if(d) d.addEventListener('click', function(){ run(true); });
     if(rn) rn.addEventListener('click', function(){
-      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||6;
-      if(confirm('Ban every account in a cluster of '+min+' or more? Their bulls go back to the pool and they lose the airdrop. This is reversible.')) run(false);
+      if(confirm('Ban every detected farm account and bundler, return their bulls, strip their GRIT, and reverse referral payouts made for them?
+
+Run the preview first if you have not. This is reversible.')) run(false);
     });
   }
   // ---- Duplicate accounts: auto-flagged, appealable, reviewed here ----
@@ -396,7 +394,7 @@
             '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 4px">'+
               '<button id="dupSweepDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep now (preview)</button>'+
               '<button id="dupSweepRun" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep and ban</button>'+
-              '<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700">ban clusters of <input id="dupMin" type="number" min="3" max="50" value="6" style="width:56px;padding:7px;border-radius:8px;border:1px solid rgba(20,16,40,.18)"> or more</label>'+
+              '<span class="hint" style="font-size:12px">throwaway domains, dead domains, clusters of 6+, and the codes they were pointed at</span>'+
             '</div>'+
             '<p class="hint" style="margin:0 0 6px">Sweeping re-checks every live account, not just the queue. Clusters under the threshold are always left here for you. Appeals are never auto-actioned.</p>'+
             '<div id="dupSweepOut" class="hint" style="margin-bottom:8px"></div>';
