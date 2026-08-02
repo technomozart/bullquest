@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785632422";try{console.log("BullQuest build 1785632422");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785633880";try{console.log("BullQuest build 1785633880");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6740,7 +6740,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     box.style.display=show?'flex':'none';
     if(!show && box._menu) box._menu.classList.remove('on');
     try{ document.documentElement.classList.toggle('bq-authed', show); }catch(e){}
-    if(show){ try{ if(window.bqUpdateNotifBadge) window.bqUpdateNotifBadge(); }catch(e){} }
+    if(show){ try{ if(window.bqUpdateNotifBadge) window.bqUpdateNotifBadge(); if(window.bqIosCheckin) window.bqIosCheckin(); }catch(e){} }
   }
   // ---- Universal "?" help explainers ----------------------------------------------------------------------
   // ONE glossary (window.BQ_HELP) is the single source of truth. Any element `<button class="bq-hint"
@@ -6840,6 +6840,30 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   // ---- Player notifications: unread badge on the bell + a panel of news / updates / personal messages ----
   function bqNotifEsc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function bqSetNotifBadge(n){ var b=document.querySelector('.bq-acct .nbadge'); if(!b) return; if(n>0){ b.textContent=n>9?'9+':String(n); b.style.display='grid'; } else { b.style.display='none'; } }
+  /* Tell the server once per session that we are running inside the native iOS app. The server
+     decides whether that is true by looking at the request Origin, which a browser will not let a
+     page forge, and completes the download quest if so. The website calls this too and is simply
+     told "not native", which is why it is silent on failure. */
+  window.bqIosCheckin=function(){
+    if(!sb) return;
+    try{ if(sessionStorage.getItem('bq_ios_checked')==='1') return; }catch(e){}
+    sb.auth.getSession().then(function(sess){
+      var t=(sess&&sess.data&&sess.data.session&&sess.data.session.access_token)||'';
+      if(!t) return null;
+      return fetch(URL_+'/functions/v1/ios-checkin',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+t},
+        body:'{}'
+      });
+    }).then(function(r){ return r ? r.json() : null; }).then(function(j){
+      try{ sessionStorage.setItem('bq_ios_checked','1'); }catch(e){}
+      if(j && j.native && j.result && j.result.granted && window.bqToast){
+        window.bqToast('Quest complete, +'+j.result.granted+' GRIT for opening the app');
+        if(window.bqRenderQuests) window.bqRenderQuests();
+      }
+    }).catch(function(){});
+  };
+
   window.bqUpdateNotifBadge=function(){ if(!sb) return; sb.rpc('notifications_unread').then(function(r){ if(r&&typeof r.data==='number') bqSetNotifBadge(r.data); }, function(){}); };
   function bqNotifTimeAgo(iso){ try{ var s=Math.max(0,(Date.now()-new Date(iso).getTime())/1000); if(s<60) return 'just now'; if(s<3600) return Math.floor(s/60)+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; if(s<604800) return Math.floor(s/86400)+'d ago'; return new Date(iso).toLocaleDateString(); }catch(e){ return ''; } }
   window.bqOpenNotifs=function(){
@@ -9399,6 +9423,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
               '<span class="qsub-msg" hidden></span></div>';
           }
         }
+        else if(q.kind==='auto'){
+          /* Completes itself when the account is seen inside the native app, so there is nothing to
+             press. A button here would just be the honour system again, and the rating quest showed
+             what that pays for: 50 claims against 0 real App Store ratings. */
+          actHtml = '<a class="qbtn appstore" href="'+esc(q.url)+'" target="_blank" rel="noopener noreferrer">Get app</a>';
+        }
         else { actHtml = honor ? '<button type="button" class="qbtn '+esc(q.platform)+'" data-honor="1">'+esc(HLBL[q.slug]||'Open')+'</button>' : '<span id="'+actId+'"></span>'; }
         if(isSubmit) card.className='qcard submit';
         card.innerHTML='<span class="qic '+esc(q.platform)+'">'+(ICONS[q.platform]||'')+'</span>'+
@@ -9418,6 +9448,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
               if(inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submitQuest(q.slug, inp, go, msg); } });
             }
           }
+          else if(q.kind==='auto'){ /* nothing to wire: the app itself reports in */ }
           else if(honor){ var hb=card.querySelector('[data-honor]'); if(hb) hb.addEventListener('click', function(){ claimHonor(q.slug,q.url); }); }
           else if(q.platform==='discord'){ if(q.slug==='discord_react'){ mountDiscordReact(card.querySelector('#'+actId), q.url); } else { mountDiscord(card.querySelector('#'+actId)); } }
           else if(q.platform==='telegram'){ mountTelegram(card.querySelector('#'+actId)); }
