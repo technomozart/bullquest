@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785635920";try{console.log("BullQuest build 1785635920");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785642813";try{console.log("BullQuest build 1785642813");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -3690,6 +3690,23 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   <!-- ===== content sheet ===== -->
   <div class="sheet">
 
+    <!-- Telegram and wallet accounts carry a synthetic address for a mailbox nobody can read, so the
+         iOS app (email and Apple sign-in only) cannot reach them at all. The fix already existed in
+         the account menu and 2 of 232 people had found it, which is what a buried menu item is worth. -->
+    <div class="card" id="bqNeedEmail" hidden style="background:linear-gradient(135deg,#4DA6F5,#2C7BD4);color:#fff">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <div style="min-width:0">
+          <b style="display:block;font-size:15px;margin-bottom:3px">Add an email to play on iPhone</b>
+          <span style="display:block;font-size:13px;line-height:1.5;opacity:.94">You signed up with Telegram or a wallet, so there is no email on your account. The App Store app signs you in by email, so without one it cannot find your bulls or your GRIT.</span>
+          <div style="display:flex;gap:8px;margin-top:11px;flex-wrap:wrap">
+            <button type="button" id="bqNeedEmailGo" style="border:0;border-radius:11px;background:#fff;color:#1665B8;font:inherit;font-weight:800;font-size:14px;padding:11px 18px;min-height:44px;cursor:pointer">Add my email</button>
+            <button type="button" id="bqNeedEmailLater" style="border:0;border-radius:11px;background:rgba(255,255,255,.2);color:#fff;font:inherit;font-weight:700;font-size:14px;padding:11px 16px;min-height:44px;cursor:pointer">Not now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="seclabel"><h3><span class="sico" style="background:linear-gradient(135deg,#5FB2F8,#4C86EC)"><i class="pico" style="--m:url('assets/icons/ui_wallet.png')"></i></span>Your GRIT</h3><a class="link" href="#" data-bqgo="view-airdrop">Airdrop <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     <div class="card wallet">
       <div class="wallet-head">
@@ -6744,7 +6761,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     box.style.display=show?'flex':'none';
     if(!show && box._menu) box._menu.classList.remove('on');
     try{ document.documentElement.classList.toggle('bq-authed', show); }catch(e){}
-    if(show){ try{ if(window.bqUpdateNotifBadge) window.bqUpdateNotifBadge(); if(window.bqIosCheckin) window.bqIosCheckin(); }catch(e){} }
+    if(show){ try{ if(window.bqUpdateNotifBadge) window.bqUpdateNotifBadge(); if(window.bqIosCheckin) window.bqIosCheckin(); if(window.bqCheckNeedEmail) window.bqCheckNeedEmail(); }catch(e){} }
   }
   // ---- Universal "?" help explainers ----------------------------------------------------------------------
   // ONE glossary (window.BQ_HELP) is the single source of truth. Any element `<button class="bq-hint"
@@ -7014,6 +7031,29 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
      read, so the iOS app, which offers only email and Apple sign-in, cannot reach them at all. The
      code Supabase sends at sign-in is what proves they own the address; this only records it.
      Their Telegram and wallet login keep working, because those key on telegram_id and pubkey. */
+  /* Show the "add an email" card only to accounts that actually cannot sign in on iOS, and let it
+     be dismissed for a week rather than forever: it matters more as launch approaches, and someone
+     who taps Not now today may want it next week. Re-checks after a successful attach so the card
+     disappears without a reload. */
+  window.bqCheckNeedEmail=function(){
+    if(!sb) return;
+    var card=document.getElementById('bqNeedEmail'); if(!card) return;
+    var snoozed=0; try{ snoozed=parseInt(localStorage.getItem('bq_email_snooze')||'0',10)||0; }catch(e){}
+    if(snoozed && Date.now() < snoozed){ card.hidden=true; return; }
+    sb.rpc('my_email_state').then(function(r){
+      var st=(r&&r.data)||{};
+      card.hidden = !st.needs_email;
+    }, function(){ card.hidden=true; });
+  };
+  (function(){
+    var go=document.getElementById('bqNeedEmailGo'), later=document.getElementById('bqNeedEmailLater');
+    if(go) go.addEventListener('click', function(){ if(window.bqAttachEmail) window.bqAttachEmail(); });
+    if(later) later.addEventListener('click', function(){
+      try{ localStorage.setItem('bq_email_snooze', String(Date.now() + 7*24*3600*1000)); }catch(e){}
+      var c=document.getElementById('bqNeedEmail'); if(c) c.hidden=true;
+    });
+  })();
+
   window.bqAttachEmail=function(){
     if(document.getElementById('bqEmailOv')) return;
     var ov=document.createElement('div'); ov.id='bqEmailOv'; ov.className='bqfb-ov'; ov.style.zIndex='10050';
@@ -7051,6 +7091,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         if(j && j.ok){
           say('Saved. Sign in on the app with ' + v + ' and we will email you a code.', false);
           var mi=document.querySelector('.bq-acctmenu [data-a="email"]'); if(mi) mi.style.display='none';
+          var nc=document.getElementById('bqNeedEmail'); if(nc) nc.hidden=true;
           setTimeout(close, 2600);
           return;
         }
