@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785694309";try{console.log("BullQuest build 1785694309");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785695672";try{console.log("BullQuest build 1785695672");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6234,7 +6234,13 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var bl=modal.querySelector('#bqBullsLeft'); if(bl) bl.style.display='none';
     var rb=modal.querySelector('#bqRefBonus');
     if(rb){ var hr; try{ hr=localStorage.getItem('bq_ref'); }catch(e){}
-      if(mode==='signup' && hr){ rb.textContent = (window.bqRefName ? (window.bqRefName+' invited you. Reach level 2 and play on two different days, and you both get bonus GRIT.') : 'You were invited. Reach level 2 and play on two different days, and you and your friend both get bonus GRIT.'); rb.style.display=''; }
+      /* State the whole bar, including the GRIT one. A player who only hears about levels and days
+         has no idea why the bonus has not landed. bqRefBar is filled from referral_config so the
+         copy follows the dial instead of going stale the next time it moves. */
+      if(mode==='signup' && hr){ var _bar = window.bqRefBar || {grit:400, days:2, level:2};
+        var _terms = 'Reach level '+_bar.level+', earn '+_bar.grit+' GRIT by playing, and play on '+_bar.days+' different days';
+        rb.textContent = (window.bqRefName ? (window.bqRefName+' invited you. '+_terms+', and you both get bonus GRIT.')
+                                           : ('You were invited. '+_terms+', and you and your friend both get bonus GRIT.')); rb.style.display=''; }
       else { rb.style.display='none'; } }
     if(window.bqGoogleOn){ var gmb=modal.querySelector('#bqGoogleModalBtn'), gmo=modal.querySelector('#bqGoogleOr'); if(gmb) renderGoogleBtn(gmb); if(gmo) gmo.style.display='flex'; }
     try{ var tgm=modal.querySelector('#bqTgModalBtn'); if(tgm&&window.bqRenderTgWidget) window.bqRenderTgWidget(tgm); }catch(e){}
@@ -7892,6 +7898,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         if(window.showToast) showToast('+'+d.reward+' GRIT unlocked from your friend’s invite!');
         sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.grit!=null&&window.bqSetGrit) window.bqSetGrit(g.data.grit); }).catch(function(){});
       }
+      /* Remember how far off the bonus is, so the invite sheet can show real progress instead of
+         a vague "keep playing". The RPC returns exactly what is still missing. */
+      try{
+        if(d.pending && d.reason){
+          localStorage.setItem('bq_ref_progress', JSON.stringify({
+            reason:d.reason, grit_earned:d.grit_earned, grit_needed:d.grit_needed,
+            days_active:d.days_active, days_needed:d.days_needed,
+            level:d.level, level_needed:d.level_needed }));
+        } else if(done){ localStorage.removeItem('bq_ref_progress'); }
+      }catch(e){}
     }).catch(function(){});
   }
   function showInvite(){
@@ -9180,6 +9196,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
        refresh-token reuse detection looks like when two tabs race. Record the actual event so the
        next report comes with evidence instead of a guess. TOKEN_REFRESHED is deliberately not
        logged, only the sign-out and the failures around it. */
+    /* Referral terms come from referral_config so the copy can never drift from the actual rule. */
+    try{
+      sb.from('referral_config').select('min_grit_earned,require_days,require_level').limit(1)
+        .then(function(r){ var c=r&&r.data&&r.data[0]; if(!c) return;
+          window.bqRefBar={grit:c.min_grit_earned, days:c.require_days, level:c.require_level}; }, function(){});
+    }catch(e){}
     /* The sign-outs are not random. The client treated "could not reach the auth server" exactly
        like "your session was revoked", so a Supabase blip, or two tabs racing a refresh, dropped
        the player to the landing page with their session deleted from storage. Confirmed on
