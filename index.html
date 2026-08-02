@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785700325";try{console.log("BullQuest build 1785700325");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785703994";try{console.log("BullQuest build 1785703994");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6113,6 +6113,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   // --- launch safety: Cloudflare Turnstile CAPTCHA on signup + sold-out waitlist ---
   var TURNSTILE_SITE_KEY='0x4AAAAAAD1Air3ZqokI6e_a'; // real Cloudflare Turnstile site key (BullQuest widget). Allowed hostnames: bullquest.fun + technomozart.github.io (set 2026-07-15). Not yet enforced - turn on CAPTCHA in Supabase Auth to activate.
   var tsWidgetId=null, captchaToken='';
+  window.BQ_TS_KEY = TURNSTILE_SITE_KEY;   // the wallet flow needs the same key from another scope
   function loadTurnstile(){ if(window.turnstile||document.getElementById('bqTsScript')) return; var s=document.createElement('script'); s.id='bqTsScript'; s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async=true; s.defer=true; document.head.appendChild(s); }
   function renderTurnstile(){ var el=modal&&modal.querySelector('#bqTurnstile'); if(!el) return; if(!window.turnstile){ setTimeout(renderTurnstile,200); return; } captchaToken=''; if(tsWidgetId!==null){ try{ window.turnstile.reset(tsWidgetId); }catch(e){} return; } try{ tsWidgetId=window.turnstile.render(el,{sitekey:TURNSTILE_SITE_KEY,callback:function(t){captchaToken=t;},'expired-callback':function(){captchaToken='';},'error-callback':function(){captchaToken='';}}); }catch(e){} }
   function updateBullsLeft(){ var bl=modal&&modal.querySelector('#bqBullsLeft'); if(!bl||!sb) return; sb.rpc('bulls_remaining').then(function(r){ var n=r&&r.data; if(typeof n!=='number') return; if(n<=0){ closeModal(); showWaitlist(''); } else if(mode==='signup'){ bl.style.display=''; bl.textContent=n.toLocaleString()+' free bulls left'; } }).catch(function(){}); }
@@ -6260,6 +6261,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(/already registered|already exists|identity/i.test(m)) return 'That email already has an account. Tap Log in.';
     if(/invalid login/i.test(m)) return 'Wrong email or password.';
     if(/rate limit/i.test(m)) return 'Too many attempts. Wait a moment and retry.';
+    /* Both of these can only happen while CREATING a wallet account, never while signing in to one
+       that already exists, so the wording is about joining rather than about being locked out. */
+    if(/vpn-blocked/.test(m)) return 'Please turn off your VPN to create an account, then try again. You can turn it back on afterwards.';
+    if(/captcha-failed/.test(m)) return 'The verification did not go through. Please try again.';
     if(/sold out|fully claimed/i.test(m)) return 'Every free bull is claimed right now. Check back soon.';
     return m||'Something snagged. Give it another go.';
   }
@@ -7610,6 +7615,38 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     });
   }
   window.bqConnectWallet = bqConnectWallet;
+  /* A Turnstile token for the wallet path. Deliberately never blocks: if the widget is slow, fails,
+     or is blocked by an extension, this resolves empty after 7s and the server decides. Only ACCOUNT
+     CREATION requires a valid token, so an existing player signing in is unaffected either way.
+     interaction-only means most people never see anything at all. */
+  var bqWalTsId=null, bqWalTok='';
+  function bqWalletCaptcha(){
+    return new Promise(function(resolve){
+      if(bqWalTok) return resolve(bqWalTok);
+      var key=window.BQ_TS_KEY; if(!key) return resolve('');
+      try{ if(!window.turnstile && !document.getElementById('bqTsScript')){
+        var s=document.createElement('script'); s.id='bqTsScript';
+        s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        s.async=true; s.defer=true; document.head.appendChild(s); } }catch(e){}
+      var done=false;
+      var to=setTimeout(function(){ if(!done){ done=true; resolve(''); } }, 7000);
+      function finish(t){ if(done) return; done=true; clearTimeout(to); if(t) bqWalTok=t; resolve(t||''); }
+      (function wait(){
+        if(done) return;
+        if(!window.turnstile) return setTimeout(wait, 150);
+        var host=document.getElementById('bqWalletTs');
+        if(!host){ host=document.createElement('div'); host.id='bqWalletTs';
+          host.style.cssText='position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:10005';
+          document.body.appendChild(host); }
+        try{
+          if(bqWalTsId===null){
+            bqWalTsId=window.turnstile.render(host,{ sitekey:key, appearance:'interaction-only',
+              callback:finish, 'error-callback':function(){ finish(''); }, 'timeout-callback':function(){ finish(''); } });
+          } else { try{ window.turnstile.reset(bqWalTsId); }catch(e){} }
+        }catch(e){ finish(''); }
+      })();
+    });
+  }
   function walletLogin(kind){
     if(window.bqBrowserOnly && window.bqBrowserOnly('Signing in with a wallet')) return;
     var prov=getProvider(kind);
@@ -7620,7 +7657,14 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var msg='Sign in to BullQuest\n\nWallet: '+pk+'\nTime: '+new Date().toISOString();
       return Promise.resolve(prov.signMessage(new TextEncoder().encode(msg),'utf8')).then(function(signed){
         var sig=signed&&signed.signature?signed.signature:signed;
-        return fetch(URL_+'/functions/v1/wallet-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({pubkey:pk,signature:toB64(sig),message:msg})});
+        /* Email signup has had a CAPTCHA for weeks; the wallet path had none, and a farm walked
+           through it on 2026-08-02 with rented proxies. The token is only REQUIRED server-side when
+           creating a new account, so an existing player signing in is never blocked by it, and we
+           never block here on the client either: if the widget is slow or fails we send nothing and
+           let the server decide. */
+        return bqWalletCaptcha().then(function(tok){
+          return fetch(URL_+'/functions/v1/wallet-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({pubkey:pk,signature:toB64(sig),message:msg,captchaToken:tok||''})});
+        });
       });
     }).then(function(r){ return r.json(); })
       .then(function(j){ if(j.error) throw new Error(j.error); return sb.auth.setSession(j.session); })
