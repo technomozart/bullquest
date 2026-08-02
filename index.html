@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785628596";try{console.log("BullQuest build 1785628596");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785630828";try{console.log("BullQuest build 1785630828");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4701,6 +4701,19 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 #view-quests .qst-hero>p{margin:0;font-size:13.5px;color:rgba(255,255,255,.9);line-height:1.5}
 #view-quests .qst-total{margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:800;color:#fff}
 #view-quests .qst-list{padding:16px 16px 0;display:grid;gap:14px}
+#view-quests .qdone-group{margin-top:6px}
+#view-quests .qdone-toggle{width:100%;display:flex;align-items:center;gap:9px;background:var(--tint-neutral1,rgba(20,16,40,.05));
+  border:0;border-radius:16px;padding:13px 16px;min-height:48px;cursor:pointer;font:inherit;font-weight:800;
+  font-size:14.5px;color:var(--ink);text-align:left}
+#view-quests .qdone-toggle:hover{background:var(--tint-neutral2,rgba(20,16,40,.08))}
+#view-quests .qdone-n{background:#2D8548;color:#fff;border-radius:999px;font-size:12px;font-weight:800;padding:2px 9px}
+#view-quests .qdone-act{margin-left:auto;font-size:13px;font-weight:700;color:#6B6785}
+#view-quests .qdone-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+#view-quests .qdone-list .qcard{opacity:.62}
+#view-quests .qalldone{background:var(--surface);border-radius:20px;padding:26px 20px;text-align:center;
+  box-shadow:0 10px 24px rgba(20,16,40,.07)}
+#view-quests .qalldone b{display:block;font-size:16px;margin-bottom:5px}
+#view-quests .qalldone span{font-size:13.5px;color:#6B6785}
 #view-quests .qcard{background:var(--surface);border-radius:20px;box-shadow:0 10px 24px rgba(20,16,40,.07);padding:17px 18px;display:flex;align-items:center;gap:15px}
 #view-quests .qic{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;color:#fff}
 #view-quests .qic svg{width:24px;height:24px}
@@ -9289,6 +9302,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         so.querySelector('button').addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-onboard'); });
         list.appendChild(so);
       }
+      var doneCards=[];   // finished quests drop into a collapsed group so the live ones stay at the top
       var DONE='<span class="qdone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4 10-11"/></svg>Done</span>';
       (st.quests||[]).forEach(function(q){
         var done=claimed.indexOf(q.slug)>=0;
@@ -9323,7 +9337,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         card.innerHTML='<span class="qic '+esc(q.platform)+'">'+(ICONS[q.platform]||'')+'</span>'+
           '<div class="qbody"><b>'+esc(q.title)+'</b><span>'+esc(q.description)+'</span><div class="qreward">+'+q.reward+' GRIT</div></div>'+
           '<div class="qact">'+actHtml+'</div>'+submitRow;
-        list.appendChild(card);
+        /* An in-review submission is not finished, so it stays up top where the player can see it. */
+        if(done) doneCards.push(card); else list.appendChild(card);
         if(out){
           var sg=card.querySelector('.qsignin-go');
           if(sg) sg.addEventListener('click', function(){ if(window.bqGo) window.bqGo('view-onboard'); });
@@ -9341,6 +9356,35 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           else if(q.platform==='telegram'){ mountTelegram(card.querySelector('#'+actId)); }
         }
       });
+
+      /* Twelve quests stacked in one column buried the ones a player can still act on. Finished
+         ones collapse into a single row, collapsed by default, and stay reachable. */
+      if(!list.querySelector('.qcard') && doneCards.length){
+        var ad=document.createElement('div'); ad.className='qalldone';
+        ad.innerHTML='<b>Every quest done</b><span>Nothing left for now. New ones land as we grow, so check back.</span>';
+        list.appendChild(ad);
+      }
+      if(doneCards.length){
+        var grp=document.createElement('div'); grp.className='qdone-group';
+        var tog=document.createElement('button'); tog.type='button'; tog.className='qdone-toggle';
+        tog.setAttribute('aria-expanded','false');
+        var box=document.createElement('div'); box.className='qdone-list'; box.hidden=true;
+        doneCards.forEach(function(c){ box.appendChild(c); });
+        var earned=doneCards.reduce(function(a,c){
+          var m=(c.querySelector('.qreward')||{textContent:''}).textContent.match(/\d+/);
+          return a + (m ? parseInt(m[0],10) : 0);
+        }, 0);
+        function paint(){
+          tog.innerHTML='<span>Completed</span><span class="qdone-n">'+doneCards.length+'</span>'+
+            '<span class="qdone-act">'+(box.hidden?'Show':'Hide')+
+            (earned?(' &middot; '+earned.toLocaleString()+' GRIT'):'')+'</span>';
+          tog.setAttribute('aria-expanded', box.hidden?'false':'true');
+        }
+        paint();
+        tog.addEventListener('click', function(){ box.hidden=!box.hidden; paint(); });
+        grp.appendChild(tog); grp.appendChild(box);
+        list.appendChild(grp);
+      }
     }
     function composeUrl(){
       /* The old template said "Tag 3 friends" and tagged nobody, so 162 of 177 submissions came back
