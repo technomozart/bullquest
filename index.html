@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785658962";try{console.log("BullQuest build 1785658962");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785661683";try{console.log("BullQuest build 1785661683");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -9207,6 +9207,51 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           }
         }catch(e){}
       });
+    })();
+    /* A suspended account used to fail silently: every button returned an error toast and the player
+       was left guessing. That is how 539 wrongful bans sat unnoticed until someone found Discord.
+       Say it plainly, show the reason, and put the appeal one tap away. */
+    (function(){
+      var shown=false;
+      function ban(){
+        if(shown||!sb) return;
+        sb.rpc('my_ban_state').then(function(r){
+          var d=r&&r.data; if(!d||!d.banned||shown) return; shown=true;
+          var appealed = d.appeal_status && d.appeal_status!=='none';
+          var el=document.createElement('div');
+          el.id='bqBanWrap';
+          el.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(16,18,24,.72);display:flex;align-items:center;justify-content:center;padding:18px';
+          el.innerHTML='<div style="background:var(--surface,#fff);color:var(--title,#161a22);max-width:400px;width:100%;border-radius:20px;padding:20px 18px;box-shadow:0 24px 60px rgba(0,0,0,.35);font-family:inherit">'
+            +'<div style="font-size:34px;line-height:1;margin-bottom:10px">&#9888;&#65039;</div>'
+            +'<h3 style="margin:0 0 8px;font-size:18px;font-weight:900">This account is suspended</h3>'
+            +'<p style="margin:0 0 12px;font-size:13px;line-height:1.5;opacity:.8">Our anti-cheat flagged it as '
+            +'<b>'+(d.reason?String(d.reason).replace(/[<>&]/g,''):'a duplicate account')+'</b>. '
+            +'If that is wrong, tell us below. We read every one of these, and a mistake is put right in full: your GRIT and your bull come back.</p>'
+            +(appealed
+              ? '<div style="background:var(--tint-gold1,#FFF3D6);border-radius:12px;padding:12px;font-size:12.5px;color:#6b4a05;line-height:1.5"><b>We got your message.</b><br>A human is reviewing it. You do not need to send it again.</div>'
+              : '<textarea id="bqBanTxt" rows="3" maxlength="1500" placeholder="Tell us what happened. For example: I only have one account, I play on my phone at home." style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid rgba(0,0,0,.16);border-radius:12px;font-family:inherit;font-size:13px;resize:vertical;background:var(--surface,#fff);color:var(--title,#161a22)"></textarea>'
+                +'<button type="button" id="bqBanSend" style="margin-top:9px;width:100%;border:0;border-radius:13px;background:#161a22;color:#fff;font-weight:800;font-size:14px;padding:12px;cursor:pointer;font-family:inherit">Send an appeal</button>'
+                +'<span id="bqBanMsg" style="display:block;font-size:12px;margin-top:8px;min-height:15px"></span>')
+            +'<a href="https://discord.gg/bullquest" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--gold,#B47C0C);text-decoration:none;font-weight:700">Or ask us on Discord</a>'
+            +'</div>';
+          document.body.appendChild(el);
+          var b=el.querySelector('#bqBanSend');
+          if(b) b.addEventListener('click', function(){
+            var t=(el.querySelector('#bqBanTxt').value||'').trim(), m=el.querySelector('#bqBanMsg');
+            if(t.length<10){ m.style.color='#B42318'; m.textContent='Please add a sentence or two so we can look into it.'; return; }
+            b.disabled=true; m.style.color=''; m.textContent='Sending...';
+            sb.rpc('submit_ban_appeal',{p_message:t}).then(function(rr){
+              var dd=rr&&rr.data;
+              if(dd&&dd.ok){ m.style.color='#2FA657'; m.textContent='Sent. A human will read it and reply.'; b.remove(); el.querySelector('#bqBanTxt').disabled=true; }
+              else { b.disabled=false; m.style.color='#B42318'; m.textContent='Could not send that. Please try again.'; }
+            }, function(){ b.disabled=false; m.style.color='#B42318'; m.textContent='Could not send that. Please try again.'; });
+          });
+        }, function(){});
+      }
+      try{
+        sb.auth.getSession().then(function(s){ if(s&&s.data&&s.data.session) ban(); }, function(){});
+        sb.auth.onAuthStateChange(function(evt, session){ if(session) setTimeout(ban, 400); });
+      }catch(e){}
     })();
     // error visibility: report uncaught JS errors to the founder dashboard.
     // Deduped + capped per session, fire-and-forget (rpc builder has no .catch), never throws.

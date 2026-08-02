@@ -420,7 +420,7 @@
       var a=document.getElementById('dupSweepDry'), b=document.getElementById('dupSweepRun');
       if(a) a.setAttribute('disabled',''); if(b) b.setAttribute('disabled','');
       if(out){ out.style.color=''; out.textContent = dry ? 'Scanning every account...' : 'Banning and clawing back...'; }
-      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||6;
+      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||5;
       sb.rpc('farm_ban', { p_dry: !!dry, p_min_cluster: min }).then(function(r){
         if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
         if(!out) return;
@@ -428,11 +428,12 @@
         if(r && r.error){ out.style.color='#E5484D'; out.textContent='Failed: '+r.error.message; return; }
         if(!j || j.error){ out.style.color='#E5484D'; out.textContent='Failed: '+((j&&j.error)||'no result'); return; }
         out.style.color='#12B76A';
-        out.textContent=(j.dry_run?'PREVIEW, nothing changed. ':'Done. ')+
-          j.total_banned+' accounts ('+j.bots+' bots + '+j.bundlers+' bundlers), '+
-          j.bulls_returned+' bulls back, '+j.grit_removed+' GRIT removed, '+
-          'clawback '+j.clawback_grit+' GRIT from '+j.clawback_accounts+' referrers.';
-        if(!j.dry_run) setTimeout(function(){ loadDuplicates(); load(); }, 1500);
+        out.textContent=(j.dry?'PREVIEW, nothing changed. ':'Done. ')+
+          ((j.bots||0)+(j.farm_runners||0))+' accounts ('+(j.bots||0)+' bots + '+(j.farm_runners||0)+' farm runners), '+
+          (j.bulls_released||0)+' bulls back, '+(j.grit_removed||0)+' GRIT removed, '+
+          'clawback '+(j.grit_clawed_back||0)+' GRIT from '+(j.referrers_charged||0)+' referrers'+
+          ((j.spared_because_proven_human||0)?('. Spared '+j.spared_because_proven_human+' proven human accounts.'):'.');
+        if(!j.dry) setTimeout(function(){ loadDuplicates(); load(); }, 1500);
       }).catch(function(e){
         if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
         if(out){ out.style.color='#E5484D'; out.textContent='Failed: '+e.message; }
@@ -441,11 +442,54 @@
     var d=document.getElementById('dupSweepDry'), rn=document.getElementById('dupSweepRun');
     if(d) d.addEventListener('click', function(){ run(true); });
     if(rn) rn.addEventListener('click', function(){
-      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||6;
-      var warn=(min<=3)?(' At '+min+' this catches households and shared wifi, so run the preview first.'):'';
-      if(confirm('Ban every farm account and bundler in clusters of '+min+' or more, return their bulls, strip their GRIT, and reverse referral payouts made for them?'+warn+' This is reversible.')) run(false);
+      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||5;
+      if(confirm('Ban every account with hard proof of farming (same-second signup bursts of '+min+'+, bulk-registered domains, duplicate gmail mailboxes), return their bulls, strip their GRIT, and reverse referral payouts made for them? Proven human accounts are skipped. This is reversible.')) run(false);
     });
   }
+  /* ---- Ban appeals ----
+     Every row carries the evidence next to the plea, so the decision is made on numbers rather
+     than on how upset the message sounds. "Still flagged: no" means the current rules would not
+     ban this account today, which is the signal that it was a false positive. */
+  function loadAppeals(){
+    var el=document.getElementById('appealPanel'); if(!el) return;
+    sb.rpc('admin_ban_appeals').then(function(r){
+      var a=(r&&r.data)||[]; if(a.error){ el.innerHTML=''; return; }
+      if(!a.length){ el.innerHTML='<div class="panel"><h3>Ban appeals</h3><p class="hint">No open appeals. Suspended players see an appeal box in the app, so anything wrong lands here.</p></div>'; return; }
+      navCount('appealPanel', a.length);
+      var h='<div class="panel"><h3>Ban appeals <span style="font-size:13px;color:#E5484D">('+a.length+' waiting)</span></h3>'+
+            '<p class="hint">A suspended player wrote in. Restoring returns their GRIT in full and grants a bull, and marks the account so no future sweep can touch it.</p>';
+      a.forEach(function(x){
+        var e=x.evidence||{}, real=(e.days_returned>=2)||(e.gym>0&&e.duels>2);
+        h+='<div style="border-top:1px solid rgba(20,16,40,.08);padding:12px 2px">'+
+           '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">'+
+             '<b style="font-size:13.5px">'+esc(x.username||'')+'</b>'+
+             '<span style="font-size:11.5px;opacity:.7">'+esc(x.email||'')+'</span>'+
+             '<span style="font-size:11px;padding:3px 8px;border-radius:999px;background:'+(real?'#E7F7EE;color:#1E9E52':'#EEF1F6;color:#5a6273')+'">'+(real?'looks like a real player':'thin activity')+'</span>'+
+           '</div>'+
+           '<div style="font-size:11.5px;opacity:.75;margin-top:4px">Banned for: '+esc(x.banned_reason||'?')+'</div>'+
+           '<div style="font-size:12px;margin-top:5px">'+(e.duels||0)+' duels &middot; '+(e.gym||0)+' gym sessions &middot; came back on '+(e.days_returned||0)+' days &middot; '+
+             '<b style="color:'+(e.still_flagged_by_scan?'#B42318':'#1E9E52')+'">still flagged by the current rules: '+(e.still_flagged_by_scan?'YES':'no')+'</b></div>'+
+           '<div style="margin-top:7px;padding:9px 11px;background:rgba(20,16,40,.04);border-radius:10px;font-size:12.5px;line-height:1.5;white-space:pre-wrap">'+esc(x.message||'')+'</div>'+
+           '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">'+
+             '<button class="apOk" data-u="'+esc(x.user_id)+'" style="cursor:pointer;background:#12B76A;color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font:inherit">Restore, give it all back</button>'+
+             '<button class="apNo" data-u="'+esc(x.user_id)+'" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font:inherit">Keep banned</button>'+
+             '<span class="apMsg" style="font-size:12px;align-self:center"></span></div></div>';
+      });
+      el.innerHTML=h+'</div>';
+      function act(btn, restore){
+        var u=btn.getAttribute('data-u'), m=btn.parentNode.querySelector('.apMsg');
+        btn.setAttribute('disabled',''); if(m) m.textContent='Working...';
+        sb.rpc('admin_resolve_appeal',{p_user:u,p_restore:restore}).then(function(rr){
+          var d=rr&&rr.data;
+          if(d&&d.ok){ if(m){ m.style.color='#12B76A'; m.textContent=restore?('Restored, '+(d.grit_returned||0)+' GRIT and a bull returned.'):'Kept banned.'; } setTimeout(loadAppeals, 1200); }
+          else { btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } }
+        }, function(){ btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } });
+      }
+      Array.prototype.forEach.call(el.querySelectorAll('.apOk'), function(b){ b.addEventListener('click', function(){ act(b,true); }); });
+      Array.prototype.forEach.call(el.querySelectorAll('.apNo'), function(b){ b.addEventListener('click', function(){ act(b,false); }); });
+    }, function(){ el.innerHTML=''; });
+  }
+
   // ---- Duplicate accounts: auto-flagged, appealable, reviewed here ----
   function loadDupes(){
     var el=document.getElementById('dupPanel'); if(!el) return;
@@ -461,12 +505,12 @@
             '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 4px">'+
               '<button id="dupSweepDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep now (preview)</button>'+
               '<button id="dupSweepRun" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep and ban</button>'+
-              '<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700">ban clusters of '
-                +'<input id="dupMin" type="number" min="2" max="50" value="6" style="width:56px;padding:7px;border-radius:8px;border:1px solid rgba(20,16,40,.18)">'
+              '<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700">burst size '
+                +'<input id="dupMin" type="number" min="5" max="50" value="5" style="width:56px;padding:7px;border-radius:8px;border:1px solid rgba(20,16,40,.18)">'
                 +' or more</label>'+
-              '<span class="hint" style="font-size:12px;flex-basis:100%;margin:0">Throwaway and dead domains are always caught. This number only sets how many accounts sharing an IP or device counts as a farm: 6 spares households and shared wifi, 3 does not.</span>'+
+              '<span class="hint" style="font-size:12px;flex-basis:100%;margin:0">The sweep bans on proof only: accounts created within the same 10 seconds under one referrer, bulk-registered mail domains, and gmail addresses that are the same mailbox with dots or +tags. Shared IP and phone model are <b>not</b> used, they banned 539 real players on 2026-08-02.</span>'+
             '</div>'+
-            '<p class="hint" style="margin:0 0 6px">Sweeping re-checks every live account, not just the queue. Clusters under the threshold are always left here for you. Appeals are never auto-actioned.</p>'+
+            '<p class="hint" style="margin:0 0 6px">Sweeping re-checks every live account. Anyone who came back on a later day or paid real SOL is skipped no matter what else they trip. Appeals are never auto-actioned.</p>'+
             '<div id="dupSweepOut" class="hint" style="margin-bottom:8px"></div>';
       /* Pending flags now sort first, but the archive still follows them in the same list. Mark
          where it starts, otherwise 76 already-decided rows read as more work to do. */
@@ -518,6 +562,7 @@
   var NAV=[
     {g:'Act on'},
     {id:'subsPanel',    t:'Tweet queue',   n:function(d){ return d.submissions_pending; }},
+    {id:'appealPanel',  t:'Ban appeals'},
     {id:'dupPanel',     t:'Duplicates',    n:function(d){ return d.flags_awaiting; }},
     {id:'sec-notify',   t:'Send notice'},
     {g:'Numbers'},
@@ -622,6 +667,7 @@
     html+='<div id="sec-errors">'+errPanel(d.recent_errors)+'</div>';
 
     html+='<div id="buyPanel"></div>';   // what players actually paid for
+    html+='<div id="appealPanel"></div>';// players telling us the ban was wrong
     html+='<div id="dupPanel"></div>';   // auto-flagged duplicate accounts + appeals
 
     // Funnel
@@ -647,6 +693,7 @@
     wireNotify();
     loadPurchases();
     loadDupes();
+    loadAppeals();
     loadSubmissions();
     loadAccounts();
     var g=d.generated_at?new Date(d.generated_at):null;
