@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785703994";try{console.log("BullQuest build 1785703994");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785706335";try{console.log("BullQuest build 1785706335");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6265,6 +6265,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
        that already exists, so the wording is about joining rather than about being locked out. */
     if(/vpn-blocked/.test(m)) return 'Please turn off your VPN to create an account, then try again. You can turn it back on afterwards.';
     if(/captcha-failed/.test(m)) return 'The verification did not go through. Please try again.';
+    /* Not a ban and never phrased as one: this device has hit its account limit, so the way out is
+       to sign in to the account it already has. */
+    if(/device-limit/.test(m)) return 'This device already has a BullQuest account. Tap Log in and use that one.';
     if(/sold out|fully claimed/i.test(m)) return 'Every free bull is claimed right now. Check back soon.';
     return m||'Something snagged. Give it another go.';
   }
@@ -7514,6 +7517,86 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   window.bqSetGrit = setGrit;
   window.bqToast = function(m){ walletMsg(m); };
   window.bqOpenAuth = function(intent){ openModal(intent==='login'?'login':'signup'); };
+  /* ---- Device identity ----
+     Two separate things, because they fail in different ways.
+
+     bqDeviceId is a random value we assign. It is honest and precise, but it lives in storage, so a
+     private window or "clear site data" resets it. Written to localStorage, a cookie and IndexedDB
+     so that clearing one of the three is not enough.
+
+     bqDeviceFp describes the MACHINE: GPU renderer, how this exact GPU and driver rasterise a
+     canvas, and how the audio pipeline rounds floats. None of that lives in storage, so a private
+     window does not change it. This is what the old signal should have been. The old one was
+     userAgent|screen|timezone|language|cores, about 12 bits, which is a phone model in a locale, and
+     it is why 539 real players were banned for "sharing a device" with strangers.
+
+     Fingerprints still collide, so this is used ONLY to cap how many accounts a device may open.
+     Never to ban. A wrong answer here says "sign in instead", it never takes anything away. */
+  var bqFpCache=null;
+  window.bqDeviceId = function(){
+    var k='bq_did', v='';
+    try{ v = localStorage.getItem(k) || ''; }catch(e){}
+    if(!v){ try{ var m=document.cookie.match(/(?:^|;\s*)bq_did=([^;]+)/); if(m) v=decodeURIComponent(m[1]); }catch(e){} }
+    if(!v){ v = Date.now().toString(36)+Math.random().toString(36).slice(2,10); }
+    try{ localStorage.setItem(k, v); }catch(e){}
+    try{ document.cookie = 'bq_did='+encodeURIComponent(v)+'; path=/; max-age=63072000; SameSite=Lax'+(location.protocol==='https:'?'; Secure':''); }catch(e){}
+    try{
+      var rq=indexedDB.open('bq_id',1);
+      rq.onupgradeneeded=function(){ try{ rq.result.createObjectStore('kv'); }catch(e){} };
+      rq.onsuccess=function(){ try{ rq.result.transaction('kv','readwrite').objectStore('kv').put(v,'did'); }catch(e){} };
+    }catch(e){}
+    return v;
+  };
+  window.bqDeviceFp = function(){
+    if(bqFpCache) return Promise.resolve(bqFpCache);
+    var parts=[];
+    try{
+      var c=document.createElement('canvas'); c.width=240; c.height=60;
+      var x=c.getContext('2d');
+      x.textBaseline='top'; x.font="16px 'Arial'"; x.fillStyle='#f60'; x.fillRect(0,0,120,20);
+      x.fillStyle='#069'; x.fillText('BullQuest \u{1F402} 0123', 2, 15);
+      x.fillStyle='rgba(102,204,0,0.7)'; x.fillText('BullQuest \u{1F402} 0123', 4, 25);
+      parts.push(c.toDataURL());
+    }catch(e){ parts.push('nocanvas'); }
+    try{
+      var g=document.createElement('canvas').getContext('webgl');
+      var d=g && g.getExtension('WEBGL_debug_renderer_info');
+      parts.push(d ? (g.getParameter(d.UNMASKED_VENDOR_WEBGL)+'|'+g.getParameter(d.UNMASKED_RENDERER_WEBGL)) : 'nogl');
+      if(g) parts.push(String(g.getParameter(g.MAX_TEXTURE_SIZE))+'|'+String(g.getParameter(g.MAX_RENDERBUFFER_SIZE)));
+    }catch(e){ parts.push('nogl'); }
+    try{
+      parts.push([screen.width,screen.height,screen.colorDepth,window.devicePixelRatio||1,
+                  navigator.hardwareConcurrency||0, navigator.deviceMemory||0,
+                  (navigator.platform||''), (navigator.maxTouchPoints||0)].join('|'));
+    }catch(e){}
+    var audio = new Promise(function(res){
+      try{
+        var AC=window.OfflineAudioContext||window.webkitOfflineAudioContext;
+        if(!AC) return res('noaudio');
+        var ctx=new AC(1,5000,44100), osc=ctx.createOscillator(), comp=ctx.createDynamicsCompressor();
+        osc.type='triangle'; osc.frequency.value=10000;
+        osc.connect(comp); comp.connect(ctx.destination); osc.start(0); ctx.startRendering();
+        var t=setTimeout(function(){ res('audiotimeout'); }, 800);
+        ctx.oncomplete=function(ev){ clearTimeout(t);
+          try{ var b=ev.renderedBuffer.getChannelData(0), s=0; for(var i=2000;i<3000;i++) s+=Math.abs(b[i]); res(s.toFixed(6)); }
+          catch(e){ res('audioerr'); } };
+      }catch(e){ res('noaudio'); }
+    });
+    return audio.then(function(a){
+      parts.push(a);
+      var str=parts.join('~~');
+      if(!(window.crypto&&crypto.subtle&&crypto.subtle.digest)){
+        var h=0; for(var i=0;i<str.length;i++){ h=((h<<5)-h+str.charCodeAt(i))|0; }
+        bqFpCache='h'+Math.abs(h).toString(36); return bqFpCache;
+      }
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(function(buf){
+        var b=new Uint8Array(buf), s='';
+        for(var i=0;i<16;i++) s+=b[i].toString(16).padStart(2,'0');
+        bqFpCache=s; return s;
+      });
+    }).catch(function(){ return ''; });
+  };
+
   window.bqGame = {
     ready: function(){ return !!sb; },
     bull: function(){ return curBull; },
@@ -7532,17 +7615,21 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     // this never blocks anyone from playing, it only gates referral rewards.
     sendSignal: function(){
       try{ if(sessionStorage.getItem('bq_sig')==='1') return Promise.resolve(); }catch(e){}
-      var did='';
-      try{
-        did = localStorage.getItem('bq_did');
-        if(!did){ did = Date.now().toString(36)+Math.random().toString(36).slice(2,10); localStorage.setItem('bq_did', did); }
-      }catch(e){}
-      var dev='';
-      try{ dev=[navigator.userAgent, (screen.width+'x'+screen.height), new Date().getTimezoneOffset(),
-                navigator.language, (navigator.hardwareConcurrency||0)].join('|'); }catch(e){}
-      return sb.auth.getSession().then(function(s){
-        var tok=(s&&s.data&&s.data.session&&s.data.session.access_token); if(!tok) return null;
-        return fetch(URL_+'/functions/v1/signal',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({device_id:did, device:dev})});
+      var did = window.bqDeviceId ? window.bqDeviceId() : '';
+      /* The old "device" string was userAgent|screen|timezone|language|cores. That is a phone model
+         in a locale, roughly 12 bits, which is why thousands of strangers collided on it and 539
+         real players were banned. It is not sent any more. bqDeviceFp() replaces it with something
+         that actually identifies a machine. */
+      return (window.bqDeviceFp ? window.bqDeviceFp() : Promise.resolve('')).then(function(fp){
+        return sb.auth.getSession().then(function(s){
+          var tok=(s&&s.data&&s.data.session&&s.data.session.access_token); if(!tok) return null;
+          var uid=s.data.session.user && s.data.session.user.id;
+          /* Register which machine opened this account, so the signup limit has something to count.
+             Recorded after the fact and never used to remove anything: it only answers "may this
+             device open ANOTHER account". */
+          if(uid && fp){ try{ sb.rpc('device_record_signup',{p_user:uid, p_fp:fp, p_device_id:did}); }catch(e){} }
+          return fetch(URL_+'/functions/v1/signal',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({device_id:did, device_fp:fp})});
+        });
       }).then(function(){ try{ sessionStorage.setItem('bq_sig','1'); }catch(e){} }, function(){});
     },
     myFlag: function(){ return sb.rpc('my_duplicate_flag').then(function(r){ if(r.error) throw r.error; return r.data; }); },
@@ -7662,8 +7749,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
            creating a new account, so an existing player signing in is never blocked by it, and we
            never block here on the client either: if the widget is slow or fails we send nothing and
            let the server decide. */
-        return bqWalletCaptcha().then(function(tok){
-          return fetch(URL_+'/functions/v1/wallet-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({pubkey:pk,signature:toB64(sig),message:msg,captchaToken:tok||''})});
+        return Promise.all([bqWalletCaptcha(), (window.bqDeviceFp?window.bqDeviceFp():Promise.resolve(''))]).then(function(a){
+          var did = window.bqDeviceId ? window.bqDeviceId() : '';
+          return fetch(URL_+'/functions/v1/wallet-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({pubkey:pk,signature:toB64(sig),message:msg,captchaToken:a[0]||'',deviceFp:a[1]||'',deviceId:did})});
         });
       });
     }).then(function(r){ return r.json(); })
