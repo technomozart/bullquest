@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785700139";try{console.log("BullQuest build 1785700139");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785700325";try{console.log("BullQuest build 1785700325");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -8975,14 +8975,25 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
        So: wait for the app to actually settle, never open on top of a reveal, and keep waiting while
        any other sheet is up. */
+    /* This guide used to open on a flat 1.4s timer from page load, which meant it dropped over the
+       SIGN-UP screen before the player even had an account, covering the very buttons they were
+       reaching for. The wallet flow needs the most taps to get through (Connect a wallet, then pick
+       a wallet), so it was interrupted the most, and the numbers show it: of wallet players who
+       opened the game only 34.6% ever took a single action, against 81.7% for Google, yet 96.4% of
+       the ones who did act went on to duel. They were not bored, they were blocked.
+
+       It now waits until the player is actually in the game, on Home, with nothing else on screen,
+       so it can never bury a brand new bull or intercept a sign-in. */
     var seen; try{ seen=localStorage.getItem('bq_howto'); }catch(e){}
     if(!seen){
-      var waited=0;
+      var calm=0;
       (function waitForCalm(){
-        var busy = document.querySelector('.bqrev-card') || document.querySelector('.bqfb-ov')
-                || document.querySelector('.bqauth:not([hidden])');
-        if(busy){ waited=0; return setTimeout(waitForCalm, 700); }   // something else has the screen
-        if(waited < 1400){ waited += 350; return setTimeout(waitForCalm, 350); }
+        var home=document.getElementById('view-home');
+        var ready = window.bqLoggedIn && home && !home.hidden;
+        var busy  = document.querySelector('.bqrev-card') || document.querySelector('.bqfb-ov')
+                 || document.querySelector('.bqauth:not([hidden])');
+        if(!ready || busy){ calm=0; return setTimeout(waitForCalm, 700); }
+        if(calm < 1200){ calm += 400; return setTimeout(waitForCalm, 400); }
         try{ if(localStorage.getItem('bq_howto')) return; localStorage.setItem('bq_howto','1'); }catch(e){}
         showHowTo();
       })();
