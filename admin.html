@@ -407,7 +407,8 @@
       var a=document.getElementById('dupSweepDry'), b=document.getElementById('dupSweepRun');
       if(a) a.setAttribute('disabled',''); if(b) b.setAttribute('disabled','');
       if(out){ out.style.color=''; out.textContent = dry ? 'Scanning every account...' : 'Banning and clawing back...'; }
-      sb.rpc('farm_ban', { p_dry: !!dry }).then(function(r){
+      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||6;
+      sb.rpc('farm_ban', { p_dry: !!dry, p_min_cluster: min }).then(function(r){
         if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
         if(!out) return;
         var j = r && r.data;
@@ -427,7 +428,9 @@
     var d=document.getElementById('dupSweepDry'), rn=document.getElementById('dupSweepRun');
     if(d) d.addEventListener('click', function(){ run(true); });
     if(rn) rn.addEventListener('click', function(){
-      if(confirm('Ban every detected farm account and bundler, return their bulls, strip their GRIT, and reverse referral payouts made for them? Run the preview first if you have not. This is reversible.')) run(false);
+      var min=parseInt((document.getElementById('dupMin')||{}).value,10)||6;
+      var warn=(min<=3)?(' At '+min+' this catches households and shared wifi, so run the preview first.'):'';
+      if(confirm('Ban every farm account and bundler in clusters of '+min+' or more, return their bulls, strip their GRIT, and reverse referral payouts made for them?'+warn+' This is reversible.')) run(false);
     });
   }
   // ---- Duplicate accounts: auto-flagged, appealable, reviewed here ----
@@ -445,7 +448,10 @@
             '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 4px">'+
               '<button id="dupSweepDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep now (preview)</button>'+
               '<button id="dupSweepRun" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep and ban</button>'+
-              '<span class="hint" style="font-size:12px">throwaway domains, dead domains, clusters of 6+, and the codes they were pointed at</span>'+
+              '<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700">ban clusters of '
+                +'<input id="dupMin" type="number" min="2" max="50" value="6" style="width:56px;padding:7px;border-radius:8px;border:1px solid rgba(20,16,40,.18)">'
+                +' or more</label>'+
+              '<span class="hint" style="font-size:12px;flex-basis:100%;margin:0">Throwaway and dead domains are always caught. This number only sets how many accounts sharing an IP or device counts as a farm: 6 spares households and shared wifi, 3 does not.</span>'+
             '</div>'+
             '<p class="hint" style="margin:0 0 6px">Sweeping re-checks every live account, not just the queue. Clusters under the threshold are always left here for you. Appeals are never auto-actioned.</p>'+
             '<div id="dupSweepOut" class="hint" style="margin-bottom:8px"></div>';
