@@ -446,6 +446,81 @@
       if(confirm('Ban every account with hard proof of farming (same-second signup bursts of '+min+'+, bulk-registered domains, duplicate gmail mailboxes), return their bulls, strip their GRIT, and reverse referral payouts made for them? Proven human accounts are skipped. This is reversible.')) run(false);
     });
   }
+  /* ---- Enforcement ----
+     The workflow that replaces "scan, then strip 539 people". A sweep can only RESTRICT, which
+     takes nothing and lets the player carry on while you look. Only a human can confirm, and even
+     then the bull sits in custody so Clear gives back the same animal, not a replacement. */
+  function loadEnforcement(){
+    var el=document.getElementById('enfPanel'); if(!el) return;
+    sb.rpc('admin_enforcement_queue').then(function(r){
+      var d=r&&r.data; if(!d || d.error){ el.innerHTML=''; return; }
+      var c=d.counts||{}, rows=d.rows||[];
+      navCount('enfPanel', (c.restricted||0)+(c.appeals_open||0)+(c.banned_without_current_evidence||0));
+      var h='<div class="panel"><h3>Enforcement</h3>'+
+        '<p class="hint">A sweep can only <b>restrict</b>: nothing is taken and the player keeps playing while you decide. Only <b>Confirm</b> removes anything, and the bull goes into custody so <b>Clear</b> returns the exact same bull with the same stats. Anyone who came back on a later day or paid real SOL can never be caught by a sweep at all.</p>'+
+        '<div class="grid">'+kpi('Restricted', c.restricted||0, 'awaiting your call')+
+          kpi('Banned', c.banned||0)+kpi('Appeals open', c.appeals_open||0)+
+          kpi('Bulls in custody', c.in_custody||0, 'returnable exactly')+
+          kpi('Banned with no current evidence', c.banned_without_current_evidence||0, 'should be zero')+'</div>'+
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 4px">'+
+          '<button id="enfDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Preview a sweep</button>'+
+          '<button id="enfRun" style="cursor:pointer;background:#F5A623;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep and restrict</button>'+
+          '<span id="enfOut" class="hint" style="margin:0"></span>'+
+        '</div>';
+      if(!rows.length) h+='<p class="hint" style="margin-top:10px">Nothing waiting on you.</p>';
+      rows.forEach(function(x){
+        var e=x.evidence||{}, b=e.behaviour||{};
+        h+='<div style="border-top:1px solid rgba(20,16,40,.08);padding:12px 2px">'+
+          '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">'+
+            '<b style="font-size:13.5px">'+esc(x.username||'')+'</b>'+
+            '<span style="font-size:11.5px;opacity:.7">'+esc(x.email||'')+'</span>'+
+            '<span style="font-size:11px;padding:3px 8px;border-radius:999px;background:'+(x.state==='banned'?'#FDEDEE;color:#B42318':'#FFF3D6;color:#6b4a05')+'">'+esc(x.state)+'</span>'+
+            (x.proven_human?'<span style="font-size:11px;padding:3px 8px;border-radius:999px;background:#E7F7EE;color:#1E9E52">proven human</span>':'')+
+            (x.bulls_in_custody?'<span style="font-size:11px;padding:3px 8px;border-radius:999px;background:#EEF1F6;color:#5a6273">'+x.bulls_in_custody+' bull in custody</span>':'')+
+          '</div>'+
+          '<div style="font-size:12px;margin-top:4px;opacity:.75">Acted on for: '+esc(x.reason_at_action||'?')+'</div>'+
+          '<div style="font-size:12px;margin-top:4px">'+(b.duels||0)+' duels &middot; '+(b.gym||0)+' gym &middot; '+(b.spins||0)+' spins &middot; back on '+(b.active_days||0)+' days &middot; '+(e.invited_count||0)+' invited'+(b.paid_sol?' &middot; <b>paid real SOL</b>':'')+'</div>'+
+          '<div style="font-size:12px;margin-top:5px;padding:7px 10px;border-radius:9px;background:'+(x.still_condemned?'#FDEDEE':'#E7F7EE')+';color:'+(x.still_condemned?'#B42318':'#1E9E52')+'">'+
+            '<b>'+(x.still_condemned?'Current rules still say farm:':'Current rules clear this account:')+'</b> '+esc(x.current_rule_says||'')+'</div>'+
+          (x.appeal?'<div style="margin-top:7px;padding:9px 11px;background:rgba(20,16,40,.04);border-radius:10px;font-size:12.5px;line-height:1.5;white-space:pre-wrap"><span style="opacity:.6;font-size:11px;display:block">They wrote</span>'+esc(x.appeal.message||'')+'</div>':'')+
+          '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">'+
+            '<button class="enfClear" data-u="'+esc(x.user_id)+'" style="cursor:pointer;background:#12B76A;color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font:inherit">Clear, give it all back</button>'+
+            (x.state==='banned'?'':'<button class="enfBan" data-u="'+esc(x.user_id)+'" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font:inherit">Confirm the ban</button>')+
+            '<span class="enfMsg" style="font-size:12px;align-self:center"></span></div></div>';
+      });
+      el.innerHTML=h+'</div>';
+
+      function sweep(dry){
+        var o=document.getElementById('enfOut'); if(o){ o.style.color=''; o.textContent='Scanning...'; }
+        sb.rpc('farm_restrict',{p_dry:!!dry, p_min_cluster:5}).then(function(rr){
+          var j=rr&&rr.data;
+          if(!o) return;
+          if(rr&&rr.error){ o.style.color='#E5484D'; o.textContent='Failed: '+rr.error.message; return; }
+          if(!j||j.error){ o.style.color='#E5484D'; o.textContent='Failed: '+((j&&j.error)||'no result'); return; }
+          o.style.color='#12B76A';
+          o.textContent=(j.dry?'Preview: ':'Done: ')+j.would_restrict+' account(s) restricted, '+j.spared_proven_humans+' proven humans skipped. Nothing was taken.';
+          if(!j.dry) setTimeout(loadEnforcement, 1200);
+        });
+      }
+      var a=document.getElementById('enfDry'), bb=document.getElementById('enfRun');
+      if(a) a.addEventListener('click', function(){ sweep(true); });
+      if(bb) bb.addEventListener('click', function(){ if(confirm('Restrict every account the current rules condemn? Nothing is taken from anyone: they keep their bull and GRIT and can keep playing until you decide.')) sweep(false); });
+
+      function act(btn, fn, label){
+        var u=btn.getAttribute('data-u'), m=btn.parentNode.querySelector('.enfMsg');
+        var note = fn==='admin_confirm_ban' ? (prompt('Optional note for the record (required if the account has proved it is a person):')||'') : 'reviewed in admin';
+        btn.setAttribute('disabled',''); if(m){ m.style.color=''; m.textContent='Working...'; }
+        sb.rpc(fn, fn==='admin_confirm_ban' ? {p_user:u,p_note:note} : {p_user:u,p_note:note}).then(function(rr){
+          var j=rr&&rr.data;
+          if(j&&j.ok){ if(m){ m.style.color='#12B76A'; m.textContent=label; } setTimeout(loadEnforcement, 1200); }
+          else { btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent=(j&&j.error)||'Failed.'; } }
+        }, function(){ btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } });
+      }
+      Array.prototype.forEach.call(el.querySelectorAll('.enfClear'), function(x){ x.addEventListener('click', function(){ act(x,'admin_clear_enforcement','Cleared, everything returned.'); }); });
+      Array.prototype.forEach.call(el.querySelectorAll('.enfBan'), function(x){ x.addEventListener('click', function(){ if(confirm('Confirm the ban? The bull goes into custody, so Clear can still return the exact same one later.')) act(x,'admin_confirm_ban','Banned, bull held in custody.'); }); });
+    }, function(){ el.innerHTML=''; });
+  }
+
   /* ---- Ban appeals ----
      Every row carries the evidence next to the plea, so the decision is made on numbers rather
      than on how upset the message sounds. "Still flagged: no" means the current rules would not
@@ -565,6 +640,7 @@
   var NAV=[
     {g:'Act on'},
     {id:'subsPanel',    t:'Tweet queue',   n:function(d){ return d.submissions_pending; }},
+    {id:'enfPanel',     t:'Enforcement'},
     {id:'appealPanel',  t:'Ban appeals'},
     {id:'dupPanel',     t:'Duplicates',    n:function(d){ return d.flags_awaiting; }},
     {id:'sec-notify',   t:'Send notice'},
@@ -670,6 +746,7 @@
     html+='<div id="sec-errors">'+errPanel(d.recent_errors)+'</div>';
 
     html+='<div id="buyPanel"></div>';   // what players actually paid for
+    html+='<div id="enfPanel"></div>';   // restricted + contested accounts waiting on a human
     html+='<div id="appealPanel"></div>';// players telling us the ban was wrong
     html+='<div id="dupPanel"></div>';   // auto-flagged duplicate accounts + appeals
 
@@ -696,6 +773,7 @@
     wireNotify();
     loadPurchases();
     loadDupes();
+    loadEnforcement();
     loadAppeals();
     loadSubmissions();
     loadAccounts();
