@@ -467,8 +467,11 @@
              '<span style="font-size:11px;padding:3px 8px;border-radius:999px;background:'+(real?'#E7F7EE;color:#1E9E52':'#EEF1F6;color:#5a6273')+'">'+(real?'looks like a real player':'thin activity')+'</span>'+
            '</div>'+
            '<div style="font-size:11.5px;opacity:.75;margin-top:4px">Banned for: '+esc(x.banned_reason||'?')+'</div>'+
-           '<div style="font-size:12px;margin-top:5px">'+(e.duels||0)+' duels &middot; '+(e.gym||0)+' gym sessions &middot; came back on '+(e.days_returned||0)+' days &middot; '+
-             '<b style="color:'+(e.still_flagged_by_scan?'#B42318':'#1E9E52')+'">still flagged by the current rules: '+(e.still_flagged_by_scan?'YES':'no')+'</b></div>'+
+           '<div style="font-size:12px;margin-top:5px">'+(e.duels||0)+' duels &middot; '+(e.gym||0)+' gym sessions &middot; came back on '+(e.days_returned||0)+' days</div>'+
+           /* The decisive line: what TODAY's rules say about this account, not the reason it was
+              banned under whatever rules were live at the time. */
+           '<div style="font-size:12px;margin-top:4px;padding:7px 10px;border-radius:9px;background:'+(e.still_flagged_by_scan?'#FDEDEE':'#E7F7EE')+';color:'+(e.still_flagged_by_scan?'#B42318':'#1E9E52')+'">'+
+             '<b>'+(e.still_flagged_by_scan?'The current rules still say farm:':'The current rules clear this account:')+'</b> '+esc(e.current_rule_says||'')+'</div>'+
            '<div style="margin-top:7px;padding:9px 11px;background:rgba(20,16,40,.04);border-radius:10px;font-size:12.5px;line-height:1.5;white-space:pre-wrap">'+esc(x.message||'')+'</div>'+
            '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">'+
              '<button class="apOk" data-u="'+esc(x.user_id)+'" style="cursor:pointer;background:#12B76A;color:#fff;border:0;border-radius:9px;padding:9px 14px;font-weight:700;font:inherit">Restore, give it all back</button>'+
