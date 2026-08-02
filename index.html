@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785661683";try{console.log("BullQuest build 1785661683");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785692331";try{console.log("BullQuest build 1785692331");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6614,7 +6614,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         var msg=el.querySelector('#bqDelMsg');
         if(r&&r.error){ if(msg) msg.textContent=(r.error.message||'Could not delete, try again'); btn.disabled=false; btn.textContent='Delete forever'; return; }
         if(r&&r.data&&r.data.error){ if(msg) msg.textContent=r.data.error; btn.disabled=false; btn.textContent='Delete forever'; return; }
-        try{ sb.auth.signOut(); }catch(e){}
+        try{ if(window.bqSignOutIntent) window.bqSignOutIntent(); sb.auth.signOut(); }catch(e){}
         try{ sessionStorage.clear(); localStorage.removeItem('bq_ws'); }catch(e){}
         location.reload();
       }).catch(function(){ var msg=el.querySelector('#bqDelMsg'); if(msg) msg.textContent='Network error, try again'; btn.disabled=false; btn.textContent='Delete forever'; });
@@ -6744,7 +6744,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       (function(){ var tm=menu.querySelector('[data-a="theme"]'), st=tm&&tm.querySelector('.tmstate');
         function paint(){ if(st) st.textContent=(document.documentElement.getAttribute('data-theme')==='dark')?'ON':'OFF'; }
         paint(); if(tm) tm.addEventListener('click', function(e){ e.stopPropagation(); if(window.bqToggleTheme) window.bqToggleTheme(); paint(); }); })();
-      menu.querySelector('[data-a="out"]').addEventListener('click', function(){ sb.auth.signOut().then(function(){ try{ sessionStorage.removeItem('bq_view'); }catch(e){} location.reload(); }); });
+      menu.querySelector('[data-a="out"]').addEventListener('click', function(){ if(window.bqSignOutIntent) window.bqSignOutIntent(); sb.auth.signOut().then(function(){ try{ sessionStorage.removeItem('bq_view'); }catch(e){} location.reload(); }); });
       menu.querySelector('[data-a="del"]').addEventListener('click', function(){ closeMenu(); if(window.bqDeleteAccountFlow) window.bqDeleteAccountFlow(); });
       // show "Connect a wallet" in the menu only for accounts that do not have one yet
       try{ sb.auth.getUser().then(function(res){ var u=res.data&&res.data.user; if(!u) return; sb.from('wallets').select('pubkey',{count:'exact',head:true}).eq('user_id',u.id).then(function(r){ if(!(r&&r.count>0)){ var wb=menu.querySelector('[data-a="wallet"]'); if(wb) wb.style.display=''; } }, function(){}); }); }catch(e){}
@@ -9180,22 +9180,84 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
        refresh-token reuse detection looks like when two tabs race. Record the actual event so the
        next report comes with evidence instead of a guess. TOKEN_REFRESHED is deliberately not
        logged, only the sign-out and the failures around it. */
+    /* The sign-outs are not random. The client treated "could not reach the auth server" exactly
+       like "your session was revoked", so a Supabase blip, or two tabs racing a refresh, dropped
+       the player to the landing page with their session deleted from storage. Confirmed on
+       2026-08-02, when the whole project API stopped answering and everyone was logged out.
+       Only the server gets to end a session now: keep a copy, and on an unexpected SIGNED_OUT put
+       it back and keep retrying until the server either accepts it or says it is genuinely dead. */
     (function(){
+      var SKEY = 'sb-' + (function(){ try{ return new URL(URL_).hostname.split('.')[0]; }catch(e){ return ''; } })() + '-auth-token';
+      var BKEY = 'bq_sess_backup';
+      var recovering = false, strip = null;
+
+      function save(){ try{ var v = localStorage.getItem(SKEY); if(v) localStorage.setItem(BKEY, v); }catch(e){} }
+      function forget(){ try{ localStorage.removeItem(BKEY); }catch(e){} }
+      // Log out and Delete account go through this, so a deliberate exit is never fought.
+      window.bqSignOutIntent = function(){ try{ sessionStorage.setItem('bq_signout_intent','1'); }catch(e){} forget(); };
+      function intentional(){ try{ return sessionStorage.getItem('bq_signout_intent') === '1'; }catch(e){ return false; } }
+
+      function showStrip(){
+        if(strip) return;
+        strip = document.createElement('div');
+        strip.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99998;background:#20143A;color:#fff;font:600 12.5px/1.4 inherit;padding:9px 14px;text-align:center';
+        strip.textContent = 'Reconnecting, your progress is safe...';
+        document.body.appendChild(strip);
+      }
+      function hideStrip(){ if(strip){ strip.remove(); strip = null; } }
+
+      // A refresh token the server has actually rejected is dead; anything else is the network.
+      function serverSaidNo(err){
+        var m = String((err && (err.message || err.error_description || err.error)) || '').toLowerCase();
+        return /invalid[_ ]grant|refresh[_ ]token[_ ]not[_ ]found|already used|revoked|user not found|invalid refresh/.test(m);
+      }
+
+      function recover(){
+        if(recovering || intentional()) return;
+        var raw; try{ raw = localStorage.getItem(BKEY); }catch(e){}
+        if(!raw) return;
+        var s; try{ s = JSON.parse(raw.indexOf('base64-') === 0 ? atob(raw.slice(7)) : raw); }catch(e){ return; }
+        if(!(s && s.refresh_token)) return;
+        recovering = true;
+        try{ localStorage.setItem(SKEY, raw); }catch(e){}   // so a manual reload recovers too
+        showStrip();
+        var wait = 4000;
+        (function attempt(){
+          sb.auth.setSession({ access_token: s.access_token, refresh_token: s.refresh_token }).then(function(r){
+            if(r && r.error){
+              if(serverSaidNo(r.error)){ forget(); try{ localStorage.removeItem(SKEY); }catch(e){} hideStrip(); recovering = false; return; }
+              setTimeout(attempt, wait); wait = Math.min(wait * 2, 60000); return;
+            }
+            hideStrip(); recovering = false; save();
+            location.reload();
+          }, function(){ setTimeout(attempt, wait); wait = Math.min(wait * 2, 60000); });
+        })();
+      }
+
       var hadSession = false;
       try{
+        save();
         sb.auth.onAuthStateChange(function(evt, session){
-          if(session) hadSession = true;
+          if(session){ hadSession = true; setTimeout(save, 0); }
           if(evt === 'SIGNED_OUT' && hadSession){
             var vis = (typeof document.visibilityState === 'string') ? document.visibilityState : '?';
             var msg = 'LOGOUT event=' + evt
                     + ' visible=' + vis
                     + ' online=' + (navigator.onLine ? 1 : 0)
+                    + ' intent=' + (intentional() ? 1 : 0)
                     + ' tabs_hint=' + (function(){ try{ return sessionStorage.getItem('bq_view')||'-'; }catch(e){ return '-'; } })();
             try{ sb.rpc('log_client_error', { p_msg: msg, p_page: 'auth@'+(window.BQ_BUILD||''),
                                               p_agent: (navigator.userAgent||'').slice(0,180) }); }catch(e){}
+            if(intentional()){ try{ sessionStorage.removeItem('bq_signout_intent'); }catch(e){} forget(); }
+            else { recover(); }
           }
         });
       }catch(e){}
+      // A tab that was asleep through an outage comes back with a dead access token; give it a nudge.
+      document.addEventListener('visibilitychange', function(){
+        if(document.visibilityState !== 'visible' || recovering) return;
+        try{ if(!localStorage.getItem(SKEY) && localStorage.getItem(BKEY)) recover(); }catch(e){}
+      });
       // a refresh that fails is the step immediately before an unwanted sign-out
       window.addEventListener('unhandledrejection', function(ev){
         try{
