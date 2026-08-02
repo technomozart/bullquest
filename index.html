@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785649321";try{console.log("BullQuest build 1785649321");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785654041";try{console.log("BullQuest build 1785654041");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -7053,7 +7053,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           if(s) s.textContent='You signed up with Telegram or a wallet, so your account has no email and no password. The iPhone app needs both. Set them here and your bulls and GRIT come with you.';
         } else {
           if(b) b.textContent='Set a password for the iPhone app';
-          if(s) s.textContent='You signed in with Google, which the iPhone app does not offer. Set a password here and you can sign in there with '+(st.email||'your email')+' and keep everything.';
+          /* Do not name the provider: this also covers wallet players who have already attached an
+             email, and telling them they "signed in with Google" is simply wrong. */
+          if(s) s.textContent='The iPhone app signs in with an email and a password, and your account has no password yet. Set one here and you can sign in there with '+(st.email||'your email')+' and keep your bulls and GRIT.';
         }
       }
     }, function(){ card.hidden=true; });
@@ -7076,8 +7078,15 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       +'You signed up with Telegram or a wallet, so your account has no email and no password. The iPhone app signs in with both, so set them here and you keep the same bulls and GRIT.</p>'
       +'<input id="bqEmailIn" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" '
       +'style="width:100%;padding:13px 14px;border:1px solid rgba(20,16,40,.18);border-radius:12px;font:inherit;font-size:15px;box-sizing:border-box">'
+      +'<div style="position:relative;margin-top:9px">'
       +'<input id="bqEmailPw" type="password" autocomplete="new-password" placeholder="Choose a password, 8 characters or more" '
-      +'style="width:100%;margin-top:9px;padding:13px 14px;border:1px solid rgba(20,16,40,.18);border-radius:12px;font:inherit;font-size:15px;box-sizing:border-box">'
+      +'style="width:100%;padding:13px 46px 13px 14px;border:1px solid rgba(20,16,40,.18);border-radius:12px;font:inherit;font-size:15px;box-sizing:border-box">'
+      +'<button type="button" id="bqEmailPwEye" aria-label="Show password" aria-pressed="false" '
+      +'style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;background:none;'
+      +'cursor:pointer;display:grid;place-items:center;color:#6B6785;padding:0">'
+      +'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+      +'<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>'
+      +'</button></div>'
       +'<div id="bqEmailMsg" style="font-size:13px;font-weight:600;margin:10px 0 0;min-height:18px"></div>'
       +'<div style="display:flex;gap:9px;margin-top:14px">'
         +'<button type="button" id="bqEmailGo" style="flex:1;border:0;border-radius:12px;background:#4DA6F5;color:#fff;font:inherit;font-weight:800;font-size:15px;padding:13px;min-height:48px;cursor:pointer">Save</button>'
@@ -7085,6 +7094,24 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       +'</div></div>';
     document.body.appendChild(ov);
     var inp=ov.querySelector('#bqEmailIn'), pw=ov.querySelector('#bqEmailPw'), go=ov.querySelector('#bqEmailGo'), msg=ov.querySelector('#bqEmailMsg');
+    /* Let people see what they are typing. A password they cannot check is a password they will
+       mistype, and this one has to be retyped later on a phone keyboard. */
+    (function(){
+      var eye=ov.querySelector('#bqEmailPwEye'); if(!eye) return;
+      var slash='<path d="M3 3l18 18"/>';
+      eye.addEventListener('click', function(){
+        var showing = pw.type === 'text';
+        pw.type = showing ? 'password' : 'text';
+        eye.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+        eye.setAttribute('aria-pressed', showing ? 'false' : 'true');
+        var svg = eye.querySelector('svg');
+        if(svg){
+          var base='<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/>';
+          svg.innerHTML = showing ? base : base + slash;
+        }
+        try{ pw.focus(); pw.setSelectionRange(pw.value.length, pw.value.length); }catch(e){}
+      });
+    })();
     /* A Google player already has the right email; asking them to retype it invites a typo that
        would move their account to an address they do not own. Prefill and lock it. */
     (function(){
@@ -7092,7 +7119,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(st.email && !st.needs_email){
         inp.value=st.email; inp.readOnly=true; inp.style.opacity='.72';
         var h=ov.querySelector('h3'); if(h) h.textContent='Set a password';
-        var pEl=ov.querySelector('p'); if(pEl) pEl.textContent='The iPhone app signs in with an email and a password. Yours has no password yet, so pick one and use it there with '+st.email+'.';
+        var pEl=ov.querySelector('p'); if(pEl) pEl.textContent='The iPhone app signs in with an email and a password. Your account has no password yet, so pick one and use it there with '+st.email+'.';
         setTimeout(function(){ try{ pw.focus(); }catch(e){} }, 60);
       }
     })();
