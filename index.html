@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785658172";try{console.log("BullQuest build 1785658172");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785658432";try{console.log("BullQuest build 1785658432");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -9173,6 +9173,39 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
     sb=window.supabase.createClient(URL_,KEY_);
+    /* Random sign-outs are reported but not reproducible, and the session tables only show the
+       aftermath: 26% of refresh tokens revoked, 59 sessions with 4+ revocations, which is what
+       refresh-token reuse detection looks like when two tabs race. Record the actual event so the
+       next report comes with evidence instead of a guess. TOKEN_REFRESHED is deliberately not
+       logged, only the sign-out and the failures around it. */
+    (function(){
+      var hadSession = false;
+      try{
+        sb.auth.onAuthStateChange(function(evt, session){
+          if(session) hadSession = true;
+          if(evt === 'SIGNED_OUT' && hadSession){
+            var vis = (typeof document.visibilityState === 'string') ? document.visibilityState : '?';
+            var msg = 'LOGOUT event=' + evt
+                    + ' visible=' + vis
+                    + ' online=' + (navigator.onLine ? 1 : 0)
+                    + ' tabs_hint=' + (function(){ try{ return sessionStorage.getItem('bq_view')||'-'; }catch(e){ return '-'; } })();
+            try{ sb.rpc('log_client_error', { p_msg: msg, p_page: 'auth@'+(window.BQ_BUILD||''),
+                                              p_agent: (navigator.userAgent||'').slice(0,180) }); }catch(e){}
+          }
+        });
+      }catch(e){}
+      // a refresh that fails is the step immediately before an unwanted sign-out
+      window.addEventListener('unhandledrejection', function(ev){
+        try{
+          var m = String((ev && ev.reason && (ev.reason.message || ev.reason)) || '');
+          if(/refresh|token|JWT|session/i.test(m)){
+            sb.rpc('log_client_error', { p_msg: 'AUTHFAIL ' + m.slice(0,160),
+                                         p_page: 'auth@'+(window.BQ_BUILD||''),
+                                         p_agent: (navigator.userAgent||'').slice(0,180) });
+          }
+        }catch(e){}
+      });
+    })();
     // error visibility: report uncaught JS errors to the founder dashboard.
     // Deduped + capped per session, fire-and-forget (rpc builder has no .catch), never throws.
     (function(){
