@@ -269,10 +269,13 @@
           +'<div style="flex:1;min-width:210px">'
           +'<a href="'+esc(s.url)+'" target="_blank" rel="noopener" style="color:#4DA6F5;font-weight:700;word-break:break-all">'+esc(s.url)+'</a>'
           +'<div class="hint" style="margin-top:3px">'+esc(s.email||String(s.user_id).slice(0,8))+' &middot; '+esc(fmtTime(s.created_at))+'</div></div>'
-          /* Two quests share this queue and are judged by different rules, so each row says which
-             it is. Reviewing a comment against the hashtag rules would reject every one of them. */
-          +'<span style="font-size:11.5px;font-weight:800;border-radius:999px;padding:3px 9px;white-space:nowrap;'
-            +(s.quest_slug==='x_engage_launch'
+          /* Several quests share this queue and are judged by different rules, so each row says
+             which it is. Reviewing a comment against the hashtag rules would reject every one.
+             The label comes from reply_target (does the QUEST point at a specific tweet), never
+             from a hardcoded slug: that is how x_engage_thesis got mislabelled as an original post
+             and would have had all its genuine replies rejected for "missing #BullQuest". */
+          +'<span title="'+esc(s.quest_title||s.quest_slug)+'" style="font-size:11.5px;font-weight:800;border-radius:999px;padding:3px 9px;white-space:nowrap;'
+            +(s.reply_target
                 ? 'background:rgba(93,63,211,.12);color:#5D3FD3">comment on our post'
                 : 'background:rgba(20,16,40,.08);color:#4A4560">original post')+'</span>'
           +'<button class="subApprove refresh" data-id="'+esc(s.id)+'" style="cursor:pointer;background:#12B76A">Approve</button>'
@@ -290,7 +293,7 @@
         /* The guidance used to describe x_shill only, above a queue that now also holds comments.
            Judging a comment by the hashtag rules would reject every one of them. */
         +'<p class="hint" style="margin-bottom:3px"><b>original post</b> should say why they like BullQuest, tag 3 friends, and include #BullQuest #Solana #PumpFun and @BullQuestSol.</p>'
-        +'<p class="hint" style="margin-top:0"><b>comment on our post</b> only needs to be a real reply to the launch post. Bookmarks, likes and reposts cannot be checked from outside X. The 3 friends box applies to original posts only. Approve pays the reward; Reject lets them try again.</p>'
+        +'<p class="hint" style="margin-top:0"><b>comment on our post</b> only needs to be a real reply to the exact post its quest points at, so it is never asked for hashtags, for tagging us, or for friends. <b>The 3 friends box only ever affects original posts.</b> Hover a badge to see which quest a row belongs to. Bookmarks, likes and reposts cannot be checked from outside X. Approve pays the reward; Reject lets them try again.</p>'
         +cards+'<div id="subMsg" style="font-size:13px;font-weight:600;margin-top:10px"></div></div>';
       wireSubmissions(); wireBulkCheck();
     }, function(){ el.innerHTML='<div class="panel"><h3>Tweet submissions</h3><p class="hint" style="color:#E5484D">Failed to load.</p></div>'; });
