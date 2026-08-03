@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785788133";try{console.log("BullQuest build 1785788133");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785788595";try{console.log("BullQuest build 1785788595");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4624,9 +4624,36 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 #view-airdrop .bqair-hero h1{font-size:26px;line-height:1.15;margin:0 0 6px;font-weight:800}
 #view-airdrop .bqair-hero>p{margin:0 0 16px;font-size:14px;color:rgba(255,255,255,.9);line-height:1.5}
 #view-airdrop .bqair-poolrow{display:flex;gap:10px}
-#view-airdrop .bqair-poolrow>div{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px 10px;text-align:center}
+#view-airdrop .bqair-poolrow>div,#view-airdrop .bqair-poolrow>button{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px 10px;text-align:center}
+#view-airdrop .bqair-poolrow>button{font-family:inherit;cursor:pointer;transition:background .15s ease,transform .15s ease;-webkit-tap-highlight-color:transparent}
+#view-airdrop .bqair-poolrow>button:hover{background:rgba(255,255,255,.22)}
+#view-airdrop .bqair-poolrow>button:active{transform:scale(.97)}
 #view-airdrop .bqair-poolrow b{display:block;font-size:17px;font-weight:800;color:#fff}
 #view-airdrop .bqair-poolrow span{font-size:10.5px;color:rgba(255,255,255,.90);line-height:1.3;display:block;margin-top:2px}
+#view-airdrop .bqair-poolrow .bqair-tap{display:inline-block;margin-left:3px;opacity:.85;font-weight:800}
+/* registered-wallet browser */
+.bqwl-ov{position:fixed;inset:0;z-index:10070;background:rgba(20,16,40,.55);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:16px}
+.bqwl{background:var(--surface);border-radius:20px;width:100%;max-width:440px;max-height:82vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 18px 50px rgba(20,16,40,.28)}
+.bqwl-h{padding:16px 16px 10px;border-bottom:1px solid var(--line);position:relative}
+.bqwl-h h3{margin:0;font-size:17px;font-weight:800;color:var(--ink)}
+.bqwl-h p{margin:3px 0 0;font-size:12.5px;color:var(--faint)}
+.bqwl-x{position:absolute;top:10px;right:10px;width:32px;height:32px;border:0;background:transparent;font-size:22px;line-height:1;color:var(--faint);cursor:pointer;border-radius:8px}
+.bqwl-x:hover{background:var(--tint-violet1)}
+.bqwl-s{padding:10px 16px}
+.bqwl-s input{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:12px;font-size:14px;font-family:inherit;color:var(--ink);background:var(--surface)}
+.bqwl-s input:focus{outline:none;border-color:var(--v)}
+.bqwl-list{overflow-y:auto;flex:1;padding:0 16px 8px;-webkit-overflow-scrolling:touch}
+.bqwl-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
+.bqwl-row:last-child{border-bottom:0}
+.bqwl-addr{flex:1;min-width:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:var(--ink);word-break:break-all;line-height:1.45}
+.bqwl-when{font-size:10.5px;color:var(--faint);white-space:nowrap}
+.bqwl-copy{border:1.5px solid var(--line);background:var(--surface);border-radius:9px;padding:5px 9px;font-size:11px;font-weight:700;color:var(--v);cursor:pointer;font-family:inherit;white-space:nowrap}
+.bqwl-copy:hover{background:var(--tint-violet1)}
+.bqwl-empty{padding:26px 8px;text-align:center;color:var(--faint);font-size:13px}
+.bqwl-f{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 16px;border-top:1px solid var(--line)}
+.bqwl-f button{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--v);cursor:pointer;font-family:inherit}
+.bqwl-f button:disabled{opacity:.4;cursor:default}
+.bqwl-f span{font-size:12px;color:var(--faint)}
 #view-airdrop .bqair-card{background:var(--surface);border-radius:20px;box-shadow:0 10px 24px rgba(20,16,40,.07);padding:20px;margin:16px 16px 0}
 #view-airdrop .bqair-card h3{margin:0;font-size:17px;font-weight:800}
 #view-airdrop .bqair-p{margin:6px 0 14px;font-size:13.5px;color:var(--faint);line-height:1.5}
@@ -4690,7 +4717,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <div class="bqair-poolrow">
         <div><b id="airPool">10%</b><span>of $BULL this season</span></div>
         <div><b id="airRounds">10 rounds</b><span>1% every ~9 days</span></div>
-        <div><b id="airReg">0 wallets</b><span>registered</span></div>
+        <button type="button" id="airRegBtn" aria-label="See the list of registered wallets"><b id="airReg">0 wallets</b><span>registered<span class="bqair-tap">&rsaquo;</span></span></button>
       </div>
     </header>
     <section class="bqair-card" id="airMe"><p class="bqair-p">Loading&hellip;</p></section>
@@ -9626,6 +9653,69 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     function dstr(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }catch(e){ return ''; } }
     var busy=false;
 
+    /* Registered-wallet browser. Anyone can open the list and search for their own address, which
+       is the point: the airdrop should be checkable rather than taken on trust. The RPC returns
+       ONLY the payout address and when it registered, never a username, email or GRIT figure, and
+       it hides removed accounts so this list and the counter above it always agree. */
+    var WL_PAGE=50;
+    function bqWalletList(){
+      var page=0, q='', tmr=null, reqId=0;
+      var ov=document.createElement('div'); ov.className='bqwl-ov';
+      ov.innerHTML='<div class="bqwl" role="dialog" aria-label="Registered wallets">'+
+        '<div class="bqwl-h"><h3>Registered wallets</h3><p id="bqwlSub">Loading&hellip;</p>'+
+        '<button type="button" class="bqwl-x" aria-label="Close">&times;</button></div>'+
+        '<div class="bqwl-s"><input id="bqwlQ" type="search" autocomplete="off" spellcheck="false" placeholder="Search for an address"></div>'+
+        '<div class="bqwl-list" id="bqwlList"></div>'+
+        '<div class="bqwl-f"><button type="button" id="bqwlPrev">Back</button><span id="bqwlPage"></span><button type="button" id="bqwlNext">Next</button></div>'+
+      '</div>';
+      document.body.appendChild(ov);
+      var list=ov.querySelector('#bqwlList'), sub=ov.querySelector('#bqwlSub'),
+          inp=ov.querySelector('#bqwlQ'), prev=ov.querySelector('#bqwlPrev'),
+          next=ov.querySelector('#bqwlNext'), pg=ov.querySelector('#bqwlPage');
+
+      function close(){ ov.remove(); document.removeEventListener('keydown', onKey); }
+      function onKey(e){ if(e.key==='Escape') close(); }
+      document.addEventListener('keydown', onKey);
+      ov.querySelector('.bqwl-x').addEventListener('click', close);
+      ov.addEventListener('click', function(e){ if(e.target===ov) close(); });
+
+      function load(){
+        var mine=++reqId;
+        list.innerHTML='<div class="bqwl-empty">Loading&hellip;</div>';
+        sb.rpc('airdrop_wallet_list',{p_q:q,p_limit:WL_PAGE,p_offset:page*WL_PAGE}).then(function(r){
+          if(mine!==reqId) return;                       // a newer keystroke already won
+          var d=(r&&r.data)||{}, rows=d.rows||[], matched=Number(d.matched)||0, total=Number(d.total)||0;
+          sub.textContent = q ? (fmt(matched)+' of '+fmt(total)+' match') : (fmt(total)+' wallets registered for the airdrop');
+          if(!rows.length){ list.innerHTML='<div class="bqwl-empty">'+(q?'No wallet matches that.':'No wallets registered yet.')+'</div>'; }
+          else {
+            list.innerHTML='';
+            rows.forEach(function(row){
+              var d1=document.createElement('div'); d1.className='bqwl-row';
+              var a=document.createElement('div'); a.className='bqwl-addr'; a.textContent=row.wallet;
+              var w=document.createElement('span'); w.className='bqwl-when'; w.textContent=dstr(row.at);
+              var c=document.createElement('button'); c.type='button'; c.className='bqwl-copy'; c.textContent='Copy';
+              c.addEventListener('click', function(){
+                try{ navigator.clipboard.writeText(row.wallet); c.textContent='Copied'; setTimeout(function(){ c.textContent='Copy'; },1200); }
+                catch(e){ if(window.bqToast) window.bqToast('Could not copy'); }
+              });
+              d1.appendChild(a); d1.appendChild(w); d1.appendChild(c); list.appendChild(d1);
+            });
+          }
+          var pages=Math.max(1, Math.ceil(matched/WL_PAGE));
+          pg.textContent='Page '+(page+1)+' of '+fmt(pages);
+          prev.disabled = page<=0; next.disabled = (page+1)>=pages;
+          list.scrollTop=0;
+        }).catch(function(){
+          if(mine!==reqId) return;
+          list.innerHTML='<div class="bqwl-empty">Could not load the list. Please try again.</div>';
+        });
+      }
+      inp.addEventListener('input', function(){ clearTimeout(tmr); tmr=setTimeout(function(){ q=inp.value.trim(); page=0; load(); },250); });
+      prev.addEventListener('click', function(){ if(page>0){ page--; load(); } });
+      next.addEventListener('click', function(){ page++; load(); });
+      load();
+    }
+
     function renderOverview(o){
       var e;
       if(e=document.getElementById('airPool')) e.textContent=(o.pool_pct||10)+'%';
@@ -9633,6 +9723,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(e=document.getElementById('airReg')) e.textContent=fmt(o.registered_count)+' wallet'+(Number(o.registered_count)===1?'':'s');
       // the qualifying floor lives in airdrop_config, never hardcode it in the bundle
       if((e=document.getElementById('airMinGrit')) && Number(o.min_grit_to_qualify)>0) e.textContent=fmt(o.min_grit_to_qualify);
+      var rb=document.getElementById('airRegBtn');
+      if(rb && !rb.dataset.wired){ rb.dataset.wired='1'; rb.addEventListener('click', bqWalletList); }
       var s=document.getElementById('airSched');
       if(s&&o.rounds){
         var next=null,i; for(i=0;i<o.rounds.length;i++){ if(o.rounds[i].status==='upcoming'){ next=o.rounds[i]; break; } }
