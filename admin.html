@@ -287,7 +287,12 @@
         +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px">'
           +'<button id="subCheckDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Check all (preview)</button>'
           +'<button id="subCheckRun" style="cursor:pointer;background:#12B76A;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Check all and apply</button>'
-          +'<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700"><input type="checkbox" id="subFriends"> require 3 friends tagged</label>'
+          /* The friend requirement used to live here as a global checkbox, so it hit every quest in
+             the queue at once and its value depended on how the box happened to be flipped that
+             run: 408 rejections against 276 approvals, and 27 players approved for the exact
+             behaviour the other 408 were refused for. It now lives on quests.min_friend_tags, one
+             value per quest, so it can only ever apply to the quest that actually asks for it. */
+          +'<span class="hint" style="font-size:12.5px;align-self:center">Friend tags are set per quest now, not here.</span>'
         +'</div>'
         +'<div id="subAuto" class="hint" style="margin-bottom:8px"></div>'
         /* The guidance used to describe x_shill only, above a queue that now also holds comments.
@@ -302,7 +307,6 @@
     function run(dry){
       var out=document.getElementById('subAuto');
       var a=document.getElementById('subCheckDry'), b=document.getElementById('subCheckRun');
-      var friends=document.getElementById('subFriends');
       if(a) a.setAttribute('disabled',''); if(b) b.setAttribute('disabled','');
       if(out){ out.style.color=''; out.textContent = dry ? 'Checking every pending tweet, no changes yet...' : 'Checking and applying, this can take a minute...'; }
       sb.auth.getSession().then(function(sess){
@@ -313,7 +317,7 @@
           /* The function defaults to 500 a run. After a mass requeue the backlog is larger than
              that, and a half-done queue looks like the checker silently skipped people. Ask for
              its maximum so one click clears everything. */
-          body:JSON.stringify({dryRun:dry, requireFriends: !!(friends&&friends.checked), limit:1000})
+          body:JSON.stringify({dryRun:dry, limit:1000})
         });
       }).then(function(r){ return r.json(); }).then(function(j){
         if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
