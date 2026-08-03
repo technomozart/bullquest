@@ -310,7 +310,10 @@
         return fetch(URL_+'/functions/v1/verify-tweets',{
           method:'POST',
           headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},
-          body:JSON.stringify({dryRun:dry, requireFriends: !!(friends&&friends.checked)})
+          /* The function defaults to 500 a run. After a mass requeue the backlog is larger than
+             that, and a half-done queue looks like the checker silently skipped people. Ask for
+             its maximum so one click clears everything. */
+          body:JSON.stringify({dryRun:dry, requireFriends: !!(friends&&friends.checked), limit:1000})
         });
       }).then(function(r){ return r.json(); }).then(function(j){
         if(a) a.removeAttribute('disabled'); if(b) b.removeAttribute('disabled');
