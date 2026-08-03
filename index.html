@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785788703";try{console.log("BullQuest build 1785788703");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785792981";try{console.log("BullQuest build 1785792981");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -9374,9 +9374,20 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var WA=window.bqTgWebApp;
     if(!WA||!WA.initData){ if(window.bqToast) window.bqToast('Please reopen BullQuest from the bot menu.'); return Promise.resolve(false); }
     if(btn){ btn.disabled=true; btn.textContent='Entering...'; }
-    return fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({init_data:WA.initData})})
+    /* Send the CURRENT session token when we have one. Without it tg-auth cannot tell this is an
+       existing player, finds no telegram_links row, and mints a brand new account: the player ends
+       up with two, and the newer one gets auto-flagged as a duplicate of themselves. With the token
+       tg-auth links the Telegram id to the account they are already signed into. */
+    return sb.auth.getSession().then(function(s){
+      var body={ init_data: WA.initData };
+      var tok = s && s.data && s.data.session && s.data.session.access_token;
+      if(tok) body.access_token = tok;
+      return fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify(body)});
+    })
       .then(function(r){ return r.json(); })
       .then(function(j){
+        // linked onto the account we were already signed into: no new session to set
+        if(j&&j.linked){ return loadAndShow(false).then(function(){ if(window.bqGo) window.bqGo('view-home'); return true; }); }
         if(j&&j.session){ return sb.auth.setSession(j.session).then(function(){ return loadAndShow(false); }).then(function(){ if(window.bqGo) window.bqGo('view-home'); return true; }); }
         if(window.bqToast) window.bqToast((j&&j.error)||'Could not sign in. Reopen BullQuest from the bot menu.');
         if(btn){ btn.disabled=false; btn.textContent='Enter BullQuest'; } return false;
@@ -9442,9 +9453,17 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var tgl; try{ tgl=new URLSearchParams(location.search).get('tgl'); }catch(e){}
     if(!tgl){ return resolve(); }
     try{ var qp=new URLSearchParams(location.search); qp.delete('tgl'); var clean=location.pathname+(qp.toString()?('?'+qp.toString()):'')+location.hash; history.replaceState(null,'',clean); }catch(e){}
-    fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify({login_token:tgl})})
+    /* Same reason as bqTgInAppLogin: if they are already signed in, hand tg-auth the session token
+       so it LINKS Telegram to that account instead of creating a second one. */
+    sb.auth.getSession().then(function(s){
+      var body={ login_token: tgl };
+      var tok = s && s.data && s.data.session && s.data.session.access_token;
+      if(tok) body.access_token = tok;
+      return fetch(URL_+'/functions/v1/tg-auth',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+KEY_},body:JSON.stringify(body)});
+    })
       .then(function(r){ return r.json(); })
       .then(function(j){
+        if(j&&j.linked){ try{ sessionStorage.setItem('bq_view','view-home'); }catch(e){} if(window.bqToast) window.bqToast('Telegram linked to your account'); return resolve(); }
         if(j&&j.session){ return sb.auth.setSession(j.session).then(function(){ try{ sessionStorage.setItem('bq_view','view-home'); }catch(e){} resolve(); }, function(){ resolve(); }); }
         if(window.bqToast) window.bqToast((j&&j.error)||'That Telegram login link expired. Tap Continue with Telegram again.');
         resolve();
