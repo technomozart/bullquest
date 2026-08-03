@@ -471,11 +471,23 @@
         '<div class="grid">'+kpi('Restricted', c.restricted||0, 'awaiting your call')+
           kpi('Banned', c.banned||0)+kpi('Appeals open', c.appeals_open||0)+
           kpi('Bulls in custody', c.in_custody||0, 'returnable exactly')+
-          kpi('Banned with no current evidence', c.banned_without_current_evidence||0, 'should be zero')+'</div>'+
+          /* NOT "should be zero". Batch rules are historical by nature: a burst of signups at
+             04:00 cannot be re-derived from live data once it is over, so accounts banned by one
+             will always read as unevidenced. Only treat a spike here as suspicious. */
+          kpi('Banned, evidence not re-derivable', c.banned_without_current_evidence||0, 'normal for batch rules')+'</div>'+
         '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 4px">'+
-          '<button id="enfDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Preview a sweep</button>'+
-          '<button id="enfRun" style="cursor:pointer;background:#F5A623;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Sweep and restrict</button>'+
+          '<button id="enfDry" style="cursor:pointer;background:#4DA6F5;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Look for new offenders</button>'+
+          '<button id="enfRun" style="cursor:pointer;background:#F5A623;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Restrict any it finds</button>'+
           '<span id="enfOut" class="hint" style="margin:0"></span>'+
+        '</div>'+
+        /* The sweep only ever FINDS new offenders; it does nothing about the queue below, which
+           is why it can report 0 while hundreds sit waiting. These two clear that queue in bulk,
+           and strictly by the evidence: each one acts only where the current rules agree. */
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 2px;padding-top:10px;border-top:1px solid rgba(20,16,40,.08)">'+
+          '<span class="hint" style="margin:0;flex-basis:100%">Clear the waiting queue in bulk. Each button acts only where the current rules agree with it, so nothing ambiguous is touched.</span>'+
+          '<button id="enfBulkBan" style="cursor:pointer;background:#E5484D;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Confirm every one the rules still condemn</button>'+
+          '<button id="enfBulkClear" style="cursor:pointer;background:#12B76A;color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:800;min-height:44px">Release every one the rules now clear</button>'+
+          '<span id="enfBulkOut" class="hint" style="margin:0"></span>'+
         '</div>';
       if(!rows.length) h+='<p class="hint" style="margin-top:10px">Nothing waiting on you.</p>';
       rows.forEach(function(x){
@@ -515,6 +527,24 @@
       var a=document.getElementById('enfDry'), bb=document.getElementById('enfRun');
       if(a) a.addEventListener('click', function(){ sweep(true); });
       if(bb) bb.addEventListener('click', function(){ if(confirm('Restrict every account the current rules condemn? Nothing is taken from anyone: they keep their bull and GRIT and can keep playing until you decide.')) sweep(false); });
+
+      function bulk(action, ask){
+        var o=document.getElementById('enfBulkOut'); if(!confirm(ask)) return;
+        if(o){ o.style.color=''; o.textContent='Working through the queue...'; }
+        sb.rpc('admin_enforcement_bulk',{p_action:action,p_max:500}).then(function(rr){
+          var j=rr&&rr.data;
+          if(!o) return;
+          if((rr&&rr.error)||!j||j.error){ o.style.color='#E5484D'; o.textContent='Failed: '+((rr&&rr.error&&rr.error.message)||(j&&j.error)||'no result'); return; }
+          o.style.color='#12B76A';
+          o.textContent='Done: '+j.done+' actioned'+(j.failed?', '+j.failed+' failed':'')+', '+j.still_restricted+' still waiting.';
+          setTimeout(loadEnforcement, 1200);
+        });
+      }
+      var bkb=document.getElementById('enfBulkBan'), bkc=document.getElementById('enfBulkClear');
+      if(bkb) bkb.addEventListener('click', function(){ bulk('confirm_condemned',
+        'Confirm the ban on every restricted account the current rules STILL condemn?\n\nEach bull goes into custody, so Clear can hand back the exact same animal later. Accounts the rules no longer condemn are not touched.'); });
+      if(bkc) bkc.addEventListener('click', function(){ bulk('clear_uncondemned',
+        'Release every restricted account the current rules NO LONGER condemn?\n\nThey get everything back and are marked so no future sweep can catch them again.'); });
 
       function act(btn, fn, label){
         var u=btn.getAttribute('data-u'), m=btn.parentNode.querySelector('.enfMsg');
