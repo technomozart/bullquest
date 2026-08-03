@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785713361";try{console.log("BullQuest build 1785713361");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785721245";try{console.log("BullQuest build 1785721245");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4647,6 +4647,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 #view-airdrop .bqair-stat span{font-size:10.5px;color:var(--faint);margin-top:3px;display:block;line-height:1.25}
 #view-airdrop .bqair-next{font-size:12.5px;color:var(--faint);line-height:1.5;margin-bottom:12px}
 #view-airdrop .bqair-claim{text-align:center;font-weight:800;font-size:13px;color:#6E5700;background:linear-gradient(180deg,#FFE9AE,#FFD976);border-radius:12px;padding:11px}
+/* Qualifying gate. A round only pays wallets whose LIFETIME earned GRIT is at or above
+   airdrop_config.min_grit_to_qualify, so a player below it must be told the number rather than
+   shown a bare 0%. Tokenized colours so it reads correctly in dark mode too. */
+#view-airdrop .bqair-gate{background:var(--tint-violet1);border:1px solid var(--hairline);border-radius:14px;padding:12px 13px;margin:0 0 12px}
+#view-airdrop .bqair-gate .gt{font-size:13px;font-weight:800;color:var(--title);margin-bottom:3px}
+#view-airdrop .bqair-gate .gs{font-size:12.5px;color:var(--faint);line-height:1.5}
+#view-airdrop .bqair-gate .gbar{height:7px;border-radius:999px;background:var(--tint-neutral1);overflow:hidden;margin:9px 0 7px}
+#view-airdrop .bqair-gate .gbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#8B5CF6,#6B31E6);transition:width .4s ease}
+#view-airdrop .bqair-gate.ok{background:var(--tint-green1)}
+#view-airdrop .bqair-gate.ok .gbar i{background:linear-gradient(90deg,#48B368,#2F9A50)}
 #view-airdrop .bqair-cta{text-align:center;padding:6px 4px}
 #view-airdrop .bqair-cta h3{font-size:19px}
 #view-airdrop .bqair-steps{list-style:none;counter-reset:s;margin:12px 0 0;padding:0}
@@ -4687,7 +4697,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <ol class="bqair-steps">
         <li><b>Register your wallet</b><span>Paste your Solana address or connect Phantom. Receive-only, no signing, no risk to your funds.</span></li>
         <li><b>Earn GRIT by playing</b><span>Spins, quests and duel wins all add to your GRIT. Each round counts what you <b>earned since the last one</b>, so spending GRIT at the Gym never costs you a thing.</span></li>
-        <li><b>Every ~9 days, 1% unlocks</b><span>That 1% of $BULL is shared out by how much GRIT each player earned during that window.</span></li>
+        <li><b>Pass the qualifying line</b><span>A wallet has to have earned <b id="airMinGrit">1,000</b> GRIT in total before rounds start paying it. That keeps the pool with real players instead of throwaway accounts. Your progress toward it is shown at the top of this page.</span></li>
+        <li><b>Every ~9 days, 1% unlocks</b><span>That 1% of $BULL is shared out by how much GRIT each qualifying player earned during that window. One wallet can take at most a tenth of a round, so nobody sweeps it.</span></li>
         <li><b>Claim at launch</b><span>Each round locks in your allocation. When $BULL goes live, you claim it all to your wallet.</span></li>
       </ol>
     </section>
@@ -9596,6 +9607,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(e=document.getElementById('airPool')) e.textContent=(o.pool_pct||10)+'%';
       if(e=document.getElementById('airRounds')) e.textContent=(o.num_rounds||10)+' rounds';
       if(e=document.getElementById('airReg')) e.textContent=fmt(o.registered_count)+' wallet'+(Number(o.registered_count)===1?'':'s');
+      // the qualifying floor lives in airdrop_config, never hardcode it in the bundle
+      if((e=document.getElementById('airMinGrit')) && Number(o.min_grit_to_qualify)>0) e.textContent=fmt(o.min_grit_to_qualify);
       var s=document.getElementById('airSched');
       if(s&&o.rounds){
         var next=null,i; for(i=0;i<o.rounds.length;i++){ if(o.rounds[i].status==='upcoming'){ next=o.rounds[i]; break; } }
@@ -9609,6 +9622,25 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       }
     }
 
+    // A round only allocates to wallets whose LIFETIME earned GRIT is at or above the configured
+    // floor (airdrop_config.min_grit_to_qualify). Without this strip a player under the floor just
+    // sees "0%" with no explanation, which reads as the airdrop being broken or rigged.
+    function gateHtml(m){
+      var min=Number(m&&m.min_grit_to_qualify)||0;
+      if(min<=0) return '';                                   // no floor configured, nothing to say
+      var life=Number(m&&m.grit_earned_lifetime)||0;
+      var need=Math.max(min-life,0);
+      var pct=Math.max(0,Math.min(100,Math.round(life/min*100)));
+      if(need<=0){
+        return '<div class="bqair-gate ok"><div class="gt">You qualify for the airdrop</div>'+
+               '<div class="gbar"><i style="width:100%"></i></div>'+
+               '<div class="gs">You have earned '+fmt(life)+' GRIT, past the '+fmt(min)+' needed. Every round you earn in now counts toward your share.</div></div>';
+      }
+      return '<div class="bqair-gate"><div class="gt">'+fmt(need)+' more GRIT to qualify</div>'+
+             '<div class="gbar"><i style="width:'+pct+'%"></i></div>'+
+             '<div class="gs">Rounds only pay wallets that have earned at least '+fmt(min)+' GRIT in total. You are at '+fmt(life)+'. Duel, train and finish quests to get there, then every round counts.</div></div>';
+    }
+
     function renderMe(m){
       var el=document.getElementById('airMe'); if(!el) return;
       if(!m||m.loggedOut){
@@ -9618,6 +9650,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(!m.registered){
         el.innerHTML=
           '<h3>Register your payout wallet'+window.bqHint('payout-wallet','payout wallet')+'</h3>'+
+          gateHtml(m)+
           '<p class="bqair-p">Paste the Solana address where you want your $BULL. Receive-only, we never ask for your key.</p>'+
           '<div class="bqair-reg"><input id="airAddr" type="text" spellcheck="false" autocomplete="off" placeholder="Your Solana address"><button type="button" class="bqair-ghost" id="airPhantom">Phantom</button></div>'+
           '<div id="airMsg" class="bqair-msg"></div>'+
@@ -9626,6 +9659,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       }
       el.innerHTML=
         '<div class="bqair-mehead"><h3>Your allocation</h3><button type="button" class="bqair-change" id="airChange">'+shortAddr(m.payout_pubkey)+' · change</button></div>'+
+        '<div style="height:12px"></div>'+
+        gateHtml(m)+
         '<div class="bqair-stats">'+
           // what this round actually counts, so the player can see the number their share is built from
           '<div class="bqair-stat"><b>'+fmt(m.grit_this_round!=null?m.grit_this_round:m.grit_balance)+'</b><span>GRIT this round</span></div>'+
