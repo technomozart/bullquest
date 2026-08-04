@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785841668";try{console.log("BullQuest build 1785841668");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785843470";try{console.log("BullQuest build 1785843470");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -375,16 +375,11 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .bq-hero .sub{font-size:18px;color:rgba(255,255,255,.92);max-width:44ch;margin-bottom:28px;font-weight:500}
 #view-landing .bq-hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
 #view-landing .bq-trust{display:flex;gap:10px;flex-wrap:wrap}
-/* Flat translucent pills with hairline glyphs read as filler on the hero. Solid light plate,
-   brand-violet text and a properly weighted icon give them enough contrast to look deliberate
-   without competing with the CTA above. */
-#view-landing .bq-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.94);
-  color:#4B21B0;padding:9px 15px;border-radius:999px;font-size:13px;font-weight:800;letter-spacing:.1px;
-  box-shadow:0 4px 14px rgba(20,10,60,.16)}
-#view-landing .bq-chip svg{width:17px;height:17px;flex:none;color:#6B31E6}
-@media(prefers-color-scheme:dark){
-  #view-landing .bq-chip{background:rgba(255,255,255,.92)}
-}
+/* Text only. Icons at this size were the problem: a bull glyph becomes an unreadable blob and the
+   rest read as clip art. Quiet outlined pills that sit under the CTA instead of competing with it. */
+#view-landing .bq-chip{display:inline-flex;align-items:center;background:transparent;
+  color:rgba(255,255,255,.96);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;
+  letter-spacing:.2px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.34)}
 #view-landing .bq-hero-art{position:relative;display:flex;justify-content:center;align-items:center;min-height:420px}
 #view-landing .bq-hero-art .stage{position:relative;width:100%;max-width:440px}
 #view-landing .bq-hero-bull{position:relative;z-index:2;width:100%;filter:drop-shadow(0 18px 30px rgba(40,15,90,.3))}
@@ -2915,10 +2910,13 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
              needed" repeated it again while sounding defensive about the very thing we are built on.
              Now each chip covers a different axis: what you get, where you play, how little friction
              there is to start. -->
+        <!-- No icons. At chip size a bull glyph is an unreadable blob and the rest read as clip art,
+             so the words carry it. Each chip covers a different axis: what you get, where you play,
+             how little friction there is to start. -->
         <div class="bq-trust">
-          <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.5 9.2C5.1 7.4 4 6.3 3 5.6c.6 1.7 1.3 3.2 2.6 4.4Z" fill="currentColor"/><path d="M17.5 9.2c1.4-1.8 2.5-2.9 3.5-3.6-.6 1.7-1.3 3.2-2.6 4.4Z" fill="currentColor"/><ellipse cx="12" cy="14.6" rx="6" ry="5.4" fill="currentColor"/><circle cx="9.9" cy="13.8" r="1.05" fill="#6B31E6"/><circle cx="14.1" cy="13.8" r="1.05" fill="#6B31E6"/></svg>A free bull to start</span>
-          <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2" stroke="currentColor" stroke-width="2"/><path d="M8.5 20.5h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 8.4h18" stroke="currentColor" stroke-width="2"/></svg>Web-first</span>
-          <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2.5 5.4 13.4h5.3l-1 8.1 7.9-11.2h-5.2z" fill="currentColor"/></svg>No wallet to sign up</span>
+          <span class="bq-chip">A free bull to start</span>
+          <span class="bq-chip">Web-first</span>
+          <span class="bq-chip">No wallet to sign up</span>
         </div>
       </div>
 
