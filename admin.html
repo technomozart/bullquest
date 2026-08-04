@@ -88,6 +88,30 @@
   .legend{display:flex;gap:16px;margin-bottom:10px;font-size:12px;font-weight:700;color:var(--body)}
   .legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
   svg{width:100%;height:auto;display:block;overflow:visible}
+
+  /* Ranked bar list: countries, quests, GRIT sources. The bar is the comparison, the number is the
+     detail, so the bar sits under the label rather than replacing it. */
+  .bars{display:flex;flex-direction:column;gap:9px}
+  .bar .brow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+  .bar .bname{font-size:13px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bar .bval{font-size:13px;font-weight:800;font-variant-numeric:tabular-nums;flex:none}
+  .bar .bval span{color:var(--faint);font-weight:700;margin-left:6px}
+  .bar .btrack{height:8px;background:#F1EEF9;border-radius:5px;overflow:hidden}
+  .bar .btrack i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--violet2),var(--violet))}
+  .bar.muted .btrack i{background:#C9C2DE}
+
+  /* Tables scroll inside themselves so a wide one never makes the page scroll sideways. */
+  .tblwrap{overflow-x:auto;margin:0 -4px}
+  table.t{width:100%;border-collapse:collapse;font-size:13px}
+  table.t th{text-align:right;font-size:11px;font-weight:800;color:var(--faint);text-transform:uppercase;
+    letter-spacing:.4px;padding:0 8px 8px;white-space:nowrap}
+  table.t th:first-child,table.t td:first-child{text-align:left}
+  table.t td{text-align:right;padding:8px;border-top:1px solid var(--hair);font-weight:700;
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+  table.t td.name{font-weight:700;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+  table.t td.dim{color:var(--faint);font-weight:600}
+  .good{color:#12B76A}.warn{color:#E0A100}.bad{color:#E5484D}
+  .note{font-size:12.5px;color:var(--faint);font-weight:600;margin-top:12px}
   .err{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--hair);align-items:flex-start}
   .err:first-of-type{border-top:0}
   .err .emsg{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--ink);word-break:break-word;line-height:1.45}
@@ -159,6 +183,61 @@
     });
     return '<div class="legend"><span><b style="background:#7C5CE6"></b>Signups</span><span><b style="background:#4DA6F5"></b>Active users</span></div>'+
       '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Daily signups and active users, last 14 days">'+bars+'</svg>';
+  }
+
+  // ---- generic renderers for the expanded stats ----
+  function num(n){ return (n==null||n==='') ? '-' : Number(n).toLocaleString(); }
+  /* Ranked bars. `rows` is [{name, val, sub}], scaled against the biggest value rather than a total,
+     so a long tail stays readable instead of collapsing to slivers. */
+  function bars(rows, opts){
+    rows=rows||[]; opts=opts||{};
+    if(!rows.length) return '<div class="note">Nothing to show yet.</div>';
+    var max=1; rows.forEach(function(r){ max=Math.max(max, Number(r.val)||0); });
+    return '<div class="bars">'+rows.map(function(r){
+      var w=Math.max(1.5, (Number(r.val)||0)/max*100);
+      return '<div class="bar'+(r.muted?' muted':'')+'">'+
+        '<div class="brow"><span class="bname">'+esc(r.name)+'</span>'+
+        '<span class="bval">'+num(r.val)+(r.sub?'<span>'+esc(r.sub)+'</span>':'')+'</span></div>'+
+        '<div class="btrack"><i style="width:'+w+'%"></i></div></div>';
+    }).join('')+'</div>';
+  }
+  /* `cols` is [{h, k, f}] where f optionally formats the cell. Anything null renders as a dim dash,
+     never as a zero, because a not-yet-measurable number must not look like a measured zero. */
+  function tbl(cols, rows){
+    rows=rows||[];
+    if(!rows.length) return '<div class="note">Nothing to show yet.</div>';
+    var head=cols.map(function(c){ return '<th>'+esc(c.h)+'</th>'; }).join('');
+    var body=rows.map(function(r){
+      return '<tr>'+cols.map(function(c,i){
+        var v=r[c.k];
+        if(v==null||v==='') return '<td class="dim">-</td>';
+        var txt=c.f?c.f(v,r):num(v);
+        return '<td'+(i===0?' class="name"':'')+'>'+esc(txt)+'</td>';
+      }).join('')+'</tr>';
+    }).join('');
+    return '<div class="tblwrap"><table class="t"><thead><tr>'+head+'</tr></thead><tbody>'+body+'</tbody></table></div>';
+  }
+  function panel(id, title, hint, body){
+    return '<div id="'+id+'" class="panel"><h3>'+esc(title)+'</h3>'+
+      (hint?'<p class="hint">'+esc(hint)+'</p>':'')+body+'</div>';
+  }
+  /* Stacked two-series day chart: real signups against accounts from that same day since banned. */
+  function stackChart(series, aKey, bKey, aLab, bLab){
+    series=series||[]; if(!series.length) return '';
+    var W=760,H=170,padB=22,padT=8,n=series.length,gw=W/n,max=1;
+    series.forEach(function(d){ max=Math.max(max,(Number(d[aKey])||0)+(Number(d[bKey])||0)); });
+    var bars='';
+    series.forEach(function(d,i){
+      var cx=i*gw+gw/2, bw=Math.min(20,gw-8), y0=H-padB;
+      var a=(Number(d[aKey])||0)/max*(H-padB-padT), b=(Number(d[bKey])||0)/max*(H-padB-padT);
+      bars+='<rect x="'+(cx-bw/2)+'" y="'+(y0-a)+'" width="'+bw+'" height="'+a+'" rx="3" fill="#7C5CE6"></rect>';
+      bars+='<rect x="'+(cx-bw/2)+'" y="'+(y0-a-b)+'" width="'+bw+'" height="'+b+'" rx="3" fill="#E5484D" opacity=".72"></rect>';
+      var lbl=String(d.day).slice(5);
+      if(i%2===0||i===n-1) bars+='<text x="'+cx+'" y="'+(H-6)+'" text-anchor="middle" font-size="9.5" fill="#9AA0AE" font-weight="700">'+esc(lbl)+'</text>';
+    });
+    return '<div class="legend"><span><b style="background:#7C5CE6"></b>'+esc(aLab)+'</span>'+
+      '<span><b style="background:#E5484D;opacity:.72"></b>'+esc(bLab)+'</span></div>'+
+      '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(aLab+' and '+bLab+' by day')+'">'+bars+'</svg>';
   }
 
   function fmtTime(t){ try{ return new Date(t).toLocaleString(); }catch(e){ return ''; } }
@@ -690,6 +769,16 @@
     {id:'sec-funnel',   t:'Funnel'},
     {id:'sec-retention',t:'Retention'},
     {id:'sec-chart',    t:'Last 14 days'},
+    {g:'Deep dive'},
+    {id:'sec-geo',      t:'Where players are'},
+    {id:'sec-growth',   t:'Growth'},
+    {id:'sec-funnel-live', t:'Funnel (live only)'},
+    {id:'sec-retention-2', t:'Retention detail'},
+    {id:'sec-quests',   t:'Quests'},
+    {id:'sec-economy',  t:'GRIT economy'},
+    {id:'sec-money',    t:'Real money'},
+    {id:'sec-bulls',    t:'Bulls'},
+    {id:'sec-health',   t:'Health',        n:function(d){ return (d.review_queue||{}).total_waiting; }},
     {g:'Detail'},
     {id:'sec-errors',   t:'Errors',        n:function(d){ return (d.recent_errors||[]).length; }},
     {id:'buyPanel',     t:'Purchases'},
@@ -737,6 +826,192 @@
     spy._on = pick;
     window.addEventListener('scroll', pick, {passive:true});
     pick();
+  }
+
+  /* Everything added on 2026-08-04. Kept in its own function so render() stays readable, and every
+     panel guards its own key so one missing stat blanks one panel instead of the whole page. */
+  function extraSections(d){
+    var h='', x;
+
+    // ---- where the players are ----
+    x=d.players_by_country||{};
+    var geo = '<div class="grid">'+
+      kpi('Countries', num(x.countries), 'live players')+
+      kpi('Located', num(x.located), (x.located_pct||0)+'% of players')+
+      kpi('Unknown location', num(x.unknown), 'no IP signal recorded')+
+    '</div>'+
+    bars((x.rows||[]).map(function(r){
+      return {name:r.c, val:r.n, sub:(r.pct!=null?r.pct+'%':''), muted:(r.c==='Unknown'||r.c==='Other')};
+    }));
+    var today=d.playing_today_by_country||{};
+    geo += '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Playing today</h3>'+
+      '<p class="hint">'+num(today.total)+' live players opened the game today. Only 3% of these are unlocated, so this is the honest read on which country is actually rising.</p>'+
+      bars((today.rows||[]).map(function(r){
+        return {name:r.c, val:r.n, sub:(r.pct!=null?r.pct+'%':''), muted:(r.c==='Unknown'||r.c==='Other')};
+      }));
+    geo += '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Country quality</h3>'+
+      '<p class="hint">Size next to behaviour. A big country is not automatically a good one, and the farm column is the share of every account ever seen from there that ended up banned.</p>'+
+      tbl([{h:'Country',k:'c'},{h:'Players',k:'n'},{h:'Came back',k:'back',f:function(v){return v+'%';}},
+           {h:'Quests',k:'quests'},{h:'Median GRIT',k:'grit'},{h:'Farm rate',k:'farm',f:function(v){return v+'%';}}],
+          d.country_quality||[]);
+    h += panel('sec-geo','Where the players are','Live players only. About a quarter have no location signal at all, so that row is shown rather than hidden.', geo);
+
+    // ---- growth ----
+    var rv=d.referral_vs_organic||{}, ig=d.invite_graph||{}, wl=d.waitlist_funnel||{};
+    var growth = '<div class="grid">'+
+      kpi('From a referral', num(rv.from_a_referral), (rv.referral_pct||0)+'% of players')+
+      kpi('Found us alone', num(rv.organic), 'no invite link')+
+      kpi('Referred today', num(rv.new_24h_referred), (rv.referral_pct_24h||0)+'% of today')+
+      kpi('Inviter since banned', num(rv.inviter_since_banned), 'invited by a farm')+
+    '</div>'+
+    '<div class="grid">'+
+      kpi('People inviting', num(ig.inviters), (ig.pct_of_live_who_invited||0)+'% of players')+
+      kpi('Median invites', num(ig.median_per_inviter), 'average is '+num(ig.avg_per_inviter))+
+      kpi('Biggest inviter', num(ig.biggest_inviter), 'live invitees')+
+      kpi('Waitlist signed up', num(wl.signed_up_and_live), (wl.conversion_pct||0)+'% of '+num(wl.emails_collected)+' emails')+
+    '</div>'+
+    '<h3 style="margin:18px 0 4px;font-size:15px;font-weight:800">How people sign up</h3>'+
+    '<p class="hint">Live accounts, with the accounts banned from that same method beside them.</p>'+
+    tbl([{h:'Method',k:'method'},{h:'Live',k:'live'},{h:'Joined today',k:'live_24h'},{h:'Banned',k:'banned'}], d.signups_by_method||[])+
+    '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Daily signups, real vs later banned</h3>'+
+    '<p class="hint">The red band is how much of that day turned out to be a farm. It is the single most honest growth chart on this page.</p>'+
+    '<div class="chart">'+stackChart(d.series_real_vs_banned,'real','banned','Real players','Banned since')+'</div>';
+    h += panel('sec-growth','Growth','Where players come from, and how much of each day was real.', growth);
+
+    // ---- funnel on live accounts ----
+    var fl=d.funnel_live||{}, steps=(fl.steps||[]), base=(steps[0]&&steps[0].players)||0;
+    var fun = '<div class="funnel">'+steps.map(function(s,i){
+      return stage(s.step, s.players, base, i>0);
+    }).join('')+'</div>'+
+    '<p class="note">'+num(fl.dueled_but_skipped_quests)+' players fought a duel without ever finishing a quest, so the quest step is a detour rather than a wall.</p>'+
+    '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Players who joined today</h3>'+
+    '<p class="hint">The same funnel for the last 24 hours. This one keeps working once the all-time figure goes stale.</p>'+
+    '<div class="funnel">'+(d.funnel_new_24h||[]).map(function(s,i){
+      var b=((d.funnel_new_24h||[])[0]||{}).players||0;
+      return stage(s.step, s.players, b, i>0);
+    }).join('')+'</div>';
+    h += panel('sec-funnel-live','Signup to first duel','Live accounts only, so a banned farm cannot flatter the funnel.', fun);
+
+    // ---- retention ----
+    var rw=d.retention_window||{}, nb=d.never_came_back||{};
+    var ret = '<div class="grid">'+
+      kpi('Played this week', num(d.active_this_week), 'last 7 days')+
+      kpi('Never came back', num(nb.never_came_back), (nb.never_came_back_pct||0)+'% of those who could')+
+      kpi('Tracking since', String(rw.tracking_since||'-'), (rw.days_tracked||0)+' days of data')+
+      kpi('Under a week old', (rw.players_under_7_days_old_pct||0)+'%', 'of live players')+
+    '</div>'+
+    '<h3 style="margin:18px 0 4px;font-size:15px;font-weight:800">Retention by signup day</h3>'+
+    '<p class="hint">Share of that day’s signups who came back by each later day. A dash means that day has not happened yet, not zero.</p>'+
+    tbl([{h:'Signed up',k:'signup_day'},{h:'Players',k:'signed_up'},
+         {h:'D1',k:'d1',f:function(v){return v+'%';}},{h:'D2',k:'d2',f:function(v){return v+'%';}},
+         {h:'D3',k:'d3',f:function(v){return v+'%';}},{h:'D4',k:'d4',f:function(v){return v+'%';}},
+         {h:'D5',k:'d5',f:function(v){return v+'%';}},{h:'D6',k:'d6',f:function(v){return v+'%';}}],
+        d.came_back_by_signup_day||[])+
+    '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Login streaks</h3>'+
+    '<p class="hint">A streak counter freezes at the last claim, so "still going" is the column that means anything.</p>'+
+    tbl([{h:'Streak',k:'bucket'},{h:'Players',k:'players'},{h:'Still going',k:'still_going'}], d.login_streaks||[]);
+    h += panel('sec-retention-2','Retention','Live accounts, measured from the day activity tracking began.', ret);
+
+    // ---- quests ----
+    h += panel('sec-quests','Quests, weakest first',
+      'Share of live players who finished each one. The quests at the top are the ones nobody is doing.',
+      tbl([{h:'Quest',k:'title'},{h:'Reward',k:'reward_grit'},{h:'Finished by',k:'done_by'},
+           {h:'Of players',k:'pct_of_players',f:function(v){return v+'%';}},
+           {h:'Live',k:'live',f:function(v){return v?'yes':'no';}}], d.quests_weakest_first||[]));
+
+    // ---- GRIT economy ----
+    var gs=d.grit_supply||{}, gf=d.grit_flow||{}, gd=d.grit_distribution||{},
+        gb=d.grit_on_banned_accounts||{}, gg=d.grit_ledger_gap||{}, du=d.duels||{};
+    var econ = '<div class="grid">'+
+      kpi('GRIT held', num(gs.held_now), 'by live players')+
+      kpi('Ever earned', num(gs.ever_earned), (gs.spent_pct||0)+'% has been spent')+
+      kpi('Minted today', num(gf.minted_today), 'burned '+num(gf.burned_today))+
+      kpi('Net last 7 days', num(gf.net_7d), '+'+(gf.net_7d_pct_of_supply||0)+'% of all GRIT')+
+    '</div>'+
+    '<div class="grid">'+
+      kpi('Median balance', num(gd.median), 'p90 is '+num(gd.p90))+
+      kpi('Top 10% hold', (gd.top_10_pct_share||0)+'%', 'of all GRIT')+
+      kpi('Duels today', num(du.duels_today), num(du.avg_duels_per_dueller_today)+' each')+
+      kpi('Unexplained GRIT', num(gg.unexplained_grit), num(gg.players_affected)+' players off-ledger')+
+    '</div>'+
+    '<h3 style="margin:18px 0 4px;font-size:15px;font-weight:800">Where GRIT comes from</h3>'+
+    bars((d.grit_earn_sources||[]).map(function(r){
+      return {name:r.reason, val:r.grit, sub:num(r.events)+' times', muted:(r.kind!=='gameplay')};
+    }))+
+    '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Where GRIT goes</h3>'+
+    '<p class="hint">Faded bars are enforcement, not players choosing to spend.</p>'+
+    bars((d.grit_spend_sinks||[]).map(function(r){
+      return {name:r.reason, val:r.grit, sub:num(r.events)+' times', muted:(r.kind!=='player spend')};
+    }))+
+    '<p class="note">Banned accounts earned '+num(gb.grit_they_ever_earned)+' GRIT before being caught, and '+
+      num(gb.clawed_back)+' has been taken back.</p>';
+    h += panel('sec-economy','GRIT economy','Live players only. The net figure is the inflation number to watch.', econ);
+
+    // ---- real money ----
+    var sr=d.sol_revenue||{}, mm=d.marketplace_money||{}, pp=d.paying_players||{};
+    var money = '<div class="grid">'+
+      kpi('SOL to treasury', num(sr.total_sol), 'our cut, all time')+
+      kpi('Last 7 days', num(sr.last_7d_sol), 'SOL')+
+      kpi('Paying players', num(pp.paying_players), (pp.pct_of_live||0)+'% of players')+
+      kpi('Came back to pay', num(pp.repeat_payers), 'more than once')+
+    '</div>'+
+    tbl([{h:'Source',k:'source'},{h:'Payments',k:'payments'},{h:'SOL',k:'sol'}], sr.by_source||[])+
+    '<p class="note">Marketplace: '+num(mm.sales)+' sales, '+num(mm.volume_sol)+' SOL of volume, '+
+      num(mm.sold_by_us)+' sold by us and '+num(mm.player_to_player)+' player to player.</p>';
+    h += panel('sec-money','Real money','Every SOL that reached the treasury, and who paid it.', money);
+
+    // ---- bulls ----
+    var bs=d.bull_supply||{}, rn=d.free_bull_runway||{}, bp=d.bulls_per_player||{},
+        ml=d.market_listings||{}, nbull=d.players_without_a_bull||{};
+    var runwayCls = (rn.days_left_at_7d_rate!=null && Number(rn.days_left_at_7d_rate)<3) ? 'bad' : '';
+    var bull = '<div class="grid">'+
+      kpi('Free bulls left', num(rn.free_bulls_left), 'of 5,000 in Gen 1')+
+      kpi('Days of supply', (rn.days_left_at_7d_rate==null?'-':rn.days_left_at_7d_rate), 'at '+num(rn.avg_per_day_7d)+' a day')+
+      kpi('Claimed today', num(rn.claimed_last_24h))+
+      kpi('Returned by bans', num(rn.returned_by_bans), 'back in the pool')+
+    '</div>'+
+    (runwayCls==='bad' ? '<p class="note bad" style="font-weight:800">Gen 1 runs dry in about '+rn.days_left_at_7d_rate+' days at the current rate. After that a new player gets nothing to claim.</p>' : '')+
+    '<div class="grid">'+
+      kpi('Held', num(bs.held), (bs.pct_held||0)+'% of all bulls')+
+      kpi('Players with none', num(nbull.no_bull), num(nbull.signed_up_today)+' joined today')+
+      kpi('More than one', num(bp.more_than_one), 'biggest holds '+num(bp.biggest_collection))+
+      kpi('For sale now', num(ml.active_listings), 'from '+num(ml.sellers)+' sellers')+
+    '</div>'+
+    (Number(bs.flag_mismatch)>0
+      ? '<p class="note bad" style="font-weight:800">'+num(bs.flag_mismatch)+' bulls disagree between the claimed flag and who actually holds them. That is a data bug worth fixing.</p>'
+      : '<p class="note">Ownership is consistent: the claimed flag and the holder table agree on all 5,000 bulls.</p>')+
+    '<h3 style="margin:18px 0 4px;font-size:15px;font-weight:800">Which rarities are taken</h3>'+
+    tbl([{h:'Band',k:'band'},{h:'Held',k:'held'},{h:'Total',k:'total'},
+         {h:'Taken',k:'pct_held',f:function(v){return v+'%';}}], d.rarity_bands_held||[]);
+    h += panel('sec-bulls','Bulls','Supply, who holds them, and how long Gen 1 lasts.', bull);
+
+    // ---- health ----
+    var bl=d.bans_last_24h||{}, rq=d.review_queue||{}, ce=d.client_errors_24h||{},
+        aw=d.airdrop_wallets||{}, tb=d.telemetry_blind_spot||{};
+    var health = '<div class="grid">'+
+      kpi('Banned today', num(bl.banned_24h), num(bl.with_logged_rule)+' with a logged rule')+
+      kpi('Restricted today', num(bl.restricted_24h))+
+      kpi('Waiting on you', num(rq.total_waiting), num(rq.duplicate_flags_open)+' flags, '+num(rq.ban_appeals_open)+' appeals')+
+      kpi('Invisible to anti-farm', num(tb.invisible), (tb.pct_invisible||0)+'% of players')+
+    '</div>'+
+    '<div class="grid">'+
+      kpi('Airdrop wallet set', num(aw.wallet_registered), (aw.pct_registered||0)+'% of players')+
+      kpi('Cannot be paid', num(aw.not_registered), 'no wallet on file')+
+      kpi('Farm payout rows', num(aw.rows_on_banned), 'must stay out of any weight')+
+      kpi('Errors today', num(ce.total_hits_24h), num(ce.distinct_errors_24h)+' distinct')+
+    '</div>'+
+    (bl.top_rules && bl.top_rules.length
+      ? '<h3 style="margin:18px 0 4px;font-size:15px;font-weight:800">What today’s bans were for</h3>'+
+        '<p class="hint">Only '+num(bl.with_logged_rule)+' of '+num(bl.banned_24h)+' carry a logged rule, so this is a slice and not the whole picture.</p>'+
+        bars(bl.top_rules.map(function(r){ return {name:r.rule, val:r.accounts}; }))
+      : '')+
+    (ce.worst && ce.worst.length
+      ? '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Worst errors today</h3>'+
+        tbl([{h:'Message',k:'message'},{h:'Page',k:'page'},{h:'Hits',k:'hits'}], ce.worst)
+      : '');
+    h += panel('sec-health','Health and integrity','Enforcement load, the review queue, and the gaps in what we can see.', health);
+
+    return h;
   }
 
   function render(d){
@@ -805,7 +1080,9 @@
     '</div></div>';
 
     // Chart
-    html+='<div id="sec-chart" class="panel"><h3>Last 14 days</h3><p class="hint">Daily signups vs unique active users.</p><div class="chart">'+chart(d.series)+'</div></div>';
+    html+='<div id="sec-chart" class="panel"><h3>Last 14 days</h3><p class="hint">Daily signups vs unique active users. This one counts banned accounts, which is why the live twin sits under Growth.</p><div class="chart">'+chart(d.series)+'</div></div>';
+
+    html+=extraSections(d);
 
     html+='<div id="acctPanel"></div>';
     root.innerHTML=html;
