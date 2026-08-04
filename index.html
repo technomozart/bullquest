@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785844532";try{console.log("BullQuest build 1785844532");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785848130";try{console.log("BullQuest build 1785848130");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6693,6 +6693,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     return sb.auth.getUser().then(function(res){
       var u=res.data&&res.data.user; if(!u) throw new Error('no-session');
       window.bqLoggedIn = true;
+      /* Fire this the moment we know who they are, NOT after a bull is in hand. It used to sit
+         inside the post-bull branch below, so a player without a bull recorded zero active days
+         ever: DAU, D1 and D7 all silently undercounted them. Measured on 2026-08-04, all 68
+         bull-less live accounts had zero rows in user_active_days despite 13 of them completing
+         quests. Fire-and-forget, and it is one row per user per day server-side. */
+      sb.rpc('ping_active').then(function(){}, function(){});
       var wal=u.user_metadata&&u.user_metadata.wallet;
       acctLabel = wal ? (wal.slice(0,4)+'…'+wal.slice(-4)) : (function(e){ if(!e) return ''; var s=(e.split('@')[0].split(/[._+-]/)[0])||e.split('@')[0]; return (s.charAt(0).toUpperCase()+s.slice(1)).slice(0,14); })(u.email);
       return fetchBull(u, 4).then(function(ub){
@@ -6712,7 +6718,6 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           populate((p&&p.data&&p.data.username)||'', ub);
           sb.rpc('get_state').then(function(r){ applyLiveState(r&&r.data); }).catch(function(){});
           try{ bqClaimDailyLogin(); }catch(e){}   // daily login streak reward (once per session; server-authoritative)
-          sb.rpc('ping_active').then(function(){}, function(){});   // analytics: record "active today" (once/user/day) - fire-and-forget (rpc builder has no .catch)
           if(window.bqArenaRefresh) window.bqArenaRefresh();
           renderBulls();
           if(reveal){ var seen; try{ seen=localStorage.getItem('bq_claimed'); }catch(e){} if(!seen){ try{ localStorage.setItem('bq_claimed','1'); }catch(e){} try{ showClaim(ub); }catch(e){ logErr(e); } } }
@@ -7086,7 +7091,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(!t) return;
     e.preventDefault(); e.stopImmediatePropagation();
     var intent=t.getAttribute('data-entry');
-    function go(){ sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(logErr); else openModal(intent==='login'?'login':'signup'); }); }
+    /* A returning player whose bull claim fails used to get nothing at all here: loadAndShow
+       rejected, the catch wrote to the console, and they were left staring at the landing page
+       already signed in. That is exactly what the 55 people who joined during the sellout saw.
+       Say what happened, in the same words the signup modal uses. */
+    function go(){ sb.auth.getSession().then(function(s){ if(s.data.session) loadAndShow(true).catch(function(e){ logErr(e); if(window.bqToast) window.bqToast(friendly(e)); }); else openModal(intent==='login'?'login':'signup'); }); }
     if(sb) go(); else { var n=0; (function wait(){ if(sb) return go(); if(n++<60) setTimeout(wait,80); })(); }
   }, true);
 
