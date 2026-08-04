@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785803232";try{console.log("BullQuest build 1785803232");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785804811";try{console.log("BullQuest build 1785804811");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -3634,7 +3634,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         </div>
       </div>
       <div class="purses">
-        <span class="pill" role="button" tabindex="0" aria-label="dollar BULL airdrop coming soon" data-bqtoast="$BULL is the future token, airdropped to GRIT holders at launch. Gather GRIT now.">
+        <span class="pill" role="button" tabindex="0" aria-label="dollar BULL airdrop coming soon" data-bqtoast="$BULL is the future token. Your share comes from the GRIT you EARN, not the GRIT you hold, so spend it freely at the Gym.">
           <img src="assets/icons/coin_bull.png?v=2" width="18" height="18" alt="" style="vertical-align:middle">
           <small>$BULL soon</small>
         </span>
@@ -3650,7 +3650,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         <div class="ring" aria-hidden="true">
           <svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">
             <circle class="track" cx="44" cy="44" r="34"/>
-            <circle class="prog" cx="44" cy="44" r="34" stroke-dasharray="213.6" stroke-dashoffset="64"/>
+            <circle class="prog" id="bqGritRing" cx="44" cy="44" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
           </svg>
           <div class="center"><img src="assets/icons/gem_grit.png" width="36" height="36" alt=""></div>
         </div>
@@ -3658,14 +3658,14 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           <div class="season-k"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:13px;height:13px;background:currentColor;vertical-align:-1px;margin-right:5px"></i>GRIT Airdrop</div>
           <div class="tier">
             <b id="bqGritBand" style="font-size:27px">0</b>
-            <span style="font-size:13px;font-weight:800;opacity:.82;margin-left:6px">GRIT gathered</span><button type="button" class="bqhelp" data-help="grit" aria-label="What is GRIT" style="background:rgba(255,255,255,.28);color:#fff;margin-left:7px">?</button>
+            <span style="font-size:13px;font-weight:800;opacity:.82;margin-left:6px">GRIT earned</span><button type="button" class="bqhelp" data-help="grit" aria-label="What is GRIT" style="background:rgba(255,255,255,.28);color:#fff;margin-left:7px">?</button>
           </div>
-          <div class="togo">Every GRIT you gather now grows your <b>$BULL</b> airdrop later.</div>
+          <div class="togo" id="bqGritToGo">Every GRIT you earn now grows your <b>$BULL</b> airdrop later. Spending it never shrinks your share.</div>
           <div class="ends">
             <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Airdrop unlocks at $BULL launch
+            <span id="bqAirNext">Airdrop unlocks at $BULL launch</span>
           </div>
-          <button type="button" data-bqgo="view-airdrop" style="margin-top:12px;width:100%;border:0;background:linear-gradient(180deg,#FFD976,#F0B429);color:#5a3d00;font-weight:800;font-size:13.5px;padding:11px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">&#129747; See your airdrop progress &rsaquo;</button>
+          <button type="button" data-bqgo="view-airdrop" style="margin-top:12px;width:100%;border:0;background:linear-gradient(180deg,#FFD976,#F0B429);color:#5a3d00;font-weight:800;font-size:13.5px;padding:11px 14px;border-radius:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">&#129666; See your airdrop progress &rsaquo;</button>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:11px">
             <button type="button" id="bqLbBtn" style="border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:9px 15px;min-height:44px;border-radius:999px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_trophy.png');width:14px;height:14px;background:var(--surface)"></i>Leaderboard</button>
             <button type="button" id="bqInviteBtn" style="border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:12.5px;padding:9px 15px;min-height:44px;border-radius:999px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px"><i class="pico" style="--m:url('assets/icons/ui_share.png');width:14px;height:14px;background:var(--surface)"></i>Invite friends</button>
@@ -3722,7 +3722,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <div class="bal"><b>0</b><span>GRIT</span></div>
       <div class="sub">
         <img src="assets/icons/coin_bull.png?v=2" width="18" height="18" alt="" style="vertical-align:middle">
-        <small>$BULL airdrops to GRIT holders at launch</small>
+        <small id="bqGritCardSub">GRIT you earn counts toward your $BULL airdrop. Spending it never shrinks your share.</small>
       </div>
       <button type="button" id="bqGritHistBtn" style="margin-top:13px;width:100%;border:0;background:var(--tint-violet1,#F1ECFD);color:var(--ot-6b31e6,#6B31E6);font-weight:800;font-size:13px;padding:11px 14px;border-radius:14px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">
         <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="flex:none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8v4l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4718,7 +4718,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <button type="button" class="bqair-back" data-bqback aria-label="Back">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <div class="bqair-kicker">&#129747; $BULL AIRDROP</div>
+      <div class="bqair-kicker">&#129666; $BULL AIRDROP</div>
       <h1>Claim your share of $BULL</h1>
       <p>Earn GRIT, lock in your share. 10% of $BULL supply across 10 rounds, with future rounds bought back from the market using fees and app income.</p>
       <div class="bqair-poolrow">
@@ -7294,7 +7294,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function setGrit(g){
     if(typeof g!=='number') return;
     var txt=g.toLocaleString();
-    ['#bqGritTop','#view-home .card.wallet .bal b','#bqGritBand','#bqGritSpin'].forEach(function(sel){
+    /* #bqGritBand deliberately NOT in this list: it is the airdrop panel and shows GRIT EARNED,
+       which renderAirdropBand owns. Putting the spendable balance there made the Gym look like it
+       was destroying your airdrop. */
+    ['#bqGritTop','#view-home .card.wallet .bal b','#bqGritSpin'].forEach(function(sel){
       var el=document.querySelector(sel); if(el) el.textContent=txt;
     });
   }
@@ -7405,9 +7408,36 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     s.addEventListener('click', function(){ showLoginLadder(); });
     s.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); showLoginLadder(); } });
   })();
+  /* The home band is the airdrop panel, so it must show GRIT EARNED against the qualifying floor,
+     not the spendable balance. Showing the balance meant training at the Gym visibly shrank the
+     number players believed was their airdrop, which taught them to hoard and starved the sink.
+     The ring next to it was hardcoded at 70% for every player and never moved. */
+  function renderAirdropBand(s){
+    var el, lifetime=Number(s&&s.grit_earned_lifetime)||0, gate=Number(s&&s.min_grit_to_qualify)||0;
+    if(el=document.getElementById('bqGritBand')) el.textContent=lifetime.toLocaleString();
+    if(el=document.getElementById('bqGritRing')){
+      var frac = gate>0 ? Math.min(1, lifetime/gate) : 0;
+      el.setAttribute('stroke-dashoffset', String(Math.round(213.6*(1-frac)*10)/10));
+    }
+    if(el=document.getElementById('bqGritToGo')){
+      if(gate>0 && lifetime<gate){
+        el.innerHTML='<b>'+(gate-lifetime).toLocaleString()+' more GRIT</b> to qualify for the $BULL airdrop. Spending never shrinks your share.';
+      } else if(gate>0){
+        el.innerHTML='<b>You qualify</b> for the $BULL airdrop. Every GRIT you earn from here grows your share.';
+      }
+    }
+    if((el=document.getElementById('bqAirNext')) && s && s.next_round_at){
+      var t=new Date(s.next_round_at)-new Date();
+      if(t>0){
+        var d=Math.floor(t/86400000), h=Math.floor(t%86400000/3600000), m=Math.floor(t%3600000/60000);
+        el.textContent='Next airdrop round closes in '+(d>0?(d+'d '+h+'h'):(h+'h '+m+'m'));
+      }
+    }
+  }
   function applyLiveState(s){
     if(!s||s.error) return;
     setGrit(s.grit);
+    try{ renderAirdropBand(s); }catch(e){}
     if(s.bull){ var hc=document.querySelector('#view-home .card.featured'), he;
       if(hc){
         nrgPill(hc.querySelector('.energy'), s.bull.energy, s.bull.energy_max);
