@@ -211,7 +211,9 @@
       return '<tr>'+cols.map(function(c,i){
         var v=r[c.k];
         if(v==null||v==='') return '<td class="dim">-</td>';
-        var txt=c.f?c.f(v,r):num(v);
+        /* Only format numbers as numbers. Running a country code or a quest title through
+           toLocaleString gives NaN, which is exactly what the first build of this table did. */
+        var txt=c.f?c.f(v,r):(typeof v==='number'?num(v):String(v));
         return '<td'+(i===0?' class="name"':'')+'>'+esc(txt)+'</td>';
       }).join('')+'</tr>';
     }).join('');
