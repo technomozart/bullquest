@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785797319";try{console.log("BullQuest build 1785797319");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785803112";try{console.log("BullQuest build 1785803112");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -8909,7 +8909,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     return host;
   }
   function pmRefreshBadge(){ if(!sb) return; var h=bqMktHeaders(true); h.Range='0-0';
-    fetch(URL_+'/rest/v1/bull_listings?select=id&status=eq.active',{headers:h}).then(function(res){ var cr=res.headers.get('content-range'), n=0; if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') n=parseInt(p[1],10); } var badge=document.getElementById('bqPmBadge'); if(badge){ badge.textContent=n.toLocaleString(); badge.hidden=(n===0); } }, function(){}); }
+    fetch(URL_+'/rest/v1/bull_listings?select=id&status=eq.active',{headers:h}).then(function(res){ var cr=res.headers.get('content-range'), n=0; if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') n=parseInt(p[1],10); } var badge=document.getElementById('bqPmBadge'); if(badge){ badge.textContent=n.toLocaleString(); badge.hidden=(n===0); } try{ if(window.bqSyncMktPill) window.bqSyncMktPill(); }catch(e){} }, function(){}); }
   function renderPlayers(){
     if(!sb) return; var host=pmEnsureScaffold(); if(!host) return;
     pmRefreshBadge(); pmTotal=null;   // fresh count each render so the pager stays accurate after buys/sells
@@ -9064,6 +9064,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         pagerEl=document.getElementById('bqMktPager'), prevEl=document.getElementById('bqMktPrev'),
         nextEl=document.getElementById('bqMktNext'), pageInfoEl=document.getElementById('bqMktPageInfo');
     var PAGE=24, page=1, filter='all', sortBy='id', total=null, loading=false, inited=false, searchId=null;
+    var colTotal=null, plShown=false;   // header pill: collection size vs live player listings
     function totalPages(){ return (total!=null && total>0) ? Math.max(1, Math.ceil(total/PAGE)) : 1; }
     function rangeFor(f){ if(f==='leg')return'rarity_rank=lte.50'; if(f==='epic')return'rarity_rank=gte.51&rarity_rank=lte.300'; if(f==='rare')return'rarity_rank=gte.301&rarity_rank=lte.1200'; if(f==='common')return'rarity_rank=gte.1201'; return''; }
     var TINT={ '#F0B429':'#FBF1DC','#7C5CE6':'#F0ECFB','#4DA6F5':'#E4EEF3','#9AA6B2':'#EEF1F4' };
@@ -9082,7 +9083,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     function updateMeta(){ var lbl={all:'available',leg:'Legendary',epic:'Epic',rare:'Rare',common:'Common'}[filter];
       if(searchId!=null){ metaEl.textContent = grid.children.length? ('Bull #'+searchId) : ('Bull #'+searchId+' is not for sale right now.'); return; }
       metaEl.textContent = (total!=null)? (total.toLocaleString()+' '+lbl) : 'Rounding up the herd...';
-      var cnt=document.getElementById('bqMktCount'); if(cnt&&filter==='all'&&total!=null) cnt.textContent=total.toLocaleString(); }
+      var cnt=document.getElementById('bqMktCount');
+      if(cnt&&filter==='all'&&total!=null){ colTotal=total; if(!plShown){ cnt.textContent=total.toLocaleString(); cnt.setAttribute('aria-label','Bulls in the collection'); } } }
     function updatePager(){ if(searchId!=null || total==null || total<=PAGE){ pagerEl.hidden=true; return; } var tp=totalPages(); if(page>tp) page=tp; pagerEl.hidden=false; prevEl.disabled=(page<=1); nextEl.disabled=(page>=tp); pageInfoEl.innerHTML='Page '+page+' of '+tp+'<small>'+total.toLocaleString()+' bulls</small>'; }
     function fetchPage(){ if(loading) return; loading=true; statusEl.textContent = grid.children.length? '' : 'Loading...';
       // marketplace: only show bulls that are actually for sale (unclaimed system inventory).
@@ -9108,10 +9110,26 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     // ----- segmented control: Collection vs Player market. Flips hidden only, never wipes innerHTML,
     //       so the player module's one-time delegated click listener survives every re-render. -----
     var segEl=document.getElementById('bqMktSeg'), colEl=document.getElementById('bqMktCollection'), plEl=document.getElementById('bqMktPlayers');
+    /* The header pill used to be written only by the Collection renderer, so on the Player market
+       tab it kept showing the collection size: a big "5,000" sitting next to two listings, which
+       reads as nonsense. It now follows whichever tab is open. */
+    function setMktPill(){
+      var cnt=document.getElementById('bqMktCount'); if(!cnt) return;
+      if(plShown){
+        var badge=document.getElementById('bqPmBadge');
+        var n=badge?parseInt((badge.textContent||'0').replace(/[^0-9]/g,''),10):0;
+        cnt.textContent=(isNaN(n)?0:n).toLocaleString();
+        cnt.setAttribute('aria-label','Bulls listed by players');
+      } else if(colTotal!=null){
+        cnt.textContent=colTotal.toLocaleString();
+        cnt.setAttribute('aria-label','Bulls in the collection');
+      }
+    }
+    window.bqSyncMktPill = setMktPill;
     if(segEl){ segEl.addEventListener('click', function(e){ var b=e.target.closest('button[data-tab]'); if(!b) return;
       [].forEach.call(segEl.querySelectorAll('button'), function(x){ x.classList.remove('on'); }); b.classList.add('on');
-      if(b.getAttribute('data-tab')==='players'){ if(colEl)colEl.hidden=true; if(plEl)plEl.hidden=false; if(window.bqRenderPlayers) window.bqRenderPlayers(); scrollMktTop(); }
-      else { if(plEl)plEl.hidden=true; if(colEl)colEl.hidden=false; scrollMktTop(); }
+      if(b.getAttribute('data-tab')==='players'){ plShown=true; if(colEl)colEl.hidden=true; if(plEl)plEl.hidden=false; if(window.bqRenderPlayers) window.bqRenderPlayers(); setMktPill(); scrollMktTop(); }
+      else { plShown=false; if(plEl)plEl.hidden=true; if(colEl)colEl.hidden=false; setMktPill(); scrollMktTop(); }
     }); }
     window.bqMktShowPlayers = function(){ var b=segEl&&segEl.querySelector('button[data-tab="players"]'); if(b) b.click(); };
     var raf=false; function onScroll(){ if(marketView&&marketView.hasAttribute('hidden')) return; if(raf) return; raf=true; requestAnimationFrame(function(){ raf=false; loadVisible(); }); }
