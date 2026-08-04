@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785807335";try{console.log("BullQuest build 1785807335");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785811007";try{console.log("BullQuest build 1785811007");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -10164,7 +10164,13 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         var card=document.createElement('div'); card.className='qcard';
         var actId='qact_'+q.slug;
         var honor=(q.verified===false);   // honor quests (X follow/repost/reply, TG/Discord post engagement): open link + self-claim by slug
-        var isSubmit=(q.kind==='submit'); var sub=subs[q.slug];
+        /* quests_state used to return {slug: status}; it now returns {slug: {status,note,url}} so the
+           card can say WHY a submission was turned down. Normalise both shapes: an old cached bundle
+           can still be running against the new RPC for a few minutes after a deploy. */
+        var isSubmit=(q.kind==='submit'); var subRaw=subs[q.slug];
+        var sub=(subRaw && typeof subRaw==='object') ? subRaw.status : subRaw;
+        var subNote=(subRaw && typeof subRaw==='object') ? (subRaw.note||'') : '';
+        var subUrl=(subRaw && typeof subRaw==='object') ? (subRaw.url||'') : '';
         var HLBL={x_follow:'Follow',x_repost:'Repost',x_reply:'Reply',tg_boost:'Boost',discord_react:'React',
                   appstore_download:'Get app',appstore_rate:'Rate',x_community_join:'Join'};
         var actHtml, submitRow='';
@@ -10181,11 +10187,18 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           actHtml = (sub==='pending')
             ? '<span class="qpend">In review</span>'
             : '<a class="qbtn x" href="'+esc(openUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(openLbl)+'</a>';
-          if(sub!=='pending'){
-            submitRow='<div class="qsubmit">'+(sub==='rejected'?'<span class="qsub-note">Not accepted last time. Follow the steps and submit again.</span>':'')+
-              '<div class="qsub-row"><input type="url" class="qsub-in" placeholder="'+esc(pastePh)+'"><button type="button" class="qbtn x qsub-go">Submit</button></div>'+
-              '<span class="qsub-msg" hidden></span></div>';
+          /* The paste field used to vanish while a submission was pending, so anyone who pasted the
+             wrong link had to wait for a rejection before they could correct it. Keep it, prefilled
+             with what they sent, and relabel the button. */
+          var noteHtml='';
+          if(sub==='rejected'){
+            noteHtml='<span class="qsub-note">'+esc(subNote ? subNote.charAt(0).toUpperCase()+subNote.slice(1) : 'Not accepted last time')+'. Fix that and submit again.</span>';
+          } else if(sub==='pending'){
+            noteHtml='<span class="qsub-note">We have your link and are checking it. Pasted the wrong one? Replace it below.</span>';
           }
+          submitRow='<div class="qsubmit">'+noteHtml+
+            '<div class="qsub-row"><input type="url" class="qsub-in" value="'+esc(subUrl)+'" placeholder="'+esc(pastePh)+'"><button type="button" class="qbtn x qsub-go">'+(sub==='pending'?'Replace':'Submit')+'</button></div>'+
+            '<span class="qsub-msg" hidden></span></div>';
         }
         else if(q.kind==='auto'){
           /* Completes itself when the account is seen inside the native app, so there is nothing to
@@ -10281,8 +10294,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         return;
       }
       if(!sb){ submitMsg(msg,'Still loading, give it a second and try again.'); return; }
+      var origLbl = btn ? btn.textContent : 'Submit';   // may be "Replace" when a submission is pending
       if(btn){ btn.disabled=true; btn.textContent='Sending…'; }
-      function fail(text){ submitMsg(msg,text); if(btn){ btn.disabled=false; btn.textContent='Submit'; } }
+      function fail(text){ submitMsg(msg,text); if(btn){ btn.disabled=false; btn.textContent=origLbl; } }
       sb.rpc('quest_submit',{p_slug:slug,p_url:url}).then(function(r){
         var d=r&&r.data, err=(r&&r.error)||null;
         if(d&&d.ok){
