@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785918431";try{console.log("BullQuest build 1785918431");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785920758";try{console.log("BullQuest build 1785920758");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    On 2026-08-04 both invites (discord.gg/bullquest and the "permanent" fFcCQWKHxr) started
    returning 404 Unknown Invite. The URL was hard-coded in 7 places in this file, including the
@@ -10401,7 +10401,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
   /* ---------- QUESTS view (verified Discord + Telegram, honor X) ---------- */
   (function(){
-    var DISCORD_CLIENT='1527451236746531068';
+    /* X OAuth 2.0. The client id is public by design, it appears in the authorize URL every player
+   sees. The secret lives only in Supabase and is never in this bundle. */
+var X_CLIENT='M1p2R1VwSEM2a3VROU5yWmpoSzk6MTpjaQ'
+var X_REDIRECT='https://cewumdioknvjtsiolxce.supabase.co/functions/v1/x-verify'
+var DISCORD_CLIENT='1527451236746531068';
     var DISCORD_REDIRECT='https://cewumdioknvjtsiolxce.supabase.co/functions/v1/discord-verify';
     var FN='https://cewumdioknvjtsiolxce.supabase.co/functions/v1';
     var tgBotId=null;
@@ -10497,7 +10501,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
             }
           }
           else if(q.kind==='auto'){ /* nothing to wire: the app itself reports in */ }
-          else if(honor){ var hb=card.querySelector('[data-honor]'); if(hb) hb.addEventListener('click', function(){ claimHonor(q.slug,q.url); }); }
+          else if(honor){ var hb=card.querySelector('[data-honor]'); if(hb) hb.addEventListener('click', function(){ claimHonor(q.slug,q.url,q.platform); }); }
           else if(q.platform==='discord'){ if(q.slug==='discord_react'){ mountDiscordReact(card.querySelector('#'+actId), q.url); } else { mountDiscord(card.querySelector('#'+actId)); } }
           else if(q.platform==='telegram'){ mountTelegram(card.querySelector('#'+actId)); }
         }
@@ -10591,6 +10595,24 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         window.location.href='https://discord.com/oauth2/authorize?client_id='+DISCORD_CLIENT+'&redirect_uri='+encodeURIComponent(DISCORD_REDIRECT)+'&response_type=code&scope=identify&state='+encodeURIComponent(nonce);
       }).catch(function(){ if(btn){ btn.disabled=false; btn.textContent='Verify'; } });
     }
+    /* Connect X. Unlike Discord, X requires PKCE, so quest_start_link returns a challenge whose
+       verifier stays on the server. We never see or hold the player's X password or token. */
+    function startX(btn){
+      if(!sb) return;
+      if(btn){ btn.disabled=true; btn.textContent='…'; }
+      sb.rpc('quest_start_link',{p_platform:'x'}).then(function(r){
+        var d=r&&r.data, nonce=d&&d.nonce, chal=d&&d.challenge;
+        if(!nonce||!chal){ if(window.bqToast) window.bqToast('Sign in first'); if(btn){ btn.disabled=false; btn.textContent='Connect X'; } return; }
+        window.location.href='https://x.com/i/oauth2/authorize?response_type=code'+
+          '&client_id='+encodeURIComponent(X_CLIENT)+
+          '&redirect_uri='+encodeURIComponent(X_REDIRECT)+
+          '&scope='+encodeURIComponent('users.read tweet.read')+
+          '&state='+encodeURIComponent(nonce)+
+          '&code_challenge='+encodeURIComponent(chal)+
+          '&code_challenge_method=S256';
+      }).catch(function(){ if(btn){ btn.disabled=false; btn.textContent='Connect X'; } });
+    }
+    window.bqConnectX = startX;
     function mountDiscord(container){
       if(!container) return;
       container.innerHTML='<div class="qtwo"><a href="'+(window.BQ_DISCORD||'https://discord.gg/bullquest')+'" target="_blank" rel="noopener noreferrer" class="qbtn djoin">Join</a><button type="button" class="qbtn discord">Verify</button></div>';
@@ -10620,10 +10642,29 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       container.innerHTML='<div class="qtwo"><a href="'+esc(url||window.BQ_DISCORD||'https://discord.gg/bullquest')+'" target="_blank" rel="noopener noreferrer" class="qbtn djoin">React</a><button type="button" class="qbtn discord">Verify</button></div>';
       var b=container.querySelector('button'); b.addEventListener('click', function(){ doDiscordReact(b); });
     }
-    function claimHonor(slug,url){
+    function claimHonor(slug,url,platform){
       if(url) window.open(url,'_blank','noopener');
       if(!sb) return;
-      sb.rpc('quest_claim_honor',{p_slug:slug}).then(function(r){
+      /* X quests go through x_claim_quest, which stamps the claim with the player's LINKED X
+         account. That turns on quest_complete's account-taken guard, so one X account can claim
+         each quest once instead of once per game account. It is the only handle we have on the
+         21,159 honour claims, since X gives us no way to see who actually followed. */
+      var isX = platform === 'x';
+      sb.rpc(isX ? 'x_claim_quest' : 'quest_claim_honor', {p_slug:slug}).then(function(r){
+        var dd=r&&r.data;
+        if(dd&&dd.error==='connect-x-first'){
+          if(window.bqToast) window.bqToast('Connect your X account first, so this counts once.');
+          startX(null); return;
+        }
+        if(dd&&dd.error==='account-taken'){
+          if(window.bqToast) window.bqToast('That X account already claimed this one.');
+          return;
+        }
+        return handleHonorResult(r);
+      }, function(){ if(window.bqToast) window.bqToast('Could not claim that, please try again.'); });
+    }
+    function handleHonorResult(r){
+      return Promise.resolve(r).then(function(r){
         var d=r&&r.data;
         if(d&&d.ok){ if(window.bqToast) window.bqToast(d.already?'Already claimed':'+'+(d.reward||0)+' GRIT, thank you!'); window.bqRenderQuests(); refreshGrit(); }
         /* Every failure used to read "Sign in to claim this", which is wrong for a signed-in player
@@ -10738,9 +10779,15 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     try{
       var qp=new URLSearchParams(location.search).get('quest');
       if(qp){
-        var msg={discord_ok:'Discord verified! GRIT added.',discord_notmember:'Join the Discord server first, then tap Verify.',discord_taken:'That Discord is already linked to another account.',discord_expired:'That link expired, tap Verify again.',discord_err:'Discord verify failed, try again.'}[qp];
+        var msg={discord_ok:'Discord verified! GRIT added.',discord_notmember:'Join the Discord server first, then tap Verify.',discord_taken:'That Discord is already linked to another account.',discord_expired:'That link expired, tap Verify again.',discord_err:'Discord verify failed, try again.',
+          x_ok:'X connected. Your X quests count now.',
+          x_taken:'That X account is already connected to another player.',
+          x_already:'This account already has a different X connected.',
+          x_cancelled:'X connection cancelled.',
+          x_expired:'That link expired, tap Connect X again.',
+          x_err:'Could not connect X, please try again.'}[qp];
         history.replaceState(null,'',location.pathname);
-        setTimeout(function(){ if(window.bqGo) window.bqGo('view-quests'); if(window.bqToast&&msg) window.bqToast(msg); if(window.bqRenderQuests) window.bqRenderQuests(); if(qp==='discord_ok') refreshGrit(); }, 700);
+        setTimeout(function(){ if(window.bqGo) window.bqGo('view-quests'); if(window.bqToast&&msg) window.bqToast(msg); if(window.bqRenderQuests) window.bqRenderQuests(); if(qp==='discord_ok'||qp==='x_ok') refreshGrit(); }, 700);
       } else if(sessionStorage.getItem('bq_view')==='view-quests'){ setTimeout(window.bqRenderQuests,500); }
     }catch(e){}
   })();
