@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785957516";try{console.log("BullQuest build 1785957516");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785958110";try{console.log("BullQuest build 1785958110");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -5044,7 +5044,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   // once a fight is revealed we LOCK the opponent until the result is dismissed, so nothing (nav refresh, init,
   // post-result reset, a stray state fetch) can swap the opponent's name/bull mid-fight.
   function bqWait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
-  function bqPreloadBull(bid){ return new Promise(function(res){ if(!bid){ res(); return; } var im=new Image(), done=false, fin=function(){ if(done) return; done=true; res(); }; im.onload=fin; im.onerror=fin; im.src='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+bid+'.webp'; setTimeout(fin, 1200); }); }
+  function bqPreloadBull(bid){ return new Promise(function(res){ if(!bid){ res(); return; } var im=new Image(), done=false, fin=function(){ if(done) return; done=true; res(); }; im.onload=fin; im.onerror=fin; im.src='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+((((+bid)-1)%5000)+1)+'.webp'; setTimeout(fin, 1200); }); }
   // LOCAL image binder. The global bqBindImg (and URL_) are declared in a DIFFERENT IIFE and are NOT
   // visible in this module, so calling them threw a silent ReferenceError inside the state promise and
   // the fighter image was never set. Keep this self-contained so the arena can never lose its bulls again.
@@ -6393,7 +6393,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function updateBullsLeft(){ var bl=modal&&modal.querySelector('#bqBullsLeft'); if(!bl||!sb) return; sb.rpc('bulls_remaining').then(function(r){ var n=r&&r.data; if(typeof n!=='number') return; if(n<=0){ closeModal(); showWaitlist(''); } else if(mode==='signup'){ bl.style.display=''; bl.textContent=n.toLocaleString()+' free bulls left'; } }).catch(function(){}); }
   function showWaitlist(email){
     var el=document.createElement('div'); el.className='bqauth';
-    el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot"><img src="assets/icons/logo.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div><h2>All bulls are claimed</h2><p class="sub">The 5,000 Genesis bulls are taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
+    el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot"><img src="assets/icons/logo.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div><h2>All bulls are claimed</h2><p class="sub">Every bull in the current runs is taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
     document.body.appendChild(el);
     var card=el.querySelector('.bqauth-card'), inp=el.querySelector('#bqWlEmail'); inp.value=email||'';
     el.querySelector('.bqauth-x').addEventListener('click', function(){ el.remove(); });
@@ -7153,7 +7153,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     "nft":{t:"NFT",d:"A digital item you truly own on the blockchain. Later you will be able to turn your bull into one and trade it."},
     "mint":{t:"Mint",d:"Turning your in game bull into a blockchain NFT you fully own. Planned for a later phase, not available yet."},
     "on-chain":{t:"On-chain ownership",d:"Recorded on the public blockchain, so your bull is publicly yours to keep or trade. Planned for a later phase."},
-    "genesis":{t:"Genesis bull",d:"One of the first 5000 bulls in the game. Genesis just means it is from the original launch set. Yours is free on sign up."},
+    "genesis":{t:"Genesis bull",d:"One of the first 5000 bulls in the game, also called Gen 1. Later runs (Gen 2, Second Run) are new prints of the same bulls: same look, own number, and a lower duel stake cap, so Genesis stays the collector tier. Your free bull on sign up comes from whatever is left in the pool."},
     "hay":{t:"HAY",d:"A paid spin fuel planned for the future $BULL launch. It is not part of play yet and you do not need it."},
     "leaderboard":{t:"Leaderboard",d:"A live ranking of players by GRIT earned. Climb it by winning duels and finishing quests."},
     "pay-to-win":{t:"Pay-to-win",d:"Winning by spending money instead of skill. BullQuest is built to avoid it. Skill decides every duel."},
@@ -9228,8 +9228,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var grid=document.getElementById('bqPmGrid'), st=document.getElementById('bqPmStatus');
     if(st) st.textContent=(grid&&grid.children.length)?'':'Loading...';
     var q;
-    if(pmSearchId!=null){ q=URL_+'/rest/v1/bull_listings?select=id,bull_id,price_lamports,seller_id,bulls!inner(name,rarity_rank,image_url)&status=eq.active&bull_id=eq.'+pmSearchId; }
-    else { var off=(pmPage-1)*PM_PAGE; q=URL_+'/rest/v1/bull_listings?select=id,bull_id,price_lamports,seller_id,bulls!inner(name,rarity_rank,image_url)&status=eq.active&order='+pmOrderQ(pmSort)+'&limit='+PM_PAGE+'&offset='+off+pmRarityQ(pmFilter); }
+    if(pmSearchId!=null){ q=URL_+'/rest/v1/bull_listings?select=id,bull_id,price_lamports,seller_id,bulls!inner(name,rarity_rank,image_url,generation)&status=eq.active&bull_id=eq.'+pmSearchId; }
+    else { var off=(pmPage-1)*PM_PAGE; q=URL_+'/rest/v1/bull_listings?select=id,bull_id,price_lamports,seller_id,bulls!inner(name,rarity_rank,image_url,generation)&status=eq.active&order='+pmOrderQ(pmSort)+'&limit='+PM_PAGE+'&offset='+off+pmRarityQ(pmFilter); }
     fetch(q,{headers:bqMktHeaders(pmTotal==null&&pmSearchId==null)}).then(function(res){ var cr=res.headers.get('content-range'); if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') pmTotal=parseInt(p[1],10); } return res.json(); })
     .then(function(rows){ pmLoading=false; if(!Array.isArray(rows)) rows=[]; if(grid) grid.innerHTML='';
       if(!rows.length){
@@ -9276,7 +9276,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     document.getElementById('bqPmSort').addEventListener('click', function(){ pmSort=pmSort==='recent'?'low':(pmSort==='low'?'high':'recent'); this.textContent='Sort: '+pmSortLabel(pmSort); pmSearchId=null; var se=document.getElementById('bqPmSearch'); if(se)se.value=''; pmReset(); });
     document.getElementById('bqPmPrev').addEventListener('click', function(){ pmGoTo(pmPage-1); });
     document.getElementById('bqPmNext').addEventListener('click', function(){ pmGoTo(pmPage+1); });
-    var ptmr=null; document.getElementById('bqPmSearch').addEventListener('input', function(){ clearTimeout(ptmr); var v=this.value.replace(/[^0-9]/g,''); ptmr=setTimeout(function(){ if(v===''){ pmSearchId=null; pmReset(); return; } var n=parseInt(v,10); if(!n||n<1||n>5000){ pmSearchId=n||0; var g=document.getElementById('bqPmGrid'); if(g)g.innerHTML=''; var stt=document.getElementById('bqPmStatus'); if(stt)stt.textContent=''; var pg=document.getElementById('bqPmPager'); if(pg)pg.hidden=true; pmMeta(); return; } pmSearchId=n; pmReset(); }, 300); });
+    var ptmr=null; document.getElementById('bqPmSearch').addEventListener('input', function(){ clearTimeout(ptmr); var v=this.value.replace(/[^0-9]/g,''); ptmr=setTimeout(function(){ if(v===''){ pmSearchId=null; pmReset(); return; } var n=parseInt(v,10); if(!n||n<1||n>10000){ pmSearchId=n||0; var g=document.getElementById('bqPmGrid'); if(g)g.innerHTML=''; var stt=document.getElementById('bqPmStatus'); if(stt)stt.textContent=''; var pg=document.getElementById('bqPmPager'); if(pg)pg.hidden=true; pmMeta(); return; } pmSearchId=n; pmReset(); }, 300); });
     return host;
   }
   function pmRefreshBadge(){ if(!sb) return; var h=bqMktHeaders(true); h.Range='0-0';
@@ -9314,7 +9314,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   setTimeout(function(){ var mv=document.getElementById('view-market'); if(mv&&!mv.hasAttribute('hidden')) pmRefreshBadge(); }, 900);
 
   // ---- Market: real browsable gallery of all 5,000 Genesis bulls, now also the primary shop ----
-  function bqMktImg(id){ return URL_+'/storage/v1/object/public/bulls/nft_'+id+'.webp'; }
+  /* Art files exist only for ids 1-5000. Later generations are second prints of the same art
+     plates, so any id maps back to its Genesis twin's file. Real rows carry image_url and rarely
+     hit this fallback at all. */
+  function bqMktImg(id){ var n=((+id-1)%5000)+1; return URL_+'/storage/v1/object/public/bulls/nft_'+n+'.webp'; }
   function bqMktHeaders(withCount){ var h={apikey:KEY_, Authorization:'Bearer '+KEY_}; if(withCount) h.Prefer='count=exact'; return h; }
   function showBullDetail(id){
     id = parseInt(id,10);
@@ -9418,6 +9421,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           '<button type="button" class="bqmkt-chip" data-f="rare"><span class="d" style="background:#4DA6F5"></span>Rare</button>'+
           '<button type="button" class="bqmkt-chip" data-f="common"><span class="d" style="background:#9AA6B2"></span>Common</button>'+
         '</div>'+
+        '<div class="bqmkt-chips" id="bqMktGens" style="margin-top:6px">'+
+          '<button type="button" class="bqmkt-chip on" data-g="all">All generations</button>'+
+          '<button type="button" class="bqmkt-chip" data-g="1">Gen 1 &middot; Genesis</button>'+
+          '<button type="button" class="bqmkt-chip" data-g="2">Gen 2 &middot; Second Run</button>'+
+        '</div>'+
       '</div>'+
       '<div class="bqmkt-meta"><span id="bqMktMeta">Rounding up the herd...</span><button type="button" class="bqmkt-sort" id="bqMktSort">Sort: Number</button></div>'+
       '<div class="bqmkt-grid" id="bqMktGrid"></div>'+
@@ -9434,7 +9442,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         searchEl=document.getElementById('bqMktSearch'), sortEl=document.getElementById('bqMktSort'),
         pagerEl=document.getElementById('bqMktPager'), prevEl=document.getElementById('bqMktPrev'),
         nextEl=document.getElementById('bqMktNext'), pageInfoEl=document.getElementById('bqMktPageInfo');
-    var PAGE=24, page=1, filter='all', sortBy='id', total=null, loading=false, inited=false, searchId=null;
+    var PAGE=24, page=1, filter='all', genF='all', sortBy='id', total=null, loading=false, inited=false, searchId=null;
     var colTotal=null, plShown=false;   // header pill: collection size vs live player listings
     function totalPages(){ return (total!=null && total>0) ? Math.max(1, Math.ceil(total/PAGE)) : 1; }
     function rangeFor(f){ if(f==='leg')return'rarity_rank=lte.50'; if(f==='epic')return'rarity_rank=gte.51&rarity_rank=lte.300'; if(f==='rare')return'rarity_rank=gte.301&rarity_rank=lte.1200'; if(f==='common')return'rarity_rank=gte.1201'; return''; }
@@ -9460,8 +9468,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     function fetchPage(){ if(loading) return; loading=true; statusEl.textContent = grid.children.length? '' : 'Loading...';
       // marketplace: only show bulls that are actually for sale (unclaimed system inventory).
       // Bulls owned by players are not listed here; player listings show in the "For sale by players" section.
-      var q; if(searchId!=null){ q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed&id=eq.'+searchId+'&claimed=eq.false'; }
-      else { var off=(page-1)*PAGE; q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed&claimed=eq.false&order='+(sortBy==='rank'?'rarity_rank.asc':'id.asc')+'&limit='+PAGE+'&offset='+off; var rf=rangeFor(filter); if(rf) q+='&'+rf; }
+      var q; if(searchId!=null){ q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed,generation&id=eq.'+searchId+'&claimed=eq.false'; }
+      else { var off=(page-1)*PAGE; q=URL_+'/rest/v1/bulls?select=id,rarity_rank,image_url,claimed,generation&claimed=eq.false&order='+(sortBy==='rank'?'rarity_rank.asc':'id.asc')+'&limit='+PAGE+'&offset='+off; var rf=rangeFor(filter); if(rf) q+='&'+rf; if(genF!=='all') q+='&generation=eq.'+genF; }
       fetch(q,{headers:bqMktHeaders(total==null&&searchId==null)}).then(function(res){ var cr=res.headers.get('content-range'); if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') total=parseInt(p[1],10); } return res.json(); })
       .then(function(rows){ loading=false; grid.innerHTML='';
         if(!rows||!rows.length){ statusEl.textContent = (searchId!=null)? '' : (page>1? 'No bulls on this page.' : 'No bulls available right now.'); updateMeta(); updatePager(); return; }
@@ -9472,8 +9480,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     function scrollMktTop(){ var n=grid; while(n){ if(n.scrollHeight>n.clientHeight+4){ var cs=window.getComputedStyle(n); if(/(auto|scroll)/.test(cs.overflowY)){ n.scrollTop=0; return; } } n=n.parentElement; } window.scrollTo(0,0); }
     function reset(){ grid.innerHTML=''; page=1; total=null; statusEl.textContent=''; pagerEl.hidden=true; fetchPage(); }
     document.getElementById('bqMktChips').addEventListener('click', function(e){ var b=e.target.closest('.bqmkt-chip'); if(!b) return; [].forEach.call(this.querySelectorAll('.bqmkt-chip'),function(c){c.classList.remove('on');}); b.classList.add('on'); filter=b.getAttribute('data-f'); searchId=null; searchEl.value=''; reset(); });
+    document.getElementById('bqMktGens').addEventListener('click', function(e){ var b=e.target.closest('.bqmkt-chip'); if(!b) return; [].forEach.call(this.querySelectorAll('.bqmkt-chip'),function(c){c.classList.remove('on');}); b.classList.add('on'); genF=b.getAttribute('data-g'); searchId=null; searchEl.value=''; reset(); });
     sortEl.addEventListener('click', function(){ sortBy=sortBy==='id'?'rank':'id'; sortEl.textContent='Sort: '+(sortBy==='id'?'Number':'Rarest'); searchId=null; searchEl.value=''; reset(); });
-    var stmr=null; searchEl.addEventListener('input', function(){ clearTimeout(stmr); var v=searchEl.value.replace(/[^0-9]/g,''); stmr=setTimeout(function(){ if(v===''){ searchId=null; reset(); return; } var n=parseInt(v,10); if(!n||n<1||n>5000){ searchId=n||0; grid.innerHTML=''; statusEl.textContent=''; pagerEl.hidden=true; updateMeta(); return; } searchId=n; reset(); }, 300); });
+    var stmr=null; searchEl.addEventListener('input', function(){ clearTimeout(stmr); var v=searchEl.value.replace(/[^0-9]/g,''); stmr=setTimeout(function(){ if(v===''){ searchId=null; reset(); return; } var n=parseInt(v,10); if(!n||n<1||n>10000){ searchId=n||0; grid.innerHTML=''; statusEl.textContent=''; pagerEl.hidden=true; updateMeta(); return; } searchId=n; reset(); }, 300); });
     grid.addEventListener('click', function(e){ var t=e.target.closest('.bqmkt-tile'); if(t) showBullDetail(t.getAttribute('data-id')); });
     prevEl.addEventListener('click', function(){ goToPage(page-1); });
     nextEl.addEventListener('click', function(){ goToPage(page+1); });
