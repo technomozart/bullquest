@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785909498";try{console.log("BullQuest build 1785909498");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785911895";try{console.log("BullQuest build 1785911895");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4784,6 +4784,29 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 #view-quests .qst-hero>p{margin:0;font-size:13.5px;color:rgba(255,255,255,.9);line-height:1.5}
 #view-quests .qst-total{margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:800;color:#fff}
 #view-quests .qst-list{padding:16px 16px 0;display:grid;gap:14px}
+/* Transaction ladder. Deliberately a different shape from the social quest cards: it is one
+   continuous track you move along, not a list of separate jobs. */
+#view-quests .qtx{margin:16px 16px 0;background:var(--surface);border-radius:20px;
+  box-shadow:0 10px 24px rgba(20,16,40,.07);padding:17px 18px}
+#view-quests .qtx h3{margin:0 0 3px;font-size:15.5px;font-weight:800}
+#view-quests .qtx .qtx-sub{margin:0 0 14px;font-size:12.5px;color:var(--faint);line-height:1.5}
+#view-quests .qtx-count{display:inline-flex;align-items:baseline;gap:6px;margin-bottom:13px}
+#view-quests .qtx-count b{font-size:27px;font-weight:800;letter-spacing:-.5px;color:var(--v)}
+#view-quests .qtx-count span{font-size:12.5px;color:var(--faint);font-weight:700}
+#view-quests .qtx-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(20,16,40,.07)}
+#view-quests .qtx-row:first-of-type{border-top:0}
+#view-quests .qtx-dot{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-size:11.5px;font-weight:800;background:rgba(20,16,40,.07);color:var(--faint)}
+#view-quests .qtx-row.hit .qtx-dot{background:#2D8548;color:#fff}
+#view-quests .qtx-row.claimed .qtx-dot{background:#B7BCC6;color:#fff}
+#view-quests .qtx-lab{flex:1;min-width:0}
+#view-quests .qtx-lab b{display:block;font-size:13.5px;font-weight:700}
+#view-quests .qtx-lab span{font-size:12px;color:var(--faint)}
+#view-quests .qtx-btn{flex:none;border:0;border-radius:12px;background:var(--v);color:#fff;font:inherit;
+  font-weight:800;font-size:13px;padding:10px 15px;min-height:44px;cursor:pointer}
+#view-quests .qtx-btn[disabled]{background:rgba(20,16,40,.08);color:#8A85A0;cursor:default}
+#view-quests .qtx-note{margin:13px 0 0;font-size:12px;color:var(--faint);line-height:1.5;
+  background:rgba(20,16,40,.04);border-radius:11px;padding:10px 12px}
 #view-quests .qdone-group{margin-top:6px}
 #view-quests .qdone-toggle{width:100%;display:flex;align-items:center;gap:9px;background:var(--tint-neutral1,rgba(20,16,40,.05));
   border:0;border-radius:16px;padding:13px 16px;min-height:48px;cursor:pointer;font:inherit;font-weight:800;
@@ -4847,6 +4870,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <p>Join the community and stack GRIT toward your airdrop and Sector Wars.</p>
       <div class="qst-total" id="qstTotal">0 GRIT earned</div>
     </header>
+    <!-- Rewards for actually transacting. Rendered above the social quests because it is the one
+         ladder a player can move on their own, without waiting on anybody. -->
+    <div id="qstTx"></div>
     <div class="qst-list" id="qstList"></div>
     <p class="qst-foot">GRIT you earn here adds to your balance, which grows your $BULL airdrop share and your weight in Sector Wars.</p>
   </div>
@@ -10560,9 +10586,60 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       container.innerHTML='<div class="qtwo"><a href="https://t.me/BullQuest" target="_blank" rel="noopener noreferrer" class="qbtn tgjoin">Join</a><button type="button" class="qbtn telegram">Verify</button></div>';
       var b=container.querySelector('button'); b.addEventListener('click', function(){ doTelegram(b); });
     }
+    /* Transaction milestones. Separate RPC from quests_state on purpose: this one is
+       authenticated-only, and a signed-out visitor should see the social quests without an error
+       where this section would be. */
+    function renderTxLadder(st){
+      var box=document.getElementById('qstTx'); if(!box) return;
+      if(!st || st.error || !st.tiers || !st.tiers.length){ box.innerHTML=''; return; }
+      var n=Number(st.transactions)||0;
+      var h='<div class="qtx"><h3>Transaction rewards</h3>'+
+        '<p class="qtx-sub">Every extra spin, energy refill, bull you buy and rename counts. Rewards pay once each.</p>'+
+        '<div class="qtx-count"><b>'+n.toLocaleString()+'</b><span>transaction'+(n===1?'':'s')+' so far</span></div>';
+      st.tiers.forEach(function(t){
+        var cls = t.claimed ? 'claimed' : (t.done ? 'hit' : '');
+        h+='<div class="qtx-row '+cls+'">'+
+             '<span class="qtx-dot">'+(t.claimed?'&#10003;':t.threshold)+'</span>'+
+             '<span class="qtx-lab"><b>'+esc(t.label)+'</b>'+
+               '<span>'+(Number(t.reward)||0).toLocaleString()+' GRIT'+
+               (t.claimed ? ' &middot; claimed' : (t.done ? '' : ' &middot; '+t.remaining+' to go'))+'</span></span>'+
+             (t.claimable
+               ? '<button type="button" class="qtx-btn" data-tx="'+t.threshold+'">Claim</button>'
+               : '<button type="button" class="qtx-btn" disabled>'+(t.claimed?'Done':'Locked')+'</button>')+
+           '</div>';
+      });
+      /* Say this plainly. Paying for airdrop share is the one thing these rewards must not do, and
+         a player deserves to know that before they spend. */
+      h+='<p class="qtx-note">'+esc(st.note||'')+'</p></div>';
+      box.innerHTML=h;
+      Array.prototype.forEach.call(box.querySelectorAll('.qtx-btn[data-tx]'), function(b){
+        b.addEventListener('click', function(){
+          b.disabled=true; b.textContent='...';
+          sb.rpc('claim_tx_milestone',{p_threshold:Number(b.getAttribute('data-tx'))}).then(function(r){
+            var d=r&&r.data;
+            if(d&&d.ok){
+              if(window.bqSetGrit && d.grit!=null) window.bqSetGrit(d.grit);
+              if(window.bqToast) window.bqToast('+'+Number(d.reward).toLocaleString()+' GRIT');
+            } else if(window.bqToast){
+              window.bqToast((d&&d.error==='already-claimed') ? 'Already claimed.'
+                : (d&&d.error==='not-yet') ? 'Not there yet.'
+                : (d&&d.error==='account-under-review') ? 'This account is under review.'
+                : 'Could not claim that.');
+            }
+            loadTxLadder();
+          }, function(){ b.disabled=false; b.textContent='Claim'; });
+        });
+      });
+    }
+    function loadTxLadder(){
+      if(!sb) return;
+      sb.rpc('tx_milestones_state').then(function(r){ renderTxLadder(r&&r.data); },
+                                        function(){ var b=document.getElementById('qstTx'); if(b) b.innerHTML=''; });
+    }
     window.bqRenderQuests=function(){
       if(!sb){ setTimeout(window.bqRenderQuests,200); return; }
       sb.rpc('quests_state').then(function(r){ if(r&&r.data) render(r.data); }).catch(function(){});
+      loadTxLadder();
     };
     document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('[data-bqgo="view-quests"]')) setTimeout(window.bqRenderQuests,60); },false);
     try{
