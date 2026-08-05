@@ -32,7 +32,7 @@
   .sidenav a.on .n{background:rgba(93,63,211,.16);color:#5D3FD3}
   .sidenav .grp{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
                 color:#8B87A3;padding:11px 10px 5px}
-  [id^="sec-"],#subsPanel,#buyPanel,#dupPanel,#acctPanel{scroll-margin-top:14px}
+  [id^="sec-"],#subsPanel,#buyPanel,#dupPanel,#acctPanel,#enfPanel,#appealPanel{scroll-margin-top:14px}
   /* Under 1000px there is no room beside the content, so it becomes a scrollable strip on top. */
   @media(max-width:1000px){
     .shell{display:block}
@@ -151,7 +151,15 @@
   function pct(a,b){ return b>0?Math.round(a/b*100):0; }
   function msg(html){ root.innerHTML='<div class="msg">'+html+'</div>'; }
 
-  function kpi(lab,val,sub){ return '<div class="kpi"><div class="lab">'+esc(lab)+'</div><div class="val">'+esc(val)+'</div>'+(sub?'<div class="sub">'+esc(sub)+'</div>':'')+'</div>'; }
+  /* The original tiles printed raw values, so they read "201200" next to newer panels showing
+     "1,894,322". Only genuinely numeric values are grouped: percentages, dates and words are left
+     exactly as passed, because running those through Number() is what prints NaN. */
+  function kpiVal(v){
+    if(v==null||v==='') return '-';
+    if(typeof v==='number') return isFinite(v) ? v.toLocaleString() : '-';
+    return /^-?\d+(\.\d+)?$/.test(String(v).trim()) ? Number(v).toLocaleString() : String(v);
+  }
+  function kpi(lab,val,sub){ return '<div class="kpi"><div class="lab">'+esc(lab)+'</div><div class="val">'+esc(kpiVal(val))+'</div>'+(sub?'<div class="sub">'+esc(sub)+'</div>':'')+'</div>'; }
 
   function stage(name,n,base,showPct){
     var p=pct(n,base);
@@ -683,6 +691,12 @@
            granted either way, but the row should not invite the second click. */
         Array.prototype.forEach.call(row.querySelectorAll('button'), function(b){ b.setAttribute('disabled',''); });
         row.style.opacity='.55';
+        /* ...and put the whole row back if the call fails, otherwise a failed decision left both
+           buttons dead and the card greyed out with no way forward except a page reload. */
+        function unlock(){
+          Array.prototype.forEach.call(row.querySelectorAll('button'), function(b){ b.removeAttribute('disabled'); });
+          row.style.opacity='';
+        }
         if(m) m.textContent='Working...';
         sb.rpc('admin_resolve_appeal',{p_user:u,p_restore:restore}).then(function(rr){
           var d=rr&&rr.data;
@@ -708,8 +722,8 @@
               loadAppeals();
             }, 900);
           }
-          else { btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } }
-        }, function(){ btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } });
+          else { unlock(); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } }
+        }, function(){ unlock(); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } });
       }
       Array.prototype.forEach.call(el.querySelectorAll('.apOk'), function(b){ b.addEventListener('click', function(){ act(b,true); }); });
       Array.prototype.forEach.call(el.querySelectorAll('.apNo'), function(b){ b.addEventListener('click', function(){ act(b,false); }); });
@@ -874,7 +888,15 @@
     }));
     var today=d.playing_today_by_country||{};
     geo += '<h3 style="margin:22px 0 4px;font-size:15px;font-weight:800">Playing today</h3>'+
-      '<p class="hint">'+num(today.total)+' live players opened the game today. Only 3% of these are unlocated, so this is the honest read on which country is actually rising.</p>'+
+      /* This share was hard-coded at 3% and had already drifted to 8.5%. Read it off the same rows
+         the chart below is drawn from, so it can never disagree with what is on screen. */
+      '<p class="hint">'+num(today.total)+' live players opened the game today. '+
+        (function(){
+          var u=(today.rows||[]).filter(function(r){ return r.c==='Unknown'; })[0];
+          return (u && u.pct!=null) ? esc(u.pct)+'% of these are unlocated'
+                                    : 'A small share of these are unlocated';
+        })()+
+      ', so this is the honest read on which country is actually rising.</p>'+
       bars((today.rows||[]).map(function(r){
         return {name:r.c, val:r.n, sub:(r.pct!=null?r.pct+'%':''), muted:(r.c==='Unknown'||r.c==='Other')};
       }));
