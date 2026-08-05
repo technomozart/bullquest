@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785903599";try{console.log("BullQuest build 1785903599");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785904806";try{console.log("BullQuest build 1785904806");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6066,8 +6066,35 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       'disabled':'Renaming is turned off right now.', 'memo-mismatch':"That payment couldn't be matched to your account.",
       'wrong-recipient':'The payment did not reach the treasury.', 'no-payment':'No payment was found in that transaction.',
       'tx-failed':'The payment transaction failed on-chain.', 'not-authenticated':'Please sign in again.',
-      'not-your-bull':'That is not your bull.', 'bad-length':'Use 2 to 20 characters.', 'bad-chars':'Letters, numbers, spaces, and - _ . only.' };
-    return map[(j && j.error) || ''] || "Rename didn't go through.";
+      'not-your-bull':'That is not your bull.', 'bad-length':'Use 2 to 20 characters.', 'bad-chars':'Letters, numbers, spaces, and - _ . only.',
+      /* 'blocked' had no entry, so a name the server refused fell through to "Rename didn't go
+         through", which reads as a failed payment and invites a second one. */
+      'blocked':'That name is not allowed. Pick another one.' };
+    var msg = map[(j && j.error) || ''] || "Rename didn't go through.";
+    /* The payment is on file either way now, so never imply the money is gone. */
+    if (j && j.credit) msg += ' Your payment is saved, so the next name is free.';
+    return msg;
+  }
+  /* Held between attempts: if the server kept the payment as a credit, the retry must submit the
+     SAME signature so it is redeemed rather than charging the player a second 0.05 SOL. */
+  var renameCredit = null;
+  /* One place that decides what a grant response means, so the paid path and the credit-redemption
+     path can never drift apart. */
+  function settleRename(resp, bullId, ov, go, goLabel){
+    var j = (resp && resp.body) || {};
+    renameBusy = false;
+    if (j && j.ok) {
+      renameCredit = null;
+      if (ov) ov.remove();
+      applyRenameToUI(bullId, j.name);
+      if (window.bqToast) window.bqToast('Renamed to ' + j.name + '!');
+      return;
+    }
+    if (go) { go.disabled = false; go.textContent = goLabel; }
+    if (j && j.retry) { if (window.bqToast) window.bqToast('Still confirming. Tap rename again in a few seconds.'); return; }
+    /* The server kept the money on file. Remember the signature so the next attempt spends it. */
+    if (j && j.credit && j.signature) renameCredit = { sig: j.signature };
+    if (window.bqToast) window.bqToast(friendlyRename(j));
   }
   function renameGrantRetry(sig, bullId, name, tries){
     return window.bqGame.renameGrant(sig, bullId, name).then(function(resp){
@@ -6094,6 +6121,27 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var quote, provider, web3, fromStr;
     window.bqGame.session().then(function(has){
       if (!has) { if (window.bqOpenAuth) window.bqOpenAuth(); throw new Error('__silent__'); }
+      /* Ask the server whether the name is usable BEFORE opening the wallet. rnValid only checks
+         length and charset, but the server also runs a profanity blocklist that leet-folds and
+         strips separators, so ordinary names like Tycoon and Cocktail are refused. Without this
+         the player pays 0.05 SOL first and is told no afterwards. */
+      if (!window.bqGame.renameNameOk) return true;
+      return window.bqGame.renameNameOk(newName).then(function(v){
+        if (v && v.ok === false) throw new Error(v.reason || 'blocked');
+        return true;
+      }, function(){ return true; });   // pre-flight is advisory: never block a rename on it failing
+    }).then(function(){
+      /* An unspent credit means the player already paid and the name was refused. Redeem it rather
+         than taking a second 0.05 SOL. '__done__' unwinds to the catch, which treats it like
+         '__silent__' because settle() has already reported the outcome. */
+      if (renameCredit && renameCredit.sig) {
+        if (window.bqToast) window.bqToast('Using your saved payment...');
+        go.textContent = 'Renaming...';
+        return renameGrantRetry(renameCredit.sig, bullId, newName, 5).then(function(resp){
+          settleRename(resp, bullId, ov, go, goLabel);
+          throw new Error('__done__');
+        });
+      }
       return window.bqGame.renameQuote();
     }).then(function(q){
       if (!q || q.enabled === false) throw new Error('disabled');
@@ -6124,14 +6172,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if (window.bqToast) window.bqToast('Payment sent, verifying on-chain...');
       return renameGrantRetry(sig, bullId, newName, 5);
     }).then(function(resp){
-      var j = (resp && resp.body) || {};
-      renameBusy = false;
-      if (j && j.ok) { if (ov) ov.remove(); applyRenameToUI(bullId, j.name); if (window.bqToast) window.bqToast('Renamed to ' + j.name + '!'); }
-      else if (j && j.retry) { go.disabled = false; go.textContent = goLabel; if (window.bqToast) window.bqToast('Still confirming. Tap rename again in a few seconds.'); }
-      else { go.disabled = false; go.textContent = goLabel; if (window.bqToast) window.bqToast(friendlyRename(j)); }
+      settleRename(resp, bullId, ov, go, goLabel);
     }).catch(function(e){
       renameBusy = false; if (go) { go.disabled = false; go.textContent = goLabel; }
-      var m = (e && e.message) || ''; if (m === '__silent__') return;
+      var m = (e && e.message) || ''; if (m === '__silent__' || m === '__done__') return;
+      /* The pre-flight rejects these before any wallet is opened, so no money is involved. */
+      if (m === 'blocked' || m === 'bad-length' || m === 'bad-chars') {
+        if (hint) { hint.textContent = friendlyRename({ error: m }); hint.style.color = '#EE5B62'; }
+        else if (window.bqToast) window.bqToast(friendlyRename({ error: m }));
+        return;
+      }
       try { console.error('[rename] failed:', e); } catch (_) {}
       var t = { 'no-wallet':'Connect a Solana wallet (Phantom, Solflare, Backpack) to rename.', 'disabled':'Renaming is turned off right now.',
                 'buffer-load':"Couldn't load the payment library, retry.", 'web3-load':"Couldn't load the payment library, retry.",
@@ -7802,6 +7852,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     // ----- Paid bull rename (0.05 SOL, on-chain verified) -----
     renameQuote:    function(){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/rename-bull',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({action:'quote'})}).then(function(r){ return r.json(); }); }); },
     renameBlockhash:function(){ return fetch(URL_+'/functions/v1/rename-bull',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_},body:JSON.stringify({action:'blockhash'})}).then(function(r){ return r.json(); }); },
+    /* Pre-flight the name BEFORE the wallet opens. The rename block lives in an earlier script
+       block and cannot see sb, so it has to come through bqGame like every other call. */
+    renameNameOk:   function(name){ return sb.rpc('rename_name_ok',{p_name:name}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
     renameGrant:    function(signature,bullId,newName){ return sb.auth.getSession().then(function(s){ var tok=(s&&s.data&&s.data.session&&s.data.session.access_token)||KEY_; return fetch(URL_+'/functions/v1/rename-bull',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},body:JSON.stringify({signature:signature,bull_id:bullId,new_name:newName})}).then(function(r){ return r.json().then(function(j){ return {status:r.status, body:j}; }); }); }); },
     // ----- Marketplace RPCs (buyer/seller, authenticated) -----
     mintQuote:      function(bullId){ return sb.rpc('mint_primary_quote',{p_bull_id:bullId}).then(function(r){ if(r.error) throw r.error; return r.data; }); },
