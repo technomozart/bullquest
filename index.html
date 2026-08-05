@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785916077";try{console.log("BullQuest build 1785916077");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785918040";try{console.log("BullQuest build 1785918040");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -4731,7 +4731,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 #view-airdrop .bqair-gate.hold{background:var(--tint-gold1)}
 /* --gold on the gold tint is about 1.9:1, so the one link they need is drawn in the body
    colour with an underline instead, which stays legible in both themes. */
-#view-airdrop .bqair-gate.hold .gs a{color:var(--title);font-weight:700;text-decoration:underline}
+#view-airdrop .bqair-gate.hold .gs a,
+#view-airdrop .bqair-gate.hold .gs [data-bq-feedback]{color:var(--title);font-weight:700;
+  text-decoration:underline;background:none;border:0;padding:0;font:inherit;cursor:pointer}
 :root[data-theme="dark"] #view-airdrop .bqair-gate.hold .gs{color:#9A90B0}
 #view-airdrop .bqair-cta{text-align:center;padding:6px 4px}
 #view-airdrop .bqair-cta h3{font-size:19px}
@@ -9492,6 +9494,18 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   initFeedback();
   initHelp();
 
+  /* Anything anywhere can now say "tell us" and reach a human, without hard-coding a link that can
+     die. Both Discord invites 404'd on 2026-08-04 and took every in-app "ask us on Discord" route
+     with them, including the one shown to suspended players. This one writes to the feedback table
+     and has no external dependency. Delegated, so it works for markup rendered later. */
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('[data-bq-feedback]') : null;
+    if (!t) return;
+    e.preventDefault();
+    var b = document.getElementById('bqFbBtn');
+    if (b) b.click();
+  });
+
   // ===== AI help assistant (floating, always-on) =====
   (function(){
     if(document.getElementById('bqAiBtn')) return;
@@ -10096,7 +10110,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         return '<div class="bqair-gate hold"><div class="gt">'+
                (review?'Your account is being checked':'This account is suspended')+'</div>'+
                '<div class="gs">'+(review
-                 ? 'Airdrop rounds are on hold for this wallet until that is finished. Nothing you have earned is lost, and your GRIT keeps adding up. If you think this is a mistake, <a href="https://discord.gg/bullquest" target="_blank" rel="noopener">message us</a> and a human will look at it.'
+                 /* Deliberately NOT a Discord link. Both invites went dead on 2026-08-04 and every
+                    "ask us on Discord" route silently stopped working, which is the worst possible
+                    thing to hand somebody who is already being told they are held. The in-app
+                    reporter writes straight to the feedback table and cannot expire. */
+                 ? 'Airdrop rounds are on hold for this wallet until that is finished. Nothing you have earned is lost, and your GRIT keeps adding up. If you think this is a mistake, <button type="button" data-bq-feedback>tell us</button> and a human will look at it.'
                  : 'Suspended accounts are not included in airdrop rounds.')+'</div></div>';
       }
       var min=Number(m&&m.min_grit_to_qualify)||0;
