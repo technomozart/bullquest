@@ -1105,8 +1105,8 @@
     /* Real first. The raw totals counted a bot farm as growth on 2026-08-01, so the honest number
        has to be the one your eye lands on. */
     html+='<div id="sec-stats"><div class="grid">'+
-      kpi('Real users', d.real_users, 'excludes banned')+
-      kpi('Real signups today', d.real_signups_today)+
+      kpi('Players', d.real_users, 'excludes banned')+
+      kpi('Signups today', d.real_signups_today, 'excludes banned')+
       kpi('Active today', d.dau_today, 'unique opens')+
       kpi('Played today', d.played_today, 'actually earned GRIT')+
       kpi('Avg daily (7d)', d.dau_7d_avg)+
@@ -1120,11 +1120,34 @@
     '</div>';
     html+='<div class="grid">'+
       kpi('Total incl. banned', d.users_total, 'raw signups')+
-      kpi('Signups today (raw)', d.signups_today)+
-      kpi('Signups 7d (raw)', d.signups_7d)+
+      kpi('Signups today, incl. banned', d.signups_today)+
+      kpi('Signups 7d, incl. banned', d.signups_7d)+
       kpi('Referral GRIT pending', d.referral_grit_pending, 'not yet paid')+
       kpi('Bulls left in pool', d.bulls_free)+
-    '</div></div>';
+    '</div>';
+    /* Traction numbers, the ones worth screenshotting. Separate RPC (admin_growth_stats) for the
+       same reason quest health is: admin_analytics is already at the json_build_object argument
+       cap. Non-fatal if it fails, but the tiles say so rather than silently vanishing. */
+    var g = d.growth;
+    if(g){
+      html+='<div class="grid">'+
+        kpi('Duels played', g.duels_played, 'all time')+
+        kpi('GRIT earned', g.grit_earned, 'all time')+
+        kpi('Genesis bulls claimed', g.bulls_claimed, 'of '+kpiVal(g.bulls_total))+
+        kpi('Day 1 retention', (g.d1_retention!=null ? g.d1_retention+'%' : null), (g.d1_cohort? g.d1_cohort+' cohort':''))+
+        kpi('Countries', g.countries)+
+      '</div>';
+      html+='<div class="grid">'+
+        kpi('Quest claims', g.quest_claims, 'all time')+
+        kpi('Discord verified', g.discord_members, 'proved membership')+
+        kpi('Telegram linked', g.telegram_linked)+
+        kpi('X connected', g.x_linked)+
+        kpi('Active today', g.active_today, 'unique players')+
+      '</div>';
+    } else {
+      html+='<p class="hint">Traction stats unavailable: '+esc(String(d.growth_error||'unknown'))+'</p>';
+    }
+    html+='</div>';
     if(d.top_referrers_24h && d.top_referrers_24h.length){
       html+='<div id="sec-referrers" class="panel"><h3>Top referrers, last 24h</h3>'+
         '<p class="hint">A single link bringing in hundreds of accounts is the shape of a farm, not word of mouth. The banned column tells you which.</p>';
@@ -1198,8 +1221,8 @@
         /* Quest health is a separate RPC rather than a 68th key on admin_analytics, which already
            builds 67 and has to split its json_build_object calls around the 100 argument cap.
            Its failure is non-fatal: the dashboard is more useful without one panel than not at all. */
-        return Promise.all([sb.rpc('admin_analytics'), sb.rpc('admin_quest_health')]).then(function(res){
-          var r=res[0], qh=res[1];
+        return Promise.all([sb.rpc('admin_analytics'), sb.rpc('admin_quest_health'), sb.rpc('admin_growth_stats')]).then(function(res){
+          var r=res[0], qh=res[1], gs=res[2];
           btn.removeAttribute('disabled');
           if(r.error){ msg('<h2>Something went wrong</h2>'+esc(r.error.message||'RPC error')); return; }
           var d=r.data;
@@ -1210,6 +1233,11 @@
           d.quest_health_error = d.quest_health ? null
             : ((qh && qh.error && (qh.error.message || qh.error.hint))
                || (qh && qh.data && qh.data.error)
+               || 'no response');
+          d.growth = (gs && !gs.error && gs.data && !gs.data.error) ? gs.data : null;
+          d.growth_error = d.growth ? null
+            : ((gs && gs.error && (gs.error.message || gs.error.hint))
+               || (gs && gs.data && gs.data.error)
                || 'no response');
           render(d);
         });
