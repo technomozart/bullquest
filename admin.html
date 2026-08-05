@@ -656,7 +656,7 @@
             '<p class="hint">A suspended player wrote in. Restoring returns their GRIT in full and grants a bull, and marks the account so no future sweep can touch it.</p>';
       a.forEach(function(x){
         var e=x.evidence||{}, real=(e.days_returned>=2)||(e.gym>0&&e.duels>2);
-        h+='<div style="border-top:1px solid rgba(20,16,40,.08);padding:12px 2px">'+
+        h+='<div data-appeal="'+esc(x.user_id)+'" style="border-top:1px solid rgba(20,16,40,.08);padding:12px 2px">'+
            '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">'+
              '<b style="font-size:13.5px">'+esc(x.username||'')+'</b>'+
              '<span style="font-size:11.5px;opacity:.7">'+esc(x.email||'')+'</span>'+
@@ -676,8 +676,14 @@
       });
       el.innerHTML=h+'</div>';
       function act(btn, restore){
-        var u=btn.getAttribute('data-u'), m=btn.parentNode.querySelector('.apMsg');
-        btn.setAttribute('disabled',''); if(m) m.textContent='Working...';
+        var u=btn.getAttribute('data-u'), row=btn.parentNode, m=row.querySelector('.apMsg');
+        /* Disable BOTH buttons in the row, not just the one clicked. The list only refreshes after
+           the round trip, so until then the other button is still live and the same appeal could be
+           resolved twice. The RPC is idempotent and takes an advisory lock, so nothing is double
+           granted either way, but the row should not invite the second click. */
+        Array.prototype.forEach.call(row.querySelectorAll('button'), function(b){ b.setAttribute('disabled',''); });
+        row.style.opacity='.55';
+        if(m) m.textContent='Working...';
         sb.rpc('admin_resolve_appeal',{p_user:u,p_restore:restore}).then(function(rr){
           var d=rr&&rr.data;
           if(d&&d.ok){
@@ -689,10 +695,18 @@
                  taken. Say which. */
               var g = Number(d.grit_returned)||0;
               m.textContent = !restore ? 'Kept banned.'
+                : d.already_resolved ? 'Already resolved, nothing changed.'
                 : g > 0 ? ('Restored. '+g.toLocaleString()+' GRIT returned'+(d.bull_granted?' and a bull.':'.'))
                         : ('Restored. No GRIT was owed, it was already repaid or none was taken'+(d.bull_granted?', and a bull was granted.':'.'));
             }
-            setTimeout(loadAppeals, 1200);
+            /* Take the card out straight away rather than waiting on the reload, so a resolved
+               appeal can never be acted on twice, and the waiting count drops when you expect. */
+            var card = row.closest ? row.closest('[data-appeal]') : null;
+            setTimeout(function(){
+              if(card && card.parentNode) card.parentNode.removeChild(card);
+              else if(row && row.parentNode) row.parentNode.style.display='none';
+              loadAppeals();
+            }, 900);
           }
           else { btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } }
         }, function(){ btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } });
