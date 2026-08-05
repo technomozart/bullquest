@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>BullQuest · Airdrop Payout Tool</title>
+<style>
+  :root{--violet:#6B31E6;--bg:#F4F2FB;--card:#fff;--ink:#20143A;--body:#5B5570;--faint:#9AA0AE;
+    --hair:#ECEAF3;--green:#2FA657;--red:#D64545;--amber:#E0930F;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;padding:22px 16px 60px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:22px;letter-spacing:-.5px;margin:0}
+  .sub{color:var(--body);font-size:13.5px;font-weight:600;margin:4px 0 18px}
+  .panel{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:18px;margin-bottom:14px}
+  .panel h3{margin:0 0 6px;font-size:15.5px}
+  .panel p.hint{margin:0 0 12px;color:var(--body);font-size:13px;font-weight:600;line-height:1.5}
+  .step{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;font-size:12.5px;font-weight:800;margin-right:8px;vertical-align:-4px}
+  button{font-family:inherit;font-weight:800;font-size:14px;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;background:var(--violet);color:#fff}
+  button.ghost{background:#EFEAFB;color:var(--violet)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.danger{background:var(--red)}
+  input[type=text]{width:100%;border:1.5px solid var(--hair);border-radius:12px;padding:12px 13px;font-size:13.5px;font-family:ui-monospace,Menlo,Consolas,monospace;background:#FBFAFE;color:var(--ink)}
+  label{font-size:12px;font-weight:800;color:var(--faint);text-transform:uppercase;letter-spacing:.5px;display:block;margin:12px 0 5px}
+  .ok{color:var(--green);font-weight:800}.bad{color:var(--red);font-weight:800}.warn{color:var(--amber);font-weight:800}
+  .kv{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0}
+  .kv div{background:#F7F5FD;border-radius:12px;padding:10px 14px;font-size:13px;font-weight:700}
+  .kv b{display:block;font-size:17px;letter-spacing:-.3px}
+  #log{background:#171226;color:#D9D2F0;border-radius:14px;padding:14px;font:12px/1.7 ui-monospace,Menlo,Consolas,monospace;max-height:340px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{text-align:left;color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;border-bottom:1px solid var(--hair)}
+  td{padding:7px 8px;border-bottom:1px solid var(--hair);font-variant-numeric:tabular-nums}
+  td.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px}
+  .pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:800}
+  .pill.paid{background:#E7F5EC;color:#1D7A3F}.pill.due{background:#FDF1DC;color:#8A5B00}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .spacer{flex:1}
+  #tblWrap{max-height:300px;overflow:auto;border:1px solid var(--hair);border-radius:12px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Airdrop payout tool</h1>
+  <p class="sub">Sends $BULL to every qualified wallet for a round. You sign every transaction in Phantom. This page never sees or asks for a private key, and it can never pay the same allocation twice.</p>
+
+  <div class="panel">
+    <h3><span class="step">1</span>Sign in</h3>
+    <p class="hint">This tool uses your founder session from the game. If the line below is red, open <a href="./">the app</a> in this browser, sign in with your founder account, then come back and refresh.</p>
+    <div id="sessState" class="warn">Checking your session...</div>
+  </div>
+
+  <div class="panel">
+    <h3><span class="step">2</span>Connect Phantom</h3>
+    <p class="hint">The wallet you connect is the one that pays. It must hold the $BULL you are distributing plus a little SOL for fees (about 0.001 SOL per 6 wallets).</p>
+    <div class="row">
+      <button id="btnConnect">Connect Phantom</button>
+      <span id="walState" class="warn">Not connected</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3><span class="step">3</span>The token</h3>
+    <p class="hint">Paste the $BULL mint address (the token's own address, from where you launched it). Then press Check token and make sure the supply and decimals look right before anything is sent.</p>
+    <label>Token mint address</label>
+    <input type="text" id="mintAddr" placeholder="paste the $BULL mint address here" autocomplete="off" spellcheck="false">
+    <label>RPC endpoint (leave as is unless sends fail with rate limits)</label>
+    <input type="text" id="rpcUrl" autocomplete="off" spellcheck="false">
+    <div class="row" style="margin-top:12px">
+      <button id="btnCheckMint" class="ghost">Check token</button>
+      <span id="mintState"></span>
+    </div>
+    <div class="kv" id="mintInfo" style="display:none">
+      <div>Program<b id="miProg">-</b></div>
+      <div>Decimals<b id="miDec">-</b></div>
+      <div>Supply<b id="miSup">-</b></div>
+      <div>Your balance<b id="miBal">-</b></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3><span class="step">4</span>Rehearsal (do this once before the real run)</h3>
+    <p class="hint">Send a tiny amount of the token to one wallet you control, for example your phone's wallet. If this works end to end, the big run uses exactly the same machinery.</p>
+    <label>Test wallet address</label>
+    <input type="text" id="testWallet" autocomplete="off" spellcheck="false">
+    <label>Test amount (in whole tokens, e.g. 1.5)</label>
+    <input type="text" id="testAmount" value="1" autocomplete="off">
+    <div class="row" style="margin-top:12px"><button id="btnTest" class="ghost">Send test</button><span id="testState"></span></div>
+  </div>
+
+  <div class="panel">
+    <h3><span class="step">5</span>The round</h3>
+    <p class="hint">Load a round to see exactly who gets what before anything is signed. Already-paid rows are skipped automatically, so if the browser closes mid-run you just come back, load the round again, and continue.</p>
+    <div class="row">
+      <label style="margin:0">Round</label>
+      <input type="text" id="roundNo" value="1" style="width:70px;text-align:center">
+      <button id="btnLoad" class="ghost">Load round</button>
+      <span id="loadState"></span>
+    </div>
+    <div class="kv" id="roundInfo" style="display:none">
+      <div>Wallets<b id="riWallets">-</b></div>
+      <div>Unpaid<b id="riUnpaid">-</b></div>
+      <div>Tokens to send<b id="riTokens">-</b></div>
+      <div>% of supply<b id="riPct">-</b></div>
+    </div>
+    <div id="tblWrap" style="display:none"><table id="tbl"><thead><tr><th>#</th><th>Wallet</th><th>Tokens</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <div class="panel">
+    <h3><span class="step">6</span>Send</h3>
+    <p class="hint">Wallets are paid in groups of 6 per transaction, and Phantom asks you to approve small batches of transactions at a time. Each allocation is locked in our database the moment its transaction is signed, before it is broadcast, so a mid-run crash can never cause a double payment. Keep this tab open until it says finished.</p>
+    <div class="row">
+      <button id="btnSend" disabled>Start sending</button>
+      <button id="btnStop" class="danger" style="display:none">Stop after this batch</button>
+      <span class="spacer"></span>
+      <span id="sendState"></span>
+    </div>
+    <div style="margin-top:12px"><div id="log">Ready.</div></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/buffer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.8/lib/index.iife.min.js"></script>
+<script>
+(function(){
+  'use strict';
+  var URL_='https://cewumdioknvjtsiolxce.supabase.co';
+  var KEY_='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNld3VtZGlva252anRzaW9seGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2OTI3NzUsImV4cCI6MjA5OTI2ODc3NX0.n_r2gixZZTuTyJOiUhCZMpPKp5mUYtdM9bShs-nWkWk';
+  var RECIPIENTS_PER_TX=6, TXS_PER_APPROVAL=6;
+  var TOKEN_PROGRAM='TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+  var TOKEN_2022='TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb';
+  var ATA_PROGRAM='ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL';
+
+  var sb=null, provider=null, payer=null, W=window.solanaWeb3;
+  var mint=null, mintProgram=null, decimals=null;
+  var queue=[], roundNo=1, stopFlag=false;
+
+  var $=function(id){return document.getElementById(id);};
+  function log(s){ var el=$('log'); el.textContent+=(el.textContent?'\n':'')+s; el.scrollTop=el.scrollHeight; }
+  function short(a){ return a? (a.slice(0,4)+'..'+a.slice(-4)) : '?'; }
+
+  /* ---- exact decimal to base units, string math only: 12.5 tokens at 6 decimals must become
+     exactly 12500000, never 12499999.999 via floats ---- */
+  function toBaseUnits(str, dec){
+    str=String(str).trim(); if(!/^\d+(\.\d+)?$/.test(str)) return null;
+    var p=str.split('.'), whole=p[0], frac=p[1]||'';
+    if(frac.length>dec) return null;                    // more precision than the token supports
+    while(frac.length<dec) frac+='0';
+    var s=(whole+frac).replace(/^0+(?=\d)/,'');
+    return BigInt(s);
+  }
+  function fromBaseUnits(bi, dec){
+    var s=bi.toString().padStart(dec+1,'0');
+    var w=s.slice(0,s.length-dec), f=s.slice(s.length-dec).replace(/0+$/,'');
+    return f? (w+'.'+f) : w;
+  }
+  function u64le(bi){
+    var b=new Uint8Array(8);
+    for(var i=0;i<8;i++){ b[i]=Number(bi & 255n); bi>>=8n; }
+    return b;
+  }
+
+  function rpcUrl(){ return $('rpcUrl').value.trim() || 'https://api.mainnet-beta.solana.com'; }
+  function conn(){ return new W.Connection(rpcUrl(), 'confirmed'); }
+
+  function ataFor(owner, mintPk, tokenProgPk){
+    return W.PublicKey.findProgramAddressSync(
+      [owner.toBuffer(), tokenProgPk.toBuffer(), mintPk.toBuffer()],
+      new W.PublicKey(ATA_PROGRAM))[0];
+  }
+  function ixCreateAtaIdempotent(payerPk, ata, owner, mintPk, tokenProgPk){
+    return new W.TransactionInstruction({
+      programId: new W.PublicKey(ATA_PROGRAM),
+      keys:[
+        {pubkey:payerPk, isSigner:true,  isWritable:true},
+        {pubkey:ata,     isSigner:false, isWritable:true},
+        {pubkey:owner,   isSigner:false, isWritable:false},
+        {pubkey:mintPk,  isSigner:false, isWritable:false},
+        {pubkey:W.SystemProgram.programId, isSigner:false, isWritable:false},
+        {pubkey:tokenProgPk, isSigner:false, isWritable:false}
+      ],
+      data: window.Buffer.from([1])   // 1 = CreateIdempotent
+    });
+  }
+  function ixTransferChecked(srcAta, mintPk, dstAta, ownerPk, amountBI, dec, tokenProgPk){
+    var data=new Uint8Array(1+8+1); data[0]=12; data.set(u64le(amountBI),1); data[9]=dec;
+    return new W.TransactionInstruction({
+      programId: tokenProgPk,
+      keys:[
+        {pubkey:srcAta,  isSigner:false, isWritable:true},
+        {pubkey:mintPk,  isSigner:false, isWritable:false},
+        {pubkey:dstAta,  isSigner:false, isWritable:true},
+        {pubkey:ownerPk, isSigner:true,  isWritable:false}
+      ],
+      data: window.Buffer.from(data)
+    });
+  }
+
+  /* ---------- step 1: session ---------- */
+  function ready(){
+    if(!(window.supabase&&window.supabase.createClient)||!window.solanaWeb3){ return setTimeout(ready,80); }
+    W=window.solanaWeb3;
+    sb=window.supabase.createClient(URL_,KEY_);
+    $('rpcUrl').value = localStorage.getItem('bq_airdrop_rpc') || 'https://api.mainnet-beta.solana.com';
+    $('mintAddr').value = localStorage.getItem('bq_airdrop_mint') || '';
+    sb.auth.getSession().then(function(s){
+      var sess=s&&s.data&&s.data.session;
+      if(!sess){ $('sessState').textContent='Not signed in. Open the app, sign in, come back and refresh.'; $('sessState').className='bad'; return; }
+      return sb.rpc('airdrop_payout_queue',{p_round:1}).then(function(r){
+        if(r.error || (r.data&&r.data.error)){ $('sessState').textContent='Signed in, but this account is not the founder account.'; $('sessState').className='bad'; }
+        else { $('sessState').textContent='Signed in as founder. Ready.'; $('sessState').className='ok'; }
+      });
+    });
+  }
+
+  /* ---------- step 2: phantom ---------- */
+  $('btnConnect').addEventListener('click', function(){
+    var p=window.phantom&&window.phantom.solana ? window.phantom.solana : window.solana;
+    if(!p||!p.connect){ $('walState').textContent='Phantom not found. Install the Phantom extension in this browser first.'; $('walState').className='bad'; return; }
+    p.connect().then(function(res){
+      provider=p; payer=new W.PublicKey((res&&res.publicKey||p.publicKey).toString());
+      $('walState').textContent='Connected: '+short(payer.toBase58()); $('walState').className='ok';
+      maybeEnableSend();
+    }).catch(function(e){ $('walState').textContent='Connection cancelled.'; $('walState').className='warn'; });
+  });
+
+  /* ---------- step 3: token ---------- */
+  $('btnCheckMint').addEventListener('click', function(){
+    var addr=$('mintAddr').value.trim();
+    $('mintState').textContent='Checking...'; $('mintState').className='warn';
+    var mintPk; try{ mintPk=new W.PublicKey(addr); }catch(e){ $('mintState').textContent='That is not a valid Solana address.'; $('mintState').className='bad'; return; }
+    var c=conn();
+    c.getParsedAccountInfo(mintPk).then(function(ai){
+      var v=ai&&ai.value;
+      if(!v || !v.data || !v.data.parsed || v.data.parsed.type!=='mint'){ throw new Error('not a token mint'); }
+      var ownerProg=v.owner.toBase58();
+      if(ownerProg!==TOKEN_PROGRAM && ownerProg!==TOKEN_2022){ throw new Error('unknown token program'); }
+      mint=mintPk; mintProgram=new W.PublicKey(ownerProg);
+      decimals=v.data.parsed.info.decimals;
+      localStorage.setItem('bq_airdrop_mint', addr);
+      localStorage.setItem('bq_airdrop_rpc', $('rpcUrl').value.trim());
+      $('miProg').textContent = ownerProg===TOKEN_PROGRAM? 'SPL Token' : 'Token-2022';
+      $('miDec').textContent = decimals;
+      $('miSup').textContent = fromBaseUnits(BigInt(v.data.parsed.info.supply), decimals);
+      $('mintInfo').style.display='';
+      $('mintState').textContent='Token looks good.'; $('mintState').className='ok';
+      if(payer){
+        var myAta=ataFor(payer, mint, mintProgram);
+        c.getTokenAccountBalance(myAta).then(function(b){ $('miBal').textContent=(b&&b.value&&b.value.uiAmountString)||'0'; },
+          function(){ $('miBal').textContent='0 (no token account yet)'; });
+      }
+      maybeEnableSend();
+    }).catch(function(e){ $('mintState').textContent='Could not verify: '+(e&&e.message||e); $('mintState').className='bad'; });
+  });
+
+  /* ---------- shared send machinery ---------- */
+  function buildTx(recipients, blockhash){
+    // recipients: [{wallet:PublicKey, amount:BigInt}]
+    var tx=new W.Transaction({feePayer:payer, recentBlockhash:blockhash});
+    tx.add(W.ComputeBudgetProgram.setComputeUnitPrice({microLamports:60000}));
+    var srcAta=ataFor(payer, mint, mintProgram);
+    recipients.forEach(function(r){
+      var dst=ataFor(r.wallet, mint, mintProgram);
+      tx.add(ixCreateAtaIdempotent(payer, dst, r.wallet, mint, mintProgram));
+      tx.add(ixTransferChecked(srcAta, mint, dst, payer, r.amount, decimals, mintProgram));
+    });
+    return tx;
+  }
+  function confirmSig(c, sig, tries){
+    tries=tries||30;
+    return new Promise(function(res){
+      var n=0, t=setInterval(function(){
+        n++;
+        c.getSignatureStatuses([sig]).then(function(st){
+          var s=st&&st.value&&st.value[0];
+          if(s && (s.confirmationStatus==='confirmed'||s.confirmationStatus==='finalized')){ clearInterval(t); res({ok:!s.err, err:s.err}); }
+          else if(n>=tries){ clearInterval(t); res({ok:false, err:'timeout'}); }
+        }, function(){ if(n>=tries){ clearInterval(t); res({ok:false, err:'rpc'}); } });
+      }, 2000);
+    });
+  }
+
+  /* ---------- step 4: rehearsal ---------- */
+  $('btnTest').addEventListener('click', function(){
+    if(!provider||!payer){ $('testState').textContent='Connect Phantom first.'; $('testState').className='bad'; return; }
+    if(!mint){ $('testState').textContent='Check the token first.'; $('testState').className='bad'; return; }
+    var wPk; try{ wPk=new W.PublicKey($('testWallet').value.trim()); }catch(e){ $('testState').textContent='Bad wallet address.'; $('testState').className='bad'; return; }
+    var amt=toBaseUnits($('testAmount').value, decimals);
+    if(amt===null||amt<=0n){ $('testState').textContent='Bad amount.'; $('testState').className='bad'; return; }
+    $('testState').textContent='Building...'; $('testState').className='warn';
+    var c=conn();
+    c.getLatestBlockhash('confirmed').then(function(bh){
+      var tx=buildTx([{wallet:wPk, amount:amt}], bh.blockhash);
+      return provider.signTransaction(tx).then(function(signed){
+        return c.sendRawTransaction(signed.serialize(),{skipPreflight:false}).then(function(sig){
+          log('TEST sent '+$('testAmount').value+' tokens to '+short(wPk.toBase58())+' sig '+sig);
+          $('testState').textContent='Sent, waiting for confirmation...';
+          return confirmSig(c, sig).then(function(r){
+            if(r.ok){ $('testState').textContent='Confirmed. The machinery works.'; $('testState').className='ok'; log('TEST confirmed.'); }
+            else { $('testState').textContent='Sent but not confirmed: '+JSON.stringify(r.err); $('testState').className='bad'; log('TEST NOT confirmed: '+JSON.stringify(r.err)); }
+          });
+        });
+      });
+    }).catch(function(e){ $('testState').textContent='Failed: '+(e&&e.message||e); $('testState').className='bad'; log('TEST failed: '+(e&&e.message||e)); });
+  });
+
+  /* ---------- step 5: load round ---------- */
+  $('btnLoad').addEventListener('click', function(){
+    roundNo=parseInt($('roundNo').value,10)||1;
+    $('loadState').textContent='Loading...'; $('loadState').className='warn';
+    sb.rpc('airdrop_payout_queue',{p_round:roundNo}).then(function(r){
+      if(r.error){ $('loadState').textContent=r.error.message; $('loadState').className='bad'; return; }
+      var d=r.data||{};
+      if(d.error){ $('loadState').textContent=d.error; $('loadState').className='bad'; return; }
+      if(!d.round){ $('loadState').textContent='No such round.'; $('loadState').className='bad'; return; }
+      var rows=d.rows||[];
+      queue=[];
+      var bad=0, paid=0, totalDue=0;
+      var tb=$('tbl').querySelector('tbody'); tb.innerHTML='';
+      rows.forEach(function(row,i){
+        var okAddr=true, pk=null;
+        try{ pk=new W.PublicKey(row.wallet); }catch(e){ okAddr=false; bad++; }
+        var isPaid=!!row.paid_signature; if(isPaid) paid++;
+        if(okAddr && !isPaid){ queue.push({id:row.id, wallet:pk, tokens:row.tokens}); totalDue+=Number(row.tokens); }
+        var tr=document.createElement('tr');
+        tr.innerHTML='<td>'+(i+1)+'</td><td class="mono">'+row.wallet+(okAddr?'':' <span class="bad">(invalid!)</span>')+'</td>'+
+          '<td>'+Number(row.tokens).toLocaleString()+'</td>'+
+          '<td>'+(isPaid?'<span class="pill paid">paid</span>':'<span class="pill due">due</span>')+'</td>';
+        tb.appendChild(tr);
+      });
+      $('riWallets').textContent=rows.length.toLocaleString();
+      $('riUnpaid').textContent=queue.length.toLocaleString();
+      $('riTokens').textContent=Math.round(totalDue).toLocaleString();
+      $('riPct').textContent=(totalDue/1e9*100).toFixed(3)+'%';
+      $('roundInfo').style.display=''; $('tblWrap').style.display='';
+      var msg='Round '+roundNo+' ('+(d.round.status||'?')+'): '+rows.length+' wallets, '+paid+' already paid, '+queue.length+' to pay'+(bad?(', '+bad+' invalid addresses SKIPPED'):'');
+      $('loadState').textContent=msg; $('loadState').className= queue.length? 'ok':'warn';
+      log(msg);
+      if(rows.length===0) log('Nothing here yet. Allocations appear when the round snapshot runs.');
+      maybeEnableSend();
+    });
+  });
+
+  function maybeEnableSend(){ $('btnSend').disabled = !(provider && payer && mint && queue.length); }
+
+  /* ---------- step 6: the run ---------- */
+  $('btnStop').addEventListener('click', function(){ stopFlag=true; $('btnStop').textContent='Stopping after this batch...'; });
+
+  $('btnSend').addEventListener('click', function(){
+    if(!queue.length) return;
+    stopFlag=false;
+    $('btnSend').disabled=true; $('btnStop').style.display=''; $('btnStop').textContent='Stop after this batch';
+    var c=conn();
+    var groups=[];
+    for(var i=0;i<queue.length;i+=RECIPIENTS_PER_TX) groups.push(queue.slice(i,i+RECIPIENTS_PER_TX));
+    log('Starting: '+queue.length+' wallets in '+groups.length+' transactions, approvals of up to '+TXS_PER_APPROVAL+' at a time.');
+    var gi=0, sentOk=0, sentFail=0;
+
+    function nextApproval(){
+      if(gi>=groups.length || stopFlag){
+        $('btnStop').style.display='none';
+        $('sendState').textContent = stopFlag? 'Stopped. Load the round again to continue.' : 'Finished.';
+        $('sendState').className = stopFlag? 'warn' : 'ok';
+        log((stopFlag?'STOPPED':'FINISHED')+': '+sentOk+' transactions confirmed, '+sentFail+' failed. Reload the round to see the paid list update.');
+        $('btnSend').disabled=false;
+        return;
+      }
+      var chunk=groups.slice(gi, gi+TXS_PER_APPROVAL);
+      $('sendState').textContent='Batch '+(Math.floor(gi/TXS_PER_APPROVAL)+1)+' of '+Math.ceil(groups.length/TXS_PER_APPROVAL)+': approve in Phantom...';
+      $('sendState').className='warn';
+      c.getLatestBlockhash('confirmed').then(function(bh){
+        var txs=chunk.map(function(g){
+          return buildTx(g.map(function(q){ return {wallet:q.wallet, amount:toBaseUnits(String(q.tokens), decimals)}; }), bh.blockhash);
+        });
+        return provider.signAllTransactions(txs).then(function(signed){
+          // Lock every allocation in the DB BEFORE broadcasting. A crash between mark and send
+          // leaves a row to check by hand; the reverse order could pay somebody twice. Twice is worse.
+          var seq=Promise.resolve();
+          signed.forEach(function(stx, k){
+            var g=chunk[k];
+            var sig=(window.Buffer&&stx.signature)? bs58encode(stx.signature) : null;
+            seq=seq.then(function(){
+              return sb.rpc('airdrop_mark_paid',{
+                p_ids:g.map(function(q){return q.id;}),
+                p_signature:sig||('unknown-'+Date.now()),
+                p_amounts:g.map(function(q){return Number(q.tokens);})
+              }).then(function(mr){
+                if(mr.error||(mr.data&&mr.data.error)) log('WARN could not lock rows before send: '+JSON.stringify(mr.error||mr.data));
+                return c.sendRawTransaction(stx.serialize(),{skipPreflight:false}).then(function(realSig){
+                  log('tx '+(gi+k+1)+'/'+groups.length+' sent: '+realSig+' ('+g.length+' wallets)');
+                  return confirmSig(c, realSig).then(function(cr){
+                    if(cr.ok){ sentOk++; log('   confirmed'); }
+                    else { sentFail++; log('   NOT CONFIRMED: '+JSON.stringify(cr.err)+' , wallets: '+g.map(function(q){return short(q.wallet.toBase58());}).join(' ')); }
+                  });
+                }, function(e){ sentFail++; log('   SEND FAILED: '+(e&&e.message||e)); });
+              });
+            });
+          });
+          return seq;
+        });
+      }).then(function(){
+        gi+=TXS_PER_APPROVAL;
+        setTimeout(nextApproval, 400);
+      }).catch(function(e){
+        log('Batch failed or was cancelled: '+(e&&e.message||e));
+        $('sendState').textContent='Paused: '+(e&&e.message||e); $('sendState').className='bad';
+        $('btnStop').style.display='none'; $('btnSend').disabled=false;
+      });
+    }
+    nextApproval();
+  });
+
+  /* base58 for signature bytes (web3's bs58 is not exposed on the iife build) */
+  var B58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  function bs58encode(bytes){
+    var digits=[0], i, j, carry;
+    for(i=0;i<bytes.length;i++){
+      carry=bytes[i];
+      for(j=0;j<digits.length;j++){ carry+=digits[j]<<8; digits[j]=carry%58; carry=(carry/58)|0; }
+      while(carry){ digits.push(carry%58); carry=(carry/58)|0; }
+    }
+    for(i=0;i<bytes.length&&bytes[i]===0;i++) digits.push(0);
+    var out=''; for(i=digits.length-1;i>=0;i--) out+=B58[digits[i]];
+    return out;
+  }
+
+  /* self-test hook used during development; harmless to keep */
+  window.__bqAtaSelfTest=function(mintAddr, ownerAddr){
+    var m=new W.PublicKey(mintAddr), o=new W.PublicKey(ownerAddr);
+    return ataFor(o, m, new W.PublicKey(TOKEN_PROGRAM)).toBase58();
+  };
+  window.__bqUnitsSelfTest=function(){
+    return [ toBaseUnits('12.5',6)===12500000n, toBaseUnits('0.000001',6)===1n,
+             toBaseUnits('1000000',9)===1000000000000000n, toBaseUnits('1.2345678',6)===null,
+             fromBaseUnits(12500000n,6)==='12.5' ];
+  };
+
+  ready();
+})();
+</script>
+</body>
+</html>
