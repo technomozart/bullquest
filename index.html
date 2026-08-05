@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785848130";try{console.log("BullQuest build 1785848130");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785903599";try{console.log("BullQuest build 1785903599");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -6929,7 +6929,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     "rarity-rank":{t:"Rarity rank",d:"A bull&#39;s place among the 5,000 in its generation. Number 1 is the rarest. Ranks restart each generation, so Gen 1 #462 and Gen 2 #462 are different bulls."},
     "level":{t:"Level",d:"How grown your bull is. It levels up as your bull wins duels, and each level raises all three battle stats."},
     "xp":{t:"XP",d:"Experience earned from duels. Enough XP levels up your bull. XP is separate from GRIT."},
-    "win-chance":{t:"Win chance",d:"Your rough odds to win this fight, based on your bull's rarity, level, and stat edge over the opponent."},
+    /* Was "and stat edge over the opponent". resolve_duel builds the opponent FROM your own stats,
+       so that term is structurally always zero and the claim was untrue. */
+    "win-chance":{t:"Win chance",d:"Your rough odds to win this fight, based on your bull's rarity and level."},
     "daily-spin":{t:"Daily spin",d:"One free spin of the prize wheel each day. Every spin pays 10 to 100 bonus GRIT. Extra spins cost SOL."},
     "quests":{t:"Quests",d:"Simple tasks like joining Discord or Telegram or winning a duel that reward you GRIT."},
     "gym":{t:"Gym / Training",d:"Spend GRIT to permanently raise your bull's Power, Speed, or Stamina. The cost climbs as a stat grows."},
@@ -7116,7 +7118,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     sb.auth.signInWithIdToken({ provider:'google', token: resp.credential })
       .then(function(r){ if(r.error) throw r.error; return loadAndShow(true, true); })
       .then(function(){ try{ closeModal(); }catch(e){} try{ recordReferralIfAny(); }catch(e){} })
-      .catch(function(e){ if(!modal) buildModal(); if(modal.hidden) openModal('signup'); errmsg('Google sign-in failed: '+((e&&e.message)||'please try again')); });
+      /* friendly() maps pool-empty and the rest to real sentences. Without it the account IS
+         created, loadAndShow then throws Error('pool-empty'), and the player is shown the literal
+         developer string "Google sign-in failed: pool-empty" with no waitlist offer. */
+      .catch(function(e){ if(!modal) buildModal(); if(modal.hidden) openModal('signup'); errmsg(friendly(e)); });
   }
   function renderGoogleBtn(el){
     if(!el) return; el.style.display='flex';
@@ -9516,7 +9521,26 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         if(j&&j.session){ return sb.auth.setSession(j.session).then(function(){ return loadAndShow(false); }).then(function(){ if(window.bqGo) window.bqGo('view-home'); return true; }); }
         if(window.bqToast) window.bqToast((j&&j.error)||'Could not sign in. Reopen BullQuest from the bot menu.');
         if(btn){ btn.disabled=false; btn.textContent='Enter BullQuest'; } return false;
-      }).catch(function(){ if(window.bqToast) window.bqToast('Network error, please try again.'); if(btn){ btn.disabled=false; btn.textContent='Enter BullQuest'; } return false; });
+      /* This blanket catch told every Telegram player their network was broken, including when the
+         real cause was an empty bull pool. Telegram is a primary channel and showWaitlist was never
+         reachable on this path at all, so say what actually happened and offer the waitlist. */
+      }).catch(function(e){
+        var m=(e&&e.message)||'', msg='Network error, please try again.';
+        /* showWaitlist and friendly are plain declarations in the auth block above, not on window,
+           so they are reached by typeof and wrapped: a ReferenceError raised inside a catch would
+           replace a bad message with no message at all. */
+        if(/pool-empty/.test(m)){
+          try{
+            if(typeof showWaitlist==='function'){
+              showWaitlist('');
+              if(btn){ btn.disabled=false; btn.textContent='Enter BullQuest'; }
+              return false;
+            }
+          }catch(_){}
+        }
+        try{ if(typeof friendly==='function' && /pool-empty|no-bull|vpn-blocked|rate limit/.test(m)) msg=friendly(e); }catch(_){}
+        if(window.bqToast) window.bqToast(msg);
+        if(btn){ btn.disabled=false; btn.textContent='Enter BullQuest'; } return false; });
   }
   window.bqTgInAppLogin=bqTgInAppLogin;
   // Inside Telegram the signup screen must NOT offer Google (blocked in in-app webviews), a wallet (no provider), or
