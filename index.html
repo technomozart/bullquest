@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785929866";try{console.log("BullQuest build 1785929866");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785930185";try{console.log("BullQuest build 1785930185");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -6859,6 +6859,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     return sb.auth.getUser().then(function(res){
       var u=res.data&&res.data.user; if(!u) throw new Error('no-session');
       window.bqLoggedIn = true;
+      /* Remind them their X quest GRIT is frozen. Fired here because this is the one place we know
+         a real player is signed in, and sb is in scope. */
+      try{ if(window.bqXNudge) setTimeout(function(){ window.bqXNudge(sb); }, 1400); }catch(_){}
       /* Fire this the moment we know who they are, NOT after a bull is in hand. It used to sit
          inside the post-bull branch below, so a player without a bull recorded zero active days
          ever: DAU, D1 and D7 all silently undercounted them. Measured on 2026-08-04, all 68
@@ -9578,6 +9581,50 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var b = document.getElementById('bqFbBtn');
     if (b) b.click();
   });
+
+  /* Connect X nudge. Players do not open the airdrop page often, so the frozen GRIT was invisible
+     to exactly the people it affects, and they were finding out from a shrinking share instead.
+     Shown once per session so it is a reminder rather than a nag, and only to players who
+     actually have something frozen. */
+  /* Takes the client as an argument: `sb` is declared inside a LATER script block, so reaching for
+     it here (or for window.sb, which is never set) would throw and the nudge would silently never
+     appear. */
+  window.bqXNudge = function (client) {
+    try {
+      if (!client || sessionStorage.getItem('bq_xnudge')) return;
+      client.rpc('my_social_links').then(function (r) {
+        var d = r && r.data; if (!d) return;
+        var frozen = Number(d.frozen_x_grit) || 0;
+        if ((d.x && d.x.linked) || frozen <= 0) return;
+        sessionStorage.setItem('bq_xnudge', '1');
+
+        var ov = document.createElement('div');
+        ov.style.cssText = 'position:fixed;inset:0;z-index:99998;background:rgba(16,18,24,.72);' +
+          'display:flex;align-items:center;justify-content:center;padding:18px';
+        ov.innerHTML =
+          '<div style="background:var(--surface,#fff);color:var(--ink,#161a22);max-width:400px;width:100%;' +
+          'border-radius:20px;padding:22px 20px;box-shadow:0 24px 60px rgba(0,0,0,.35);font-family:inherit">' +
+            '<div style="font-size:15px;font-weight:900;margin-bottom:8px">' +
+              frozen.toLocaleString() + ' GRIT is not counting toward your airdrop</div>' +
+            '<p style="margin:0 0 14px;font-size:13.5px;line-height:1.55;color:var(--body,#5C6674)">' +
+              'You still have it and you can still spend it. It just does not count toward your ' +
+              'airdrop share until you connect the X account you did the quests on, so we can check ' +
+              'they were really done. Connect it and this unlocks straight away, including ' +
+              'everything you earned before.</p>' +
+            '<button type="button" data-bq-connectx style="width:100%;border:0;border-radius:13px;' +
+              'background:#0f1419;color:#fff;font-weight:800;font-size:15px;padding:13px;cursor:pointer;' +
+              'font-family:inherit">Connect X</button>' +
+            '<button type="button" data-x-later style="width:100%;border:0;background:transparent;' +
+              'margin-top:9px;color:var(--body,#5C6674);font-size:12.5px;font-weight:700;cursor:pointer;' +
+              'font-family:inherit">Later</button>' +
+          '</div>';
+        document.body.appendChild(ov);
+        ov.addEventListener('click', function (e) {
+          if (e.target === ov || (e.target.closest && e.target.closest('[data-x-later],[data-bq-connectx]'))) ov.remove();
+        });
+      }, function () {});
+    } catch (e) {}
+  };
 
   /* Discord and X verification navigate the whole page away to an approval screen. Coming back,
      the browser restores the page EXACTLY as it was left, so the button the player tapped is still
