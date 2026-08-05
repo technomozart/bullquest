@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785905129";try{console.log("BullQuest build 1785905129");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785909498";try{console.log("BullQuest build 1785909498");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -7333,21 +7333,57 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     ov.querySelector('#bqEmailX').addEventListener('click', close);
     setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 60);
     function say(t,bad){ msg.textContent=t; msg.style.color = bad ? '#E5484D' : '#12B76A'; }
+    /* Claiming an address you do not already sign in with now requires a 6 digit code, because
+       marking an address confirmed without proof let a squatter claim someone's gmail and collect
+       their next Google sign-in. Setting a password on your OWN address is unchanged and never
+       reaches this step. */
+    var codeInp = null, codeMode = false;
+    function showCodeStep(sentTo){
+      codeMode = true;
+      /* Hide the two fields themselves. Do NOT walk up to a parent: the email input is a direct
+         child of the dialog body, so closest('div') is the whole modal and hiding it would blank
+         the dialog. The password sits in its own relative wrapper with the eye button, and that
+         wrapper is the thing to hide so the eye goes with it. */
+      inp.style.display = 'none';
+      var pwWrap = (pw.parentElement && pw.parentElement !== ov) ? pw.parentElement : pw;
+      pwWrap.style.display = 'none';
+      var h=ov.querySelector('h3'); if(h) h.textContent='Check your email';
+      var pEl=ov.querySelector('p'); if(pEl) pEl.textContent='We sent a 6 digit code to '+sentTo+'. Enter it to finish. It expires in 15 minutes.';
+      if(!codeInp){
+        codeInp=document.createElement('input');
+        codeInp.type='text'; codeInp.inputMode='numeric'; codeInp.autocomplete='one-time-code';
+        codeInp.maxLength=6; codeInp.placeholder='000000';
+        codeInp.setAttribute('aria-label','6 digit code');
+        codeInp.style.cssText='width:100%;box-sizing:border-box;font-size:26px;font-weight:800;'+
+          'letter-spacing:9px;text-align:center;padding:12px 8px;border-radius:12px;'+
+          'border:1.5px solid rgba(20,16,40,.18);margin:0 0 10px;font-family:inherit';
+        msg.parentElement.insertBefore(codeInp, msg);
+        codeInp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submit(); } });
+        codeInp.addEventListener('input', function(){ codeInp.value = codeInp.value.replace(/\D/g,'').slice(0,6); });
+      }
+      codeInp.value=''; codeInp.style.display='';
+      go.textContent='Confirm code';
+      setTimeout(function(){ try{ codeInp.focus(); }catch(e){} }, 60);
+    }
     function submit(){
       var v=(inp.value||'').trim().toLowerCase();
       var pv=(pw.value||'');
+      var cv=(codeInp && codeInp.value || '').trim();
       if(!/^[^\s@]+@[^\s@,;:]+\.[A-Za-z]{2,}$/.test(v)){ say('That does not look like an email address.', true); return; }
       if(pv.length < 8){ say('Choose a password of at least 8 characters.', true); pw.focus(); return; }
-      go.setAttribute('disabled',''); say('Saving...', false);
+      if(codeMode && cv.length !== 6){ say('Enter the 6 digit code we emailed you.', true); codeInp.focus(); return; }
+      go.setAttribute('disabled',''); say(codeMode ? 'Checking your code...' : 'Saving...', false);
       sb.auth.getSession().then(function(sess){
         var tok=(sess&&sess.data&&sess.data.session&&sess.data.session.access_token)||'';
         return fetch(URL_+'/functions/v1/attach-email',{
           method:'POST',
           headers:{'Content-Type':'application/json','apikey':KEY_,'Authorization':'Bearer '+tok},
-          body:JSON.stringify({email:v, password:pv})
+          body:JSON.stringify(codeMode ? {email:v, password:pv, code:cv} : {email:v, password:pv})
         });
       }).then(function(r){ return r.json(); }).then(function(j){
         go.removeAttribute('disabled');
+        /* Not an error: the server sent a code and is waiting for it. */
+        if(j && j.needs_code){ showCodeStep(j.sent_to || v); say(j.message || 'We emailed you a code.', false); return; }
         if(j && j.ok){
           /* The shipped iOS build has no "sign in with code" button, only email plus password,
              so tell them exactly that rather than promising a code that never arrives. */
@@ -7359,11 +7395,23 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           return;
         }
         var e=(j&&j.error)||'failed';
+        /* A wrong or stale code keeps the player on the code step rather than bouncing them back
+           to the start, which would make them re-enter everything and request another code. */
+        if(codeMode && codeInp && (e==='bad-code' || e==='code-expired' || e==='no-code' || e==='too-many-attempts')){
+          codeInp.value=''; try{ codeInp.focus(); }catch(_){}
+        }
         say(e==='email-in-use' ? 'That email already belongs to another BullQuest account.'
           : e==='bad-email'    ? 'That does not look like an email address.'
           : e==='weak-password'? 'Choose a password of at least 8 characters.'
           : e==='not-signed-in'? 'Please sign in again and retry.'
           : e==='account-suspended' ? 'This account is suspended.'
+          : e==='email-already-set' ? (j.message || 'This account already has an email address.')
+          : e==='bad-code'          ? 'That code is not right. Check the email and try again.'
+          : e==='code-expired'      ? 'That code expired. Close this and start again to get a new one.'
+          : e==='no-code'           ? 'Close this and start again to get a new code.'
+          : e==='too-many-attempts' ? 'Too many wrong codes. Close this and start again.'
+          : e==='too-many-codes'    ? 'Too many codes requested today. Try again tomorrow.'
+          : e==='send-failed'       ? 'We could not send the code to that address. Check it and try again.'
           : 'Could not save that. Please try again.', true);
       }).catch(function(err){ go.removeAttribute('disabled'); say('Could not save that: '+err.message, true); });
     }
