@@ -1,11 +1,15 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785923414";try{console.log("BullQuest build 1785923414");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785929866";try{console.log("BullQuest build 1785929866");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
-   On 2026-08-04 both invites (discord.gg/bullquest and the "permanent" fFcCQWKHxr) started
-   returning 404 Unknown Invite. The URL was hard-coded in 7 places in this file, including the
-   Discord JOIN QUEST button, so relinking the quest row in the database would not have fixed it.
-   The join quest went from 55 claims an hour to zero for 23 hours.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
-   bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. */
+   bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
+   because the URL used to be hard-coded in 7 places including the JOIN QUEST button, so relinking
+   the quest row in the database would not have changed what players actually clicked.
+
+   CORRECTION, and do not act on the old note that used to be here: the invites are NOT dead.
+   discord.gg/bullquest and fFcCQWKHxr both resolve, and the server has about 1,500 members. An
+   earlier check called them 404 because Discord's REST API returns 404 to unauthenticated invite
+   lookups; a real browser opens them fine. The discord_join quest collapsing on 2026-08-04 has a
+   different, still unidentified cause, so re-linking the invite will not fix it. */
 window.BQ_DISCORD = 'https://discord.gg/bullquest';
 window.bqFixDiscordLinks = function () {
   try {
@@ -4831,6 +4835,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   box-shadow:0 10px 24px rgba(20,16,40,.07);padding:17px 18px}
 #view-quests .qtx h3{margin:0 0 3px;font-size:15.5px;font-weight:800}
 #view-quests .qtx .qtx-sub{margin:0 0 14px;font-size:12.5px;color:var(--faint);line-height:1.5}
+/* A busy quest button must LOOK disabled. Without this the Verify button sat there full-size,
+   fully opaque and still clickable showing "...", which players read as a broken button. */
+#view-quests .qbtn[disabled]{opacity:.5;cursor:default;pointer-events:none}
 /* Connected accounts strip */
 #view-quests .qcon{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;
   padding:12px 13px;margin:0 0 14px}
@@ -9570,6 +9577,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     e.preventDefault();
     var b = document.getElementById('bqFbBtn');
     if (b) b.click();
+  });
+
+  /* Discord and X verification navigate the whole page away to an approval screen. Coming back,
+     the browser restores the page EXACTLY as it was left, so the button the player tapped is still
+     sitting there disabled showing "...". That is what "I joined the Discord but I cannot see the
+     verify button" means: the button is there, it is just dead.
+     Every other quest keeps its button because it never leaves the page. Re-rendering on return
+     rebuilds them all fresh, and covers the back-forward cache too. */
+  window.addEventListener('pageshow', function () {
+    try { if (window.bqRenderQuests) window.bqRenderQuests(); } catch (e) {}
   });
 
   /* Same delegated trick for Connect X, so any surface can offer it without caring whether the
