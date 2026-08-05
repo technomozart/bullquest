@@ -680,7 +680,20 @@
         btn.setAttribute('disabled',''); if(m) m.textContent='Working...';
         sb.rpc('admin_resolve_appeal',{p_user:u,p_restore:restore}).then(function(rr){
           var d=rr&&rr.data;
-          if(d&&d.ok){ if(m){ m.style.color='#12B76A'; m.textContent=restore?('Restored, '+(d.grit_returned||0)+' GRIT and a bull returned.'):'Kept banned.'; } setTimeout(loadAppeals, 1200); }
+          if(d&&d.ok){
+            if(m){
+              m.style.color='#12B76A';
+              /* "Restored, 0 GRIT" read like a failure when it actually means nothing was owed.
+                 admin_resolve_appeal works out the debt from the ledger (farm_ban debits minus
+                 wrongful_ban_reversed credits), so 0 means already repaid, or nothing was ever
+                 taken. Say which. */
+              var g = Number(d.grit_returned)||0;
+              m.textContent = !restore ? 'Kept banned.'
+                : g > 0 ? ('Restored. '+g.toLocaleString()+' GRIT returned'+(d.bull_granted?' and a bull.':'.'))
+                        : ('Restored. No GRIT was owed, it was already repaid or none was taken'+(d.bull_granted?', and a bull was granted.':'.'));
+            }
+            setTimeout(loadAppeals, 1200);
+          }
           else { btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } }
         }, function(){ btn.removeAttribute('disabled'); if(m){ m.style.color='#E5484D'; m.textContent='Failed.'; } });
       }
