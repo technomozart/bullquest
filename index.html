@@ -1,4 +1,21 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785918040";try{console.log("BullQuest build 1785918040");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785918254";try{console.log("BullQuest build 1785918254");}catch(e){}</script><script>
+/* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
+   On 2026-08-04 both invites (discord.gg/bullquest and the "permanent" fFcCQWKHxr) started
+   returning 404 Unknown Invite. The URL was hard-coded in 7 places in this file, including the
+   Discord JOIN QUEST button, so relinking the quest row in the database would not have fixed it.
+   The join quest went from 55 claims an hour to zero for 23 hours.
+   To point at a new invite, change this one line. Static markup is rewritten at startup by
+   bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. */
+window.BQ_DISCORD = 'https://discord.gg/bullquest';
+window.bqFixDiscordLinks = function () {
+  try {
+    var a = document.querySelectorAll('a[href*="discord.gg/"]');
+    for (var i = 0; i < a.length; i++) a[i].href = window.BQ_DISCORD;
+    return a.length;
+  } catch (e) { return 0; }
+};
+document.addEventListener('DOMContentLoaded', function () { window.bqFixDiscordLinks(); });
+
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -9936,7 +9953,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
               : '<textarea id="bqBanTxt" rows="3" maxlength="1500" placeholder="Tell us what happened. For example: I only have one account, I play on my phone at home." style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid rgba(0,0,0,.16);border-radius:12px;font-family:inherit;font-size:13px;resize:vertical;background:var(--surface,#fff);color:var(--title,#161a22)"></textarea>'
                 +'<button type="button" id="bqBanSend" style="margin-top:9px;width:100%;border:0;border-radius:13px;background:#161a22;color:#fff;font-weight:800;font-size:14px;padding:12px;cursor:pointer;font-family:inherit">Send an appeal</button>'
                 +'<span id="bqBanMsg" style="display:block;font-size:12px;margin-top:8px;min-height:15px"></span>')
-            +'<a href="https://discord.gg/bullquest" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--gold,#B47C0C);text-decoration:none;font-weight:700">Or ask us on Discord</a>'
+            +'<a href="'+(window.BQ_DISCORD||'https://discord.gg/bullquest')+'" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--gold,#B47C0C);text-decoration:none;font-weight:700">Or ask us on Discord</a>'
             +'</div>';
           document.body.appendChild(el);
           var b=el.querySelector('#bqBanSend');
@@ -10567,7 +10584,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     }
     function mountDiscord(container){
       if(!container) return;
-      container.innerHTML='<div class="qtwo"><a href="https://discord.gg/bullquest" target="_blank" rel="noopener noreferrer" class="qbtn djoin">Join</a><button type="button" class="qbtn discord">Verify</button></div>';
+      container.innerHTML='<div class="qtwo"><a href="'+(window.BQ_DISCORD||'https://discord.gg/bullquest')+'" target="_blank" rel="noopener noreferrer" class="qbtn djoin">Join</a><button type="button" class="qbtn discord">Verify</button></div>';
       var b=container.querySelector('button'); b.addEventListener('click', function(){ startDiscord(b); });
     }
     // discord_react is truly verified: the bot checks you actually reacted to the #announcements post,
@@ -10591,7 +10608,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     }
     function mountDiscordReact(container, url){
       if(!container) return;
-      container.innerHTML='<div class="qtwo"><a href="'+esc(url||'https://discord.gg/bullquest')+'" target="_blank" rel="noopener noreferrer" class="qbtn djoin">React</a><button type="button" class="qbtn discord">Verify</button></div>';
+      container.innerHTML='<div class="qtwo"><a href="'+esc(url||window.BQ_DISCORD||'https://discord.gg/bullquest')+'" target="_blank" rel="noopener noreferrer" class="qbtn djoin">React</a><button type="button" class="qbtn discord">Verify</button></div>';
       var b=container.querySelector('button'); b.addEventListener('click', function(){ doDiscordReact(b); });
     }
     function claimHonor(slug,url){
