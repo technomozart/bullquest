@@ -899,6 +899,14 @@
              {h:'Status', k:'status', f:function(v){ return v==='ok' ? 'ok' : v.toUpperCase(); }}],
             busy));
     }
+    else {
+      /* The panel used to disappear entirely when the RPC failed, so the nav chip scrolled to an
+         id that did not exist and the button looked broken with nothing explaining why. Always
+         render it, and say what went wrong. */
+      h += panel('sec-questhealth', 'Quest health',
+        'Could not load quest health: '+String(d.quest_health_error||'unknown')+
+        '. The rest of the dashboard is unaffected.', '');
+    }
 
     // ---- where the players are ----
     x=d.players_by_country||{};
@@ -1197,6 +1205,12 @@
           var d=r.data;
           if(!d || d.error){ msg('<h2>Not authorized</h2>This account isn\'t an admin. Sign in with the founder account.'); return; }
           d.quest_health = (qh && !qh.error && qh.data && !qh.data.error) ? qh.data : null;
+          /* Keep the reason. Swallowing it silently is what made a missing grant look like a
+             dead nav button instead of a permissions error. */
+          d.quest_health_error = d.quest_health ? null
+            : ((qh && qh.error && (qh.error.message || qh.error.hint))
+               || (qh && qh.data && qh.data.error)
+               || 'no response');
           render(d);
         });
       });
