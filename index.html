@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785915109";try{console.log("BullQuest build 1785915109");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785915918";try{console.log("BullQuest build 1785915918");}catch(e){}</script><script>
 /* THEME: set data-theme before first paint so there is no flash. Default is light; dark is an opt-in
    the player can turn on from the account menu, remembered per device. bqToggleTheme flips it. */
 (function(){
@@ -2766,10 +2766,27 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
     display: grid; place-items: center;
     box-shadow: inset 0 0 0 4px rgba(107, 49, 230, .1);
   }
+  /* display:grid and display:flex both beat the UA [hidden] rule, so these need saying out loud. */
+  .bq-spin .rc-medal[hidden] { display: none; }
+  .bq-spin .rc-amt[hidden] { display: none; }
   .bq-spin .rc-medal svg { width: 58px; height: 58px; animation: bqSpinMedal 2.6s ease-in-out infinite; }
   @keyframes bqSpinMedal { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-5px) rotate(4deg); } }
+  /* The amount IS the reward, so it is the biggest thing on the card. This replaced a 96px grey
+     disc that was the largest element while carrying the least information, and whose elliptical
+     gradient plus inset ring read as two faint oval outlines. */
+  .bq-spin .rc-amt { display: flex; align-items: baseline; justify-content: center; gap: 7px; margin: 16px 0 2px; }
+  .bq-spin .rc-num { font-size:50px; font-weight: 900; letter-spacing: -2.4px; color: var(--ink); line-height: .92; }
+  .bq-spin .rc-unit { font-size:16px; font-weight: 800; color: var(--gold); }
   .bq-spin .rc-title { font-size:24px; font-weight: 900; letter-spacing: -.5px; color: var(--ink); margin: 6px 0 2px; line-height: 1.05; }
   .bq-spin .rc-sub { font-size:13px; font-weight: 600; color: var(--body); margin: 0 0 18px; }
+  /* The new balance, so the reward means something rather than being a number in isolation. */
+  .bq-spin .rc-bal {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: var(--tint-gold1); border-radius:14px; padding: 11px 14px; margin: 16px 0;
+  }
+  .bq-spin .rc-bal[hidden] { display: none; }
+  .bq-spin .rc-ball { font-size:12px; font-weight: 700; color: var(--body); }
+  .bq-spin .rc-balv { font-size:15px; font-weight: 900; color: var(--ink); letter-spacing: -.3px; }
   .bq-spin .rc-collect {
     appearance: none; border: none; width: 100%; height: 54px; border-radius:999px;
     background: linear-gradient(180deg, #0A7EE0, var(--cta)); color: #fff; font-size:16px; font-weight: 800;
@@ -2779,11 +2796,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   }
   .bq-spin .rc-collect:hover { background: linear-gradient(180deg, #0975D2, var(--cta-hover)); }
   .bq-spin .rc-collect:active { transform: scale(.98); }
-  .bq-spin .rc-dismiss {
-    appearance: none; border: none; background: transparent; cursor: pointer;
-    margin-top: 10px; color: var(--body); font-size:12.5px; font-weight: 700;
-  }
-  .bq-spin .rc-dismiss:hover { color: var(--ink); }
+  /* The old "Collect reward" button implied the GRIT was pending. It is credited server side
+     before this card is ever shown, so there is one acknowledgement and no second dismiss. */
 
   /* ---------- content sheet ---------- */
   .bq-spin .sheet {
@@ -4615,13 +4629,11 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         <span id="rcKicker">You won</span>
       </span>
       <div class="rc-medal"><svg id="rcMedal" viewBox="0 0 24 24" aria-hidden="true"><use href="#spCoin"/></svg></div>
+      <div class="rc-amt" id="rcAmt"><span class="rc-num" id="rcNum">+30</span><span class="rc-unit">GRIT</span></div>
       <h2 class="rc-title" id="rcTitle">You won!</h2>
       <p class="rc-sub" id="rcSub">Straight to your GRIT stack.</p>
-      <button type="button" class="rc-collect" id="rcCollect">
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4 10-11" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Collect reward
-      </button>
-      <button type="button" class="rc-dismiss" id="rcDismiss">Done</button>
+      <div class="rc-bal" id="rcBal" hidden><span class="rc-ball">Your stack</span><span class="rc-balv" id="rcBalV">0</span></div>
+      <button type="button" class="rc-collect" id="rcCollect">Nice</button>
     </div>
   </div>
 
@@ -5364,13 +5376,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   var rcTitle  = root.querySelector('#rcTitle');
   var rcSub    = root.querySelector('#rcSub');
   var rcCollect= root.querySelector('#rcCollect');
+  var rcAmt    = root.querySelector('#rcAmt');
+  var rcNum    = root.querySelector('#rcNum');
+  var rcBal    = root.querySelector('#rcBal');
+  var rcBalV   = root.querySelector('#rcBalV');
   // the rare bull gift replaces the medal glyph with the bull's own art
   var rcMedalBox = root.querySelector('.rc-medal');
   var rcBullImg = document.createElement('img');
   rcBullImg.alt = ''; rcBullImg.hidden = true;
   rcBullImg.style.cssText = 'width:78px;height:78px;object-fit:contain;display:block;border-radius:16px';
   if (rcMedalBox) rcMedalBox.appendChild(rcBullImg);
-  var rcDismiss= root.querySelector('#rcDismiss');
 
   // 12 wheel segments, all GRIT (server picks the landing index via daily_spin)
   var prizes = [
@@ -5400,19 +5415,30 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var amt = (lastReward && typeof lastReward.reward === 'number') ? lastReward.reward : parseInt(p.title, 10);
     var bull = lastReward && lastReward.bull;
     if (bull) {
-      // the odds come from the server, so tuning them can never leave a stale number on screen
+      // A bull is a picture, so the art leads and the GRIT rides along in the subtitle.
       var odds = Number(bull.odds);
       rcKicker.textContent = (odds > 0 && odds < 1) ? ('One in ' + Math.round(1 / odds).toLocaleString()) : 'Incredibly rare';
       rcTitle.textContent = 'You won a bull!';
       rcSub.textContent = (bull.name ? bull.name : 'A new bull') + ' is yours, and ' + amt + ' GRIT with it.';
+      if (rcMedalBox) rcMedalBox.hidden = false;
+      rcAmt.hidden = true; rcTitle.hidden = false; rcSub.hidden = false;
       if (bull.image_url) { rcBullImg.src = bull.image_url; rcBullImg.hidden = false; rcMedal.style.display = 'none'; }
       if (window.bqRenderBulls) { try { window.bqRenderBulls(); } catch (e) {} }
     } else {
+      // A GRIT win is a number, so the number leads and there is nothing else to look at.
       rcBullImg.hidden = true; rcMedal.style.display = '';
+      if (rcMedalBox) rcMedalBox.hidden = true;
+      rcAmt.hidden = false; rcTitle.hidden = true; rcSub.hidden = true;
       rcKicker.textContent = p.jackpot ? 'Jackpot' : 'You won';
-      rcTitle.textContent = (p.jackpot ? 'Jackpot! ' : 'You won ') + amt + ' GRIT';
-      rcSub.textContent = 'Straight to your GRIT stack.';
+      rcNum.textContent = '+' + amt.toLocaleString();
       rcMedal.querySelector('use').setAttribute('href', p.glyph);
+    }
+    // The running total, so the win reads as progress rather than a number in isolation. Hidden
+    // rather than zeroed when the server did not send one, because "0" would look like a loss.
+    var newBal = lastReward && typeof lastReward.grit === 'number' ? lastReward.grit : null;
+    if (rcBal) {
+      rcBal.hidden = (newBal === null);
+      if (newBal !== null) rcBalV.textContent = newBal.toLocaleString();
     }
     try{ if(window.bqHaptic) window.bqHaptic((bull||p.jackpot)?'heavy':'success'); }catch(e){}
     if (lastReward && window.bqSetGrit) window.bqSetGrit(lastReward.grit);
@@ -5533,7 +5559,6 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
   spinBtn.addEventListener('click', spin);
   rcCollect.addEventListener('click', closeResult);
-  rcDismiss.addEventListener('click', closeResult);
   wrap.addEventListener('click', function (e) { if (e.target === wrap) closeResult(); });
   root.querySelector('.go-home').addEventListener('click', function () { closeResult(); });
 
