@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785922974";try{console.log("BullQuest build 1785922974");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785923414";try{console.log("BullQuest build 1785923414");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    On 2026-08-04 both invites (discord.gg/bullquest and the "permanent" fFcCQWKHxr) started
    returning 404 Unknown Invite. The URL was hard-coded in 7 places in this file, including the
@@ -9572,6 +9572,16 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if (b) b.click();
   });
 
+  /* Same delegated trick for Connect X, so any surface can offer it without caring whether the
+     quests module has finished loading. */
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('[data-bq-connectx]') : null;
+    if (!t) return;
+    e.preventDefault();
+    if (window.bqConnectX) window.bqConnectX(t);
+    else if (window.bqToast) window.bqToast('One moment, still loading.');
+  });
+
   // ===== AI help assistant (floating, always-on) =====
   (function(){
     if(document.getElementById('bqAiBtn')) return;
@@ -10175,6 +10185,18 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         /* Past the GRIT floor but has never fought. The floor alone was reachable without playing
            (900 from quests plus a 200 signup bonus, then daily logins close the rest), so a duel is
            what separates a player from somebody opening the app once a day. */
+        /* Their X quest GRIT is real and still in their balance, it just is not counting toward
+           the airdrop until the X account is connected. Show the exact number, because a share
+           that quietly shrank with no explanation reads as theft. */
+        if(m.hold==='connect_x'){
+          var fz=Number(m.frozen_x_grit)||0;
+          return '<div class="bqair-gate hold"><div class="gt">'+fmt(fz)+' GRIT waiting on your X account</div>'+
+                 '<div class="gs">You keep every GRIT you have earned, and you can still spend it. '+
+                 'It just does not count toward your airdrop until you connect the X account you used, '+
+                 'so we can check the quests were really done. Connect it and this unlocks straight away, '+
+                 'including everything you earned before.</div>'+
+                 '<button type="button" class="bqair-btn" data-bq-connectx style="margin-top:11px">Connect X</button></div>';
+        }
         if(m.hold==='duel'){
           return '<div class="bqair-gate hold"><div class="gt">One duel to lock in your share</div>'+
                  '<div class="gs">You have the GRIT, so all that is left is to fight. Win or lose, '+
