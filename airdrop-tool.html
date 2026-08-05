@@ -215,7 +215,13 @@ try { if (!(window.Buffer && window.Buffer.from) && window.buffer && window.buff
       if(!sess){ $('sessState').textContent='Not signed in. Open the app, sign in, come back and refresh.'; $('sessState').className='bad'; return; }
       return sb.rpc('airdrop_payout_queue',{p_round:1}).then(function(r){
         if(r.error || (r.data&&r.data.error)){ $('sessState').textContent='Signed in, but this account is not the founder account.'; $('sessState').className='bad'; }
-        else { $('sessState').textContent='Signed in as founder. Ready.'; $('sessState').className='ok'; }
+        else {
+          $('sessState').textContent='Signed in as founder. Ready.'; $('sessState').className='ok';
+          /* prefer the project's paid RPC over the rate-limited public one, unless the founder
+             already typed their own */
+          var ru=r.data&&r.data.rpc_url;
+          if(ru && $('rpcUrl').value.trim()==='https://api.mainnet-beta.solana.com'){ $('rpcUrl').value=ru; localStorage.setItem('bq_airdrop_rpc', ru); }
+        }
       });
     });
   }
