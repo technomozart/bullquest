@@ -122,6 +122,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/buffer.min.js"></script>
+<script>
+/* The vendored buffer build exposes window.buffer.Buffer, not window.Buffer, and web3.js needs
+   the global. Same remap the app itself does; without it every transaction build throws. */
+try { if (!(window.Buffer && window.Buffer.from) && window.buffer && window.buffer.Buffer) window.Buffer = window.buffer.Buffer; } catch (e) {}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.8/lib/index.iife.min.js"></script>
 <script>
 (function(){
