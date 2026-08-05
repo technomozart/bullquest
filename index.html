@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785922636";try{console.log("BullQuest build 1785922636");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785922974";try{console.log("BullQuest build 1785922974");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    On 2026-08-04 both invites (discord.gg/bullquest and the "permanent" fFcCQWKHxr) started
    returning 404 Unknown Invite. The URL was hard-coded in 7 places in this file, including the
@@ -5655,7 +5655,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         '#view-landing,#view-market,#view-airdrop,#view-quests,#view-sectors,'+
         '[data-bqgo="view-market"],[data-bqgo="view-airdrop"],[data-bqgo="view-quests"],[data-bqgo="view-sectors"],'+
         '#extraBtn,.extraspin,[data-wallet],[data-bqinvite],#bqInviteBtn,#bqAiBtn,.bqbc-rn,.brename,#bqRenameActive,'+
+        /* xlink joins tg here: the whole quests view is hidden on iOS, so connecting X would lead
+           nowhere. */
         '.bq-acct [data-a="site"],.bq-acctmenu [data-a="wallet"],.bq-acctmenu [data-a="airdrop"],.bq-acctmenu [data-a="tg"],'+
+        '.bq-acctmenu [data-a="xlink"],'+
         '#bqGoogleEntry,#bqTgEntry,#view-onboard .or,#view-onboard .wallets,#view-onboard .hero .back,#view-onboard .wallet-safe,'+
         '#view-home .purses .pill[data-bqtoast],#view-home .band .togo,#view-home .band .ends,#view-home .card.wallet .sub,'+
         '#bqFbBtn,#view-home header .purses .pill[aria-label*="airdrop"]'+
@@ -6980,6 +6983,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         '<div class="sep"></div>'+
         '<button class="mi" data-a="wallet" style="display:none"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><circle cx="17" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>Connect a wallet</button>'+
         '<button class="mi" data-a="tg"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.2 15.1c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L6.3 13.1l-4.8-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg>Link Telegram</button>'+
+        /* X belongs with the other identity links, not only inside Quests. The label is filled in
+           from my_social_links once the menu is built, so a connected player sees their handle
+           instead of being invited to connect something they already connected. */
+        '<button class="mi" data-a="xlink"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.3l-4.9-6.4L6.2 22H3l7.3-8.3L2.4 2h6.4l4.4 5.9L18.9 2zm-1.1 18h1.7L8.3 3.8H6.5L17.8 20z"/></svg><span class="xlbl">Connect X</span></button>'+
         '<button class="mi" data-a="email"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email and password</button>'+
         '<button class="mi" data-a="airdrop"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/><path d="M12 8S9.5 4.5 7.5 5.5 8 8 12 8zM12 8s2.5-3.5 4.5-2.5S16 8 12 8z"/></svg>Airdrop</button>'+
         '<button class="mi" data-a="set"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg>Set your name</button>'+
@@ -7022,6 +7029,29 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       menu.querySelector('[data-a="airdrop"]').addEventListener('click', function(){ closeMenu(); if(window.bqGo){ window.bqGo('view-airdrop'); if(window.bqRenderAirdrop) setTimeout(window.bqRenderAirdrop,60); } });
       menu.querySelector('[data-a="set"]').addEventListener('click', function(){ closeMenu(); showSetName(); });
       menu.querySelector('[data-a="email"]').addEventListener('click', function(){ closeMenu(); if(window.bqAttachEmail) window.bqAttachEmail(); });
+      /* Connect X. bqConnectX lives in the quests module, so guard on it rather than assuming the
+         load order, and label the row with the handle once we know it. */
+      (function(){
+        var xb=menu.querySelector('[data-a="xlink"]'); if(!xb) return;
+        xb.addEventListener('click', function(){
+          closeMenu();
+          if(xb.getAttribute('data-linked')==='1'){
+            if(window.bqToast) window.bqToast('Your X account is already connected.');
+            return;
+          }
+          if(window.bqConnectX) window.bqConnectX(null);
+          else if(window.bqToast) window.bqToast('One moment, still loading.');
+        });
+        try{
+          sb.rpc('my_social_links').then(function(r){
+            var x=r&&r.data&&r.data.x, lbl=xb.querySelector('.xlbl');
+            if(x&&x.linked&&lbl){
+              lbl.textContent = x.handle ? ('X: @'+x.handle) : 'X connected';
+              xb.setAttribute('data-linked','1');
+            }
+          }, function(){});
+        }catch(e){}
+      })();
       /* Telegram and wallet accounts carry a synthetic address for a mailbox that does not exist,
          so the iOS app (email and Apple sign-in only) has no way to reach them. Offer the fix only
          to the accounts that actually need it. */
