@@ -1133,18 +1133,21 @@
           '<div class="stitle">BullQuest <i>live numbers</i></div>'+
           '<div class="smeta">'+esc(stamp)+' &middot; bullquest.fun</div>'+
         '</div>'+
+        /* One grid, not two. Two grids of five wrapped to 4+1 and left an orphan tile stranded on
+           its own row, which looked broken in a screenshot. Twelve tiles divide evenly at both
+           four and three across, so it stays a clean rectangle at any width. */
         '<div class="grid">'+
           kpi('Players', d.real_users)+
           kpi('Signups today', d.real_signups_today)+
           kpi('Active today', g.active_today)+
           kpi('Day 1 retention', (g.d1_retention!=null? g.d1_retention+'%' : null), 'they came back')+
           kpi('Genesis bulls claimed', g.bulls_claimed, 'of '+kpiVal(g.bulls_total))+
-        '</div>'+
-        '<div class="grid">'+
           kpi('Duels played', g.duels_played)+
           kpi('GRIT earned', g.grit_earned)+
           kpi('Quests completed', g.quest_claims)+
           kpi('Countries', g.countries)+
+          kpi('X followers', g.x_followers)+
+          kpi('Telegram members', g.telegram_members)+
           kpi('Discord members', g.discord_members)+
         '</div>'+
         '<p class="sfoot">Live from production. Free to play, free Genesis bull, no wager.</p>'+
