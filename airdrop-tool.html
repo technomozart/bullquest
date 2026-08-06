@@ -386,30 +386,57 @@ try { if (!(window.Buffer && window.Buffer.from) && window.buffer && window.buff
           return buildTx(g.map(function(q){ return {wallet:q.wallet, amount:toBaseUnits(String(q.tokens), decimals)}; }), bh.blockhash);
         });
         return provider.signAllTransactions(txs).then(function(signed){
-          // Lock every allocation in the DB BEFORE broadcasting. A crash between mark and send
-          // leaves a row to check by hand; the reverse order could pay somebody twice. Twice is worse.
+          // Every transaction in this batch shares ONE blockhash, which is only valid for about a
+          // minute. The old loop confirmed each transaction before sending the next, so by the time
+          // the later ones were broadcast that shared blockhash could already be dead: they were
+          // marked paid, never landed, and were skipped on every future run.
+          //
+          // So: mark and BROADCAST all of them first, back to back, then confirm afterwards. Every
+          // transaction now goes out inside the same short window it was signed for.
+          //
+          // Mark still happens before its own send, deliberately: a crash between mark and send
+          // leaves a row to inspect by hand, whereas the reverse order can pay somebody twice, and
+          // twice is worse. What is new is the way back. If sendRawTransaction throws, the
+          // transaction provably never reached the network, so the rows are released for a retry.
+          // A merely UNCONFIRMED transaction is never released, because it can still land.
+          var sends=[];
           var seq=Promise.resolve();
           signed.forEach(function(stx, k){
             var g=chunk[k];
+            var ids=g.map(function(q){return q.id;});
             var sig=(window.Buffer&&stx.signature)? bs58encode(stx.signature) : null;
+            var marked=sig||('unknown-'+Date.now()+'-'+k);
             seq=seq.then(function(){
               return sb.rpc('airdrop_mark_paid',{
-                p_ids:g.map(function(q){return q.id;}),
-                p_signature:sig||('unknown-'+Date.now()),
+                p_ids:ids, p_signature:marked,
                 p_amounts:g.map(function(q){return Number(q.tokens);})
               }).then(function(mr){
                 if(mr.error||(mr.data&&mr.data.error)) log('WARN could not lock rows before send: '+JSON.stringify(mr.error||mr.data));
                 return c.sendRawTransaction(stx.serialize(),{skipPreflight:false}).then(function(realSig){
-                  log('tx '+(gi+k+1)+'/'+groups.length+' sent: '+realSig+' ('+g.length+' wallets)');
-                  return confirmSig(c, realSig).then(function(cr){
-                    if(cr.ok){ sentOk++; log('   confirmed'); }
-                    else { sentFail++; log('   NOT CONFIRMED: '+JSON.stringify(cr.err)+' , wallets: '+g.map(function(q){return short(q.wallet.toBase58());}).join(' ')); }
-                  });
-                }, function(e){ sentFail++; log('   SEND FAILED: '+(e&&e.message||e)); });
+                  log('tx '+(gi+k+1)+'/'+groups.length+' broadcast: '+realSig+' ('+g.length+' wallets)');
+                  sends.push({sig:realSig, g:g, n:gi+k+1});
+                }, function(e){
+                  sentFail++;
+                  log('   SEND FAILED (never reached the network): '+(e&&e.message||e));
+                  return sb.rpc('airdrop_release_unsent',{p_ids:ids, p_signature:marked}).then(function(rr){
+                    var rel=(rr&&rr.data&&rr.data.released);
+                    log('   released '+(rel===undefined?'?':rel)+' wallets back to unpaid, they will be retried on the next run');
+                  }, function(){ log('   WARNING: could not release those rows, check them by hand: '+ids.join(',')); });
+                });
               });
             });
           });
-          return seq;
+          // confirm only after everything is on the wire
+          return seq.then(function(){
+            if(!sends.length) return;
+            $('sendState').textContent='Confirming '+sends.length+' transactions...';
+            return Promise.all(sends.map(function(s){
+              return confirmSig(c, s.sig).then(function(cr){
+                if(cr.ok){ sentOk++; log('tx '+s.n+' confirmed'); }
+                else { sentFail++; log('tx '+s.n+' NOT CONFIRMED: '+JSON.stringify(cr.err)+' , wallets: '+s.g.map(function(q){return short(q.wallet.toBase58());}).join(' ')+' (left marked paid on purpose, it may still land, check the signature before re-sending)'); }
+              });
+            }));
+          });
         });
       }).then(function(){
         gi+=TXS_PER_APPROVAL;
