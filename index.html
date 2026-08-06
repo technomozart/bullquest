@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786033015";try{console.log("BullQuest build 1786033015");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786033724";try{console.log("BullQuest build 1786033724");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -23,6 +23,25 @@ window.BQ_DISCORD = 'https://discord.gg/Hs5XmE2A2b';
    the address will need to go live fast and under pressure, and a one-line change cannot half-apply.
    Never put a placeholder or example address here. A wrong address on this page costs people money. */
 window.BQ_CA = '';
+/* Primary source is the DATABASE, not this file. token_info() is a public read, so the moment the
+   address is set with admin_set_token_ca it is live for everyone with no build and no cache wait.
+   That matters because a GitHub Pages build takes 6+ minutes and one failed outright on 2026-08-06.
+   BQ_CA above stays as the manual fallback if the database is ever unreachable. */
+window.bqLoadCA = function () {
+  try {
+    var u = 'https://cewumdioknvjtsiolxce.supabase.co/rest/v1/rpc/token_info';
+    var k = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNld3VtZGlva252anRzaW9seGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2OTI3NzUsImV4cCI6MjA5OTI2ODc3NX0.n_r2gixZZTuTyJOiUhCZMpPKp5mUYtdM9bShs-nWkWk';
+    fetch(u, { method: 'POST', headers: { 'apikey': k, 'Authorization': 'Bearer ' + k, 'Content-Type': 'application/json' }, body: '{}' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        if (d.launch_date) window.BQ_LAUNCH_DATE = d.launch_date;
+        if (d.ca) { window.BQ_CA = d.ca; }
+        window.bqRenderCA();
+      })
+      .catch(function () { /* keep whatever the bundle shipped with */ });
+  } catch (e) {}
+};
 window.bqRenderCA = function () {
   var box = document.getElementById('bqCaBox');
   if (!box) return false;
@@ -34,8 +53,14 @@ window.bqRenderCA = function () {
     + '</svg>$BULL contract address</div>';
 
   if (!ca) {
+    var when = 'soon';
+    try {
+      var d = String(window.BQ_LAUNCH_DATE || '2026-08-07').split('-');
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      when = parseInt(d[2], 10) + ' ' + months[parseInt(d[1], 10) - 1];
+    } catch (e) {}
     box.innerHTML = label
-      + '<div class="bq-ca-pending">Launching 7 August</div>'
+      + '<div class="bq-ca-pending">Launching ' + when + '</div>'
       + '<div class="bq-ca-warn">There is no $BULL token yet. The real address will appear here and on '
       + 'our official channels. Anything circulating before then is fake.</div>';
     return true;
@@ -76,7 +101,9 @@ window.bqRenderCA = function () {
   });
   return true;
 };
-document.addEventListener('DOMContentLoaded', function () { window.bqRenderCA(); });
+/* Paint the pending state immediately so the block never flashes empty, then upgrade it from the
+   database a moment later if an address has been published. */
+document.addEventListener('DOMContentLoaded', function () { window.bqRenderCA(); window.bqLoadCA(); });
 
 window.bqFixDiscordLinks = function () {
   try {
