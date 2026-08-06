@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785992660";try{console.log("BullQuest build 1785992660");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785993847";try{console.log("BullQuest build 1785993847");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -5141,7 +5141,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         // silent ReferenceError inside this promise, so the bull image never bound whenever the cached bull
         // did not match the active bull (i.e. right after switching bulls). The old hardcoded placeholder
         // hid the failure. Use the literal, exactly as bqPreloadBull does in this same module.
-        var url=(b&&b.bulls&&b.bulls.id===s.bull.id&&b.bulls.image_url) || ('https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+s.bull.id+'.webp');
+        var url=(b&&b.bulls&&b.bulls.id===s.bull.id&&b.bulls.image_url) || ('https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+((((+s.bull.id)-1)%5000)+1)+'.webp');
         var mwImg=mw&&mw.querySelector('img.bull');
         if(mwImg){ mwImg.alt=bname; armImg(mwImg, url); }
       }
@@ -5183,7 +5183,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var otier=(window.bqGame&&o.rarity_rank!=null)?window.bqGame.tier(o.rarity_rank):null;
       var orh=oppF.querySelector('.hexbadge'); if(orh&&otier) orh.style.setProperty('--hc', otier.c);
       var orr=oppF.querySelector('.rarity'); if(orr&&otier) orr.innerHTML='<span class="dot" style="background:'+otier.c+'"></span>'+otier.l;
-      var oimg=oppF.querySelector('.mascot-wrap img.bull'); if(oimg&&o.bull_id){ var newSrc='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+o.bull_id+'.webp'; oimg.alt=String(o.name); armImg(oimg, newSrc); setOppMystery(false); }
+      /* Art files exist only for ids 1-5000; a Gen 2 opponent (5001+) is a second print of its
+         Genesis twin, so map the id back. Without this, half of all opponents went invisible the
+         moment Gen 2 minted. */
+      var oimg=oppF.querySelector('.mascot-wrap img.bull'); if(oimg&&o.bull_id){ var newSrc='https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_'+((((+o.bull_id)-1)%5000)+1)+'.webp'; oimg.alt=String(o.name); armImg(oimg, newSrc); setOppMystery(false); }
     }
   }
   // short clash animation: the two bulls lunge at each other with impact flashes (~1.7s) before the result
@@ -6650,7 +6653,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var greet=document.querySelector('#view-home .hi .n');
     if(greet) greet.textContent = (username && !/^handler_[0-9a-f]{6}$/i.test(username)) ? ('Hey, '+username) : 'Hey there';
     // Remember the player's active bull image so the account avatar can BE their bull's face (not a boring initial).
-    try{ if(b){ window.bqActiveBullImg = b.image_url || (b.id ? (URL_+'/storage/v1/object/public/bulls/nft_'+b.id+'.webp') : window.bqActiveBullImg); } }catch(e){}
+    try{ if(b){ window.bqActiveBullImg = b.image_url || (b.id ? (URL_+'/storage/v1/object/public/bulls/nft_'+((((+b.id)-1)%5000)+1)+'.webp') : window.bqActiveBullImg); } }catch(e){}
     injectSignout();
   }
 
@@ -6747,7 +6750,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     el.addEventListener('click', function(e){ if(e.target===el) el.remove(); });
   }
   function statTile(l,v,c,icon){ return '<div style="background:var(--tint-neutral1);border-radius:12px;padding:10px 4px">'+(icon?'<i class="pico" style="--m:url(assets/icons/'+icon+'.png);width:16px;height:16px;background:'+c+';display:block;margin:0 auto 3px"></i>':'')+'<div style="font-size:19px;font-weight:800;color:'+c+'">'+(v==null?'-':v)+'</div><div style="font-size:11px;color:var(--body2);font-weight:700">'+l+'</div></div>'; }
-  function bullCardImg(b){ return b.image_url || (URL_+'/storage/v1/object/public/bulls/nft_'+b.id+'.webp'); }
+  function bullCardImg(b){ return b.image_url || (URL_+'/storage/v1/object/public/bulls/nft_'+((((+b.id)-1)%5000)+1)+'.webp'); }
   // Bull cards show raw stored energy; apply the same 15-min-per-point regen the server uses so a rested bull
   // reads its true current energy (not the value from its last duel). Guards future timestamps (the UTC+4 bug).
   function liveEnergy(ub){
