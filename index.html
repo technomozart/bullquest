@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786007947";try{console.log("BullQuest build 1786007947");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786033015";try{console.log("BullQuest build 1786033015");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -13,6 +13,71 @@
    it; if not, the cause is fully on Discord's side. Old links still work, and bqFixDiscordLinks
    rewrites them all to this one at startup. */
 window.BQ_DISCORD = 'https://discord.gg/Hs5XmE2A2b';
+
+/* THE $BULL CONTRACT ADDRESS LIVES HERE AND NOWHERE ELSE.
+   Empty string = not launched yet: the hero shows the launch date and a warning that any address
+   circulating before this one is fake. Paste the real mint between the quotes and the same block
+   becomes a click-to-copy row. That is the ONLY edit needed on launch day.
+
+   Deliberately one variable rather than markup, for the same reason as BQ_DISCORD above: on the day,
+   the address will need to go live fast and under pressure, and a one-line change cannot half-apply.
+   Never put a placeholder or example address here. A wrong address on this page costs people money. */
+window.BQ_CA = '';
+window.bqRenderCA = function () {
+  var box = document.getElementById('bqCaBox');
+  if (!box) return false;
+  var ca = String(window.BQ_CA || '').trim();
+  var label = '<div class="bq-ca-label">'
+    + '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">'
+    + '<rect x="4" y="3" width="16" height="18" rx="2.5" stroke="#fff" stroke-width="1.8"/>'
+    + '<path d="M8 8h8M8 12h8M8 16h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>'
+    + '</svg>$BULL contract address</div>';
+
+  if (!ca) {
+    box.innerHTML = label
+      + '<div class="bq-ca-pending">Launching 7 August</div>'
+      + '<div class="bq-ca-warn">There is no $BULL token yet. The real address will appear here and on '
+      + 'our official channels. Anything circulating before then is fake.</div>';
+    return true;
+  }
+
+  box.innerHTML = label
+    + '<button type="button" class="bq-ca-copy" id="bqCaBtn" aria-label="Copy the $BULL contract address">'
+    +   '<span class="bq-ca-addr">' + ca.replace(/[<>&"]/g, '') + '</span>'
+    +   '<span class="bq-ca-hint" id="bqCaHint">Copy</span>'
+    + '</button>'
+    + '<div class="bq-ca-warn">Only this address. Check it against our official channels before you buy.</div>';
+
+  var btn = document.getElementById('bqCaBtn'), hint = document.getElementById('bqCaHint');
+  btn.addEventListener('click', function () {
+    function done(ok) {
+      hint.textContent = ok ? 'Copied' : 'Press to select';
+      setTimeout(function () { hint.textContent = 'Copy'; }, 1800);
+    }
+    /* navigator.clipboard needs a secure context and is missing in some in-app browsers (Telegram,
+       older Android WebViews), which is exactly where a lot of our players are. Fall back rather
+       than silently doing nothing when someone taps to copy a contract address. */
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ca).then(function () { done(true); }, function () { legacy(); });
+    } else { legacy(); }
+    function legacy() {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = ca;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:absolute;left:-9999px;top:0';
+        document.body.appendChild(ta);
+        ta.select(); ta.setSelectionRange(0, ca.length);
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        done(ok);
+      } catch (e) { done(false); }
+    }
+  });
+  return true;
+};
+document.addEventListener('DOMContentLoaded', function () { window.bqRenderCA(); });
+
 window.bqFixDiscordLinks = function () {
   try {
     var a = document.querySelectorAll('a[href*="discord.gg/"]');
@@ -400,6 +465,19 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 #view-landing .bq-trust{display:flex;gap:10px;flex-wrap:wrap}
 #view-landing .bq-chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
 #view-landing .bq-chip svg{width:15px;height:15px;flex:none}
+/* Contract address block. Same translucent-on-purple language as .bq-chip so it reads as part of
+   the hero, but a card rather than a pill because the address has to be readable character by
+   character: that is the whole defence against a fake token. */
+#view-landing .bq-ca{margin-top:22px;max-width:44ch;background:rgba(255,255,255,.12);border-radius:16px;padding:14px 16px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);text-align:left}
+#view-landing .bq-ca-label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.82);margin-bottom:9px}
+#view-landing .bq-ca-label svg{width:15px;height:15px;flex:none}
+#view-landing .bq-ca-pending{font-size:16px;font-weight:800}
+#view-landing .bq-ca-warn{margin-top:9px;font-size:12.5px;font-weight:600;color:#FCE9C6;line-height:1.45}
+#view-landing .bq-ca-copy{display:flex;align-items:center;gap:10px;width:100%;background:rgba(0,0,0,.22);border:0;border-radius:12px;padding:11px 13px;cursor:pointer;text-align:left;color:#fff;font:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+#view-landing .bq-ca-copy:hover{background:rgba(0,0,0,.3)}
+#view-landing .bq-ca-copy:active{transform:translateY(1px)}
+#view-landing .bq-ca-addr{flex:1;min-width:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#view-landing .bq-ca-hint{flex:none;font-size:12px;font-weight:800;color:var(--mint)}
 #view-landing .bq-hero-art{position:relative;display:flex;justify-content:center;align-items:center;min-height:420px}
 #view-landing .bq-hero-art .stage{position:relative;width:100%;max-width:440px}
 #view-landing .bq-hero-bull{position:relative;z-index:2;width:100%;filter:drop-shadow(0 18px 30px rgba(40,15,90,.3))}
@@ -408,6 +486,8 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
   #view-landing .bq-hero h1{font-size:40px;margin-inline:auto}
   #view-landing .bq-hero .sub{margin-inline:auto}
   #view-landing .bq-hero .cta-row,#view-landing .bq-trust{justify-content:center}
+  #view-landing .bq-ca{margin-inline:auto;text-align:center}
+  #view-landing .bq-ca-label{justify-content:center}
   /* order:-1 pushed the art above the headline on phones, which drove the CTA below the fold on
      every device. Copy first, art second, and a shorter art block so the button is reachable. */
   #view-landing .bq-hero-art{min-height:240px;order:2}
@@ -2947,6 +3027,11 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
           <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="12" rx="2" stroke="#fff" stroke-width="1.8"/><path d="M9 21h6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>Web-first</span>
           <span class="bq-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>No crypto needed</span>
         </div>
+
+        <!-- $BULL contract address. Rendered from window.BQ_CA, set just below. Empty means "not
+             launched yet" and the block shows the date plus a fake-token warning; the moment a real
+             mint address is pasted in it flips to a click-to-copy row. Launch-day edit is ONE line. -->
+        <div class="bq-ca" id="bqCaBox"></div>
       </div>
 
       <div class="bq-hero-art">
