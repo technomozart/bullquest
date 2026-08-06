@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785959229";try{console.log("BullQuest build 1785959229");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1785992660";try{console.log("BullQuest build 1785992660");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -9369,6 +9369,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       '.bqmkt-chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}'+
       '.bqmkt-chips::-webkit-scrollbar{display:none}'+
       '.bqmkt-chip{flex:none;border:1.5px solid var(--line);background:var(--surface);color:var(--ot-4b3b7a,#4B3B7A);font-weight:800;font-size:12.5px;padding:8px 13px;border-radius:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}'+
+      '.bqmkt-chip .fcount{background:var(--tint-violet1);color:var(--ot-6b31e6,#6B31E6);border-radius:999px;padding:1px 7px;font-size:11px;font-variant-numeric:tabular-nums}'+
+      '.bqmkt-chip .fcount:empty{display:none}'+
+      '.bqmkt-chip.on .fcount{background:rgba(255,255,255,.22);color:inherit}'+
       '.bqmkt-chip .d{width:9px;height:9px;border-radius:50%}'+
       '.bqmkt-chip.on{background:#20143A;color:#fff;border-color:var(--title)}'+
       '.bqmkt-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 11px;font-size:12px;font-weight:700;color:var(--body2)}'+
@@ -9423,9 +9426,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         '</div>'+
         '<div class="bqmkt-chips" id="bqMktGens" style="margin-top:6px">'+
           '<button type="button" class="bqmkt-chip on" data-g="all">All generations</button>'+
-          '<button type="button" class="bqmkt-chip" data-g="1">Gen 1 &middot; Genesis</button>'+
-          '<button type="button" class="bqmkt-chip" data-g="2">Gen 2 &middot; Second Run</button>'+
+          '<button type="button" class="bqmkt-chip" data-g="1">Gen 1 &middot; Genesis <span class="fcount" id="bqGen1N"></span></button>'+
+          '<button type="button" class="bqmkt-chip" data-g="2">Gen 2 &middot; Second Run <span class="fcount" id="bqGen2N"></span></button>'+
         '</div>'+
+        '<p id="bqGenInfo" style="margin:8px 2px 0;font-size:12px;font-weight:700;color:var(--body2);line-height:1.5" hidden></p>'+
       '</div>'+
       '<div class="bqmkt-meta"><span id="bqMktMeta">Rounding up the herd...</span><button type="button" class="bqmkt-sort" id="bqMktSort">Sort: Number</button></div>'+
       '<div class="bqmkt-grid" id="bqMktGrid"></div>'+
@@ -9518,7 +9522,28 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     window.bqMktShowPlayers = function(){ var b=segEl&&segEl.querySelector('button[data-tab="players"]'); if(b) b.click(); };
     var raf=false; function onScroll(){ if(marketView&&marketView.hasAttribute('hidden')) return; if(raf) return; raf=true; requestAnimationFrame(function(){ raf=false; loadVisible(); }); }
     window.addEventListener('scroll', onScroll, {passive:true}); window.addEventListener('resize', onScroll, {passive:true});
-    function ensureInit(){ if(inited) return; inited=true; loadListMap(function(){ fetchPage(); }); }
+    /* Split the two generations out loud: the blended pool count hid the one number that
+       actually sells, how few Genesis bulls remain. Counts land on the filter chips (teaching
+       the filter exists) plus one plain sentence underneath. */
+    function loadGenCounts(){
+      function cnt(gen){
+        return fetch(URL_+'/rest/v1/bulls?select=id&claimed=eq.false&generation=eq.'+gen+'&limit=1',
+          {method:'HEAD', headers:{apikey:KEY_, Authorization:'Bearer '+KEY_, Prefer:'count=exact'}})
+          .then(function(r){ var cr=r.headers.get('content-range'); var p=cr?cr.split('/'):null; return (p&&p[1]&&p[1]!=='*')?parseInt(p[1],10):null; })
+          .catch(function(){ return null; });
+      }
+      Promise.all([cnt(1), cnt(2)]).then(function(ns){
+        var g1=ns[0], g2=ns[1];
+        var e1=document.getElementById('bqGen1N'), e2=document.getElementById('bqGen2N'), info=document.getElementById('bqGenInfo');
+        if(e1&&g1!=null) e1.textContent=g1.toLocaleString();
+        if(e2&&g2!=null) e2.textContent=g2.toLocaleString();
+        if(info&&g1!=null&&g2!=null){
+          info.innerHTML='<b style="color:var(--ot-e0930f,#B26A00)">Only '+g1.toLocaleString()+' Genesis bulls left</b>, and no more will ever be printed. Second Run has '+g2.toLocaleString()+' waiting.';
+          info.hidden=false;
+        }
+      });
+    }
+    function ensureInit(){ if(inited) return; inited=true; loadListMap(function(){ fetchPage(); }); loadGenCounts(); }
     document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('[data-bqgo="view-market"]')) setTimeout(function(){ ensureInit(); loadVisible(); }, 90); });
     if(location.hash==='#market'||location.hash==='#view-market') setTimeout(ensureInit, 400);
   })();
