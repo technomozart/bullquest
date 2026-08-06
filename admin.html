@@ -1243,12 +1243,17 @@
         /* Quest health is a separate RPC rather than a 68th key on admin_analytics, which already
            builds 67 and has to split its json_build_object calls around the 100 argument cap.
            Its failure is non-fatal: the dashboard is more useful without one panel than not at all. */
-        return Promise.all([sb.rpc('admin_analytics'), sb.rpc('admin_quest_health'), sb.rpc('admin_growth_stats')]).then(function(res){
+        /* Both of these now read a snapshot refreshed every 10 minutes. Computing them live cost
+           103s and 12s respectively on a throttled instance, which is what made this page hang. */
+        return Promise.all([sb.rpc('admin_analytics'), sb.rpc('admin_quest_health'), sb.rpc('admin_growth_stats_cached')]).then(function(res){
           var r=res[0], qh=res[1], gs=res[2];
           btn.removeAttribute('disabled');
           if(r.error){ msg('<h2>Something went wrong</h2>'+esc(r.error.message||'RPC error')); return; }
           var d=r.data;
           if(!d || d.error){ msg('<h2>Not authorized</h2>This account isn\'t an admin. Sign in with the founder account.'); return; }
+          /* First load after the cache was introduced, or right after a reset: the snapshot has
+             not been built yet. Say so plainly instead of rendering a page full of blanks. */
+          if(d.warming){ msg('<h2>Building the first snapshot</h2>The dashboard now reads a snapshot refreshed every 10 minutes instead of recomputing on every load. The first one is still being built, so give it a few minutes and hit Refresh.'); return; }
           d.quest_health = (qh && !qh.error && qh.data && !qh.data.error) ? qh.data : null;
           /* Keep the reason. Swallowing it silently is what made a missing grant look like a
              dead nav button instead of a permissions error. */
