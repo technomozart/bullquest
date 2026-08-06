@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786035822";try{console.log("BullQuest build 1786035822");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786035893";try{console.log("BullQuest build 1786035893");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -5582,7 +5582,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if (bull) {
       // A bull is a picture, so the art leads and the GRIT rides along in the subtitle.
       var odds = Number(bull.odds);
-      rcKicker.textContent = (odds > 0 && odds < 1) ? ('One in ' + Math.round(1 / odds).toLocaleString()) : 'Incredibly rare';
+      rcKicker.textContent = (odds > 0 && odds < 1) ? ('One in ' + Math.round(1 / odds).toLocaleString('en-US')) : 'Incredibly rare';
       rcTitle.textContent = 'You won a bull!';
       rcSub.textContent = (bull.name ? bull.name : 'A new bull') + ' is yours, and ' + amt + ' GRIT with it.';
       if (rcMedalBox) rcMedalBox.hidden = false;
@@ -5595,7 +5595,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if (rcMedalBox) rcMedalBox.hidden = true;
       rcAmt.hidden = false; rcTitle.hidden = true; rcSub.hidden = true;
       rcKicker.textContent = p.jackpot ? 'Jackpot' : 'You won';
-      rcNum.textContent = '+' + amt.toLocaleString();
+      rcNum.textContent = '+' + amt.toLocaleString('en-US');
       rcMedal.querySelector('use').setAttribute('href', p.glyph);
     }
     // The running total, so the win reads as progress rather than a number in isolation. Hidden
@@ -5603,7 +5603,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var newBal = lastReward && typeof lastReward.grit === 'number' ? lastReward.grit : null;
     if (rcBal) {
       rcBal.hidden = (newBal === null);
-      if (newBal !== null) rcBalV.textContent = newBal.toLocaleString();
+      if (newBal !== null) rcBalV.textContent = newBal.toLocaleString('en-US');
     }
     try{ if(window.bqHaptic) window.bqHaptic((bull||p.jackpot)?'heavy':'success'); }catch(e){}
     if (lastReward && window.bqSetGrit) window.bqSetGrit(lastReward.grit);
@@ -6524,7 +6524,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   window.BQ_TS_KEY = TURNSTILE_SITE_KEY;   // the wallet flow needs the same key from another scope
   function loadTurnstile(){ if(window.turnstile||document.getElementById('bqTsScript')) return; var s=document.createElement('script'); s.id='bqTsScript'; s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async=true; s.defer=true; document.head.appendChild(s); }
   function renderTurnstile(){ var el=modal&&modal.querySelector('#bqTurnstile'); if(!el) return; if(!window.turnstile){ setTimeout(renderTurnstile,200); return; } captchaToken=''; if(tsWidgetId!==null){ try{ window.turnstile.reset(tsWidgetId); }catch(e){} return; } try{ tsWidgetId=window.turnstile.render(el,{sitekey:TURNSTILE_SITE_KEY,callback:function(t){captchaToken=t;},'expired-callback':function(){captchaToken='';},'error-callback':function(){captchaToken='';}}); }catch(e){} }
-  function updateBullsLeft(){ var bl=modal&&modal.querySelector('#bqBullsLeft'); if(!bl||!sb) return; sb.rpc('bulls_remaining').then(function(r){ var n=r&&r.data; if(typeof n!=='number') return; if(n<=0){ closeModal(); showWaitlist(''); } else if(mode==='signup'){ bl.style.display=''; bl.textContent=n.toLocaleString()+' free bulls left'; } }).catch(function(){}); }
+  function updateBullsLeft(){ var bl=modal&&modal.querySelector('#bqBullsLeft'); if(!bl||!sb) return; sb.rpc('bulls_remaining').then(function(r){ var n=r&&r.data; if(typeof n!=='number') return; if(n<=0){ closeModal(); showWaitlist(''); } else if(mode==='signup'){ bl.style.display=''; bl.textContent=n.toLocaleString('en-US')+' free bulls left'; } }).catch(function(){}); }
   function showWaitlist(email){
     var el=document.createElement('div'); el.className='bqauth';
     el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot"><img src="assets/icons/logo.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div><h2>All bulls are claimed</h2><p class="sub">Every bull in the current runs is taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
@@ -7752,7 +7752,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   // ---- live game state helpers + public game API (used by the Arena) ----
   function setGrit(g){
     if(typeof g!=='number') return;
-    var txt=g.toLocaleString();
+    var txt=g.toLocaleString('en-US');
     /* #bqGritBand deliberately NOT in this list: it is the airdrop panel and shows GRIT EARNED,
        which renderAirdropBand owns. Putting the spendable balance there made the Gym look like it
        was destroying your airdrop. */
@@ -7873,14 +7873,14 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
      The ring next to it was hardcoded at 70% for every player and never moved. */
   function renderAirdropBand(s){
     var el, lifetime=Number(s&&s.grit_earned_lifetime)||0, gate=Number(s&&s.min_grit_to_qualify)||0;
-    if(el=document.getElementById('bqGritBand')) el.textContent=lifetime.toLocaleString();
+    if(el=document.getElementById('bqGritBand')) el.textContent=lifetime.toLocaleString('en-US');
     if(el=document.getElementById('bqGritRing')){
       var frac = gate>0 ? Math.min(1, lifetime/gate) : 0;
       el.setAttribute('stroke-dashoffset', String(Math.round(213.6*(1-frac)*10)/10));
     }
     if(el=document.getElementById('bqGritToGo')){
       if(gate>0 && lifetime<gate){
-        el.innerHTML='<b>'+(gate-lifetime).toLocaleString()+' more GRIT</b> to qualify for the $BULL airdrop. Spending never shrinks your share.';
+        el.innerHTML='<b>'+(gate-lifetime).toLocaleString('en-US')+' more GRIT</b> to qualify for the $BULL airdrop. Spending never shrinks your share.';
       } else if(gate>0){
         el.innerHTML='<b>You qualify</b> for the $BULL airdrop. Every GRIT you earn from here grows your share.';
       }
@@ -8470,7 +8470,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     el.querySelector('#bqLbClose').addEventListener('click', function(){ el.remove(); });
     el.querySelector('#bqLbShare').addEventListener('click', function(){
       var d=el._data; if(!d){ return; }
-      var txt='Ranked #'+(d.yourRank||'?')+' of '+(d.total||'?')+' on the BullQuest airdrop board with '+((d.yourGrit||0).toLocaleString())+' GRIT. Charging for the $BULL airdrop. https://bullquest.fun/';
+      var txt='Ranked #'+(d.yourRank||'?')+' of '+(d.total||'?')+' on the BullQuest airdrop board with '+((d.yourGrit||0).toLocaleString('en-US'))+' GRIT. Charging for the $BULL airdrop. https://bullquest.fun/';
       if(navigator.share){ navigator.share({text:txt}).catch(function(){}); }
       else if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(function(){ if(window.showToast) showToast('Copied. Paste it anywhere'); }); }
       else if(window.showToast) showToast('Sharing not supported here');
@@ -8484,7 +8484,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var yourCard='<div style="background:linear-gradient(180deg,#7C5CE6,#6B31E6);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">'+
       '<div style="font-size:26px;font-weight:800;min-width:44px">#'+(d.yourRank||'-')+'</div>'+
       '<div style="flex:1"><div style="font-weight:800;font-size:15px">You</div><div style="font-size:12px;opacity:.85">of '+(d.total||0)+' player'+((d.total===1)?'':'s')+'</div></div>'+
-      '<div style="text-align:right"><div style="font-weight:800;font-size:19px">'+((d.yourGrit||0).toLocaleString())+'</div><div style="font-size:11px;opacity:.85">GRIT</div></div></div>';
+      '<div style="text-align:right"><div style="font-weight:800;font-size:19px">'+((d.yourGrit||0).toLocaleString('en-US'))+'</div><div style="font-size:11px;opacity:.85">GRIT</div></div></div>';
     var medal=['#F0B429','#AEB8C2','#CD7F32'];
     function lbName(h){ if(h && /^handler_[0-9a-f]{6}$/i.test(h)) return 'Player '+h.slice(-6).toUpperCase(); return bqEsc(h||'Player'); }
     var list=rows.map(function(x){
@@ -8492,7 +8492,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var badge = x.rank<=3 ? '<span style="display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:'+medal[x.rank-1]+';color:#fff;font-weight:800;font-size:12px">'+x.rank+'</span>' : '<span style="display:inline-block;width:24px;text-align:center;font-weight:800;color:var(--ot-8a85a0,#8A85A0);font-size:13px">'+x.rank+'</span>';
       return '<div style="display:flex;align-items:center;gap:11px;padding:9px 8px;border-radius:12px;'+(mine?'background:var(--tint-violet1)':'')+'">'+badge+
         '<div style="flex:1;font-weight:700;font-size:13.5px;color:'+(mine?'var(--ot-6b31e6,#6B31E6)':'var(--title)')+'">'+lbName(x.handle)+(mine?' (you)':'')+'</div>'+
-        '<div style="font-weight:800;font-size:13.5px;color:var(--title)"><img src="assets/icons/gem_grit.png" width="13" height="13" alt="" style="vertical-align:-1px;margin-right:3px">'+(x.grit||0).toLocaleString()+'</div></div>';
+        '<div style="font-weight:800;font-size:13.5px;color:var(--title)"><img src="assets/icons/gem_grit.png" width="13" height="13" alt="" style="vertical-align:-1px;margin-right:3px">'+(x.grit||0).toLocaleString('en-US')+'</div></div>';
     }).join('');
     var footer = (d.total<=1) ? '<div style="text-align:center;color:#8A85A0;font-size:12.5px;margin-top:12px">You are first on the board. It fills as players join, and every GRIT you gather locks in your lead.</div>' : '';
     body.innerHTML = yourCard + '<div style="max-height:46vh;overflow:auto">'+list+'</div>' + footer;
@@ -8539,7 +8539,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         var rl=t.l.toUpperCase(); x.font='800 30px -apple-system,Segoe UI,Roboto,sans-serif'; var rw=x.measureText(rl).width+56; x.fillStyle=t.c; rrect(x,W/2-rw/2,828,rw,52,26); x.fill(); ct(rl, W/2, 864, '800 30px -apple-system,Segoe UI,Roboto,sans-serif', '#fff');
         var stats=[['POWER',ub.power],['SPEED',ub.speed],['STAM',ub.stamina]], cw=210, gp=24, tw=cw*3+gp*2, sx=W/2-tw/2, sy=912;
         stats.forEach(function(s,i){ var px=sx+i*(cw+gp); x.fillStyle='rgba(255,255,255,.14)'; rrect(x,px,sy,cw,88,18); x.fill(); ct(String(s[1]==null?'-':s[1]), px+cw/2, sy+48, '800 42px -apple-system,Segoe UI,Roboto,sans-serif', '#fff'); ct(s[0], px+cw/2, sy+74, '800 18px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.75)'); });
-        var foot = (grit!=null) ? (grit.toLocaleString()+' GRIT gathered'+(rank?'   ·   Rank #'+rank:'')) : 'Gathering GRIT for the $BULL airdrop';
+        var foot = (grit!=null) ? (grit.toLocaleString('en-US')+' GRIT gathered'+(rank?'   ·   Rank #'+rank:'')) : 'Gathering GRIT for the $BULL airdrop';
         ct(foot, W/2, 1032, '800 30px -apple-system,Segoe UI,Roboto,sans-serif', '#FFE7A6');
         ct('Claim a free bull at bullquest.fun', W/2, 1066, '600 24px -apple-system,Segoe UI,Roboto,sans-serif', 'rgba(255,255,255,.9)');
         try{ c.toBlob(function(blob){ shareOrDownload(blob, 'bullquest-'+(b.id||'bull')+'.png', refUrl); }, 'image/png'); }
@@ -9365,12 +9365,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function pmMeta(){ var meta=document.getElementById('bqPmMeta'); if(!meta) return;
     if(pmSearchId!=null){ var g=document.getElementById('bqPmGrid'); meta.textContent = (g&&g.children.length)? ('Bull #'+pmSearchId) : (pmSearchId>=1&&pmSearchId<=5000? ('Bull #'+pmSearchId+' is not listed by any player right now.') : 'Enter a number from 1 to 5000.'); return; }
     var lbl = pmFilter==='all' ? (pmTotal===1?'listing':'listings') : {leg:'Legendary',epic:'Epic',rare:'Rare',common:'Common'}[pmFilter];
-    meta.textContent = (pmTotal!=null)? (pmTotal.toLocaleString()+' '+lbl) : 'Rounding up the herd...'; }
+    meta.textContent = (pmTotal!=null)? (pmTotal.toLocaleString('en-US')+' '+lbl) : 'Rounding up the herd...'; }
   function pmPager(){ var pg=document.getElementById('bqPmPager'); if(!pg) return;
     if(pmSearchId!=null || pmTotal==null || pmTotal<=PM_PAGE){ pg.hidden=true; return; }
     var tp=pmPages(); if(pmPage>tp)pmPage=tp; pg.hidden=false;
     document.getElementById('bqPmPrev').disabled=(pmPage<=1); document.getElementById('bqPmNext').disabled=(pmPage>=tp);
-    document.getElementById('bqPmPageInfo').innerHTML='Page '+pmPage+' of '+tp+'<small>'+pmTotal.toLocaleString()+' listings</small>'; }
+    document.getElementById('bqPmPageInfo').innerHTML='Page '+pmPage+' of '+tp+'<small>'+pmTotal.toLocaleString('en-US')+' listings</small>'; }
   function pmFetch(){ if(pmLoading||!sb) return; pmLoading=true;
     var grid=document.getElementById('bqPmGrid'), st=document.getElementById('bqPmStatus');
     if(st) st.textContent=(grid&&grid.children.length)?'':'Loading...';
@@ -9427,7 +9427,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     return host;
   }
   function pmRefreshBadge(){ if(!sb) return; var h=bqMktHeaders(true); h.Range='0-0';
-    fetch(URL_+'/rest/v1/bull_listings?select=id&status=eq.active',{headers:h}).then(function(res){ var cr=res.headers.get('content-range'), n=0; if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') n=parseInt(p[1],10); } var badge=document.getElementById('bqPmBadge'); if(badge){ badge.textContent=n.toLocaleString(); badge.hidden=(n===0); } try{ if(window.bqSyncMktPill) window.bqSyncMktPill(); }catch(e){} }, function(){}); }
+    fetch(URL_+'/rest/v1/bull_listings?select=id&status=eq.active',{headers:h}).then(function(res){ var cr=res.headers.get('content-range'), n=0; if(cr){ var p=cr.split('/'); if(p[1]&&p[1]!=='*') n=parseInt(p[1],10); } var badge=document.getElementById('bqPmBadge'); if(badge){ badge.textContent=n.toLocaleString('en-US'); badge.hidden=(n===0); } try{ if(window.bqSyncMktPill) window.bqSyncMktPill(); }catch(e){} }, function(){}); }
   function renderPlayers(){
     if(!sb) return; var host=pmEnsureScaffold(); if(!host) return;
     pmRefreshBadge(); pmTotal=null;   // fresh count each render so the pager stays accurate after buys/sells
@@ -9624,10 +9624,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     function loadVisible(){ if(marketView&&marketView.hasAttribute('hidden')) return; var vh=window.innerHeight||800, ims=grid.querySelectorAll('.bqmkt-im[data-src]'); for(var i=0;i<ims.length;i++){ var im=ims[i], rr=im.getBoundingClientRect(); if(rr.bottom>-500 && rr.top<vh+500){ im.src=im.getAttribute('data-src'); im.removeAttribute('data-src'); } } }
     function updateMeta(){ var lbl={all:'available',leg:'Legendary',epic:'Epic',rare:'Rare',common:'Common'}[filter];
       if(searchId!=null){ metaEl.textContent = grid.children.length? ('Bull #'+searchId) : ('Bull #'+searchId+' is not for sale right now.'); return; }
-      metaEl.textContent = (total!=null)? (total.toLocaleString()+' '+lbl) : 'Rounding up the herd...';
+      metaEl.textContent = (total!=null)? (total.toLocaleString('en-US')+' '+lbl) : 'Rounding up the herd...';
       /* The header no longer shows the blended total: the per-generation pills (filled by
          loadGenCounts) replaced it, because one unlabeled number hid the Genesis scarcity. */ }
-    function updatePager(){ if(searchId!=null || total==null || total<=PAGE){ pagerEl.hidden=true; return; } var tp=totalPages(); if(page>tp) page=tp; pagerEl.hidden=false; prevEl.disabled=(page<=1); nextEl.disabled=(page>=tp); pageInfoEl.innerHTML='Page '+page+' of '+tp+'<small>'+total.toLocaleString()+' bulls</small>'; }
+    function updatePager(){ if(searchId!=null || total==null || total<=PAGE){ pagerEl.hidden=true; return; } var tp=totalPages(); if(page>tp) page=tp; pagerEl.hidden=false; prevEl.disabled=(page<=1); nextEl.disabled=(page>=tp); pageInfoEl.innerHTML='Page '+page+' of '+tp+'<small>'+total.toLocaleString('en-US')+' bulls</small>'; }
     function fetchPage(){ if(loading) return; loading=true; statusEl.textContent = grid.children.length? '' : 'Loading...';
       // marketplace: only show bulls that are actually for sale (unclaimed system inventory).
       // Bulls owned by players are not listed here; player listings show in the "For sale by players" section.
@@ -9662,7 +9662,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       if(plShown){
         var badge=document.getElementById('bqPmBadge');
         var n=badge?parseInt((badge.textContent||'0').replace(/[^0-9]/g,''),10):0;
-        pl.querySelector('b').textContent=(isNaN(n)?0:n).toLocaleString();
+        pl.querySelector('b').textContent=(isNaN(n)?0:n).toLocaleString('en-US');
         g1.hidden=true; g2.hidden=true; pl.hidden=false;
       } else {
         pl.hidden=true;
@@ -9692,14 +9692,14 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       Promise.all([cnt(1), cnt(2)]).then(function(ns){
         var g1=ns[0], g2=ns[1];
         var e1=document.getElementById('bqGen1N'), e2=document.getElementById('bqGen2N'), info=document.getElementById('bqGenInfo');
-        if(e1&&g1!=null) e1.textContent=g1.toLocaleString();
-        if(e2&&g2!=null) e2.textContent=g2.toLocaleString();
+        if(e1&&g1!=null) e1.textContent=g1.toLocaleString('en-US');
+        if(e2&&g2!=null) e2.textContent=g2.toLocaleString('en-US');
         var h1=document.getElementById('bqMcG1'), h2=document.getElementById('bqMcG2');
-        if(h1&&g1!=null) h1.querySelector('b').textContent=g1.toLocaleString();
-        if(h2&&g2!=null) h2.querySelector('b').textContent=g2.toLocaleString();
+        if(h1&&g1!=null) h1.querySelector('b').textContent=g1.toLocaleString('en-US');
+        if(h2&&g2!=null) h2.querySelector('b').textContent=g2.toLocaleString('en-US');
         setMktPill();
         if(info&&g1!=null&&g2!=null){
-          info.innerHTML='<b style="color:var(--ot-e0930f,#B26A00)">Only '+g1.toLocaleString()+' Genesis bulls left</b>, and no more will ever be printed. Second Run has '+g2.toLocaleString()+' waiting.';
+          info.innerHTML='<b style="color:var(--ot-e0930f,#B26A00)">Only '+g1.toLocaleString('en-US')+' Genesis bulls left</b>, and no more will ever be printed. Second Run has '+g2.toLocaleString('en-US')+' waiting.';
           info.hidden=false;
         }
       });
@@ -9820,7 +9820,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           '<div style="background:var(--surface,#fff);color:var(--ink,#161a22);max-width:400px;width:100%;' +
           'border-radius:20px;padding:22px 20px;box-shadow:0 24px 60px rgba(0,0,0,.35);font-family:inherit">' +
             '<div style="font-size:15px;font-weight:900;margin-bottom:8px">' +
-              frozen.toLocaleString() + ' GRIT is not counting toward your airdrop</div>' +
+              frozen.toLocaleString('en-US') + ' GRIT is not counting toward your airdrop</div>' +
             '<p style="margin:0 0 14px;font-size:13.5px;line-height:1.55;color:var(--body,#5C6674)">' +
               'You still have it and you can still spend it. It just does not count toward your ' +
               'airdrop share until you connect the X account you did the quests on, so we can check ' +
@@ -10356,7 +10356,12 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
   /* ---------- AIRDROP view (register wallet + allocation dashboard) ---------- */
   (function(){
-    function fmt(n){ return (Number(n)||0).toLocaleString(); }
+    /* ALWAYS pass 'en-US'. A bare toLocaleString() follows the DEVICE locale, so on an Indonesian
+       or German phone 8495 renders as "8.495" while pctStr right beside it prints "0.0072%" with a
+       dot for the decimal. Same screen, same symbol, two meanings: a player asked whether their
+       balance was 7 or 7000. Percentages go through toFixed, which is always dot-decimal, so the
+       thousands separator has to be a comma for the two to stay distinguishable. */
+    function fmt(n){ return (Number(n)||0).toLocaleString('en-US'); }
     function shortAddr(a){ return a ? (a.slice(0,4)+'…'+a.slice(-4)) : ''; }
     function pctStr(p){ p=Number(p)||0; if(p<=0) return '0%'; if(p<0.0001) return '<0.0001%'; return (p<0.01?p.toFixed(4):(p<1?p.toFixed(3):p.toFixed(2)))+'%'; }
     function dstr(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }catch(e){ return ''; } }
@@ -10653,7 +10658,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var COL={defi:'#4DA6F5',memes:'#F0A83C',l1s:'#2FBF71',gaming:'#8A5CF2',ai:'#5A22D6',rwa:'#F0B429',nfts:'#F2668B',privacy:'#3C93E8'};
     var last=null;
     function esc(s){ return window.bqEsc?window.bqEsc(s):String(s==null?'':s); }
-    function fmt(n){ return (Number(n)||0).toLocaleString(); }
+    function fmt(n){ return (Number(n)||0).toLocaleString('en-US'); }
     function fmtLeft(s){ s=Math.max(0,s|0); var d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60); if(d>0)return d+'d '+h+'h'; if(h>0)return h+'h '+m+'m'; return m+'m'; }
     function mult(total,cfg){ var t=Math.min(cfg.max_stake,Math.max(cfg.min_stake,total)); return 1 + 0.30*Math.sqrt(Math.max(0,t-cfg.min_stake)/(cfg.max_stake-cfg.min_stake)); }
 
@@ -10821,7 +10826,7 @@ var DISCORD_CLIENT='1527451236746531068';
     function refreshGrit(){ if(sb) sb.rpc('get_state').then(function(g){ if(g&&g.data&&g.data.grit!=null&&window.bqSetGrit) window.bqSetGrit(g.data.grit); }).catch(function(){}); }
 
     function render(st){
-      var total=document.getElementById('qstTotal'); if(total) total.textContent=(Number(st.total_earned)||0).toLocaleString()+' GRIT earned';
+      var total=document.getElementById('qstTotal'); if(total) total.textContent=(Number(st.total_earned)||0).toLocaleString('en-US')+' GRIT earned';
       var list=document.getElementById('qstList'); if(!list) return;
       var claimed=st.claimed||[]; var subs=st.submissions||{}; var reverify=st.reverify||[]; list.innerHTML='';
       /* quests_state answers for signed-out visitors too, so the list used to render with live
@@ -10938,7 +10943,7 @@ var DISCORD_CLIENT='1527451236746531068';
         function paint(){
           tog.innerHTML='<span>Completed</span><span class="qdone-n">'+doneCards.length+'</span>'+
             '<span class="qdone-act">'+(box.hidden?'Show':'Hide')+
-            (earned?(' &middot; '+earned.toLocaleString()+' GRIT'):'')+'</span>';
+            (earned?(' &middot; '+earned.toLocaleString('en-US')+' GRIT'):'')+'</span>';
           tog.setAttribute('aria-expanded', box.hidden?'false':'true');
         }
         paint();
@@ -11152,13 +11157,13 @@ var DISCORD_CLIENT='1527451236746531068';
       var n=Number(st.transactions)||0;
       var h='<div class="qtx"><h3>Transaction rewards</h3>'+
         '<p class="qtx-sub">Every extra spin, energy refill, bull you buy and rename counts. Rewards pay once each.</p>'+
-        '<div class="qtx-count"><b>'+n.toLocaleString()+'</b><span>transaction'+(n===1?'':'s')+' so far</span></div>';
+        '<div class="qtx-count"><b>'+n.toLocaleString('en-US')+'</b><span>transaction'+(n===1?'':'s')+' so far</span></div>';
       st.tiers.forEach(function(t){
         var cls = t.claimed ? 'claimed' : (t.done ? 'hit' : '');
         h+='<div class="qtx-row '+cls+'">'+
              '<span class="qtx-dot">'+(t.claimed?'&#10003;':t.threshold)+'</span>'+
              '<span class="qtx-lab"><b>'+esc(t.label)+'</b>'+
-               '<span>'+(Number(t.reward)||0).toLocaleString()+' GRIT'+
+               '<span>'+(Number(t.reward)||0).toLocaleString('en-US')+' GRIT'+
                (t.claimed ? ' &middot; claimed' : (t.done ? '' : ' &middot; '+t.remaining+' to go'))+'</span></span>'+
              (t.claimable
                ? '<button type="button" class="qtx-btn" data-tx="'+t.threshold+'">Claim</button>'
@@ -11176,7 +11181,7 @@ var DISCORD_CLIENT='1527451236746531068';
             var d=r&&r.data;
             if(d&&d.ok){
               if(window.bqSetGrit && d.grit!=null) window.bqSetGrit(d.grit);
-              if(window.bqToast) window.bqToast('+'+Number(d.reward).toLocaleString()+' GRIT');
+              if(window.bqToast) window.bqToast('+'+Number(d.reward).toLocaleString('en-US')+' GRIT');
             } else if(window.bqToast){
               window.bqToast((d&&d.error==='already-claimed') ? 'Already claimed.'
                 : (d&&d.error==='not-yet') ? 'Not there yet.'
