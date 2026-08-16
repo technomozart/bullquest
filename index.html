@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786882595";try{console.log("BullQuest build 1786882595");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786883232";try{console.log("BullQuest build 1786883232");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -11364,22 +11364,36 @@ var DISCORD_CLIENT='1527451236746531068';
   --edge-strong:rgba(180,255,205,.22);
 }
 
-/* Landing header: a real bar. Kept DARK because its links are white; a light fill here would
-   erase them. Translucent plus blur so it reads as floating above the page at any scroll. */
+/* Landing header.
+   A translucent dark fill was tried and looked filthy: 26% of a white page bleeding through a
+   near-black tint averages out to a muddy grey-green, and the bar carries BOTH white links and
+   (at some breakpoints) a dark logo, so no mid-tone could serve both. Solid, deeper than the body
+   emerald so it separates from the page by value rather than by a border, and every child forced
+   light so there is exactly one text colour to reason about. White here measures 8.3:1. */
 #view-landing .bq-nav{
-  background:rgba(16,23,18,.74) !important;
-  -webkit-backdrop-filter:saturate(1.5) blur(14px);
-  backdrop-filter:saturate(1.5) blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.12) !important;
-  box-shadow:0 6px 20px rgba(10,16,12,.20) !important;
+  background:#0B5C26 !important;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+  border-bottom:1px solid rgba(255,255,255,.10) !important;
+  box-shadow:0 6px 18px rgba(6,32,16,.22) !important;
 }
+#view-landing .bq-nav .bq-logo,
+#view-landing .bq-nav .bq-links > a{ color:#fff !important; }
+#view-landing .bq-nav .bq-links > a[href="#airdrop"]{ color:#FFD76A !important; }   /* 6.1:1 here */
+#view-landing .bq-nav .bq-navsoc a{ color:rgba(255,255,255,.92) !important; }
+#view-landing .bq-nav .pill-cta{ color:var(--rh-ink) !important; }
 
 /* AI assistant panel: white on near-white had no edge at all. */
 #bqAiPanel{
   outline:1px solid var(--edge-strong); outline-offset:-1px;
   box-shadow:0 28px 70px rgba(12,20,15,.34), 0 2px 8px rgba(12,20,15,.14) !important;
 }
-#bqAiBtn{ box-shadow:0 10px 24px rgba(13,108,45,.42), 0 0 0 3px rgba(255,255,255,.9) !important; }
+/* The launcher was emerald sitting on a green page, so it disappeared into its own background.
+   Near-black with a lime ring instead: maximum separation from anything green, and it is the one
+   pairing that stays legible on every screen the button floats over. */
+#bqAiBtn{
+  background:#12160F !important;
+  box-shadow:0 10px 26px rgba(8,14,10,.44), 0 0 0 3px var(--rh-lime) !important;
+}
 
 /* Cards and panels: an inset hairline, drawn with outline so nothing reflows. */
 .bq-home .card, .bq-arena .card, .bq-bulls .card, .bq-market .card,
