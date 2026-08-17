@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BullQuest Founder Bulls - the 2,000</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --lime:#CCFF00; --ink:#141711; --bg:#08160D; --panel:#0F2417;
+    --edge:rgba(180,255,205,.16); --text:#EAF6EE; --muted:#9FBCA9;
+    --mythic:#FF4D6D; --legendary:#FFB020; --epic:#B36BFF; --rare:#4DA6F5; --common:#7C8B81;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  header{padding:26px 20px 14px;max-width:1240px;margin:0 auto}
+  h1{margin:0 0 4px;font-size:26px;letter-spacing:-.5px}
+  .sub{color:var(--muted);font-size:14px}
+  .bar{position:sticky;top:0;z-index:5;background:rgba(8,22,13,.92);
+       backdrop-filter:blur(10px);border-bottom:1px solid var(--edge);padding:12px 20px}
+  .bar .in{max-width:1240px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  button.f{background:transparent;color:var(--text);border:1px solid var(--edge);
+       border-radius:999px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer}
+  button.f[aria-pressed="true"]{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+  input{background:var(--panel);border:1px solid var(--edge);color:var(--text);
+        border-radius:10px;padding:9px 12px;font:inherit;min-width:190px}
+  #count{color:var(--muted);font-size:13px;margin-left:auto}
+  main{max-width:1240px;margin:0 auto;padding:18px 20px 60px;
+       display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px}
+  .c{background:var(--panel);border:1px solid var(--edge);border-radius:16px;overflow:hidden}
+  .c img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#0b1c12}
+  .m{padding:9px 11px 11px}
+  .nm{font-weight:800;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rk{color:var(--muted);font-size:11.5px;margin-top:1px}
+  .tg{display:inline-block;margin-top:7px;font-size:10.5px;font-weight:800;letter-spacing:.04em;
+      text-transform:uppercase;padding:3px 8px;border-radius:999px;color:#0b1c12}
+  .Mythic{background:var(--mythic)} .Legendary{background:var(--legendary)}
+  .Epic{background:var(--epic)} .Rare{background:var(--rare)} .Common{background:var(--common)}
+  .note{max-width:1240px;margin:0 auto;padding:0 20px 8px;color:var(--muted);font-size:13px}
+  a{color:var(--lime)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Founder Bulls</h1>
+  <div class="sub">The 2,000 selected for Robinhood Chain. Not minted yet, this is the locked set.</div>
+</header>
+<div class="note">
+  Token numbers are deliberately shuffled against rarity, so #1 is not the rarest.
+  Every entry is served from the same metadata a marketplace will read:
+  <a href="/nft/metadata/1.json">/nft/metadata/1.json</a>.
+  Ordering is fixed by <a href="/nft/PROVENANCE.txt">PROVENANCE.txt</a>.
+</div>
+<div class="bar"><div class="in" id="filters">
+  <button class="f" data-t="all" aria-pressed="true">All 2,000</button>
+  <button class="f" data-t="Mythic">Mythic 20</button>
+  <button class="f" data-t="Legendary">Legendary 80</button>
+  <button class="f" data-t="Epic">Epic 200</button>
+  <button class="f" data-t="Rare">Rare 500</button>
+  <button class="f" data-t="Common">Common 1200</button>
+  <input id="q" placeholder="Search name or #token">
+  <span id="count"></span>
+</div></div>
+<main id="grid"></main>
+<script>
+(async function(){
+  var d = await (await fetch('/nft/index.json?v=1')).json();
+  var grid = document.getElementById('grid'), count = document.getElementById('count');
+  var tier = 'all', term = '', shown = 0, view = [];
+
+  function apply(){
+    var t = term.trim().toLowerCase().replace(/^#/,'');
+    view = d.items.filter(function(x){
+      if (tier !== 'all' && x.t !== tier) return false;
+      if (!t) return true;
+      return x.n.toLowerCase().indexOf(t) >= 0 || String(x.i) === t;
+    });
+    grid.innerHTML = ''; shown = 0; more();
+    count.textContent = view.length.toLocaleString() + ' of 2,000';
+  }
+  // render in chunks so 2,000 cards never block the page
+  function more(){
+    var frag = document.createDocumentFragment();
+    view.slice(shown, shown + 120).forEach(function(x){
+      var el = document.createElement('div'); el.className = 'c';
+      el.innerHTML = '<img loading="lazy" src="' + d.base + x.u + '" alt="">' +
+        '<div class="m"><div class="nm">' + x.n + '</div>' +
+        '<div class="rk">#' + x.i + ' &middot; rarity ' + x.r + '</div>' +
+        '<span class="tg ' + x.t + '">' + x.t + '</span></div>';
+      frag.appendChild(el);
+    });
+    grid.appendChild(frag); shown += 120;
+  }
+  addEventListener('scroll', function(){
+    if (shown < view.length && innerHeight + scrollY > document.body.offsetHeight - 700) more();
+  });
+  document.getElementById('filters').addEventListener('click', function(e){
+    var b = e.target.closest('button.f'); if (!b) return;
+    [].forEach.call(document.querySelectorAll('button.f'), function(x){ x.setAttribute('aria-pressed', x === b); });
+    tier = b.dataset.t; apply();
+  });
+  document.getElementById('q').addEventListener('input', function(e){ term = e.target.value; apply(); });
+  apply();
+})();
+</script>
+</body>
+</html>
