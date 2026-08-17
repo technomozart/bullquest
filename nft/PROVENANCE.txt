@@ -1,4 +1,4 @@
-BullQuest Bulls
+BullQuest Genesis Bulls
 supply: 2000 (token ids 1-2000)
 source: generation 1, rarity_rank 1-2000
 token order: md5('bullquest-robinhood-v1:' || bull_id) ascending
