@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: tokenized stocks, gamified.</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: tokenized stocks, gamified."><meta property="og:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v5.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, tokenized stocks gamified"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: tokenized stocks, gamified."><meta name="twitter:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v5.png"></head><body><script>window.BQ_BUILD="1787007665";try{console.log("BullQuest build 1787007665");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: tokenized stocks, gamified.</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: tokenized stocks, gamified."><meta property="og:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v5.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, tokenized stocks gamified"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: tokenized stocks, gamified."><meta name="twitter:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v5.png"></head><body><script>window.BQ_BUILD="1787007801";try{console.log("BullQuest build 1787007801");}catch(e){}</script><script>
 /* BRAND LOGO. New Robinhood-era mark everywhere, EXCEPT the Classic edition, which is the old
    game reached by Play now -> old version. Founder, 2026-08-18: change it every fucking where
    except the old app. Static markup carries the new mark directly; anything rendered from JS
@@ -12227,8 +12227,9 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
 #view-choose{ min-height:100vh; background:
   radial-gradient(120% 80% at 78% 12%, rgba(204,255,0,.13), transparent 60%),
   linear-gradient(165deg,#0C5A27 0%,#07361A 55%,#041F0F 100%); color:#EAF6EE; }
-.bqch-wrap{ max-width:1060px; margin:0 auto; padding:40px 22px 56px;
-  min-height:100vh; display:flex; flex-direction:column; justify-content:center; }
+/* Deliberately NOT a centred flex column: once the three-step strip was added the content is
+   taller than a laptop viewport, and centring an overflowing column clips the top out of reach. */
+.bqch-wrap{ max-width:1060px; margin:0 auto; padding:46px 22px 58px; }
 .bqch-head{ text-align:center; margin-bottom:30px; }
 .bqch-kicker{ font-size:12px; font-weight:800; letter-spacing:1.3px; text-transform:uppercase;
   color:var(--rh-lime,#CCFF00); margin-bottom:6px; }
@@ -12275,7 +12276,7 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
 .bqch-back:hover{ background:rgba(255,255,255,.14); }
 @media (max-width:760px){ .bqch-grid{ grid-template-columns:1fr; } .bqch-head h1{ font-size:26px; }
   .bqch-how-g{ grid-template-columns:1fr; } .bqch-card{ padding:24px 20px; }
-  .bqch-wrap{ min-height:0; display:block; padding:34px 18px 60px; } }
+  .bqch-wrap{ padding:34px 18px 60px; } }
 </style>
 <script>
 /* Play routes to the chooser instead of straight into signup. Remembered per browser, so it is a
@@ -12433,19 +12434,28 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
   }
   window.bqArenaIntro = intro;
 
-  /* fire whenever the signup screen becomes visible */
+  /* Fire whenever the signup screen becomes visible, HOWEVER it got there. A click listener alone
+     missed it: the view can be shown by bqGo, by a deep link, or by restoring state, and then the
+     screen renders with the wrong edition. Watching the hidden attribute catches every route. */
+  var shown = false;
   function onShow(){
     var v = document.getElementById('view-onboard');
-    if (!v || v.hidden) return;
+    if (!v || v.hidden) { shown = false; return; }
     markEdition();
+    if (shown) return;
+    shown = true;
     if (ed() === 'arena') setTimeout(function(){ intro(false); }, 450);
   }
-  document.addEventListener('click', function(e){
-    if (e.target.closest && (e.target.closest('[data-edition]') || e.target.closest('[data-bqgo="view-onboard"]')))
-      setTimeout(onShow, 260);
-  });
-  if (document.readyState !== 'loading') setTimeout(onShow, 700);
-  else document.addEventListener('DOMContentLoaded', function(){ setTimeout(onShow, 700); });
+  function watch(){
+    var v = document.getElementById('view-onboard');
+    if (!v) { setTimeout(watch, 300); return; }
+    try{
+      new MutationObserver(onShow).observe(v, { attributes:true, attributeFilter:['hidden'] });
+    }catch(e){}
+    onShow();
+  }
+  if (document.readyState !== 'loading') watch();
+  else document.addEventListener('DOMContentLoaded', watch);
 
   /* MetaMask from a signed-out state. evm_link_start needs an account, so instead of dead-ending
      on "sign in first", open the account step and resume the wallet connect once they are in. */
