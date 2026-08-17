@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786981657";try{console.log("BullQuest build 1786981657");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786983713";try{console.log("BullQuest build 1786983713");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -11553,6 +11553,266 @@ var DISCORD_CLIENT='1527451236746531068';
 /* Bottom nav already had a shadow, but it needs a top edge against a white page. */
 .nav{ border-top:1px solid var(--edge) !important; }
 </style>
+
+<style id="bq-fx2">
+/* Second wave of landing effects. Same rule as the first: reimplemented natively, because the
+   library the founder liked is React-only and its pro tier is paid, and this app is one vanilla
+   HTML file. */
+
+@media (prefers-reduced-motion: reduce){
+  .bq-prog, .bq-aurora, .bq-dots, .bq-cur, .bq-cur-ring { display:none !important; }
+  .hl::after { animation:none !important; }
+  .bq-w { opacity:1 !important; transform:none !important; }
+}
+
+/* ---- scroll progress bar --------------------------------------------------------------- */
+.bq-prog{ position:fixed; top:0; left:0; height:3px; width:0%; z-index:10000; pointer-events:none;
+  background:linear-gradient(90deg,#CCFF00,#39E08A,#CCFF00); background-size:200% 100%;
+  animation:bqprogshift 3s linear infinite; transition:width .08s linear;
+  box-shadow:0 0 10px rgba(204,255,0,.55); }
+@keyframes bqprogshift{ from{background-position:0% 0} to{background-position:200% 0} }
+
+/* ---- shimmer sweep across the highlighted headline words -------------------------------- */
+.hl{ position:relative; display:inline-block; }
+.hl::after{ content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.62) 50%,transparent 62%);
+  background-size:260% 100%; animation:bqshine 4.6s ease-in-out infinite;
+  mix-blend-mode:overlay; }
+@keyframes bqshine{ 0%,68%{background-position:180% 0} 100%{background-position:-60% 0} }
+
+/* ---- word-by-word reveal on section headings -------------------------------------------- */
+.bq-w{ display:inline-block; opacity:0; transform:translateY(14px);
+  transition:opacity .5s cubic-bezier(.2,.7,.3,1), transform .5s cubic-bezier(.2,.7,.3,1); }
+.bq-w.in{ opacity:1; transform:none; }
+
+/* ---- aurora beams behind the dark sections ---------------------------------------------- */
+.bq-aurora{ position:absolute; inset:-20% -10%; pointer-events:none; z-index:0; overflow:hidden;
+  filter:blur(48px); opacity:.5; }
+.bq-aurora i{ position:absolute; display:block; border-radius:50%; mix-blend-mode:screen; }
+.bq-aurora i:nth-child(1){ width:46%; height:62%; left:-6%;  top:-14%; background:#19C25C;
+  animation:bqaur1 17s ease-in-out infinite alternate; }
+.bq-aurora i:nth-child(2){ width:40%; height:56%; right:-4%; top:4%;   background:#8CE04A;
+  animation:bqaur2 21s ease-in-out infinite alternate; }
+.bq-aurora i:nth-child(3){ width:36%; height:48%; left:34%;  bottom:-18%; background:#0E8C6A;
+  animation:bqaur3 25s ease-in-out infinite alternate; }
+@keyframes bqaur1{ to{ transform:translate3d(16%, 12%, 0) scale(1.22) } }
+@keyframes bqaur2{ to{ transform:translate3d(-14%, 16%, 0) scale(1.15) } }
+@keyframes bqaur3{ to{ transform:translate3d(10%, -14%, 0) scale(1.3) } }
+
+/* ---- dot grid with pointer parallax ------------------------------------------------------ */
+.bq-dots{ position:absolute; inset:0; pointer-events:none; z-index:0; opacity:.30;
+  background-image:radial-gradient(rgba(255,255,255,.55) 1px, transparent 1px);
+  background-size:26px 26px;
+  transform:translate3d(var(--dx,0px), var(--dy,0px), 0);
+  transition:transform .5s cubic-bezier(.2,.7,.3,1);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 78%);
+          mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 78%); }
+
+/* keep real content above the two decorative layers */
+.bq-violet > .wrap, .bq-hero > .wrap, .bq-violet .wrap, .bq-hero .bq-hero-copy{ position:relative; z-index:1; }
+
+/* ---- custom cursor, desktop only --------------------------------------------------------- */
+.bq-cur, .bq-cur-ring{ position:fixed; top:0; left:0; z-index:10001; pointer-events:none;
+  border-radius:50%; opacity:0; transition:opacity .25s ease; }
+.bq-cur{ width:7px; height:7px; margin:-3.5px 0 0 -3.5px; background:#CCFF00;
+  box-shadow:0 0 8px rgba(204,255,0,.9); }
+.bq-cur-ring{ width:30px; height:30px; margin:-15px 0 0 -15px; border:1.5px solid rgba(204,255,0,.62);
+  transition:opacity .25s ease, width .18s ease, height .18s ease, margin .18s ease,
+             border-color .18s ease, background-color .18s ease; }
+body.bq-curon .bq-cur, body.bq-curon .bq-cur-ring{ opacity:1; }
+body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
+  background:rgba(204,255,0,.12); border-color:rgba(204,255,0,.95); }
+
+/* ---- glow border on cards ---------------------------------------------------------------- */
+.bq-card::before{ content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+  pointer-events:none; opacity:0; transition:opacity .22s ease;
+  background:radial-gradient(180px circle at var(--sx,50%) var(--sy,50%),
+    rgba(204,255,0,.85), rgba(57,224,138,.35) 42%, transparent 68%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; }
+.bq-card.is-hot::before{ opacity:1; }
+
+/* ---- spark burst on the primary CTA ------------------------------------------------------ */
+.bq-spark{ position:fixed; width:6px; height:6px; border-radius:50%; z-index:10002;
+  pointer-events:none; background:#CCFF00; }
+</style>
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var touch  = window.matchMedia && matchMedia('(hover: none)').matches;
+  var $  = function(s,r){ return (r||document).querySelector(s); };
+  var $$ = function(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+
+  /* ---- scroll progress ------------------------------------------------------------------- */
+  function progress(){
+    if (document.getElementById('bqProg') || reduce) return;
+    var bar = document.createElement('div');
+    bar.className = 'bq-prog'; bar.id = 'bqProg'; bar.setAttribute('aria-hidden','true');
+    document.body.appendChild(bar);
+    var tick = 0;
+    addEventListener('scroll', function(){
+      if (tick) return;
+      tick = requestAnimationFrame(function(){
+        tick = 0;
+        var h = document.documentElement.scrollHeight - innerHeight;
+        bar.style.width = (h > 0 ? (scrollY / h) * 100 : 0).toFixed(2) + '%';
+      });
+    }, {passive:true});
+  }
+
+  /* ---- headline scramble, then resolve ---------------------------------------------------
+     Only text nodes are touched, so the inner <span class="hl"> and its shimmer survive. */
+  function scramble(){
+    var h1 = $('.bq-hero h1');
+    if (!h1 || reduce || h1.dataset.scrambled) return;
+    h1.dataset.scrambled = '1';
+    var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ$#%&@0123456789';
+    var nodes = [];
+    (function walk(n){
+      for (var i = 0; i < n.childNodes.length; i++){
+        var c = n.childNodes[i];
+        if (c.nodeType === 3 && c.nodeValue.trim()) nodes.push({node:c, text:c.nodeValue});
+        else if (c.nodeType === 1) walk(c);
+      }
+    })(h1);
+    if (!nodes.length) return;
+    var total = nodes.reduce(function(a,n){ return a + n.text.length; }, 0);
+    var start = 0;
+    function frame(ts){
+      if (!start) start = ts;
+      var k = Math.min(1, (ts - start) / 1100);
+      var revealed = Math.floor(k * total * 1.15);
+      var seen = 0, allDone = true;
+      nodes.forEach(function(rec){
+        var out = '';
+        for (var i = 0; i < rec.text.length; i++){
+          var ch = rec.text[i];
+          if (seen + i < revealed || ch === ' ') out += ch;
+          else { out += GLYPHS[(Math.random() * GLYPHS.length) | 0]; allDone = false; }
+        }
+        rec.node.nodeValue = out;
+        seen += rec.text.length;
+      });
+      if (k < 1 || !allDone) requestAnimationFrame(frame);
+      else nodes.forEach(function(rec){ rec.node.nodeValue = rec.text; });
+    }
+    // Guard: if rAF never runs, restore the real text. Same failure that left the figures on zero.
+    setTimeout(function(){
+      nodes.forEach(function(rec){ rec.node.nodeValue = rec.text; });
+    }, 2200);
+    requestAnimationFrame(frame);
+  }
+
+  /* ---- word-by-word reveal on section headings -------------------------------------------- */
+  function words(){
+    if (reduce || typeof IntersectionObserver === 'undefined') return;
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        $$('.bq-w', en.target).forEach(function(w, i){
+          setTimeout(function(){ w.classList.add('in'); }, i * 55);
+        });
+      });
+    }, {threshold:.25});
+    $$('.bq-head h2').forEach(function(h){
+      if (h.dataset.split) return;
+      h.dataset.split = '1';
+      var parts = h.textContent.split(/(\s+)/);
+      h.textContent = '';
+      parts.forEach(function(p){
+        if (!p.trim()){ h.appendChild(document.createTextNode(p)); return; }
+        var s = document.createElement('span');
+        s.className = 'bq-w'; s.textContent = p;
+        h.appendChild(s);
+      });
+      io.observe(h);
+    });
+    // If the observer never fires, nothing should stay invisible.
+    setTimeout(function(){ $$('.bq-w').forEach(function(w){ w.classList.add('in'); }); }, 2500);
+  }
+
+  /* ---- aurora + dot grid on the dark sections --------------------------------------------- */
+  function backdrops(){
+    if (reduce) return;
+    $$('.bq-violet').forEach(function(sec){
+      if (sec.querySelector('.bq-aurora')) return;
+      var cs = getComputedStyle(sec);
+      if (cs.position === 'static') sec.style.position = 'relative';
+      if (cs.overflow === 'visible') sec.style.overflow = 'hidden';
+      var a = document.createElement('div');
+      a.className = 'bq-aurora'; a.setAttribute('aria-hidden','true');
+      a.innerHTML = '<i></i><i></i><i></i>';
+      var d = document.createElement('div');
+      d.className = 'bq-dots'; d.setAttribute('aria-hidden','true');
+      sec.insertBefore(d, sec.firstChild);
+      sec.insertBefore(a, sec.firstChild);
+      if (touch) return;
+      sec.addEventListener('pointermove', function(e){
+        var r = sec.getBoundingClientRect();
+        d.style.setProperty('--dx', (((e.clientX - r.left) / r.width - .5) * -16).toFixed(1) + 'px');
+        d.style.setProperty('--dy', (((e.clientY - r.top) / r.height - .5) * -16).toFixed(1) + 'px');
+      }, {passive:true});
+    });
+  }
+
+  /* ---- custom cursor ----------------------------------------------------------------------- */
+  function cursor(){
+    if (touch || reduce || document.getElementById('bqCur')) return;
+    var dot = document.createElement('div'); dot.className = 'bq-cur'; dot.id = 'bqCur';
+    var ring = document.createElement('div'); ring.className = 'bq-cur-ring';
+    dot.setAttribute('aria-hidden','true'); ring.setAttribute('aria-hidden','true');
+    document.body.appendChild(dot); document.body.appendChild(ring);
+    var x = innerWidth/2, y = innerHeight/2, rx = x, ry = y, raf = 0;
+    addEventListener('pointermove', function(e){
+      x = e.clientX; y = e.clientY;
+      document.body.classList.add('bq-curon');
+      dot.style.transform = 'translate3d('+x+'px,'+y+'px,0)';
+      if (!raf) raf = requestAnimationFrame(loop);
+    }, {passive:true});
+    addEventListener('pointerleave', function(){ document.body.classList.remove('bq-curon'); }, {passive:true});
+    function loop(){
+      rx += (x - rx) * 0.18; ry += (y - ry) * 0.18;      // the ring lags, which is the whole effect
+      ring.style.transform = 'translate3d('+rx.toFixed(1)+'px,'+ry.toFixed(1)+'px,0)';
+      raf = (Math.abs(x-rx) > 0.4 || Math.abs(y-ry) > 0.4) ? requestAnimationFrame(loop) : 0;
+    }
+    document.addEventListener('pointerover', function(e){
+      var t = e.target.closest && e.target.closest('a,button,.bq-card,[role="button"],input,select');
+      document.body.classList.toggle('bq-curgrab', !!t);
+    }, {passive:true});
+  }
+
+  /* ---- spark burst when the primary CTA is clicked ----------------------------------------- */
+  function sparks(){
+    if (reduce) return;
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('.pill-cta');
+      if (!b) return;
+      for (var i = 0; i < 14; i++){
+        (function(i){
+          var s = document.createElement('div');
+          s.className = 'bq-spark';
+          s.style.left = e.clientX + 'px';
+          s.style.top = e.clientY + 'px';
+          s.style.background = i % 3 ? '#CCFF00' : '#39E08A';
+          document.body.appendChild(s);
+          var ang = (Math.PI * 2 * i) / 14 + Math.random() * .5;
+          var dist = 34 + Math.random() * 46;
+          s.animate([
+            {transform:'translate(0,0) scale(1)', opacity:1},
+            {transform:'translate('+Math.cos(ang)*dist+'px,'+Math.sin(ang)*dist+'px) scale(0)', opacity:0}
+          ], {duration: 520 + Math.random()*260, easing:'cubic-bezier(.2,.7,.3,1)'})
+           .onfinish = function(){ s.remove(); };
+        })(i);
+      }
+    }, {passive:true});
+  }
+
+  function boot(){ progress(); scramble(); words(); backdrops(); cursor(); sparks(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
 
 <style id="bq-fx">
 /* Landing polish. Effects rebuilt natively rather than pulled from React Bits: that library is
