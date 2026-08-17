@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786939680";try{console.log("BullQuest build 1786939680");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786939792";try{console.log("BullQuest build 1786939792");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -11699,20 +11699,23 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
       var old = document.getElementById('bqDemoBar'); if (old) old.remove();
       return;
     }
-    if (document.getElementById('bqDemoBar')) return;
     var msg = state.reason === 'no-wallet'
       ? 'Connect the wallet that holds your founder bull to play for real.'
       : 'You are exploring with a sample bull. Nothing here is yours yet.';
     var cta = state.reason === 'no-wallet' ? 'Connect wallet' : 'Get a bull';
-    var bar = document.createElement('div');
-    bar.id = 'bqDemoBar';
+    /* Rebuild the copy every time rather than bailing out when the bar already exists. The reason
+       changes underneath us (no-wallet becomes no-bull the moment a wallet links) and an early
+       return left the old sentence on screen telling holders to connect a wallet they just linked. */
+    var bar = document.getElementById('bqDemoBar');
+    if (!bar) { bar = document.createElement('div'); bar.id = 'bqDemoBar'; document.body.appendChild(bar); }
+    if (bar.dataset.reason === state.reason) return;
+    bar.dataset.reason = state.reason;
     bar.innerHTML = '<div><b>Demo mode</b><span>' + msg + '</span></div>' +
                     '<button type="button" class="go">' + cta + '</button>';
     bar.querySelector('.go').addEventListener('click', function () {
       if (state.reason === 'no-wallet' && window.bqConnectEvm) return window.bqConnectEvm();
       prompt_();
     });
-    document.body.appendChild(bar);
   }
 
   function prompt_() {
