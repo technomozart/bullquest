@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786930443";try{console.log("BullQuest build 1786930443");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786939680";try{console.log("BullQuest build 1786939680");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -11653,6 +11653,119 @@ var DISCORD_CLIENT='1527451236746531068';
   });
   if (document.readyState !== 'loading') setTimeout(paint, 1400);
   else document.addEventListener('DOMContentLoaded', function(){ setTimeout(paint, 1400); });
+})();
+</script>
+
+<style id="bq-demo-mode">
+/* Demo mode: people without a founder bull can walk the whole app, but every real action stops and
+   asks them to get one. Dormant unless the gate is switched on, so today this styles nothing. */
+#bqDemoBar{
+  position:fixed; left:0; right:0; bottom:0; z-index:60;
+  background:linear-gradient(180deg,#12160F,#0A0D08); color:#EAF6EE;
+  border-top:2px solid var(--rh-lime,#CCFF00);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+  display:flex; align-items:center; gap:12px; font-size:13px;
+  box-shadow:0 -8px 24px rgba(4,10,6,.5);
+}
+#bqDemoBar b{display:block;font-size:13.5px}
+#bqDemoBar span{display:block;color:#9FBCA9;font-size:12px;line-height:1.35}
+#bqDemoBar .go{
+  margin-left:auto; flex:none; background:var(--rh-lime,#CCFF00); color:#141711;
+  border:0; border-radius:999px; padding:10px 16px; font-weight:800; font-size:13px;
+  cursor:pointer; font-family:inherit; white-space:nowrap;
+}
+html.bq-demo .nav{ bottom:62px !important; }        /* keep the tab bar clear of the banner */
+html.bq-demo #bqAiBtn{ bottom:132px !important; }
+.bq-demo-tag{
+  display:inline-block; margin-left:6px; padding:2px 7px; border-radius:999px;
+  background:var(--rh-lime,#CCFF00); color:#141711; font-size:10px; font-weight:800;
+  letter-spacing:.04em; text-transform:uppercase; vertical-align:middle;
+}
+</style>
+<script>
+/* ---------- Demo mode ----------
+   Rules that matter more than the feature:
+     1. FAIL OPEN. Any error, any missing config, any network problem and the player plays. A gate
+        that locks people out when it is confused is worse than no gate.
+     2. The server decides. my_nft_access() is the only authority; this just renders its answer.
+     3. Nothing here does anything until the gate is switched on in nft_gate_config. */
+(function () {
+  var state = { allowed: true, enforced: false, reason: 'unknown' };
+  window.bqGate = state;
+
+  function markUp() {
+    document.documentElement.classList.toggle('bq-demo', state.enforced && !state.allowed);
+    if (!(state.enforced && !state.allowed)) {
+      var old = document.getElementById('bqDemoBar'); if (old) old.remove();
+      return;
+    }
+    if (document.getElementById('bqDemoBar')) return;
+    var msg = state.reason === 'no-wallet'
+      ? 'Connect the wallet that holds your founder bull to play for real.'
+      : 'You are exploring with a sample bull. Nothing here is yours yet.';
+    var cta = state.reason === 'no-wallet' ? 'Connect wallet' : 'Get a bull';
+    var bar = document.createElement('div');
+    bar.id = 'bqDemoBar';
+    bar.innerHTML = '<div><b>Demo mode</b><span>' + msg + '</span></div>' +
+                    '<button type="button" class="go">' + cta + '</button>';
+    bar.querySelector('.go').addEventListener('click', function () {
+      if (state.reason === 'no-wallet' && window.bqConnectEvm) return window.bqConnectEvm();
+      prompt_();
+    });
+    document.body.appendChild(bar);
+  }
+
+  function prompt_() {
+    if (document.getElementById('bqDemoModal')) return;
+    var ov = document.createElement('div');
+    ov.id = 'bqDemoModal'; ov.className = 'bqfb-ov';
+    ov.innerHTML = '<div class="bqfb" style="max-width:420px">' +
+      '<div style="text-align:center">' +
+        '<div style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--ot-7c5ce6,#15863B)">DEMO MODE</div>' +
+        '<h3 style="margin:2px 0 6px;font-size:21px">This one needs a founder bull</h3>' +
+        '<p class="sub" style="margin:0 0 14px">You can look around as much as you like. Duelling, the spin, the Gym and the market all need a bull you actually own.</p>' +
+      '</div>' +
+      '<div class="bqfb-actions" style="margin-top:6px">' +
+        '<button type="button" class="cancel" id="bqDemoClose">Keep looking</button>' +
+        '<button type="button" class="send" id="bqDemoBuy">Get a bull</button>' +
+      '</div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click', function (e) { if (e.target === ov) ov.remove(); });
+    ov.querySelector('#bqDemoClose').addEventListener('click', function () { ov.remove(); });
+    ov.querySelector('#bqDemoBuy').addEventListener('click', function () {
+      window.open(window.BQ_MARKET_URL || 'https://bullquest.fun/collection.html', '_blank', 'noopener');
+      ov.remove();
+    });
+  }
+  window.bqDemoPrompt = prompt_;
+
+  /* Capture-phase interception so a demo player never reaches an action that would fail server side
+     anyway. The server is still the real guard; this is only so the refusal is friendly. */
+  var BLOCK = '.cta,[data-duel],[data-spin],[data-gym],[data-buy],[data-sell],#bqSpinBtn,.extraspin,.brename';
+  document.addEventListener('click', function (e) {
+    if (!(state.enforced && !state.allowed)) return;
+    var t = e.target.closest && e.target.closest(BLOCK);
+    if (!t) return;
+    if (t.closest('#bqDemoBar') || t.closest('#bqDemoModal')) return;
+    e.preventDefault(); e.stopPropagation();
+    prompt_();
+  }, true);
+
+  async function refresh() {
+    try {
+      if (!window.bqSb) return;                       // not ready, stay open
+      var r = await window.bqSb.rpc('my_nft_access');
+      var d = r && r.data;
+      if (!d || typeof d.allowed !== 'boolean') return;   // unreadable, stay open
+      state.allowed = d.allowed; state.enforced = !!d.enforced; state.reason = d.reason || '';
+      markUp();
+      document.dispatchEvent(new CustomEvent('bq:gate', { detail: state }));
+    } catch (_e) { /* fail open, deliberately silent */ }
+  }
+  window.bqGateRefresh = refresh;
+  document.addEventListener('bq:evm-linked', refresh);
+  if (document.readyState !== 'loading') setTimeout(refresh, 1800);
+  else document.addEventListener('DOMContentLoaded', function () { setTimeout(refresh, 1800); });
 })();
 </script>
 </body></html>
