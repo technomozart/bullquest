@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786960488";try{console.log("BullQuest build 1786960488");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786965632";try{console.log("BullQuest build 1786965632");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -4497,6 +4497,51 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 <!-- ============================================================= -->
 <!-- VIEW: ONBOARDING                                              -->
 <!-- ============================================================= -->
+<!-- ================= EDITION CHOOSER =================
+     Shown when someone taps Play. Two editions, one database underneath. Classic is the Solana game
+     exactly as it is; Arena is the Robinhood Chain version with the stock marketplace. Names are
+     placeholders and live in one place each so they are cheap to change. -->
+<div class="bq-view" id="view-choose" hidden>
+  <div class="bqch-wrap">
+    <div class="bqch-head">
+      <div class="bqch-kicker">Choose how you play</div>
+      <h1>Two ways into BullQuest</h1>
+      <p>Your account works in both. They keep separate balances, so nothing you have is lost either way.</p>
+    </div>
+    <div class="bqch-grid">
+
+      <article class="bqch-card">
+        <div class="bqch-tag">Original</div>
+        <h2>Classic</h2>
+        <p class="bqch-sub">The game as it is today. Free, no wallet, nothing to buy.</p>
+        <ul class="bqch-list">
+          <li>Free to play, sign in and go</li>
+          <li>Duels, Sector Wars, the Gym, daily spin</li>
+          <li>Your bulls and GRIT are already here</li>
+          <li>Runs on Solana</li>
+        </ul>
+        <button type="button" class="bqch-btn ghost" data-edition="classic">Play Classic</button>
+      </article>
+
+      <article class="bqch-card feature">
+        <div class="bqch-tag lime">New</div>
+        <h2>Stock Arena</h2>
+        <p class="bqch-sub">Fight for GRIT, then exchange it for real tokenized stock.</p>
+        <ul class="bqch-list">
+          <li><b>Trade GRIT for real shares</b> of NVDA, TSLA, AAPL, AMZN, SPY</li>
+          <li>Rewards paid weekly from trading fees</li>
+          <li>Burn $BULL for a real edge in the Arena</li>
+          <li>Runs on Robinhood Chain</li>
+        </ul>
+        <div class="bqch-need">Needs a founder bull. Only 2,000 exist.</div>
+        <button type="button" class="bqch-btn" data-edition="arena">Enter Stock Arena</button>
+      </article>
+
+    </div>
+    <button type="button" class="bqch-back" data-bqgo="view-landing">Back</button>
+  </div>
+</div>
+
 <div class="bq-view" id="view-onboard" hidden>
 <section class="bq-onboard" aria-label="Welcome to BullQuest">
 
@@ -11782,6 +11827,74 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
   document.addEventListener('bq:evm-linked', refresh);
   if (document.readyState !== 'loading') setTimeout(refresh, 1800);
   else document.addEventListener('DOMContentLoaded', function () { setTimeout(refresh, 1800); });
+})();
+</script>
+
+<style id="bq-chooser">
+/* Edition chooser. Arena is deliberately the louder card: it is the one being launched, and a
+   neutral presentation of both would just read as indecision. */
+#view-choose{ min-height:100vh; background:
+  radial-gradient(120% 80% at 78% 12%, rgba(204,255,0,.13), transparent 60%),
+  linear-gradient(165deg,#0C5A27 0%,#07361A 55%,#041F0F 100%); color:#EAF6EE; }
+.bqch-wrap{ max-width:960px; margin:0 auto; padding:44px 20px 70px; }
+.bqch-head{ text-align:center; margin-bottom:26px; }
+.bqch-kicker{ font-size:12px; font-weight:800; letter-spacing:1.3px; text-transform:uppercase;
+  color:var(--rh-lime,#CCFF00); margin-bottom:6px; }
+.bqch-head h1{ margin:0 0 8px; font-size:30px; letter-spacing:-.7px; }
+.bqch-head p{ margin:0; color:#9FBCA9; font-size:14.5px; }
+.bqch-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:stretch; }
+.bqch-card{ position:relative; display:flex; flex-direction:column;
+  background:rgba(255,255,255,.05); border:1px solid rgba(180,255,205,.16);
+  border-radius:20px; padding:24px 22px; }
+.bqch-card.feature{ background:linear-gradient(180deg,rgba(204,255,0,.10),rgba(255,255,255,.04));
+  border:2px solid var(--rh-lime,#CCFF00); box-shadow:0 18px 44px rgba(4,20,10,.5); }
+.bqch-tag{ display:inline-block; align-self:flex-start; font-size:10.5px; font-weight:800;
+  letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:999px;
+  background:rgba(255,255,255,.12); color:#CFE6D6; margin-bottom:12px; }
+.bqch-tag.lime{ background:var(--rh-lime,#CCFF00); color:#141711; }
+.bqch-card h2{ margin:0 0 6px; font-size:24px; letter-spacing:-.5px; }
+.bqch-sub{ margin:0 0 14px; color:#9FBCA9; font-size:14px; line-height:1.45; }
+.bqch-list{ list-style:none; margin:0 0 16px; padding:0; flex:1; }
+.bqch-list li{ position:relative; padding:0 0 9px 22px; font-size:13.5px; line-height:1.45; color:#DCEBE1; }
+.bqch-list li::before{ content:""; position:absolute; left:0; top:6px; width:11px; height:11px;
+  border-radius:50%; background:var(--rh-lime,#CCFF00); }
+.bqch-card:not(.feature) .bqch-list li::before{ background:#4E7A5D; }
+.bqch-need{ font-size:12.5px; color:#141711; background:var(--rh-lime,#CCFF00);
+  border-radius:10px; padding:8px 11px; margin-bottom:14px; font-weight:700; }
+.bqch-btn{ width:100%; border:0; border-radius:14px; padding:15px; font-weight:800; font-size:15.5px;
+  cursor:pointer; font-family:inherit; background:var(--rh-lime,#CCFF00); color:#141711; }
+.bqch-btn.ghost{ background:transparent; color:#EAF6EE; border:1px solid rgba(180,255,205,.35); }
+.bqch-back{ display:block; margin:22px auto 0; background:none; border:0; color:#9FBCA9;
+  font:inherit; font-size:13.5px; cursor:pointer; text-decoration:underline; }
+@media (max-width:760px){ .bqch-grid{ grid-template-columns:1fr; } .bqch-head h1{ font-size:25px; } }
+</style>
+<script>
+/* Play routes to the chooser instead of straight into signup. Remembered per browser, so it is a
+   fork in the road once rather than a toll gate on every visit. */
+(function(){
+  function pick(ed){
+    try{ localStorage.setItem('bq_edition', ed); }catch(e){}
+    if (window.bqSb) { try{ window.bqSb.rpc('set_edition', {p_edition: ed}); }catch(e){} }
+    if (window.bqGo) window.bqGo(window.bqLoggedIn ? 'view-home' : 'view-onboard');
+    if (ed === 'arena') setTimeout(function(){ if (window.bqGateRefresh) window.bqGateRefresh(); }, 400);
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-edition]');
+    if (b){ e.preventDefault(); e.stopPropagation(); pick(b.dataset.edition); return; }
+
+    /* Intercept Play only from the landing page, and only when no edition has been chosen yet.
+       Anywhere else, data-bqgo="view-onboard" still means what it always meant. */
+    var p = e.target.closest && e.target.closest('[data-bqgo="view-onboard"]');
+    if (!p) return;
+    var landing = document.getElementById('view-landing');
+    if (!landing || landing.hidden) return;
+    var chosen = null; try{ chosen = localStorage.getItem('bq_edition'); }catch(e){}
+    if (chosen) return;
+    e.preventDefault(); e.stopPropagation();
+    if (window.bqGo) window.bqGo('view-choose');
+  }, true);
+  window.bqPickEdition = pick;
+  window.bqResetEdition = function(){ try{ localStorage.removeItem('bq_edition'); }catch(e){} };
 })();
 </script>
 </body></html>
