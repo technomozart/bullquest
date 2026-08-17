@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786966352";try{console.log("BullQuest build 1786966352");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786967108";try{console.log("BullQuest build 1786967108");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -4521,6 +4521,23 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
          Classic. This does not move your balance, it grants you a separate one in the new edition.
          You are not choosing between them.</p>
     </section>
+  </div>
+</div>
+
+<!-- ================= STOCK MARKETPLACE (Arena edition) =================
+     Replaces the bull marketplace. Burn Arena GRIT to claim a share of this week's stock purchases.
+     A pool rather than a shop with fixed prices: the treasury spends only what the fees brought in,
+     so it can never owe more than it has, and the rate improves as the token trades more. -->
+<div class="bq-view" id="view-stocks" hidden>
+  <div class="bqst-wrap">
+    <button type="button" class="bqst-back" data-bqback aria-label="Back">&lsaquo; Back</button>
+    <div class="bqst-head">
+      <div class="bqst-kicker">Stock marketplace</div>
+      <h1>Turn GRIT into shares</h1>
+      <p>Burn GRIT this week and take a slice of what the trading fees bought. Real tokenized stock,
+         delivered to the wallet holding your bull.</p>
+    </div>
+    <div id="bqstBody"><p class="bqst-p">Loading&hellip;</p></div>
   </div>
 </div>
 
@@ -12048,6 +12065,184 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
   document.addEventListener('click', function(e){
     if(e.target.closest && e.target.closest('[data-bqgo="view-evaluate"]')) setTimeout(load, 200);
   });
+})();
+</script>
+
+<style id="bq-stocks">
+#view-stocks{ min-height:100vh; background:var(--app-bg,#EDF2EE); color:var(--ink,#1C1F24); }
+.bqst-wrap{ max-width:520px; margin:0 auto; padding:18px 18px 80px; }
+.bqst-back{ background:none; border:0; font:inherit; font-size:14px; font-weight:700;
+  color:var(--body,#5C6674); cursor:pointer; padding:8px 0; }
+.bqst-head{ margin:6px 0 16px; }
+.bqst-kicker{ font-size:11.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase;
+  color:var(--ot-7c5ce6,#15863B); margin-bottom:5px; }
+.bqst-head h1{ margin:0 0 7px; font-size:25px; letter-spacing:-.5px; }
+.bqst-head p{ margin:0; color:var(--body,#5C6674); font-size:14px; line-height:1.5; }
+.bqst-card{ background:var(--white,#fff); border-radius:18px; padding:17px;
+  outline:1px solid var(--edge,rgba(18,40,26,.13)); outline-offset:-1px; margin-bottom:13px; }
+.bqst-card h3{ margin:0 0 8px; font-size:15.5px; }
+.bqst-p{ margin:0; color:var(--body,#5C6674); font-size:13.5px; line-height:1.5; }
+.bqst-pool{ display:flex; gap:10px; }
+.bqst-stat{ flex:1; background:var(--tint-green1,#E9F8EE); border-radius:13px; padding:11px 12px; }
+.bqst-stat b{ display:block; font-size:19px; letter-spacing:-.3px; }
+.bqst-stat span{ display:block; font-size:11px; color:var(--body,#5C6674); margin-top:1px; }
+.bqst-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:9px; margin:4px 0 14px; }
+.bqst-tick{ background:var(--white,#fff); border:2px solid var(--edge,rgba(18,40,26,.13));
+  border-radius:14px; padding:12px 8px; cursor:pointer; font:inherit; text-align:center;
+  transition:border-color .12s ease, transform .12s ease; }
+.bqst-tick b{ display:block; font-size:15px; letter-spacing:-.2px; }
+.bqst-tick span{ display:block; font-size:10.5px; color:var(--body,#5C6674); margin-top:2px; }
+.bqst-tick[aria-pressed="true"]{ border-color:var(--rh-lime,#CCFF00);
+  background:var(--tint-green1,#E9F8EE); transform:translateY(-1px); }
+.bqst-amt{ display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+.bqst-amt input{ flex:1; min-width:0; border:1px solid var(--edge,rgba(18,40,26,.2));
+  border-radius:12px; padding:12px 13px; font:inherit; font-size:15px; font-weight:700;
+  background:var(--white,#fff); color:var(--ink); }
+.bqst-max{ flex:none; border:1px solid var(--edge,rgba(18,40,26,.2)); background:transparent;
+  border-radius:12px; padding:12px 14px; font:inherit; font-weight:800; font-size:13px; cursor:pointer;
+  color:var(--ink); }
+.bqst-btn{ width:100%; border:0; border-radius:14px; padding:15px; font-weight:800; font-size:15px;
+  cursor:pointer; font-family:inherit; background:var(--rh-lime,#CCFF00); color:#141711; }
+.bqst-btn[disabled]{ opacity:.45; cursor:not-allowed; }
+.bqst-note{ background:var(--tint-green1,#E9F8EE); border-radius:12px; padding:11px 13px;
+  font-size:12.5px; line-height:1.45; margin-top:11px; color:var(--body,#5C6674); }
+.bqst-row{ display:flex; align-items:center; gap:10px; padding:9px 0;
+  border-bottom:1px solid var(--hairline,#EDEFF3); font-size:13.5px; }
+.bqst-row:last-child{ border-bottom:0; }
+.bqst-row b{ flex:none; width:52px; }
+.bqst-row .g{ flex:1; color:var(--body,#5C6674); }
+.bqst-row .s{ flex:none; font-size:11.5px; color:var(--body,#5C6674); }
+</style>
+<script>
+/* Stock marketplace. The pool is the honest bit: the page never quotes a fixed price, because the
+   rate genuinely moves as other people enter during the week. It says so rather than hiding it. */
+(function(){
+  var pick = null;
+  function n(v){ return (Number(v)||0).toLocaleString('en-US'); }
+  function money(v){ return '$' + (Number(v)||0).toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2}); }
+
+  function render(d){
+    var box = document.getElementById('bqstBody'); if(!box) return;
+
+    if(!d || d.error === 'not-signed-in'){
+      box.innerHTML = '<section class="bqst-card"><h3>Sign in first</h3>'+
+        '<p class="bqst-p">You need an account to hold GRIT.</p>'+
+        '<button type="button" class="bqst-btn" style="margin-top:12px" data-bqgo="view-onboard">Sign in</button></section>';
+      return;
+    }
+    if(!d.open){
+      box.innerHTML = '<section class="bqst-card"><h3>Opens after the mint</h3>'+
+        '<p class="bqst-p">The marketplace opens once the founder bulls are out and the first week of '+
+        'fees has been collected. Your GRIT keeps building until then.</p>'+
+        '<div class="bqst-pool" style="margin-top:13px"><div class="bqst-stat"><b>'+n(d.balance)+
+        '</b><span>your Arena GRIT</span></div></div></section>';
+      return;
+    }
+
+    var pool = d.pool || {};
+    var rate = pool.rate_per_1000;
+    var stocks = d.stocks || [];
+    if(!pick && stocks.length) pick = stocks[0].symbol;
+
+    box.innerHTML =
+      '<section class="bqst-card">'+
+        '<div class="bqst-pool">'+
+          '<div class="bqst-stat"><b>'+money(pool.funded_usd)+'</b><span>in the pot this week</span></div>'+
+          '<div class="bqst-stat"><b>'+n(pool.total_burned)+'</b><span>GRIT burned so far</span></div>'+
+        '</div>'+
+        '<p class="bqst-p" style="margin-top:11px">'+
+          (rate ? 'Right now that works out at about <b>'+money(rate)+' per 1,000 GRIT</b>.'
+                : 'Nobody has entered yet this week, so there is no rate to show.')+
+          ' This moves as other players enter, and it is settled at the end of the week.</p>'+
+      '</section>'+
+
+      '<section class="bqst-card">'+
+        '<h3>Pick a stock</h3>'+
+        '<div class="bqst-grid">'+
+          stocks.map(function(s){
+            return '<button type="button" class="bqst-tick" data-sym="'+s.symbol+'" aria-pressed="'+
+              (s.symbol===pick)+'"><b>'+s.symbol+'</b><span>'+s.name+'</span></button>';
+          }).join('')+
+        '</div>'+
+        '<h3>How much GRIT</h3>'+
+        '<div class="bqst-amt">'+
+          '<input id="bqstAmt" type="number" inputmode="numeric" min="'+d.min_burn+'" step="100" placeholder="'+d.min_burn+' minimum">'+
+          '<button type="button" class="bqst-max" id="bqstMax">Max</button>'+
+        '</div>'+
+        '<p class="bqst-p" style="margin-bottom:11px">You have <b>'+n(d.balance)+' GRIT</b>. '+
+          'Minimum '+n(d.min_burn)+'. Burned GRIT is gone for good.</p>'+
+        '<button type="button" class="bqst-btn" id="bqstGo">Burn GRIT for '+(pick||'stock')+'</button>'+
+        '<div class="bqst-note">This is a share of a pot, not a fixed price. If lots of people enter '+
+          'this week everyone gets a thinner slice, and if trading is quiet the pot is small. '+
+          'We would rather tell you that than pretend otherwise.</div>'+
+      '</section>'+
+
+      '<section class="bqst-card"><h3>Your entries</h3><div id="bqstMine">'+
+        '<p class="bqst-p">Loading&hellip;</p></div></section>';
+
+    box.querySelectorAll('.bqst-tick').forEach(function(b){
+      b.addEventListener('click', function(){
+        pick = b.dataset.sym;
+        box.querySelectorAll('.bqst-tick').forEach(function(x){ x.setAttribute('aria-pressed', x===b); });
+        var go = document.getElementById('bqstGo');
+        if(go) go.textContent = 'Burn GRIT for ' + pick;
+      });
+    });
+    var mx = document.getElementById('bqstMax');
+    if(mx) mx.addEventListener('click', function(){
+      var i = document.getElementById('bqstAmt'); if(i) i.value = d.balance;
+    });
+    var go = document.getElementById('bqstGo');
+    if(go) go.addEventListener('click', function(){
+      var amt = Number((document.getElementById('bqstAmt')||{}).value || 0);
+      if(!pick){ if(window.bqToast) window.bqToast('Pick a stock first'); return; }
+      if(!(amt >= d.min_burn)){ if(window.bqToast) window.bqToast('Minimum is '+n(d.min_burn)+' GRIT'); return; }
+      if(amt > d.balance){ if(window.bqToast) window.bqToast('You do not have that much GRIT'); return; }
+      go.disabled = true; go.textContent = 'Burning...';
+      window.bqSb.rpc('arena_burn', {p_symbol: pick, p_grit: amt}).then(function(r){
+        var x = r && r.data;
+        if(x && x.ok){ if(window.bqToast) window.bqToast('Burned '+n(x.burned)+' GRIT for '+x.symbol); load(); }
+        else {
+          var m = {'closed':'The marketplace is not open yet.','below-minimum':'That is below the minimum.',
+                   'unknown-stock':'Pick a stock from the list.','insufficient':'You do not have that much GRIT.',
+                   'no-bull':'You need a founder bull to trade here.','not-signed-in':'Sign in first.'};
+          if(window.bqToast) window.bqToast(m[x && x.error] || 'Could not do that, please try again.');
+          go.disabled = false; go.textContent = 'Burn GRIT for ' + pick;
+        }
+      }).catch(function(){ go.disabled = false; go.textContent = 'Burn GRIT for ' + pick; });
+    });
+
+    window.bqSb.rpc('my_arena_burns').then(function(r){
+      var el = document.getElementById('bqstMine'); if(!el) return;
+      var rows = (r && r.data) || [];
+      if(!rows.length){ el.innerHTML = '<p class="bqst-p">Nothing yet this week.</p>'; return; }
+      el.innerHTML = rows.slice(0,12).map(function(x){
+        return '<div class="bqst-row"><b>'+x.symbol+'</b>'+
+          '<span class="g">'+n(x.grit)+' GRIT</span>'+
+          '<span class="s">'+(x.payout_usd ? money(x.payout_usd) : (x.status==='settled' ? 'settled' : 'pending'))+'</span></div>';
+      }).join('');
+    }).catch(function(){});
+  }
+
+  function load(){
+    if(!window.bqSb){ setTimeout(load, 500); return; }
+    window.bqSb.rpc('arena_market_state')
+      .then(function(r){ render(r && r.data); })
+      .catch(function(){ render(null); });
+  }
+  window.bqLoadStocks = load;
+
+  /* In Arena, the Market tab is the stock marketplace. In Classic it stays the bull market. */
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('[data-bqgo="view-market"]');
+    if(!t) return;
+    var ed = 'classic';
+    try{ ed = localStorage.getItem('bq_edition') || 'classic'; }catch(err){}
+    if(ed !== 'arena') return;
+    e.preventDefault(); e.stopPropagation();
+    if(window.bqGo) window.bqGo('view-stocks');
+    setTimeout(load, 120);
+  }, true);
 })();
 </script>
 </body></html>
