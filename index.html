@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786990199";try{console.log("BullQuest build 1786990199");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786992727";try{console.log("BullQuest build 1786992727");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -11560,7 +11560,7 @@ var DISCORD_CLIENT='1527451236746531068';
    HTML file. */
 
 @media (prefers-reduced-motion: reduce){
-  .bq-prog, .bq-aurora, .bq-dots, .bq-cur, .bq-cur-ring { display:none !important; }
+  .bq-prog, .bq-aurora, .bq-dots { display:none !important; }
   .hl::after { animation:none !important; }
   .bq-w { opacity:1 !important; transform:none !important; }
 }
@@ -11610,18 +11610,6 @@ var DISCORD_CLIENT='1527451236746531068';
 
 /* keep real content above the two decorative layers */
 .bq-violet > .wrap, .bq-hero > .wrap, .bq-violet .wrap, .bq-hero .bq-hero-copy{ position:relative; z-index:1; }
-
-/* ---- custom cursor, desktop only --------------------------------------------------------- */
-.bq-cur, .bq-cur-ring{ position:fixed; top:0; left:0; z-index:10001; pointer-events:none;
-  border-radius:50%; opacity:0; transition:opacity .25s ease; }
-.bq-cur{ width:7px; height:7px; margin:-3.5px 0 0 -3.5px; background:#CCFF00;
-  box-shadow:0 0 8px rgba(204,255,0,.9); }
-.bq-cur-ring{ width:30px; height:30px; margin:-15px 0 0 -15px; border:1.5px solid rgba(204,255,0,.62);
-  transition:opacity .25s ease, width .18s ease, height .18s ease, margin .18s ease,
-             border-color .18s ease, background-color .18s ease; }
-body.bq-curon .bq-cur, body.bq-curon .bq-cur-ring{ opacity:1; }
-body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
-  background:rgba(204,255,0,.12); border-color:rgba(204,255,0,.95); }
 
 /* ---- glow border on cards ---------------------------------------------------------------- */
 .bq-card::before{ content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
@@ -11713,32 +11701,6 @@ body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
     });
   }
 
-  /* ---- custom cursor ----------------------------------------------------------------------- */
-  function cursor(){
-    if (touch || reduce || document.getElementById('bqCur')) return;
-    var dot = document.createElement('div'); dot.className = 'bq-cur'; dot.id = 'bqCur';
-    var ring = document.createElement('div'); ring.className = 'bq-cur-ring';
-    dot.setAttribute('aria-hidden','true'); ring.setAttribute('aria-hidden','true');
-    document.body.appendChild(dot); document.body.appendChild(ring);
-    var x = innerWidth/2, y = innerHeight/2, rx = x, ry = y, raf = 0;
-    addEventListener('pointermove', function(e){
-      x = e.clientX; y = e.clientY;
-      document.body.classList.add('bq-curon');
-      dot.style.transform = 'translate3d('+x+'px,'+y+'px,0)';
-      if (!raf) raf = requestAnimationFrame(loop);
-    }, {passive:true});
-    addEventListener('pointerleave', function(){ document.body.classList.remove('bq-curon'); }, {passive:true});
-    function loop(){
-      rx += (x - rx) * 0.18; ry += (y - ry) * 0.18;      // the ring lags, which is the whole effect
-      ring.style.transform = 'translate3d('+rx.toFixed(1)+'px,'+ry.toFixed(1)+'px,0)';
-      raf = (Math.abs(x-rx) > 0.4 || Math.abs(y-ry) > 0.4) ? requestAnimationFrame(loop) : 0;
-    }
-    document.addEventListener('pointerover', function(e){
-      var t = e.target.closest && e.target.closest('a,button,.bq-card,[role="button"],input,select');
-      document.body.classList.toggle('bq-curgrab', !!t);
-    }, {passive:true});
-  }
-
   /* ---- spark burst when the primary CTA is clicked ----------------------------------------- */
   function sparks(){
     if (reduce) return;
@@ -11765,7 +11727,7 @@ body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
     }, {passive:true});
   }
 
-  function boot(){ progress(); words(); backdrops(); cursor(); sparks(); }
+  function boot(){ progress(); words(); backdrops(); sparks(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
@@ -11797,14 +11759,6 @@ body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
 .bq-tick__dot{ width:5px; height:5px; border-radius:50%; background:#CCFF00; flex:none;
   box-shadow:0 0 0 3px rgba(204,255,0,.16); }
 @keyframes bqtick{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
-
-/* ---- cursor spotlight on the hero -------------------------------------------------------- */
-.bq-hero{ position:relative; }
-.bq-hero__spot{ position:absolute; inset:0; pointer-events:none; opacity:0;
-  transition:opacity .35s ease; z-index:0;
-  background:radial-gradient(320px circle at var(--mx,50%) var(--my,40%),
-    rgba(204,255,0,.16), rgba(204,255,0,.05) 45%, transparent 70%); }
-.bq-hero.is-lit .bq-hero__spot{ opacity:1; }
 
 /* ---- card tilt and shine ----------------------------------------------------------------- */
 .bq-card{ transform-style:preserve-3d; transition:transform .18s ease, box-shadow .18s ease;
@@ -11860,28 +11814,6 @@ body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
     // the row is duplicated so the -50% translate loops seamlessly
     el.innerHTML = '<div class="bq-tick__row">'+row+row+'</div>';
     hero.insertAdjacentElement('afterend', el);
-  }
-
-  /* ---- hero cursor spotlight -------------------------------------------------------------- */
-  function spotlight(){
-    var hero = document.querySelector('.bq-hero');
-    if (!hero || touch || reduce) return;
-    var spot = document.createElement('div');
-    spot.className = 'bq-hero__spot';
-    hero.insertBefore(spot, hero.firstChild);
-    var raf = 0, mx = 50, my = 40;
-    hero.addEventListener('pointermove', function(e){
-      var r = hero.getBoundingClientRect();
-      mx = ((e.clientX - r.left) / r.width) * 100;
-      my = ((e.clientY - r.top) / r.height) * 100;
-      if (!raf) raf = requestAnimationFrame(function(){
-        raf = 0;
-        hero.style.setProperty('--mx', mx.toFixed(2)+'%');
-        hero.style.setProperty('--my', my.toFixed(2)+'%');
-      });
-    }, {passive:true});
-    hero.addEventListener('pointerenter', function(){ hero.classList.add('is-lit'); }, {passive:true});
-    hero.addEventListener('pointerleave', function(){ hero.classList.remove('is-lit'); }, {passive:true});
   }
 
   /* ---- card tilt and shine ---------------------------------------------------------------- */
@@ -11977,7 +11909,7 @@ body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
     box.querySelectorAll('b').forEach(function(b){ io.observe(b); });
   }
 
-  function boot(){ ticker(); spotlight(); tilt(); magnetic(); figures(); }
+  function boot(){ ticker(); tilt(); magnetic(); figures(); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
   } else {
