@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786927063";try{console.log("BullQuest build 1786927063");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786929020";try{console.log("BullQuest build 1786929020");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -10206,6 +10206,9 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   (function ready(){
     if(!(window.supabase&&window.supabase.createClient)) return setTimeout(ready,60);
     sb=window.supabase.createClient(URL_,KEY_);
+    /* Exposed so late-loading feature scripts (EVM wallet linking) share this exact client, and
+       therefore this exact session, instead of constructing a second one. */
+    window.bqSb = sb; window.BQ_FN = FN;
     /* Random sign-outs are reported but not reproducible, and the session tables only show the
        aftermath: 26% of refresh tokens revoked, 59 sessions with 4+ revocations, which is what
        refresh-token reuse detection looks like when two tabs race. Record the actual event so the
@@ -11516,6 +11519,96 @@ var DISCORD_CLIENT='1527451236746531068';
     ty = ((e.clientY - r.top)  / r.height - .5) * 12;
     if (!raf) raf = requestAnimationFrame(tick);
   }, {passive:true});
+})();
+</script>
+
+<script>
+/* ---------- MetaMask on Robinhood Chain ----------
+   The wallet ATTACHES to the account you are already signed in to. It is never a login: wallet-first
+   auth is what minted duplicate accounts and duplicate free bulls on the Solana side.
+   Flow: connect, make sure the wallet is on Robinhood Chain, ask the server for a purpose-bound
+   challenge, sign it, and let the edge function recover the signer and store the address. */
+(function () {
+  var CHAIN = {
+    chainId: '0x1237',                                  // 4663
+    chainName: 'Robinhood Chain',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://rpc.mainnet.chain.robinhood.com'],
+    blockExplorerUrls: ['https://robinhoodchain.blockscout.com']
+  };
+  function toast(m){ if (window.bqToast) window.bqToast(m); else if (window.showToast) showToast(m); }
+  function eth(){
+    var p = window.ethereum;
+    if (!p) return null;
+    // With several wallets installed, providers are multiplexed; prefer the real MetaMask.
+    if (p.providers && p.providers.length) {
+      for (var i = 0; i < p.providers.length; i++) if (p.providers[i].isMetaMask) return p.providers[i];
+    }
+    return p;
+  }
+
+  async function ensureChain(p) {
+    try {
+      await p.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CHAIN.chainId }] });
+    } catch (e) {
+      // 4902 means the wallet has never heard of this chain, so offer to add it.
+      if (e && (e.code === 4902 || (e.data && e.data.originalError && e.data.originalError.code === 4902))) {
+        await p.request({ method: 'wallet_addEthereumChain', params: [CHAIN] });
+      } else if (e && e.code === 4001) {
+        throw new Error('__rejected__');
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  window.bqConnectEvm = async function () {
+    var p = eth();
+    if (!p) { toast('No Ethereum wallet found. Install MetaMask, then try again.'); return; }
+    var sb = window.bqSb || (window.supabaseClient || null);
+    try {
+      var accounts = await p.request({ method: 'eth_requestAccounts' });
+      var address = accounts && accounts[0];
+      if (!address) { toast('No account selected in your wallet.'); return; }
+
+      await ensureChain(p);
+
+      if (!sb) { toast('Still loading, try again in a second'); return; }
+      var start = await sb.rpc('evm_link_start');
+      var d = start && start.data;
+      if (!d || d.error) { toast(d && d.error === 'not-signed-in' ? 'Sign in first, then link your wallet.' : 'Could not start linking.'); return; }
+
+      var signature = await p.request({ method: 'personal_sign', params: [d.message, address] });
+
+      var sess = await sb.auth.getSession();
+      var tok = sess && sess.data && sess.data.session && sess.data.session.access_token;
+      var r = await fetch((window.BQ_FN || 'https://cewumdioknvjtsiolxce.supabase.co/functions/v1') + '/link-evm-wallet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (tok || '') },
+        body: JSON.stringify({ nonce: d.nonce, message: d.message, signature: signature, address: address })
+      });
+      var out = await r.json().catch(function () { return {}; });
+
+      if (out && out.ok) {
+        toast('Wallet linked: ' + address.slice(0, 6) + '...' + address.slice(-4));
+        document.dispatchEvent(new CustomEvent('bq:evm-linked', { detail: { address: out.address } }));
+      } else if (out && out.error === 'address-taken') {
+        toast('That wallet is already linked to another account.');
+      } else if (out && out.error === 'expired') {
+        toast('That took too long. Tap connect again.');
+      } else {
+        toast('Could not verify that signature. Please try again.');
+      }
+    } catch (e) {
+      if (e && (e.code === 4001 || e.message === '__rejected__')) toast('Cancelled in your wallet.');
+      else toast('Wallet error. Please try again.');
+    }
+  };
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-evm-connect]');
+    if (t) { e.preventDefault(); window.bqConnectEvm(); }
+  });
 })();
 </script>
 </body></html>
