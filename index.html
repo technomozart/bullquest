@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786983713";try{console.log("BullQuest build 1786983713");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786990199";try{console.log("BullQuest build 1786990199");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -11660,49 +11660,6 @@ body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
     }, {passive:true});
   }
 
-  /* ---- headline scramble, then resolve ---------------------------------------------------
-     Only text nodes are touched, so the inner <span class="hl"> and its shimmer survive. */
-  function scramble(){
-    var h1 = $('.bq-hero h1');
-    if (!h1 || reduce || h1.dataset.scrambled) return;
-    h1.dataset.scrambled = '1';
-    var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ$#%&@0123456789';
-    var nodes = [];
-    (function walk(n){
-      for (var i = 0; i < n.childNodes.length; i++){
-        var c = n.childNodes[i];
-        if (c.nodeType === 3 && c.nodeValue.trim()) nodes.push({node:c, text:c.nodeValue});
-        else if (c.nodeType === 1) walk(c);
-      }
-    })(h1);
-    if (!nodes.length) return;
-    var total = nodes.reduce(function(a,n){ return a + n.text.length; }, 0);
-    var start = 0;
-    function frame(ts){
-      if (!start) start = ts;
-      var k = Math.min(1, (ts - start) / 1100);
-      var revealed = Math.floor(k * total * 1.15);
-      var seen = 0, allDone = true;
-      nodes.forEach(function(rec){
-        var out = '';
-        for (var i = 0; i < rec.text.length; i++){
-          var ch = rec.text[i];
-          if (seen + i < revealed || ch === ' ') out += ch;
-          else { out += GLYPHS[(Math.random() * GLYPHS.length) | 0]; allDone = false; }
-        }
-        rec.node.nodeValue = out;
-        seen += rec.text.length;
-      });
-      if (k < 1 || !allDone) requestAnimationFrame(frame);
-      else nodes.forEach(function(rec){ rec.node.nodeValue = rec.text; });
-    }
-    // Guard: if rAF never runs, restore the real text. Same failure that left the figures on zero.
-    setTimeout(function(){
-      nodes.forEach(function(rec){ rec.node.nodeValue = rec.text; });
-    }, 2200);
-    requestAnimationFrame(frame);
-  }
-
   /* ---- word-by-word reveal on section headings -------------------------------------------- */
   function words(){
     if (reduce || typeof IntersectionObserver === 'undefined') return;
@@ -11808,7 +11765,7 @@ body.bq-curgrab .bq-cur-ring{ width:46px; height:46px; margin:-23px 0 0 -23px;
     }, {passive:true});
   }
 
-  function boot(){ progress(); scramble(); words(); backdrops(); cursor(); sparks(); }
+  function boot(){ progress(); words(); backdrops(); cursor(); sparks(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
