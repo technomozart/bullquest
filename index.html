@@ -1,4 +1,16 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: tokenized stocks, gamified.</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: tokenized stocks, gamified."><meta property="og:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, tokenized stocks gamified"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: tokenized stocks, gamified."><meta name="twitter:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1787004304";try{console.log("BullQuest build 1787004304");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: tokenized stocks, gamified.</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: tokenized stocks, gamified."><meta property="og:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, tokenized stocks gamified"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: tokenized stocks, gamified."><meta name="twitter:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1787005713";try{console.log("BullQuest build 1787005713");}catch(e){}</script><script>
+/* BRAND LOGO. New Robinhood-era mark everywhere, EXCEPT the Classic edition, which is the old
+   game reached by Play now -> old version. Founder, 2026-08-18: change it every fucking where
+   except the old app. Static markup carries the new mark directly; anything rendered from JS
+   that a Classic player can see calls bqLogo(), so the old app keeps the old mark. */
+window.BQ_LOGO     = 'assets/icons/logo-v2.png';
+window.BQ_LOGO_OLD = 'assets/icons/logo.png';
+window.bqLogo = function(){
+  var ed = null; try{ ed = localStorage.getItem('bq_edition'); }catch(e){}
+  return ed === 'classic' ? window.BQ_LOGO_OLD : window.BQ_LOGO;
+};
+</script>
+<script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -2999,7 +3011,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
 <nav class="bq-nav" aria-label="Primary">
   <div class="wrap">
     <a class="bq-logo" href="#top" aria-label="BullQuest home">
-      <img class="glyph" src="assets/icons/logo.png" alt="BullQuest logo">
+      <img class="glyph" src="assets/icons/logo-v2.png" alt="BullQuest logo">
 
       BullQuest
     </a>
@@ -3717,7 +3729,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="bq-logo" href="#top" aria-label="BullQuest home">
-          <img class="glyph" src="assets/icons/logo.png" alt="BullQuest logo">
+          <img class="glyph" src="assets/icons/logo-v2.png" alt="BullQuest logo">
           BullQuest
         </a>
         <p>Tokenized stocks, gamified. Train a bull, win duels, and earn a share of a weekly pot that holds real stock.</p>
@@ -4825,7 +4837,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 
             <circle cx="150" cy="150" r="30" fill="#fff"/>
             <circle cx="150" cy="150" r="30" fill="none" stroke="#F0B429" stroke-width="3"/>
-            <image href="assets/icons/logo.png" x="129" y="129" width="42" height="42"/>
+            <image href="assets/icons/logo-v2.png" x="129" y="129" width="42" height="42"/>
           </g>
         </svg>
 
@@ -6640,7 +6652,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function updateBullsLeft(){ var bl=modal&&modal.querySelector('#bqBullsLeft'); if(!bl||!sb) return; sb.rpc('bulls_remaining').then(function(r){ var n=r&&r.data; if(typeof n!=='number') return; if(n<=0){ closeModal(); showWaitlist(''); } else if(mode==='signup'){ bl.style.display=''; bl.textContent=n.toLocaleString('en-US')+' bulls left in the pool'; } }).catch(function(){}); }
   function showWaitlist(email){
     var el=document.createElement('div'); el.className='bqauth';
-    el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot"><img src="assets/icons/logo.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div><h2>All bulls are claimed</h2><p class="sub">Every bull in the current runs is taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
+    el.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button><div class="bqauth-mascot"><img src="assets/icons/logo-v2.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div><h2>All bulls are claimed</h2><p class="sub">Every bull in the current runs is taken right now. Leave your email and we will tell you the moment more open up.</p><input id="bqWlEmail" type="email" placeholder="you@email.com"><p class="bqauth-err" id="bqWlErr"></p><button class="bqauth-go" id="bqWlGo">Join the waitlist</button></div>';
     document.body.appendChild(el);
     var card=el.querySelector('.bqauth-card'), inp=el.querySelector('#bqWlEmail'); inp.value=email||'';
     el.querySelector('.bqauth-x').addEventListener('click', function(){ el.remove(); });
@@ -6713,7 +6725,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function buildModal(){
     modal=document.createElement('div'); modal.className='bqauth'; modal.hidden=true;
     modal.innerHTML='<div class="bqauth-card"><button class="bqauth-x" aria-label="Close">&times;</button>'
-      +'<div class="bqauth-mascot"><img src="assets/icons/logo.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div>'
+      +'<div class="bqauth-mascot"><img src="assets/icons/logo-v2.png" alt="BullQuest" style="width:48px;height:48px;object-fit:contain;display:block;margin:0 auto"></div>'
       +'<h2 id="bqAuthTitle">Create your account</h2>'
       +'<p class="sub" id="bqAuthSub">Make an account and your bull is ready in about ten seconds.</p>'
       +'<p id="bqBullsLeft" style="margin:-4px 0 10px;font-size:12px;font-weight:800;color:#43C06A;text-align:center;display:none"></p>'
@@ -6972,7 +6984,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         '<div class="bqrev-stage">'+
           '<div class="bqrev-rays" style="background:conic-gradient('+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00)"></div>'+
           '<div class="bqrev-aura" style="background:radial-gradient(circle,'+t.c+'99,'+t.c+'00 70%)"></div>'+
-          '<div class="bqrev-fb" style="background:radial-gradient(circle,'+t.c+'26,'+t.c+'00 72%)"><img src="assets/icons/logo.png" alt="" style="width:58%;height:58%;object-fit:contain"></div>'+
+          '<div class="bqrev-fb" style="background:radial-gradient(circle,'+t.c+'26,'+t.c+'00 72%)"><img src="'+bqLogo()+'" alt="" style="width:58%;height:58%;object-fit:contain"></div>'+
           '<img id="bqRevImg" class="bqrev-bull" alt="" style="display:none">'+
         '</div>'+
         '<div class="bqrev-name">'+nm+'</div>'+
@@ -7090,7 +7102,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         var fh=(labels[0]&&labels[0].querySelector('#filterHint')); if(fh) fh.textContent='';
         if(!rows.length){
           panel.innerHTML='<div style="background:var(--surface);border-radius:20px;padding:26px 20px;box-shadow:0 10px 24px rgba(16,21,18,.08);text-align:center;max-width:420px;margin:0 auto">'+
-            '<div style="width:78px;height:78px;margin:0 auto 8px"><img src="assets/icons/logo.png" alt="" style="width:100%;height:100%;object-fit:contain;opacity:.5"></div>'+
+            '<div style="width:78px;height:78px;margin:0 auto 8px"><img src="'+bqLogo()+'" alt="" style="width:100%;height:100%;object-fit:contain;opacity:.5"></div>'+
             '<div style="font-size:18px;font-weight:800;color:var(--title)">No bulls yet</div>'+
             '<p style="margin:8px 0 16px;font-size:13.5px;color:var(--body2);line-height:1.5">Pick one up from the market to start dueling and earning GRIT.</p>'+
             '<button type="button" class="mkt-more" data-bqgo="view-market" style="border:0;background:linear-gradient(180deg,#15863B,#0D6C2D);color:#fff;font-weight:800;font-size:14px;padding:12px 22px;border-radius:14px;cursor:pointer;font-family:inherit">Browse the market</button></div>';
@@ -8672,7 +8684,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var W=1080,H=1080, c=document.createElement('canvas'); c.width=W;c.height=H; var x=c.getContext('2d');
       var g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,'#0d6c2d'); g.addColorStop(1,'#0F5526'); x.fillStyle=g; x.fillRect(0,0,W,H);
       x.globalAlpha=.10; x.fillStyle='#fff'; x.beginPath(); x.arc(170,170,230,0,7); x.fill(); x.beginPath(); x.arc(950,910,270,0,7); x.fill(); x.globalAlpha=1;
-      var logo=new Image(); logo.crossOrigin='anonymous'; logo.src='assets/icons/logo.png';
+      var logo=new Image(); logo.crossOrigin='anonymous'; logo.src=bqLogo();
       var bull=new Image(); bull.crossOrigin='anonymous'; bull.src=(b.image_url||'').split('?')[0];
       var n=2; logo.onload=r2; logo.onerror=r2; bull.onload=r2; bull.onerror=r2;
       function r2(){ if(--n>0) return; paint(); }
@@ -8724,7 +8736,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       var host=document.getElementById('view-landing')||document.body;
       var bar=document.createElement('div'); bar.id='bqRefBar';
       bar.style.cssText='display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;background:linear-gradient(90deg,#0d6c2d,#0C8E37);color:#fff;padding:11px 34px 11px 16px;font-family:inherit;font-weight:700;font-size:13.5px;text-align:center;position:relative;z-index:60';
-      bar.innerHTML='<span><img src="assets/icons/logo.png" alt="" style="width:16px;height:16px;object-fit:contain;vertical-align:-3px;margin-right:3px"><b>'+safe+'</b> invited you. Start playing, and you both earn bonus GRIT as you play.</span>'+
+      bar.innerHTML='<span><img src="assets/icons/logo-v2.png" alt="" style="width:16px;height:16px;object-fit:contain;vertical-align:-3px;margin-right:3px"><b>'+safe+'</b> invited you. Start playing, and you both earn bonus GRIT as you play.</span>'+
         '<button type="button" id="bqRefBarGo" style="border:0;background:var(--surface);color:var(--ot-6b31e6,#0D6C2D);font-weight:800;font-size:13px;padding:8px 15px;border-radius:12px;cursor:pointer;font-family:inherit;white-space:nowrap">Start playing</button>'+
         '<button type="button" id="bqRefBarX" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:rgba(255,255,255,.90);font-size:19px;line-height:1;cursor:pointer;padding:4px 8px">&times;</button>';
       host.insertBefore(bar, host.firstChild);
@@ -9504,7 +9516,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function pmPages(){ return (pmTotal!=null && pmTotal>0)? Math.max(1, Math.ceil(pmTotal/PM_PAGE)) : 1; }
   function pmTileHtml(l){ var b=l.bulls||{}, t=tier(b.rarity_rank), img=b.image_url||bqMktImg(l.bull_id), bg=PM_TINT[t.c]||'#E7F3EB', mine=(pmMyUid&&l.seller_id===pmMyUid), price=lamToSol(l.price_lamports);
     return '<button type="button" class="bqmkt-tile" data-id="'+l.bull_id+'" style="--rc-bg:'+bg+'" aria-label="Bull #'+l.bull_id+', '+t.l+', '+price+' SOL'+(mine?', your listing':'')+'">'+
-      '<div class="bqmkt-thumb">'+(mine?'<span class="bqmkt-you">Yours</span>':'')+'<img decoding="async" src="'+img+'" alt="Bull #'+l.bull_id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none"><img src="assets/icons/logo.png" alt="" style="width:52%;height:52%;object-fit:contain"></span></div>'+
+      '<div class="bqmkt-thumb">'+(mine?'<span class="bqmkt-you">Yours</span>':'')+'<img decoding="async" src="'+img+'" alt="Bull #'+l.bull_id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none"><img src="'+bqLogo()+'" alt="" style="width:52%;height:52%;object-fit:contain"></span></div>'+
       '<div class="bqmkt-row"><span class="bqmkt-id">#'+l.bull_id+'</span><span class="bqmkt-rar" style="color:'+t.tc+'"><span class="d" style="background:'+t.c+'"></span>'+t.l+'</span></div>'+
       '<div class="bqmkt-rank">'+window.bqGenLabel(b)+' &middot; rank #'+b.rarity_rank+'</div>'+
       '<div class="bqmkt-price buy"><svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h13l-3 4H7z" fill="currentColor" opacity=".9"/><path d="M4 14h13l-3 4H7z" fill="currentColor" opacity=".55"/></svg>'+price+' SOL</div>'+
@@ -9761,7 +9773,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     function priceLabel(b){ var lp=listMap[b.id]; if(lp!=null) return {t:lp+' SOL',c:'buy'}; if(!b.claimed) return {t:(window.bqMkt?window.bqMkt.primaryPriceSol(b.rarity_rank, b.generation):'')+' SOL',c:'buy'}; return {t:'Owned',c:'owned'}; }
     function tileHtml(b){ var t=tier(b.rarity_rank), img=b.image_url||bqMktImg(b.id), bg=TINT[t.c]||'#E7F3EB', p=priceLabel(b);
       return '<button type="button" class="bqmkt-tile" data-id="'+b.id+'" style="--rc-bg:'+bg+'" aria-label="Bull #'+b.id+', '+t.l+', rarity rank '+b.rarity_rank+', '+p.t+'">'+
-        '<div class="bqmkt-thumb"><img class="bqmkt-im" decoding="async" data-src="'+img+'" alt="Bull #'+b.id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none"><img src="assets/icons/logo.png" alt="" style="width:52%;height:52%;object-fit:contain"></span></div>'+
+        '<div class="bqmkt-thumb"><img class="bqmkt-im" decoding="async" data-src="'+img+'" alt="Bull #'+b.id+'" onerror="this.style.display=\'none\';var f=this.parentNode.querySelector(\'.fb\');if(f)f.style.display=\'grid\'"><span class="fb" style="display:none"><img src="'+bqLogo()+'" alt="" style="width:52%;height:52%;object-fit:contain"></span></div>'+
         '<div class="bqmkt-row"><span class="bqmkt-id">#'+b.id+'</span><span class="bqmkt-rar" style="color:'+t.tc+'"><span class="d" style="background:'+t.c+'"></span>'+t.l+'</span></div>'+
         '<div class="bqmkt-rank">'+window.bqGenLabel(b)+' &middot; rank #'+b.rarity_rank+'</div>'+
         '<div class="bqmkt-price '+p.c+'">'+(p.c==='buy'?'<svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h13l-3 4H7z" fill="currentColor" opacity=".9"/><path d="M4 14h13l-3 4H7z" fill="currentColor" opacity=".55"/></svg>':'')+p.t+'</div>'+
@@ -9863,7 +9875,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function showHowTo(){
     var S=function(icon,title,body){ return '<div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid #ECF2EE"><div style="flex:none;width:34px;height:34px;border-radius:12px;background:var(--tint-violet1);display:grid;place-items:center"><i class="pico" style="--m:url(assets/icons/'+icon+'.png);width:18px;height:18px;background:#0D6C2D"></i></div><div><b style="color:var(--title);font-size:14.5px">'+title+'</b><div style="font-size:13px;color:var(--ot-4b4a63,#3D5143);font-weight:500;line-height:1.55;margin-top:2px">'+body+'</div></div></div>'; };
     var c=bqCard('<div class="bqfb" style="max-width:460px;max-height:88vh;overflow:auto">'+
-      '<div style="text-align:center;margin-bottom:8px"><img src="assets/icons/logo.png" alt="BullQuest" style="width:46px;height:46px;object-fit:contain;display:block;margin:0 auto 2px"><h3 style="margin:2px 0 2px">How BullQuest works</h3><p class="sub" style="margin:0">Claim a bull, make it stronger, battle to earn GRIT.</p></div>'+
+      '<div style="text-align:center;margin-bottom:8px"><img src="'+bqLogo()+'" alt="BullQuest" style="width:46px;height:46px;object-fit:contain;display:block;margin:0 auto 2px"><h3 style="margin:2px 0 2px">How BullQuest works</h3><p class="sub" style="margin:0">Claim a bull, make it stronger, battle to earn GRIT.</p></div>'+
       S('gem_grit','The goal','Battle other bulls and finish daily challenges to gather <b>GRIT</b>. When the $BULL token launches your GRIT becomes your airdrop, so gathering now pays off later.')+
       S('nav_bulls','Your bull','<b>Power, Speed, Stamina</b> are its battle stats and <b>Temper</b> is its crit chance. <b>Rarity</b> sets its starting strength, and it <b>levels up</b> automatically as it wins.')+
       S('nav_arena','How a duel works','Pick a <b>Discipline</b> (Clash uses Power, Chase uses Speed, Standoff uses Stamina), then a <b>Stance</b>, which is a blind game of rock, paper, scissors: <b>Charge</b> beats <b>Feint</b>, <b>Feint</b> beats <b>Brace</b>, <b>Brace</b> beats <b>Charge</b>. Rivals are matched near your bull, so skill decides it. Win = GRIT plus 20 XP. A loss costs no GRIT, just the energy you spent.')+
