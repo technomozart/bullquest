@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: tokenized stocks, gamified.</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: tokenized stocks, gamified."><meta property="og:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v5.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, tokenized stocks gamified"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: tokenized stocks, gamified."><meta name="twitter:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v5.png"></head><body><script>window.BQ_BUILD="1787005713";try{console.log("BullQuest build 1787005713");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: tokenized stocks, gamified.</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: tokenized stocks, gamified."><meta property="og:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v5.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, tokenized stocks gamified"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: tokenized stocks, gamified."><meta name="twitter:description" content="BullQuest is a free browser game on Robinhood Chain. Train a bull, win duels, and earn a share of a weekly pot that holds real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v5.png"></head><body><script>window.BQ_BUILD="1787007665";try{console.log("BullQuest build 1787007665");}catch(e){}</script><script>
 /* BRAND LOGO. New Robinhood-era mark everywhere, EXCEPT the Classic edition, which is the old
    game reached by Play now -> old version. Founder, 2026-08-18: change it every fucking where
    except the old app. Static markup carries the new mark directly; anything rendered from JS
@@ -336,7 +336,7 @@ body:has(#view-arena:not([hidden])) #bqFbBtn,
 body:has(#view-arena:not([hidden])) #bqHelpBtn{display:none!important}
 /* Same reasoning for the edition chooser. It is a one-time decision screen shown before the game
    starts, and on a 375px viewport the Feedback pill and the AI launcher sat directly on top of the
-   Stock Arena card, covering the description of the version we most want people to pick. */
+   Robinhood Arena card, covering the description of the version we most want people to pick. */
 body:has(#view-choose:not([hidden])) #bqAiBtn,
 body:has(#view-choose:not([hidden])) #bqFbBtn,
 body:has(#view-choose:not([hidden])) #bqHelpBtn{display:none!important}
@@ -4549,39 +4549,63 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     <div class="bqch-head">
       <div class="bqch-kicker">Choose how you play</div>
       <h1>Two ways into BullQuest</h1>
-      <p>Your account works in both. They keep separate balances, so nothing you have is lost either way.</p>
+      <p>One account works in both. They keep separate GRIT balances, so nothing you already have is lost.</p>
     </div>
     <div class="bqch-grid">
 
       <article class="bqch-card">
-        <div class="bqch-tag">Original</div>
+        <div class="bqch-tag">The old version</div>
         <h2>Classic</h2>
-        <p class="bqch-sub">The game exactly as it is today, kept running for the players already here.</p>
+        <p class="bqch-sub">This is BullQuest as it was <b>before Robinhood Chain</b>. It is still running,
+           and it is where the players who were already here keep playing.</p>
         <ul class="bqch-list">
-          <li>Nothing changes, sign in and carry on</li>
-          <li>Duels, Sector Wars, the Gym, daily spin</li>
-          <li>Your bulls and GRIT are already here</li>
-          <li>Runs on Solana</li>
+          <li>The original bulls live here. They are <b>not NFTs</b> and are not being minted</li>
+          <li>Everything still works: duels, Sector Wars, the Gym, the daily spin</li>
+          <li>Your existing bulls and GRIT are already in here, untouched</li>
+          <li>Runs on Solana and earns GRIT only. No stock rewards</li>
+          <li>You can carry your GRIT over to Robinhood Arena later at about <b>10 to 1</b>,
+              once you hold a Genesis Bull</li>
         </ul>
+        <div class="bqch-note">Played BullQuest before Robinhood? This is where your account already is.</div>
         <button type="button" class="bqch-btn ghost" data-edition="classic">Play Classic</button>
       </article>
 
       <article class="bqch-card feature">
         <div class="bqch-tag lime">New</div>
-        <h2>Stock Arena</h2>
-        <p class="bqch-sub">Fight for GRIT, then exchange it for real tokenized stock.</p>
+        <h2>Robinhood Arena</h2>
+        <p class="bqch-sub">The new version. Win GRIT in the game, then exchange it for
+           <b>real tokenized shares</b>.</p>
         <ul class="bqch-list">
-          <li><b>Trade GRIT for real shares</b> of NVDA, TSLA, AAPL, AMZN, SPY</li>
-          <li>Rewards paid weekly from trading fees</li>
-          <li>Bring your Classic GRIT across once you hold a Genesis Bull</li>
-          <li>Runs on Robinhood Chain</li>
+          <li>Exchange GRIT for shares of <b>NVDA, TSLA, AAPL, AMZN and SPY</b></li>
+          <li>Rewards are paid weekly out of trading fees</li>
+          <li><b>New here?</b> Start straight in this one, no history needed</li>
+          <li><b>Coming from Classic?</b> Bring your GRIT across at about 10 to 1</li>
+          <li>Runs on Robinhood Chain, and you connect with MetaMask</li>
         </ul>
-        <div class="bqch-need">Needs a Genesis Bull. Only 2,000 exist.</div>
-        <button type="button" class="bqch-btn" data-edition="arena">Enter Stock Arena</button>
+        <div class="bqch-need">You need a Genesis Bull to play. Only 2,000 will ever exist,
+          and you buy one on OpenSea.</div>
+        <button type="button" class="bqch-btn" data-edition="arena">Enter Robinhood Arena</button>
       </article>
 
     </div>
-    <button type="button" class="bqch-back" data-bqgo="view-landing">Back</button>
+    <div class="bqch-how">
+      <div class="bqch-how-t">How Robinhood Arena works, in three steps</div>
+      <div class="bqch-how-g">
+        <div class="bqch-step"><span class="n">1</span>
+          <b>Get a Genesis Bull</b>
+          <span>Buy one on OpenSea. It is the key to the new version, and only 2,000 will ever exist.</span></div>
+        <div class="bqch-step"><span class="n">2</span>
+          <b>Connect MetaMask</b>
+          <span>We check on chain that your wallet really holds a bull. We never ask for a seed phrase.</span></div>
+        <div class="bqch-step"><span class="n">3</span>
+          <b>Play, then take stock</b>
+          <span>Win duels for GRIT, then exchange it for real shares out of the weekly pot.</span></div>
+      </div>
+    </div>
+    <button type="button" class="bqch-back" data-bqgo="view-landing">
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 8 12l6.5 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to the site
+    </button>
   </div>
 </div>
 
@@ -4681,25 +4705,38 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
         </button>
       </div>
 
-      <div class="or">or use a wallet</div>
+      <div class="or ord-sol">or use a wallet</div>
 
-      <button type="button" class="secondary" data-wallet="auto" aria-label="Connect a Solana wallet">
-        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a3 3 0 0 1 3-3h11a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="13" r="1.6" fill="currentColor"/></svg>
-        Connect a Solana wallet
-      </button>
+      <div class="solwrap">
+        <button type="button" class="secondary" data-wallet="auto" aria-label="Connect a Solana wallet">
+          <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a3 3 0 0 1 3-3h11a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="13" r="1.6" fill="currentColor"/></svg>
+          Connect a Solana wallet
+        </button>
+        <p class="solnote">For players moving over from the old app. Your Solana wallet is how we
+          recognise the account you already had. It is not what gets you into Robinhood Arena.</p>
+      </div>
 
-      <!-- MetaMask on Robinhood Chain, right beside the Solana option, because this is the screen
-           people actually reach for a wallet on. -->
-      <button type="button" class="secondary" data-evm-connect aria-label="Connect MetaMask on Robinhood Chain" style="margin-top:10px">
-        <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 4L13.4 9.2l1.3-3.1z" fill="#E2761B"/><path d="M3.5 4l7 5.3-1.2-3.2z" fill="#E4761B"/><path d="M18 15.4l-1.9 2.9 4.1 1.1 1.2-3.9zM2.6 15.5l1.2 3.9 4.1-1.1-1.9-2.9z" fill="#E4761B"/><path d="M7.7 11l-1.1 1.8 4 .2-.1-4.4zM16.3 11l-2.9-2.5-.1 4.5 4-.2zM7.9 18.3l2.5-1.2-2.1-1.7zM13.6 17.1l2.5 1.2-.4-2.9z" fill="#E4761B"/></svg>
+      <!-- MetaMask is the FIRST thing in Robinhood Arena, because holding a Genesis Bull is the
+           entry requirement and nothing else on this screen gets you in. Founder, 2026-08-18:
+           "bring metamask all the way up". CSS `order` does the moving, per edition. -->
+      <div class="mmwrap">
+        <div class="mmlead">
+          <b>You need a Genesis Bull to play Robinhood Arena.</b>
+          <span>Connect MetaMask and we check on chain that your wallet holds one. We never ask for
+            a seed phrase and we cannot move your funds.</span>
+        </div>
+      <button type="button" class="secondary mmbtn" data-evm-connect aria-label="Connect MetaMask on Robinhood Chain">
+        <svg width="20" height="20" viewBox="0 0 34 32" aria-hidden="true"><path d="M32.0 1.0 19.1 10.5l2.4-5.6z" fill="#E17726"/><path d="M2.0 1.0l12.8 9.6-2.3-5.7zM27.3 22.1l-3.4 5.2 7.3 2 2.1-7.1zM0.8 22.2l2.1 7.1 7.3-2-3.4-5.2z" fill="#E27625"/><path d="M9.8 14.0 7.7 17.2l7.2.3-.2-7.8zM24.2 14.0l-7.0-4.4-.2 7.9 7.2-.3zM10.2 27.3l4.4-2.1-3.8-2.9zM19.4 25.2l4.4 2.1-.6-5.0z" fill="#E27625"/><path d="M23.8 27.3l-4.4-2.1.4 2.9v1.2zM10.2 27.3l4.0 2.0v-1.2l.4-2.9z" fill="#D5BFB2"/><path d="M14.3 20.8l-3.6-1.1 2.6-1.2zM19.7 20.8l1.0-2.3 2.6 1.2z" fill="#233447"/><path d="M10.2 27.3l.7-5.2-4.1.1zM23.1 22.1l.7 5.2 3.5-5.1zM26.3 17.2l-7.2.3.7 3.3 1.0-2.3 2.6 1.2zM10.7 19.7l2.6-1.2 1.0 2.3.7-3.3-7.2-.3z" fill="#CC6228"/><path d="M7.7 17.2l3.0 5.9-.1-2.9zM23.4 20.2l-.1 2.9 3.0-5.9zM14.9 17.5l-.7 3.3.9 4.5.2-5.9zM19.1 17.5l-.4 1.9.2 5.9.9-4.5z" fill="#E27525"/><path d="M19.8 20.8l-.9 4.5.6.5 3.8-2.9.1-2.9zM10.7 19.7l.1 2.9 3.8 2.9.6-.5-.9-4.5z" fill="#F5841F"/><path d="M19.9 29.3v-1.2l-.3-.3h-5.2l-.3.3v1.2l-4.0-2.0 1.4 1.1 2.8 2.0h5.3l2.8-2.0 1.4-1.1z" fill="#C0AC9D"/><path d="M19.4 25.2l-.6-.5h-3.6l-.6.5-.4 2.9.3-.3h5.2l.3.3z" fill="#161616"/><path d="M32.5 11.1 33.6 5.8 32.0 1.0l-12.1 9.0 4.7 3.9 6.6 1.9 1.4-1.7-.6-.5 1.0-.9-.8-.6 1.0-.8zM0.4 5.8l1.1 5.3-.7.5 1.0.8-.8.6 1.0.9-.6.5 1.4 1.7 6.6-1.9 4.7-3.9L2.0 1.0z" fill="#763E1A"/><path d="M31.2 15.8l-6.6-1.9 2.0 3.0-3.0 5.9 3.9-.1h5.9zM9.4 13.9l-6.6 1.9-2.2 6.9h5.9l3.9.1-3.0-5.9zM19.1 17.5l.4-7.3 1.9-5.1h-8.5l1.9 5.1.4 7.3.2 2.3v5.9h3.6v-5.9z" fill="#F5841F"/></svg>
         Connect MetaMask
       </button>
+        <a class="mmbuy" href="collection.html" target="_blank" rel="noopener">No Genesis Bull yet? See the collection</a>
+      </div>
 
       <div class="wallets" aria-label="Supported wallets: Phantom, Solflare, Backpack, MetaMask">
         <button type="button" class="wchip" data-wallet="phantom" aria-label="Connect with Phantom"><span class="wd" style="background:#15863B"></span>Phantom</button>
         <button type="button" class="wchip" data-wallet="solflare" aria-label="Connect with Solflare"><span class="wd" style="background:#F5A623"></span>Solflare</button>
         <button type="button" class="wchip" data-wallet="backpack" aria-label="Connect with Backpack"><span class="wd" style="background:#EE5B62"></span>Backpack</button>
-        <button type="button" class="wchip" data-evm-connect aria-label="Connect with MetaMask"><span class="wd" style="background:#E2761B"></span>MetaMask</button>
+        <button type="button" class="wchip" data-evm-connect aria-label="Connect with MetaMask"><span class="wd wd-mm" aria-hidden="true"></span>MetaMask</button>
       </div>
 
       <p class="wallet-safe">Optional, for crypto users. We never ask for your seed phrase and can't move your funds.</p>
@@ -4709,7 +4746,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <span class="ck" aria-hidden="true">
         <svg width="15" height="15" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
-      <p>Your first bull is on the house. <span>No wallet or crypto experience needed.</span></p>
+      <p id="bqOnbReassure">Sign in, train your bull and climb. <span>Your progress is saved to your account.</span></p>
     </div>
 
     <p class="legal">
@@ -12190,26 +12227,27 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
 #view-choose{ min-height:100vh; background:
   radial-gradient(120% 80% at 78% 12%, rgba(204,255,0,.13), transparent 60%),
   linear-gradient(165deg,#0C5A27 0%,#07361A 55%,#041F0F 100%); color:#EAF6EE; }
-.bqch-wrap{ max-width:960px; margin:0 auto; padding:44px 20px 70px; }
-.bqch-head{ text-align:center; margin-bottom:26px; }
+.bqch-wrap{ max-width:1060px; margin:0 auto; padding:40px 22px 56px;
+  min-height:100vh; display:flex; flex-direction:column; justify-content:center; }
+.bqch-head{ text-align:center; margin-bottom:30px; }
 .bqch-kicker{ font-size:12px; font-weight:800; letter-spacing:1.3px; text-transform:uppercase;
   color:var(--rh-lime,#CCFF00); margin-bottom:6px; }
-.bqch-head h1{ margin:0 0 8px; font-size:30px; letter-spacing:-.7px; }
-.bqch-head p{ margin:0; color:#9FBCA9; font-size:14.5px; }
-.bqch-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:stretch; }
+.bqch-head h1{ margin:0 0 9px; font-size:34px; letter-spacing:-.8px; }
+.bqch-head p{ margin:0 auto; max-width:640px; color:#B7D2C0; font-size:15.5px; line-height:1.5; }
+.bqch-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:stretch; }
 .bqch-card{ position:relative; display:flex; flex-direction:column;
   background:rgba(255,255,255,.05); border:1px solid rgba(180,255,205,.16);
-  border-radius:20px; padding:24px 22px; }
+  border-radius:22px; padding:30px 28px; }
 .bqch-card.feature{ background:linear-gradient(180deg,rgba(204,255,0,.10),rgba(255,255,255,.04));
   border:2px solid var(--rh-lime,#CCFF00); box-shadow:0 18px 44px rgba(4,20,10,.5); }
 .bqch-tag{ display:inline-block; align-self:flex-start; font-size:10.5px; font-weight:800;
   letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:999px;
   background:rgba(255,255,255,.12); color:#CFE6D6; margin-bottom:12px; }
 .bqch-tag.lime{ background:var(--rh-lime,#CCFF00); color:#141711; }
-.bqch-card h2{ margin:0 0 6px; font-size:24px; letter-spacing:-.5px; }
-.bqch-sub{ margin:0 0 14px; color:#9FBCA9; font-size:14px; line-height:1.45; }
+.bqch-card h2{ margin:0 0 8px; font-size:29px; letter-spacing:-.6px; }
+.bqch-sub{ margin:0 0 16px; color:#B7D2C0; font-size:15px; line-height:1.5; }
 .bqch-list{ list-style:none; margin:0 0 16px; padding:0; flex:1; }
-.bqch-list li{ position:relative; padding:0 0 9px 22px; font-size:13.5px; line-height:1.45; color:#DCEBE1; }
+.bqch-list li{ position:relative; padding:0 0 11px 24px; font-size:14.5px; line-height:1.5; color:#DCEBE1; }
 .bqch-list li::before{ content:""; position:absolute; left:0; top:6px; width:11px; height:11px;
   border-radius:50%; background:var(--rh-lime,#CCFF00); }
 .bqch-card:not(.feature) .bqch-list li::before{ background:#4E7A5D; }
@@ -12218,9 +12256,26 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
 .bqch-btn{ width:100%; border:0; border-radius:14px; padding:15px; font-weight:800; font-size:15.5px;
   cursor:pointer; font-family:inherit; background:var(--rh-lime,#CCFF00); color:#141711; }
 .bqch-btn.ghost{ background:transparent; color:#EAF6EE; border:1px solid rgba(180,255,205,.35); }
-.bqch-back{ display:block; margin:22px auto 0; background:none; border:0; color:#9FBCA9;
-  font:inherit; font-size:13.5px; cursor:pointer; text-decoration:underline; }
-@media (max-width:760px){ .bqch-grid{ grid-template-columns:1fr; } .bqch-head h1{ font-size:25px; } }
+.bqch-note{ font-size:13px; color:#A9C7B4; background:rgba(255,255,255,.06);
+  border:1px solid rgba(180,255,205,.14); border-radius:10px; padding:9px 11px; margin-bottom:14px; }
+.bqch-how{ margin:30px auto 0; width:100%; }
+.bqch-how-t{ text-align:center; font-size:12px; font-weight:800; letter-spacing:1.2px;
+  text-transform:uppercase; color:var(--rh-lime,#CCFF00); margin-bottom:14px; }
+.bqch-how-g{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.bqch-step{ background:rgba(255,255,255,.045); border:1px solid rgba(180,255,205,.13);
+  border-radius:16px; padding:16px 18px; }
+.bqch-step .n{ display:grid; place-items:center; width:26px; height:26px; border-radius:50%;
+  background:var(--rh-lime,#CCFF00); color:#141711; font-size:13px; font-weight:800; margin-bottom:9px; }
+.bqch-step b{ display:block; font-size:15px; margin-bottom:4px; }
+.bqch-step span:not(.n){ display:block; font-size:13.5px; line-height:1.5; color:#A9C7B4; }
+.bqch-back{ display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  margin:30px auto 0; padding:12px 22px; border-radius:999px; cursor:pointer; font:inherit;
+  font-size:14.5px; font-weight:700; color:#DCEBE1; background:rgba(255,255,255,.07);
+  border:1px solid rgba(180,255,205,.28); transition:background .15s ease; }
+.bqch-back:hover{ background:rgba(255,255,255,.14); }
+@media (max-width:760px){ .bqch-grid{ grid-template-columns:1fr; } .bqch-head h1{ font-size:26px; }
+  .bqch-how-g{ grid-template-columns:1fr; } .bqch-card{ padding:24px 20px; }
+  .bqch-wrap{ min-height:0; display:block; padding:34px 18px 60px; } }
 </style>
 <script>
 /* Play routes to the chooser instead of straight into signup. Remembered per browser, so it is a
@@ -12252,6 +12307,165 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
 })();
 </script>
 
+
+<style id="bq-onboard-arena">
+/* =====================================================================
+   ROBINHOOD ARENA ONBOARDING.
+   One shared signup screen serves both editions. When the player picked
+   Robinhood Arena we add .ed-arena and the screen becomes what that
+   edition actually needs: MetaMask first, Solana last with a note saying
+   it is only for people migrating, and no talk of a free anything.
+   Founder, 2026-08-18: "bring metamask all the way up", "move solana all
+   the way down", "nobody is telling those players what to do".
+   ===================================================================== */
+.bq-onboard .card{ display:flex; flex-direction:column; }
+.bq-onboard .mmwrap, .bq-onboard .solwrap{ display:contents; }
+
+/* MetaMask block, only ever loud in Arena */
+.bq-onboard .mmlead{ display:none; }
+.bq-onboard .mmbuy{ display:none; }
+.bq-onboard .mmbtn{ margin-top:10px; }
+.bq-onboard .solnote{ display:none; }
+/* the wallet chip row: MetaMask gets the fox, not a brown dot */
+.bq-onboard .wd-mm{ background:#F6851B url("assets/icons/wallet_metamask.png") center/86% no-repeat; }
+
+
+.bq-onboard.ed-arena .mmwrap, .bq-onboard.ed-arena .solwrap{ display:block; }
+.bq-onboard.ed-arena .mmwrap{ order:-2; margin-bottom:14px; }
+.bq-onboard.ed-arena .mmlead{ display:block; background:#F2FBF4; border:1px solid #CDEBD6;
+  border-radius:14px; padding:12px 13px; margin-bottom:11px; }
+.bq-onboard.ed-arena .mmlead b{ display:block; font-size:14.5px; color:var(--ink); margin-bottom:4px; }
+.bq-onboard.ed-arena .mmlead span{ display:block; font-size:12.8px; line-height:1.5; color:var(--body); }
+.bq-onboard.ed-arena .mmbtn{ margin-top:0; background:#F6851B; border-color:#F6851B; color:#fff; font-weight:800; }
+.bq-onboard.ed-arena .mmbtn:hover{ background:#E2761B; border-color:#E2761B; }
+.bq-onboard.ed-arena .mmbuy{ display:block; text-align:center; margin-top:9px; font-size:12.5px;
+  font-weight:700; color:var(--green-text,#1B7A3E); }
+.bq-onboard.ed-arena .ord-acct{ order:-1; }
+.bq-onboard.ed-arena #bqGoogleEntry{ order:0; }
+.bq-onboard.ed-arena #bqTgEntry{ order:1; }
+.bq-onboard.ed-arena .cta[data-entry="email"]{ order:2; }
+.bq-onboard.ed-arena .guest-wrap{ order:3; }
+.bq-onboard.ed-arena .ord-sol{ order:8; }
+.bq-onboard.ed-arena .solwrap{ order:9; }
+.bq-onboard.ed-arena .wallets{ order:10; }
+.bq-onboard.ed-arena .wallet-safe{ order:11; }
+.bq-onboard.ed-arena .solnote{ display:block; margin:8px 2px 0; font-size:12.3px; line-height:1.5;
+  color:var(--faint); }
+
+/* Arena does not hand anybody a bull, so the 3-step "Collect" teaser and the big mascot are
+   just length. Cutting them is most of the fix for "this screen is super long". */
+.bq-onboard.ed-arena .steps{ display:none; }
+.bq-onboard.ed-arena .mascot-wrap img{ max-height:120px !important; }
+.bq-onboard.ed-arena .hero{ padding:26px 22px 30px; }
+.bq-onboard.ed-arena .mascot-wrap{ margin-bottom:6px; }
+
+/* the arrival explainer */
+.bqarn-ov{ position:fixed; inset:0; z-index:10050; background:rgba(8,20,12,.62);
+  display:grid; place-items:center; padding:18px; }
+.bqarn{ background:#fff; border-radius:22px; max-width:400px; width:100%; padding:22px 20px 18px;
+  box-shadow:0 26px 70px rgba(6,18,10,.4); font-family:system-ui,"Segoe UI",Roboto,sans-serif; }
+.bqarn h3{ margin:10px 0 6px; font-size:20px; color:#1C1F24; text-align:center; letter-spacing:-.3px; }
+.bqarn .lede{ margin:0 0 15px; font-size:13.6px; line-height:1.55; color:#667080; text-align:center; }
+.bqarn .row{ display:flex; gap:11px; padding:10px 0; border-top:1px solid #EDEFF3; }
+.bqarn .row:first-of-type{ border-top:0; }
+.bqarn .row .n{ flex:none; display:grid; place-items:center; width:25px; height:25px; border-radius:50%;
+  background:#0D6C2D; color:#fff; font-size:12.5px; font-weight:800; }
+.bqarn .row b{ display:block; font-size:14px; color:#1C1F24; margin-bottom:2px; }
+.bqarn .row span{ display:block; font-size:12.7px; line-height:1.5; color:#667080; }
+.bqarn .go{ width:100%; margin-top:14px; border:0; border-radius:14px; padding:14px;
+  background:#F6851B; color:#fff; font:inherit; font-size:15px; font-weight:800; cursor:pointer; }
+.bqarn .go:hover{ background:#E2761B; }
+.bqarn .skip{ display:block; width:100%; margin-top:8px; background:none; border:0; cursor:pointer;
+  font:inherit; font-size:13px; color:#667080; text-decoration:underline; }
+.bqarn .logo{ display:block; width:52px; height:52px; margin:0 auto; }
+</style>
+<script>
+/* Robinhood Arena onboarding. Three jobs:
+   1. tag the signup screen with the edition so the CSS above can reorder it
+   2. tell an arriving player what is actually being asked of them, once
+   3. make the MetaMask button work from a signed-out state instead of toasting
+      "sign in first", which is the dead end the founder ran into */
+(function(){
+  function ed(){ try{ return localStorage.getItem('bq_edition') || ''; }catch(e){ return ''; } }
+  var ob = null;
+  function shell(){ return ob || (ob = document.querySelector('.bq-onboard')); }
+
+  function markEdition(){
+    var el = shell(); if (!el) return;
+    var arena = ed() === 'arena';
+    el.classList.toggle('ed-arena', arena);
+    var h = el.querySelector('.headline'), sub = el.querySelector('.subhead'),
+        re = el.querySelector('#bqOnbReassure');
+    if (arena){
+      if (h)   h.textContent = 'Welcome to Robinhood Arena';
+      if (sub) sub.textContent = 'Hold a Genesis Bull, connect MetaMask, then play for real stock.';
+      if (re)  re.innerHTML = 'A Genesis Bull and a MetaMask wallet are required. <span>We only read your address to check ownership.</span>';
+    }
+  }
+
+  var SEEN = 'bq_arena_intro_v1';
+  function intro(force){
+    if (!force){ try{ if (localStorage.getItem(SEEN)) return; }catch(e){} }
+    if (document.querySelector('.bqarn-ov')) return;
+    var ov = document.createElement('div'); ov.className = 'bqarn-ov';
+    ov.innerHTML =
+      '<div class="bqarn" role="dialog" aria-modal="true" aria-label="How to get into Robinhood Arena">'+
+      '<img class="logo" src="' + (window.BQ_LOGO || 'assets/icons/logo-v2.png') + '" alt="">'+
+      '<h3>Getting into Robinhood Arena</h3>'+
+      '<p class="lede">This version is for Genesis Bull holders. Here is the whole thing, three steps.</p>'+
+      '<div class="row"><span class="n">1</span><div><b>Create your account</b>'+
+        '<span>Google, Telegram or email. This is what your progress is saved to.</span></div></div>'+
+      '<div class="row"><span class="n">2</span><div><b>Connect MetaMask</b>'+
+        '<span>We read your address and check on chain that it holds a Genesis Bull. '+
+        'We never ask for a seed phrase and cannot move your funds.</span></div></div>'+
+      '<div class="row"><span class="n">3</span><div><b>Play, then take real stock</b>'+
+        '<span>Win duels for GRIT, then exchange it for shares of NVDA, TSLA, AAPL, AMZN and SPY.</span></div></div>'+
+      '<button type="button" class="go">Got it, let me in</button>'+
+      '<button type="button" class="skip">I do not have a Genesis Bull yet</button>'+
+      '</div>';
+    document.body.appendChild(ov);
+    try{ localStorage.setItem(SEEN, '1'); }catch(e){}
+    ov.querySelector('.go').addEventListener('click', function(){ ov.remove(); });
+    ov.querySelector('.skip').addEventListener('click', function(){
+      window.open('collection.html', '_blank', 'noopener'); ov.remove();
+    });
+    ov.addEventListener('click', function(e){ if (e.target === ov) ov.remove(); });
+  }
+  window.bqArenaIntro = intro;
+
+  /* fire whenever the signup screen becomes visible */
+  function onShow(){
+    var v = document.getElementById('view-onboard');
+    if (!v || v.hidden) return;
+    markEdition();
+    if (ed() === 'arena') setTimeout(function(){ intro(false); }, 450);
+  }
+  document.addEventListener('click', function(e){
+    if (e.target.closest && (e.target.closest('[data-edition]') || e.target.closest('[data-bqgo="view-onboard"]')))
+      setTimeout(onShow, 260);
+  });
+  if (document.readyState !== 'loading') setTimeout(onShow, 700);
+  else document.addEventListener('DOMContentLoaded', function(){ setTimeout(onShow, 700); });
+
+  /* MetaMask from a signed-out state. evm_link_start needs an account, so instead of dead-ending
+     on "sign in first", open the account step and resume the wallet connect once they are in. */
+  var RESUME = 'bq_evm_after_auth';
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('[data-evm-connect]');
+    if (!t) return;
+    if (window.bqLoggedIn) return;                  // normal path, the existing handler runs
+    e.preventDefault(); e.stopImmediatePropagation();
+    try{ sessionStorage.setItem(RESUME, '1'); }catch(_){}
+    if (window.bqOpenAuth) window.bqOpenAuth();
+  }, true);
+  document.addEventListener('bq:gate', function(){
+    var want = null; try{ want = sessionStorage.getItem(RESUME); }catch(_){}
+    if (!want || !window.bqLoggedIn) return;
+    try{ sessionStorage.removeItem(RESUME); }catch(_){}
+    setTimeout(function(){ if (window.bqConnectEvm) window.bqConnectEvm(); }, 500);
+  });
+})();
+</script>
 <style id="bq-evaluate">
 #view-evaluate{ min-height:100vh; background:var(--app-bg,#EDF2EE); color:var(--ink,#1C1F24); }
 .bqev-wrap{ max-width:520px; margin:0 auto; padding:18px 18px 70px; }
