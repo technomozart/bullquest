@@ -1,0 +1,6 @@
+BullQuest Founder Bulls
+supply: 2000 (token ids 1-2000)
+source: generation 1, rarity_rank 1-2000
+token order: md5('bullquest-robinhood-v1:' || bull_id) ascending
+sha256 of token_id:bull_id pairs in token order:
+6c389a31e794cc48dcf46c509f43cb81c0a7daa216b0a0ce467a73d9a94c5151

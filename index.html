@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786929116";try{console.log("BullQuest build 1786929116");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: collect, train, charge. Own the bull market.</title><meta name="theme-color" content="#6B31E6"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a free-to-play bull game. Claim a free bull, train it through quests and duels, and charge into the Arena."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: collect, train, charge. Own the bull market."><meta property="og:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v4.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, own the bull market"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: collect, train, charge. Own the bull market."><meta name="twitter:description" content="A free-to-play bull game on Solana. Claim a free Genesis bull, win skill-based Arena duels, and charge for the bull market."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v4.png"></head><body><script>window.BQ_BUILD="1786929524";try{console.log("BullQuest build 1786929524");}catch(e){}</script><script>
 /* THE DISCORD INVITE LIVES HERE AND NOWHERE ELSE.
    To point at a new invite, change this one line. Static markup is rewritten at startup by
    bqFixDiscordLinks(), and anything rendered later reads window.BQ_DISCORD directly. This exists
@@ -4927,6 +4927,13 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       </div>
     </header>
     <section class="bqair-card" id="airMe"><p class="bqair-p">Loading&hellip;</p></section>
+    <!-- Robinhood Chain wallet. This ATTACHES to the account you are already signed in to, it is not
+         a way to sign in, because wallet-first auth is what created duplicate accounts on Solana. -->
+    <section class="bqair-card" id="evmCard">
+      <h3>Your Robinhood Chain wallet</h3>
+      <p class="bqair-p" id="evmState">Connect MetaMask so your founder bull and your rewards have somewhere to land. It is a signature only, it costs nothing and moves nothing.</p>
+      <button type="button" class="cta" data-evm-connect style="margin-top:12px;width:100%;border:0;border-radius:14px;padding:14px 18px;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit">Connect MetaMask</button>
+    </section>
     <section class="bqair-card">
       <h3>How the airdrop works</h3>
       <ol class="bqair-steps">
@@ -11610,6 +11617,34 @@ var DISCORD_CLIENT='1527451236746531068';
     var t = e.target.closest && e.target.closest('[data-evm-connect]');
     if (t) { e.preventDefault(); window.bqConnectEvm(); }
   });
+})();
+</script>
+
+<script>
+/* Keeps the wallet card honest: shows the linked address if there is one, and updates the moment a
+   link succeeds rather than waiting for a reload. */
+(function () {
+  function short(a){ return a ? a.slice(0,6)+'...'+a.slice(-4) : ''; }
+  async function paint() {
+    var card = document.getElementById('evmCard');
+    var el = document.getElementById('evmState');
+    var btn = card && card.querySelector('[data-evm-connect]');
+    if (!card || !el || !window.bqSb) return;
+    try {
+      var r = await window.bqSb.rpc('evm_my_wallet');
+      var d = r && r.data;
+      if (d && d.address) {
+        el.innerHTML = 'Linked to <b style="font-family:ui-monospace,Menlo,Consolas,monospace">'+short(d.address)+'</b> on Robinhood Chain.';
+        if (btn) btn.textContent = 'Connect a different wallet';
+      }
+    } catch (_e) { /* signed out, leave the default copy */ }
+  }
+  document.addEventListener('bq:evm-linked', paint);
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-bqgo="view-airdrop"]')) setTimeout(paint, 350);
+  });
+  if (document.readyState !== 'loading') setTimeout(paint, 1400);
+  else document.addEventListener('DOMContentLoaded', function(){ setTimeout(paint, 1400); });
 })();
 </script>
 </body></html>

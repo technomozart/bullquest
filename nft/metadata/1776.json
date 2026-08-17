@@ -1,0 +1,34 @@
+{
+ "name": "Conall #1776",
+ "description": "One of only 2,000 BullQuest founder bulls on Robinhood Chain. Holding one puts you in the fee reward pool and unlocks the game.",
+ "image": "https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_3900.webp",
+ "external_url": "https://bullquest.fun/",
+ "attributes": [
+  {
+   "trait_type": "Tier",
+   "value": "Rare"
+  },
+  {
+   "trait_type": "Body",
+   "value": "Tan Common"
+  },
+  {
+   "trait_type": "Belly",
+   "value": "Pearl Common"
+  },
+  {
+   "trait_type": "Horns",
+   "value": "Galaxy Legendary"
+  },
+  {
+   "trait_type": "Face",
+   "value": "Neutral Common"
+  },
+  {
+   "trait_type": "Rarity Rank",
+   "value": 322,
+   "display_type": "number",
+   "max_value": 2000
+  }
+ ]
+}

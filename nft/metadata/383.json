@@ -1,0 +1,34 @@
+{
+ "name": "Drougar #383",
+ "description": "One of only 2,000 BullQuest founder bulls on Robinhood Chain. Holding one puts you in the fee reward pool and unlocks the game.",
+ "image": "https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1253.webp",
+ "external_url": "https://bullquest.fun/",
+ "attributes": [
+  {
+   "trait_type": "Tier",
+   "value": "Common"
+  },
+  {
+   "trait_type": "Body",
+   "value": "Charcoal Common"
+  },
+  {
+   "trait_type": "Belly",
+   "value": "Sage Uncommon"
+  },
+  {
+   "trait_type": "Horns",
+   "value": "Thickridged Orange Rare"
+  },
+  {
+   "trait_type": "Face",
+   "value": "Laugh Uncommon"
+  },
+  {
+   "trait_type": "Rarity Rank",
+   "value": 1679,
+   "display_type": "number",
+   "max_value": 2000
+  }
+ ]
+}

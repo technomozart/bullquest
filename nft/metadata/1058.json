@@ -1,0 +1,34 @@
+{
+ "name": "Memnon #1058",
+ "description": "One of only 2,000 BullQuest founder bulls on Robinhood Chain. Holding one puts you in the fee reward pool and unlocks the game.",
+ "image": "https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4318.webp",
+ "external_url": "https://bullquest.fun/",
+ "attributes": [
+  {
+   "trait_type": "Tier",
+   "value": "Epic"
+  },
+  {
+   "trait_type": "Body",
+   "value": "Slate Common"
+  },
+  {
+   "trait_type": "Belly",
+   "value": "Pink Uncommon"
+  },
+  {
+   "trait_type": "Horns",
+   "value": "Galaxy Legendary"
+  },
+  {
+   "trait_type": "Face",
+   "value": "Smug Uncommon"
+  },
+  {
+   "trait_type": "Rarity Rank",
+   "value": 239,
+   "display_type": "number",
+   "max_value": 2000
+  }
+ ]
+}

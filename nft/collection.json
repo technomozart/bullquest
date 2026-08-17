@@ -1,0 +1,8 @@
+{
+ "name": "BullQuest Founder Bulls",
+ "description": "One of only 2,000 BullQuest founder bulls on Robinhood Chain. Holding one puts you in the fee reward pool and unlocks the game.",
+ "image": "https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_280.webp",
+ "external_link": "https://bullquest.fun/",
+ "seller_fee_basis_points": 500,
+ "fee_recipient": "SET BEFORE DEPLOY"
+}

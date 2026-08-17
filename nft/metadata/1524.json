@@ -1,0 +1,34 @@
+{
+ "name": "Keleun #1524",
+ "description": "One of only 2,000 BullQuest founder bulls on Robinhood Chain. Holding one puts you in the fee reward pool and unlocks the game.",
+ "image": "https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4358.webp",
+ "external_url": "https://bullquest.fun/",
+ "attributes": [
+  {
+   "trait_type": "Tier",
+   "value": "Rare"
+  },
+  {
+   "trait_type": "Body",
+   "value": "Black Rare"
+  },
+  {
+   "trait_type": "Belly",
+   "value": "Peach Uncommon"
+  },
+  {
+   "trait_type": "Horns",
+   "value": "Ramspiral Coral Rare"
+  },
+  {
+   "trait_type": "Face",
+   "value": "Doteyes Common"
+  },
+  {
+   "trait_type": "Rarity Rank",
+   "value": 753,
+   "display_type": "number",
+   "max_value": 2000
+  }
+ ]
+}

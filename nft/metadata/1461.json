@@ -1,0 +1,34 @@
+{
+ "name": "Adapa #1461",
+ "description": "One of only 2,000 BullQuest founder bulls on Robinhood Chain. Holding one puts you in the fee reward pool and unlocks the game.",
+ "image": "https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_2292.webp",
+ "external_url": "https://bullquest.fun/",
+ "attributes": [
+  {
+   "trait_type": "Tier",
+   "value": "Rare"
+  },
+  {
+   "trait_type": "Body",
+   "value": "Slate Common"
+  },
+  {
+   "trait_type": "Belly",
+   "value": "Grey Common"
+  },
+  {
+   "trait_type": "Horns",
+   "value": "Obsidian Epic"
+  },
+  {
+   "trait_type": "Face",
+   "value": "Unamused Uncommon"
+  },
+  {
+   "trait_type": "Rarity Rank",
+   "value": 360,
+   "display_type": "number",
+   "max_value": 2000
+  }
+ ]
+}

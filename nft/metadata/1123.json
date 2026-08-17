@@ -1,0 +1,34 @@
+{
+ "name": "Rokigron #1123",
+ "description": "One of only 2,000 BullQuest founder bulls on Robinhood Chain. Holding one puts you in the fee reward pool and unlocks the game.",
+ "image": "https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4453.webp",
+ "external_url": "https://bullquest.fun/",
+ "attributes": [
+  {
+   "trait_type": "Tier",
+   "value": "Common"
+  },
+  {
+   "trait_type": "Body",
+   "value": "Powderblue Common"
+  },
+  {
+   "trait_type": "Belly",
+   "value": "Powderblue Uncommon"
+  },
+  {
+   "trait_type": "Horns",
+   "value": "Ramspiral Blue Rare"
+  },
+  {
+   "trait_type": "Face",
+   "value": "Smile Common"
+  },
+  {
+   "trait_type": "Rarity Rank",
+   "value": 920,
+   "display_type": "number",
+   "max_value": 2000
+  }
+ ]
+}
