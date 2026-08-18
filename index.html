@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: gamified tokenized stocks</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: gamified tokenized stocks"><meta property="og:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v6.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, gamified tokenized stocks"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: gamified tokenized stocks"><meta name="twitter:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v6.png"></head><body><script>window.BQ_BUILD="1787026126";try{console.log("BullQuest build 1787026126");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: gamified tokenized stocks</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: gamified tokenized stocks"><meta property="og:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v6.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, gamified tokenized stocks"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: gamified tokenized stocks"><meta name="twitter:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v6.png"></head><body><script>window.BQ_BUILD="1787027073";try{console.log("BullQuest build 1787027073");}catch(e){}</script><script>
 /* BRAND LOGO. New Robinhood-era mark everywhere, EXCEPT the Classic edition, which is the old
    game reached by Play now -> old version. Founder, 2026-08-18: change it every fucking where
    except the old app. Static markup carries the new mark directly; anything rendered from JS
@@ -3092,7 +3092,7 @@ button,a,[role="button"],.chip,.stance,.fchip,.wchip{touch-action:manipulation}
           <!-- TEMPORARY TEST, 2026-08-18. Robin Hood bull on trial as the hero mascot. To revert,
                put this line back:
                src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_1715.webp" width="440" height="440" -->
-          <img class="bq-hero-bull" src="assets/hero-bull-rh.webp" alt="A BullQuest bull in a Robin Hood cap and cape" width="440" height="529" fetchpriority="high" style="height:auto;display:block">
+          <img class="bq-hero-bull" src="assets/hero-bull-poster.webp" alt="A BullQuest bull in a Robin Hood cap and cape" width="420" height="485" fetchpriority="high" style="height:auto;display:block" data-anim="assets/hero-bull-anim.webp">
 
         </div>
       </div>
@@ -11777,6 +11777,45 @@ var DISCORD_CLIENT='1527451236746531068';
   function boot(){ if (!skip()) build(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
+})();
+</script>
+<script>
+/* Animated hero mascot, 200 frames of the founder's own clip.
+
+   It loads POSTER FIRST and swaps. The animation is 2.7MB, which is far too much to put in front of
+   the first paint, so the page renders the 31KB poster immediately and the animation replaces it
+   only once it has fully downloaded. Poster and animation are the same crop at the same 420x485, so
+   the swap is invisible and shifts nothing.
+
+   Why an animated image and not a sprite sheet like the assistant mascot: 200 frames at this size
+   would be a 8400x4850 sheet, about 160MB decoded, which no phone should be asked to hold. An
+   animated WebP decodes one frame at a time and is played by the compositor rather than a timer,
+   so it also cannot stutter the page.
+
+   NOTE for whoever changes this: the previous still is kept at assets/hero-bull-rh.webp, so
+   reverting is one attribute. */
+(function(){
+  function boot(){
+    var img = document.querySelector('#view-landing .bq-hero-bull');
+    if (!img) return;
+    var src = img.getAttribute('data-anim');
+    if (!src) return;
+
+    try{ if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
+    /* respect an explicit data saver, and do not push 2.7MB down a 2g connection */
+    try{
+      var c = navigator.connection;
+      if (c && (c.saveData || /^(slow-)?2g$/.test(c.effectiveType || ''))) return;
+    }catch(e){}
+
+    var pre = new Image();
+    pre.decoding = 'async';
+    pre.onload = function(){ img.src = src; img.setAttribute('data-anim-live','1'); };
+    pre.src = src;
+  }
+  /* wait for load, so the animation never competes with the rest of the page for bandwidth */
+  if (document.readyState === 'complete') setTimeout(boot, 300);
+  else addEventListener('load', function(){ setTimeout(boot, 300); });
 })();
 </script>
 <style id="bq-fx3">
