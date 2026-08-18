@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: gamified tokenized stocks</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: gamified tokenized stocks"><meta property="og:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v6.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, gamified tokenized stocks"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: gamified tokenized stocks"><meta name="twitter:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v6.png"></head><body><script>window.BQ_BUILD="1787027852";try{console.log("BullQuest build 1787027852");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: gamified tokenized stocks</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: gamified tokenized stocks"><meta property="og:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v6.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, gamified tokenized stocks"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: gamified tokenized stocks"><meta name="twitter:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v6.png"></head><body><script>window.BQ_BUILD="1787028851";try{console.log("BullQuest build 1787028851");}catch(e){}</script><script>
 /* BRAND LOGO. New Robinhood-era mark everywhere, EXCEPT the Classic edition, which is the old
    game reached by Play now -> old version. Founder, 2026-08-18: change it every fucking where
    except the old app. Static markup carries the new mark directly; anything rendered from JS
@@ -4748,7 +4748,25 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       <p class="wallet-safe">Optional, for crypto users. We never ask for your seed phrase and can't move your funds.</p>
     </div>
 
-    <div class="reassure">
+    <style id="bq-onboard-btnsize">
+/* Founder, 2026-08-18: "all of those buttons should be the same size, same shape, same height,
+   same width". Measured before this rule: MetaMask and the Solana wallet were 416x52 with a pill
+   radius, email was 416x54, and Telegram was 241x44 with a 12px radius. One size now. */
+#view-onboard .cta,
+#view-onboard .secondary,
+#view-onboard .bq-tgbtn{
+  width:100% !important; box-sizing:border-box !important;
+  min-height:52px !important; height:52px !important;
+  border-radius:999px !important;
+  font-size:15px !important; line-height:1 !important;
+  padding-left:18px !important; padding-right:18px !important;
+}
+/* The Google button is a third-party widget and sets its own height, so give it the same row
+   height and centre it rather than trying to restyle something we do not control. */
+#view-onboard #bqGoogleEntry{ min-height:52px; display:flex; align-items:center; justify-content:center; }
+#view-onboard #bqTgEntry{ display:block; width:100%; }
+</style>
+<div class="reassure">
       <span class="ck" aria-hidden="true">
         <svg width="15" height="15" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
@@ -6803,7 +6821,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   function applyMode(){
     if(!modal) return;
     modal.querySelector('#bqAuthTitle').textContent = mode==='signup'?'Create your account':'Welcome back';
-    modal.querySelector('#bqAuthSub').textContent = mode==='signup'?'Make an account and we hand you a free starter bull on the spot.':'Log in to get back to your bull.';
+    modal.querySelector('#bqAuthSub').textContent = mode==='signup'?'Make an account and your bull is ready in about ten seconds.':'Log in to get back to your bull.';
     modal.querySelector('#bqAuthSubmit').textContent = mode==='signup'?'Sign up & claim':'Log in';
     modal.querySelector('#bqAuthToggle').textContent = mode==='signup'?'Already have an account? Log in':'New here? Create an account';
     modal.querySelector('#bqPass').setAttribute('autocomplete', mode==='signup'?'new-password':'current-password');
@@ -7023,7 +7041,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var el=document.createElement('div'); el.className='bqrev';
     el.innerHTML=cf+
       '<div class="bqrev-card">'+
-        '<div class="bqrev-eye" style="color:'+t.c+'">YOUR FREE STARTER BULL</div>'+
+        '<div class="bqrev-eye" style="color:'+t.c+'">YOUR STARTER BULL</div>'+
         '<div class="bqrev-stage">'+
           '<div class="bqrev-rays" style="background:conic-gradient('+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00,'+t.c+'2e,'+t.c+'00)"></div>'+
           '<div class="bqrev-aura" style="background:radial-gradient(circle,'+t.c+'99,'+t.c+'00 70%)"></div>'+
@@ -7637,7 +7655,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     loadGSI(function(){
       try{
         if(!gsiInit){ window.google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCred, auto_select:false, cancel_on_tap_outside:true }); gsiInit=true; }
-        el.innerHTML=''; window.google.accounts.id.renderButton(el, { type:'standard', theme:'outline', size:'large', text:'continue_with', shape:'pill', logo_alignment:'center', width:300 });
+        el.innerHTML=''; window.google.accounts.id.renderButton(el, { type:'standard', theme:'outline', size:'large', text:'continue_with', shape:'pill', logo_alignment:'center', width:400 });
       }catch(e){}
     });
   }
@@ -8960,7 +8978,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       'no-wallet':'Connect a Phantom wallet to buy or sell.',
       'cannot-buy-own':'This is your own listing.',
       'keep-one-bull':'Keep at least one bull to play. Get another first, then list this one.',
-      'free-bull':'Your free starter bull stays with you. Only bulls you buy can be sold.',
+      'free-bull':'Your starter bull stays with you. Only bulls you buy can be sold.',
       'bad-price':'Choose a price within the allowed range.',
       'bad-bull':'That bull is not available.',
       'no-bull':'That bull is not available.',
@@ -9314,7 +9332,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
           '<span class="bqsw-sub"><span style="width:8px;height:8px;border-radius:50%;background:'+t.c+'"></span>'+t.l+' &middot; Lv '+ub.level+'</span></span>'+
           '<span class="bqsw-go">List</span></div>';
       });
-      if(freeCount) html+='<div class="bqsw-empty" style="padding:12px 8px 4px">Your free starter bull stays with you and cannot be sold.</div>';
+      if(freeCount) html+='<div class="bqsw-empty" style="padding:12px 8px 4px">Your starter bull stays with you and cannot be sold.</div>';
       list.innerHTML=html;
       [].forEach.call(list.querySelectorAll('img[data-src]'), function(im){ var s=im.getAttribute('data-src'); im.removeAttribute('data-src'); bqBindImg(im,s); });
     }).catch(function(){ if(list) list.innerHTML='<div class="bqsw-empty">Could not load your bulls. Try again.</div>'; });
@@ -12824,7 +12842,13 @@ html.bq-demo #bqAiBtn{ bottom:132px !important; }
     if (window.bqLoggedIn) return;                  // normal path, the existing handler runs
     e.preventDefault(); e.stopImmediatePropagation();
     try{ sessionStorage.setItem(RESUME, '1'); }catch(_){}
+    /* Open MetaMask FIRST, so the button does what it says. The link still needs an
+       account, so the account step follows and the connect resumes after it. Without
+       this the click only ever opened a signup box and looked like a fake button. */
+    try{ var _p = window.ethereum; if (_p && _p.request) _p.request({ method: 'eth_requestAccounts' }); }catch(_){}
     if (window.bqOpenAuth) window.bqOpenAuth();
+    setTimeout(function(){ var sub = document.getElementById('bqAuthSub');
+      if (sub) sub.textContent = 'Create your account first, then we finish connecting MetaMask.'; }, 60);
   }, true);
   document.addEventListener('bq:gate', function(){
     var want = null; try{ want = sessionStorage.getItem(RESUME); }catch(_){}
