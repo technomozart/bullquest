@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: gamified tokenized stocks</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: gamified tokenized stocks"><meta property="og:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v6.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, gamified tokenized stocks"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: gamified tokenized stocks"><meta name="twitter:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v6.png"></head><body><script>window.BQ_BUILD="1787021427";try{console.log("BullQuest build 1787021427");}catch(e){}</script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>BullQuest: gamified tokenized stocks</title><meta name="theme-color" content="#0FB948"><link rel="preconnect" href="https://cewumdioknvjtsiolxce.supabase.co" crossorigin><link rel="dns-prefetch" href="https://cewumdioknvjtsiolxce.supabase.co"><meta name="description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><link rel="icon" type="image/png" sizes="256x256" href="assets/icons/favicon-v2.png"><link rel="apple-touch-icon" href="assets/icons/favicon-512-v2.png"><style>html,body{margin:0;padding:0;background:#EDEFF3;font-family:system-ui,"Segoe UI Variable","Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}button,input,select,textarea{font-family:inherit}</style><link rel="canonical" href="https://bullquest.fun/"><meta property="og:type" content="website"><meta property="og:site_name" content="BullQuest"><meta property="og:title" content="BullQuest: gamified tokenized stocks"><meta property="og:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta property="og:url" content="https://bullquest.fun/"><meta property="og:image" content="https://bullquest.fun/assets/og-card-v6.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="BullQuest, gamified tokenized stocks"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@BullQuestSol"><meta name="twitter:title" content="BullQuest: gamified tokenized stocks"><meta name="twitter:description" content="BullQuest is a game on Robinhood Chain. Mint a Genesis Bull, win duels for GRIT, and swap it for real tokenized stock: NVDA, TSLA, AAPL, AMZN and SPY."><meta name="twitter:image" content="https://bullquest.fun/assets/og-card-v6.png"></head><body><script>window.BQ_BUILD="1787022155";try{console.log("BullQuest build 1787022155");}catch(e){}</script><script>
 /* BRAND LOGO. New Robinhood-era mark everywhere, EXCEPT the Classic edition, which is the old
    game reached by Play now -> old version. Founder, 2026-08-18: change it every fucking where
    except the old app. Static markup carries the new mark directly; anything rendered from JS
@@ -10067,7 +10067,10 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     if(document.getElementById('bqAiBtn')) return;
     var ST=document.createElement('style'); ST.textContent=[
       '#bqAiBtn{position:fixed;right:16px;bottom:86px;z-index:9997;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;background:#0D6C2D;box-shadow:0 10px 24px rgba(13,108,45,.45);padding:0;font-family:inherit;transition:transform .15s}',
-      '#bqAiBtn img{width:100%;height:100%;object-fit:cover;border-radius:50%}',
+      '#bqAiBtn img,#bqAiBtn .bq-aiface{width:100%;height:100%;object-fit:cover;border-radius:50%}',
+      /* one sheet, 10 across by 5 down. Sized off the element itself so the 56px launcher and the
+         24px panel avatar can share it without either of them hard-coding a scale. */
+      '.bq-aiface{display:block;background-image:url(assets/ai-bull-sheet.webp);background-repeat:no-repeat;border-radius:50%}',
       '#bqAiBtn:hover{transform:translateY(-2px)}#bqAiBtn:active{transform:translateY(0)}',
       '#bqAiBtn svg{width:27px;height:27px}',
       '#bqAiBtn .dot{position:absolute;top:-1px;right:-1px;width:14px;height:14px;border-radius:50%;background:#43C06A;border:2px solid #fff}',
@@ -10078,7 +10081,7 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
       '@media(max-width:520px){#bqAiPanel{right:8px;left:8px;bottom:140px;width:auto;max-width:none;height:min(70dvh,540px)}}',
       '.bqai-hd{background:linear-gradient(180deg,#0d6c2d,#0D6C2D);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:11px}',
       '.bqai-hd .av{width:34px;height:34px;border-radius:8px;flex:none;overflow:hidden;background:rgba(255,255,255,.18)}',
-      '.bqai-hd .av img{width:100%;height:100%;object-fit:cover}',
+      '.bqai-hd .av img,.bqai-hd .av .bq-aiface{width:100%;height:100%;object-fit:cover}',
       '.bqai-hd b{font-size:15px;font-weight:800;display:block;line-height:1.2}',
       '.bqai-hd .sub{font-size:11.5px;opacity:.85;font-weight:600}',
       '.bqai-hd .rs{margin-left:auto;background:transparent;border:0;color:#fff;font-size:17px;line-height:1;cursor:pointer;opacity:.8;padding:3px 5px}',
@@ -10111,12 +10114,45 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
     var convo = aiLoad(), busy = false, typingEl = null, rendered = false;
 
     var btn=document.createElement('button'); btn.id='bqAiBtn'; btn.type='button'; btn.setAttribute('aria-label','Ask the BullQuest assistant');
-    btn.innerHTML='<span class="dot"></span><img src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt="">';
+    /* The mascot is 50 frames of the founder's own clip, on a sprite sheet, stepped by one timer.
+       An animated WebP was tried first and rejected for one reason: animation there is driven by
+       the compositor, so it cannot be verified in a headless render or in a non-compositing tab,
+       and shipping an animation nobody has watched run is how you end up saying "it works" about a
+       still picture. A stepped sprite sheet is observable: read backgroundPosition and you know. */
+    btn.innerHTML='<span class="dot"></span><span class="bq-aiface"></span>';
     document.body.appendChild(btn);
 
     var panel=document.createElement('div'); panel.id='bqAiPanel'; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','BullQuest assistant');
-    panel.innerHTML='<div class="bqai-hd"><span class="av"><img src="https://cewumdioknvjtsiolxce.supabase.co/storage/v1/object/public/bulls/nft_4915.webp" alt=""></span><div><b>Bull Assistant</b><div class="sub">Ask me anything about BullQuest</div></div><button class="rs" type="button" aria-label="New chat" title="New chat">&#8635;</button><button class="x" aria-label="Close">&times;</button></div><div class="bqai-body" id="bqAiBody"></div><div class="bqai-foot"><input id="bqAiIn" type="text" placeholder="Ask a question..." autocomplete="off" maxlength="1000"><button id="bqAiSend" type="button">Send</button></div>';
+    panel.innerHTML='<div class="bqai-hd"><span class="av"><span class="bq-aiface"></span></span><div><b>Bull Assistant</b><div class="sub">Ask me anything about BullQuest</div></div><button class="rs" type="button" aria-label="New chat" title="New chat">&#8635;</button><button class="x" aria-label="Close">&times;</button></div><div class="bqai-body" id="bqAiBody"></div><div class="bqai-foot"><input id="bqAiIn" type="text" placeholder="Ask a question..." autocomplete="off" maxlength="1000"><button id="bqAiSend" type="button">Send</button></div>';
     document.body.appendChild(panel);
+
+    /* ---- mascot animation -------------------------------------------------------------------
+       50 frames on a 10x5 sheet, played forward then backward. The clip does not loop cleanly
+       (frame 50 back to frame 1 is roughly twice a normal frame step), and ping-pong makes the
+       loop seamless by construction instead of by luck. Cell size is read off each element, so
+       the 56px launcher and the 24px header avatar both work from the same sheet with no scale
+       hard-coded anywhere. */
+    (function(){
+      var COLS=10, N=50, i=0, dir=1, timer=null;
+      function faces(){ return Array.prototype.slice.call(document.querySelectorAll('.bq-aiface')); }
+      function paint(){
+        faces().forEach(function(el){
+          var s = el.getBoundingClientRect().width || el.offsetWidth;
+          if(!s) return;
+          el.style.backgroundSize = (s*COLS)+'px '+(s*5)+'px';
+          el.style.backgroundPosition = (-(i%COLS)*s)+'px '+(-Math.floor(i/COLS)*s)+'px';
+        });
+      }
+      function step(){ i+=dir; if(i>=N-1){ i=N-1; dir=-1; } else if(i<=0){ i=0; dir=1; } paint(); }
+      function start(){ if(!timer) timer=setInterval(step,60); }
+      function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+      /* a background tab should not burn a timer on a decoration */
+      document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+      addEventListener('resize', paint, {passive:true});
+      paint(); start();
+      window.bqAiFaceFrame = function(){ return i; };   // so the animation can be verified, not assumed
+    })();
+
     var body=panel.querySelector('#bqAiBody'), input=panel.querySelector('#bqAiIn'), sendBtn=panel.querySelector('#bqAiSend');
 
     function esc(x){ return window.bqEsc ? window.bqEsc(x) : String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
